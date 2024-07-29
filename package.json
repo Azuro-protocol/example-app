@@ -1,26 +1,63 @@
 {
   "name": "sdk-example",
   "version": "0.1.0",
+  "engines": {
+    "node": "=18.19.0"
+  },
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "npm run watch-icons & next dev",
+    "build": "npm run build-icons && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint && tsc --noEmit",
+    "------  Icons --------------------------------------------------------------------------": "",
+    "watch-icons": "node bin/icons --watch",
+    "build-icons": "node bin/icons"
   },
   "dependencies": {
+    "@apollo/client": "^3.11.1",
+    "@azuro-org/dictionaries": "^3.0.16",
+    "@azuro-org/sdk": "^5.1.2",
+    "@headlessui/react": "1.7.19",
+    "@headlessui/tailwindcss": "0.2.1",
+    "@locmod/intl": "1.0.5",
+    "@locmod/local-storage": "1.0.4",
+    "@locmod/modal": "3.0.1",
+    "axios": "^1.7.2",
+    "classnames": "^2.5.1",
+    "cookies-next": "^4.2.1",
+    "dayjs": "^1.11.9",
+    "formular": "3.1.6",
+    "graphql": "^16.9.0",
+    "next": "14.2.5",
+    "postcss": "^8.4.33",
     "react": "^18",
+    "sass": "1.77.6",
     "react-dom": "^18",
-    "next": "14.2.5"
+    "viem": "^2.17.3",
+    "wagmi": "^2.10.9"
   },
   "devDependencies": {
-    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1",
+    "@typescript-eslint/eslint-plugin": "5.62.0",
+    "app-module-path": "2.2.0",
+    "autoprefixer": "10.4.19",
+    "chokidar": "3.6.0",
+    "encoding": "0.1.13",
     "eslint": "^8",
-    "eslint-config-next": "14.2.5"
+    "eslint-config-next": "14.2.5",
+    "eslint-plugin-import": "2.29.1",
+    "glob": "10.3.10",
+    "pino-pretty": "10.3.1",
+    "postcss": "^8",
+    "raw-loader": "4.0.2",
+    "stylelint": "15.11.0",
+    "stylelint-config-rational-order": "^0.1.2",
+    "stylelint-scss": "5.3.2",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5",
+    "yargs": "17.7.2"
   }
 }

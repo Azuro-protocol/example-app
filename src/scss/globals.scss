@@ -1,0 +1,151 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+
+  html {
+    font-size: 4.44444vw;
+    @media (min-width: 569px) {
+      font-size: 16px;
+    }
+    @media (min-width: 1981px) {
+      font-size: 16px;
+    }
+  }
+
+  html,
+  body {
+    width: 100%;
+    height: fit-content;
+    min-height: 100dvh;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    overflow: hidden auto;
+    font-weight: 400;
+    text-rendering: optimizelegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+:focus-visible {
+  outline: none;
+}
+
+.focus-visible {
+
+  :focus-visible {
+    outline: auto;
+    outline-offset: 2px;
+  }
+}
+
+body {
+
+  &.body-scroll-frozen {
+    overflow: hidden;
+  }
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+  }
+}
+
+@layer components {
+
+  .w-container {
+    @apply w-full px-4;
+    @screen sm {
+      @apply px-3vw;
+    }
+    @screen xxl {
+      max-width: 1440px;
+      @apply px-4 mx-auto;
+    }
+  }
+
+  .bone {
+    position: relative;
+    overflow: hidden;
+    @apply bg-black/25;
+    @apply animate-pulse;
+  }
+
+  .word-spacing-max {
+    word-spacing: 9999px;
+  }
+
+  .word-spacing-normal {
+    word-spacing: normal;
+  }
+
+  .text-heading-h1 {
+    font-size: 1.75rem; /* 28 */
+    line-height: 2.25rem; /* 36 */
+  }
+
+  .text-heading-h2 {
+    font-size: 1.5rem; /* 24 */
+    line-height: 2rem; /* 32 */
+  }
+
+  .text-heading-h3 {
+    font-size: 1.25rem; /* 20 */
+    line-height: 1.625rem; /* 26 */
+  }
+
+  .text-heading-h4 {
+    font-size: 1.125rem; /* 18 */
+    line-height: 1.5rem; /* 24 */
+  }
+
+  .text-heading-h5 {
+    font-size: 1rem; /* 16 */
+    line-height: 1.25rem; /* 20 */
+  }
+
+  .text-caption-14 {
+    font-size: 0.875rem; /* 14 */
+    line-height: 1.125rem; /* 18 */
+  }
+
+  .text-caption-14 {
+    font-size: 0.875rem; /* 14 */
+    line-height: 1.125rem; /* 18 */
+  }
+
+  .text-caption-13 {
+    font-size: 0.813rem; /* 13 */
+    line-height: 1rem; /* 16 */
+  }
+
+  .text-caption-12 {
+    font-size: 0.75rem; /* 12 */
+    line-height: 0.875rem; /* 14 */
+  }
+
+  .text-label-12 {
+    font-size: 0.688rem; /* 11 */
+    line-height: 0.813rem; /* 13 */
+  }
+}
+
+@layer utilities {
+
+  // update to use the only class instead of duplication "h-screen h-dvh"
+  .h-dvh {
+    height: 100dvh;
+  }
+
+  .min-h-dvh {
+    min-height: 100dvh;
+  }
+}

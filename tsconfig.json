@@ -1,26 +1,104 @@
 {
   "compilerOptions": {
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "baseUrl": ".",
+    "target": "ES2021",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "jsx": "preserve",
+    "module": "ESNext",
+    "moduleResolution": "node",
     "allowJs": true,
+    "sourceMap": true,
+    "sourceRoot": "/",
+    "disableSizeLimit": true,
     "skipLibCheck": true,
     "strict": true,
+
+    /* TODO remove strict modifiers, use strict: true only */
+    "strictPropertyInitialization": false,
+    "noImplicitAny": false,
+    "useUnknownInCatchVariables": false,
+
+    "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "bundler",
     "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
+    "downlevelIteration": true,
     "incremental": true,
+    "isolatedModules": true,
+    "paths": {
+      /* local modules */
+      "cookie-storage": [
+        "local_modules/cookie-storage"
+      ],
+      "wallet": [
+        "local_modules/wallet"
+      ],
+      "analytics": [
+        "local_modules/analytics"
+      ],
+      "svg-provider": [
+        "local_modules/svg-provider"
+      ],
+      /* src */
+      "hooks": [
+        "src/hooks"
+      ],
+      "helpers": [
+        "src/helpers"
+      ],
+      "helpers/*": [
+        "src/helpers/*"
+      ],
+      "contracts": [
+        "src/contracts"
+      ],
+      "contracts/*": [
+        "src/contracts/*"
+      ],
+      "components/*": [
+        "src/components/*"
+      ],
+      "compositions/*": [
+        "src/compositions/*"
+      ],
+      "compositions": [
+        "src/compositions"
+      ],
+      "graph/*": [
+        "src/graph/*"
+      ],
+      "contexts": [
+        "src/contexts"
+      ],
+      "views/*": [
+        "src/views/*"
+      ],
+      "pages/*": [
+        "src/pages/*"
+      ]
+    },
     "plugins": [
       {
         "name": "next"
       }
-    ],
-    "paths": {
-      "@/*": ["./src/*"]
-    }
+    ]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "additional.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "e2e",
+    "node_modules",
+    "src/_deprecated",
+    "src/contracts/index.ts",
+    "src/graph"
+  ]
 }

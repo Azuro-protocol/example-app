@@ -1,0 +1,23 @@
+@supports (will-change: transform) {
+  @keyframes openModal {
+
+    0% {
+      transform: translate3d(0, 50%, 0);
+      opacity: 0;
+    }
+
+    50% {
+      opacity: 1;
+    }
+
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+}
+
+.container {
+  animation: openModal 0.35s ease;
+  will-change: transform; // this fixes high CPU usage for blurred animation
+}

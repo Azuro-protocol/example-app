@@ -1,0 +1,27 @@
+$leftSidebar: 240px;
+$rightSidebar: 316px;
+
+@include wide {
+
+  .root {
+    max-width: 1440px;
+  }
+
+  .leftSidebar {
+    position: sticky;
+    width: $leftSidebar;
+  }
+
+  .rightSidebar {
+    position: sticky;
+    width: $rightSidebar;
+  }
+
+  .main {
+    max-width: calc(100% - $leftSidebar);
+
+    &.withRightSidebar {
+      max-width: calc(100% - $leftSidebar - $rightSidebar);
+    }
+  }
+}

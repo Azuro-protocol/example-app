@@ -12,6 +12,7 @@ import { polygon } from 'viem/chains'
 import { constants } from 'helpers'
 
 import Providers from 'compositions/Providers/Providers'
+import PageLayout from 'compositions/PageLayout/PageLayout'
 
 import '../scss/globals.scss'
 
@@ -53,7 +54,9 @@ export default function RootLayout({
           initialLiveState={initialLiveState}
           initialChainId={initialChainId}
         >
-          {children}
+          <PageLayout>
+            {children}
+          </PageLayout>
         </Providers>
       </body>
     </html>

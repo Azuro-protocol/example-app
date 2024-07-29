@@ -60,7 +60,7 @@ const nextConfig = {
     }
   ]),
   sassOptions: {
-    // additionalData: `@import '~src/scss/index.scss';`,
+    additionalData: `@import '~src/scss/index.scss';`,
     includePaths: [
       path.join(path.dirname(fileURLToPath(import.meta.url)), 'styles')
     ]

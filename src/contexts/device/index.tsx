@@ -7,19 +7,14 @@ import { getBrowser, type BrowserType } from './browsers'
 
 export { BrowserType } from './browsers'
 
-// const updateBodyClassName = (isMobile: boolean) => {
-//   document.documentElement.classList.remove('desktop', 'mobile')
-//   document.documentElement.classList.add(isMobile ? 'mobile' : 'desktop')
-// }
-
 const getDeviceByMedia = (): MediaState => {
   const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
 
   return {
-    isMobileView: width <= 834.9,
-    isSmView: width >= 768,
-    isLgView: width >= 1096,
-    isXlView: width >= 1366,
+    isMobileView: width < 802,
+    isDesktopView: width >= 802,
+    isNarrowView: width >= 802 && width < 1280,
+    isWideView: width >= 1280,
   }
 }
 
@@ -51,14 +46,14 @@ type DeviceState = {
 }
 
 type MediaState = {
-  // max: '834.9px'
+  // viewport < 802
   isMobileView: boolean
-  // min: '835px'
-  isSmView: boolean
-  // min: '1195px'
-  isLgView: boolean
-  // min: '1981px'
-  isXlView: boolean
+  // viewport >= 802
+  isDesktopView: boolean
+  // viewport >= 802 && < 1280
+  isNarrowView: boolean
+  // viewport >= 1280
+  isWideView: boolean
 }
 
 export const DeviceContext = createContext<DeviceState>(null as unknown as DeviceState)
@@ -82,16 +77,15 @@ export const DeviceProvider: React.FC<React.PropsWithChildren<DeviceProviderProp
   const [ device ] = useState(getDeviceByUserAgent(userAgent))
   const [ media, setMedia ] = useState<MediaState>({
     isMobileView: device.isMobileDevice,
-    isSmView: !device.isMobileDevice,
-    isLgView: !device.isMobileDevice,
-    isXlView: !device.isMobileDevice,
+    isDesktopView: !device.isMobileDevice,
+    isNarrowView: !device.isMobileDevice,
+    isWideView: !device.isMobileDevice,
   })
 
   useEffect(() => {
     const handleResize = () => {
       const media = getDeviceByMedia()
 
-      // updateBodyClassName(media.isMobileView)
       setMedia(media)
     }
 

@@ -27,7 +27,7 @@ const Icon = forwardRef<SVGSVGElement | HTMLImageElement, IconProps>((props, ref
 
   const { src, source, aspect, width, height } = icons[name]
 
-  const rootClassName = clsx(className, fillClassName, (name === 'interface/spinner' || name === 'interface/preloader') ? 'animate-spin' : null)
+  const rootClassName = clsx(className, fillClassName, name === 'interface/spinner' ? 'animate-spin' : null)
 
   return (
     <Svg

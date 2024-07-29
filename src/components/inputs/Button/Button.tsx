@@ -1,3 +1,5 @@
+'use client'
+
 import React, { forwardRef } from 'react'
 import { Message } from '@locmod/intl'
 import cx from 'classnames'

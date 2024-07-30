@@ -5,12 +5,15 @@ import cx from 'classnames'
 import dynamic from 'next/dynamic'
 
 import { Media } from 'components/layout'
+import NavigationSkeleton from 'compositions/Navigation/components/Skeleton/Skeleton'
 
 import ns from './Narrow.module.scss'
 import ws from './Wide.module.scss'
 
 
-const LeftSidebar = dynamic(() => import('./components/LeftSidebar/LeftSidebar'))
+const LeftSidebar = dynamic(() => import('./components/LeftSidebar/LeftSidebar'), {
+  loading: () => <NavigationSkeleton />,
+})
 const RightSidebar = dynamic(() => import('./components/RightSidebar/RightSidebar'))
 
 
@@ -27,7 +30,7 @@ const Content: React.CFC = ({ children }) => {
 
   return (
     <div className={rootClassName}>
-      <Media className={cx(ws.leftSidebar, 'sticky top-0 h-auto z-[100] shrink-0')} wide>
+      <Media className={cx(ws.leftSidebar, 'sticky top-0 h-auto z-[100] shrink-0 pr-2')} wide>
         <LeftSidebar />
       </Media>
       <main className={mainClassName}>

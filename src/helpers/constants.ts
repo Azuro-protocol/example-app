@@ -15,4 +15,5 @@ const rpcByChains: Record<ChainId, string> = {
 export default {
   baseUrl,
   rpcByChains,
+  topPageGamePerSportLimit: 10,
 }

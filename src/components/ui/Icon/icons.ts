@@ -41,6 +41,8 @@ import _sport_rugby_union from '../../../../public/images/icons/sport/rugby-unio
 import _sport_rugby_unionSource from '!!raw-loader!../../../../public/images/icons/sport/rugby-union.svg'
 import _sport_tennis from '../../../../public/images/icons/sport/tennis.svg?url'
 import _sport_tennisSource from '!!raw-loader!../../../../public/images/icons/sport/tennis.svg'
+import _interface_burger_menu from '../../../../public/images/icons/interface/burger_menu.svg?url'
+import _interface_burger_menuSource from '!!raw-loader!../../../../public/images/icons/interface/burger_menu.svg'
 import _interface_chevron_down from '../../../../public/images/icons/interface/chevron_down.svg?url'
 import _interface_chevron_downSource from '!!raw-loader!../../../../public/images/icons/interface/chevron_down.svg'
 import _interface_chevron_left from '../../../../public/images/icons/interface/chevron_left.svg?url'
@@ -82,6 +84,7 @@ const icons = {
   'sport/rugby-league': { src: _sport_rugby_league.src, source: isServer && _sport_rugby_leagueSource, width: _sport_rugby_league.width, height: _sport_rugby_league.height, aspect: _sport_rugby_league.width/_sport_rugby_league.height }, 
   'sport/rugby-union': { src: _sport_rugby_union.src, source: isServer && _sport_rugby_unionSource, width: _sport_rugby_union.width, height: _sport_rugby_union.height, aspect: _sport_rugby_union.width/_sport_rugby_union.height }, 
   'sport/tennis': { src: _sport_tennis.src, source: isServer && _sport_tennisSource, width: _sport_tennis.width, height: _sport_tennis.height, aspect: _sport_tennis.width/_sport_tennis.height }, 
+  'interface/burger_menu': { src: _interface_burger_menu.src, source: isServer && _interface_burger_menuSource, width: _interface_burger_menu.width, height: _interface_burger_menu.height, aspect: _interface_burger_menu.width/_interface_burger_menu.height }, 
   'interface/chevron_down': { src: _interface_chevron_down.src, source: isServer && _interface_chevron_downSource, width: _interface_chevron_down.width, height: _interface_chevron_down.height, aspect: _interface_chevron_down.width/_interface_chevron_down.height }, 
   'interface/chevron_left': { src: _interface_chevron_left.src, source: isServer && _interface_chevron_leftSource, width: _interface_chevron_left.width, height: _interface_chevron_left.height, aspect: _interface_chevron_left.width/_interface_chevron_left.height }, 
   'interface/chevron_right': { src: _interface_chevron_right.src, source: isServer && _interface_chevron_rightSource, width: _interface_chevron_right.width, height: _interface_chevron_right.height, aspect: _interface_chevron_right.width/_interface_chevron_right.height }, 

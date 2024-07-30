@@ -15,6 +15,7 @@ const LeftSidebar = dynamic(() => import('./components/LeftSidebar/LeftSidebar')
   loading: () => <NavigationSkeleton />,
 })
 const RightSidebar = dynamic(() => import('./components/RightSidebar/RightSidebar'))
+const Header = dynamic(() => import('./components/Header/Header'))
 
 
 const Content: React.CFC = ({ children }) => {
@@ -27,16 +28,20 @@ const Content: React.CFC = ({ children }) => {
     // [`${ws.withRightSidebar} ds:max-w-[784rem]`]: isRightSidebarVisible,
     }
   )
+  const sidebarClassName = 'sticky top-0 h-[calc(100vh_-_0.5rem)] z-[100] shrink-0 no-scrollbar'
 
   return (
     <div className={rootClassName}>
-      <Media className={cx(ws.leftSidebar, 'sticky top-0 h-auto z-[100] shrink-0 pr-2')} wide>
+      <Media className={cx(ws.leftSidebar, sidebarClassName, 'pr-2 overflow-auto')} wide>
         <LeftSidebar />
+      </Media>
+      <Media className="sticky top-0" narrow mobile>
+        <Header />
       </Media>
       <main className={mainClassName}>
         {children}
       </main>
-      <Media className={cx(ws.rightSidebar, 'sticky top-0 h-auto z-[100] shrink-0')} wide>
+      <Media className={cx(ws.rightSidebar, sidebarClassName, 'overflow-auto')} wide>
         <RightSidebar />
       </Media>
     </div>

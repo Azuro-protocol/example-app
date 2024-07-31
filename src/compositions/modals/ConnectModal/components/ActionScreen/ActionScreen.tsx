@@ -35,7 +35,7 @@ const ActionScreen: React.FC<ActionScreenProps> = (props) => {
         {
           isError && (
             <div className="absolute top-full left-full -mt-6 -ml-6 size-8 p-1.5 bg-white shadow-lvl1 rounded-full border border-solid border-bg-10">
-              <Icon className="text-accent-red size-full" name="interface/alert-triangle" />
+              <Icon className="text-accent-red size-full" name="interface/alert_triangle" />
             </div>
           )
         }

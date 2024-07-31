@@ -45,10 +45,26 @@ import _sport_rugby_union from '../../../../public/images/icons/sport/rugby-unio
 import _sport_rugby_unionSource from '!!raw-loader!../../../../public/images/icons/sport/rugby-union.svg'
 import _sport_tennis from '../../../../public/images/icons/sport/tennis.svg?url'
 import _sport_tennisSource from '!!raw-loader!../../../../public/images/icons/sport/tennis.svg'
-import _interface_alert_triangle from '../../../../public/images/icons/interface/alert-triangle.svg?url'
-import _interface_alert_triangleSource from '!!raw-loader!../../../../public/images/icons/interface/alert-triangle.svg'
+import _networks_chiliz from '../../../../public/images/icons/networks/chiliz.svg?url'
+import _networks_chilizSource from '!!raw-loader!../../../../public/images/icons/networks/chiliz.svg'
+import _networks_gnosis from '../../../../public/images/icons/networks/gnosis.svg?url'
+import _networks_gnosisSource from '!!raw-loader!../../../../public/images/icons/networks/gnosis.svg'
+import _networks_polygon from '../../../../public/images/icons/networks/polygon.svg?url'
+import _networks_polygonSource from '!!raw-loader!../../../../public/images/icons/networks/polygon.svg'
+import _interface_alert_triangle from '../../../../public/images/icons/interface/alert_triangle.svg?url'
+import _interface_alert_triangleSource from '!!raw-loader!../../../../public/images/icons/interface/alert_triangle.svg'
 import _interface_burger_menu from '../../../../public/images/icons/interface/burger_menu.svg?url'
 import _interface_burger_menuSource from '!!raw-loader!../../../../public/images/icons/interface/burger_menu.svg'
+import _interface_caret_down from '../../../../public/images/icons/interface/caret_down.svg?url'
+import _interface_caret_downSource from '!!raw-loader!../../../../public/images/icons/interface/caret_down.svg'
+import _interface_caret_left from '../../../../public/images/icons/interface/caret_left.svg?url'
+import _interface_caret_leftSource from '!!raw-loader!../../../../public/images/icons/interface/caret_left.svg'
+import _interface_caret_right from '../../../../public/images/icons/interface/caret_right.svg?url'
+import _interface_caret_rightSource from '!!raw-loader!../../../../public/images/icons/interface/caret_right.svg'
+import _interface_caret_up from '../../../../public/images/icons/interface/caret_up.svg?url'
+import _interface_caret_upSource from '!!raw-loader!../../../../public/images/icons/interface/caret_up.svg'
+import _interface_check from '../../../../public/images/icons/interface/check.svg?url'
+import _interface_checkSource from '!!raw-loader!../../../../public/images/icons/interface/check.svg'
 import _interface_chevron_down from '../../../../public/images/icons/interface/chevron_down.svg?url'
 import _interface_chevron_downSource from '!!raw-loader!../../../../public/images/icons/interface/chevron_down.svg'
 import _interface_chevron_left from '../../../../public/images/icons/interface/chevron_left.svg?url'
@@ -63,10 +79,26 @@ import _interface_copy from '../../../../public/images/icons/interface/copy.svg?
 import _interface_copySource from '!!raw-loader!../../../../public/images/icons/interface/copy.svg'
 import _interface_download from '../../../../public/images/icons/interface/download.svg?url'
 import _interface_downloadSource from '!!raw-loader!../../../../public/images/icons/interface/download.svg'
+import _interface_external_link from '../../../../public/images/icons/interface/external_link.svg?url'
+import _interface_external_linkSource from '!!raw-loader!../../../../public/images/icons/interface/external_link.svg'
+import _interface_logout from '../../../../public/images/icons/interface/logout.svg?url'
+import _interface_logoutSource from '!!raw-loader!../../../../public/images/icons/interface/logout.svg'
+import _interface_mybets from '../../../../public/images/icons/interface/mybets.svg?url'
+import _interface_mybetsSource from '!!raw-loader!../../../../public/images/icons/interface/mybets.svg'
 import _interface_no_flag from '../../../../public/images/icons/interface/no_flag.svg?url'
 import _interface_no_flagSource from '!!raw-loader!../../../../public/images/icons/interface/no_flag.svg'
 import _interface_spinner from '../../../../public/images/icons/interface/spinner.svg?url'
 import _interface_spinnerSource from '!!raw-loader!../../../../public/images/icons/interface/spinner.svg'
+import _interface_user_avatar from '../../../../public/images/icons/interface/user_avatar.svg?url'
+import _interface_user_avatarSource from '!!raw-loader!../../../../public/images/icons/interface/user_avatar.svg'
+import _currency_azusd from '../../../../public/images/icons/currency/azusd.svg?url'
+import _currency_azusdSource from '!!raw-loader!../../../../public/images/icons/currency/azusd.svg'
+import _currency_usdt from '../../../../public/images/icons/currency/usdt.svg?url'
+import _currency_usdtSource from '!!raw-loader!../../../../public/images/icons/currency/usdt.svg'
+import _currency_wchz from '../../../../public/images/icons/currency/wchz.svg?url'
+import _currency_wchzSource from '!!raw-loader!../../../../public/images/icons/currency/wchz.svg'
+import _currency_wxdai from '../../../../public/images/icons/currency/wxdai.svg?url'
+import _currency_wxdaiSource from '!!raw-loader!../../../../public/images/icons/currency/wxdai.svg'
 
 const isServer = typeof window === 'undefined'
 
@@ -94,8 +126,16 @@ const icons = {
   'sport/rugby-league': { src: _sport_rugby_league.src, source: isServer && _sport_rugby_leagueSource, width: _sport_rugby_league.width, height: _sport_rugby_league.height, aspect: _sport_rugby_league.width/_sport_rugby_league.height }, 
   'sport/rugby-union': { src: _sport_rugby_union.src, source: isServer && _sport_rugby_unionSource, width: _sport_rugby_union.width, height: _sport_rugby_union.height, aspect: _sport_rugby_union.width/_sport_rugby_union.height }, 
   'sport/tennis': { src: _sport_tennis.src, source: isServer && _sport_tennisSource, width: _sport_tennis.width, height: _sport_tennis.height, aspect: _sport_tennis.width/_sport_tennis.height }, 
-  'interface/alert-triangle': { src: _interface_alert_triangle.src, source: isServer && _interface_alert_triangleSource, width: _interface_alert_triangle.width, height: _interface_alert_triangle.height, aspect: _interface_alert_triangle.width/_interface_alert_triangle.height }, 
+  'networks/chiliz': { src: _networks_chiliz.src, source: isServer && _networks_chilizSource, width: _networks_chiliz.width, height: _networks_chiliz.height, aspect: _networks_chiliz.width/_networks_chiliz.height }, 
+  'networks/gnosis': { src: _networks_gnosis.src, source: isServer && _networks_gnosisSource, width: _networks_gnosis.width, height: _networks_gnosis.height, aspect: _networks_gnosis.width/_networks_gnosis.height }, 
+  'networks/polygon': { src: _networks_polygon.src, source: isServer && _networks_polygonSource, width: _networks_polygon.width, height: _networks_polygon.height, aspect: _networks_polygon.width/_networks_polygon.height }, 
+  'interface/alert_triangle': { src: _interface_alert_triangle.src, source: isServer && _interface_alert_triangleSource, width: _interface_alert_triangle.width, height: _interface_alert_triangle.height, aspect: _interface_alert_triangle.width/_interface_alert_triangle.height }, 
   'interface/burger_menu': { src: _interface_burger_menu.src, source: isServer && _interface_burger_menuSource, width: _interface_burger_menu.width, height: _interface_burger_menu.height, aspect: _interface_burger_menu.width/_interface_burger_menu.height }, 
+  'interface/caret_down': { src: _interface_caret_down.src, source: isServer && _interface_caret_downSource, width: _interface_caret_down.width, height: _interface_caret_down.height, aspect: _interface_caret_down.width/_interface_caret_down.height }, 
+  'interface/caret_left': { src: _interface_caret_left.src, source: isServer && _interface_caret_leftSource, width: _interface_caret_left.width, height: _interface_caret_left.height, aspect: _interface_caret_left.width/_interface_caret_left.height }, 
+  'interface/caret_right': { src: _interface_caret_right.src, source: isServer && _interface_caret_rightSource, width: _interface_caret_right.width, height: _interface_caret_right.height, aspect: _interface_caret_right.width/_interface_caret_right.height }, 
+  'interface/caret_up': { src: _interface_caret_up.src, source: isServer && _interface_caret_upSource, width: _interface_caret_up.width, height: _interface_caret_up.height, aspect: _interface_caret_up.width/_interface_caret_up.height }, 
+  'interface/check': { src: _interface_check.src, source: isServer && _interface_checkSource, width: _interface_check.width, height: _interface_check.height, aspect: _interface_check.width/_interface_check.height }, 
   'interface/chevron_down': { src: _interface_chevron_down.src, source: isServer && _interface_chevron_downSource, width: _interface_chevron_down.width, height: _interface_chevron_down.height, aspect: _interface_chevron_down.width/_interface_chevron_down.height }, 
   'interface/chevron_left': { src: _interface_chevron_left.src, source: isServer && _interface_chevron_leftSource, width: _interface_chevron_left.width, height: _interface_chevron_left.height, aspect: _interface_chevron_left.width/_interface_chevron_left.height }, 
   'interface/chevron_right': { src: _interface_chevron_right.src, source: isServer && _interface_chevron_rightSource, width: _interface_chevron_right.width, height: _interface_chevron_right.height, aspect: _interface_chevron_right.width/_interface_chevron_right.height }, 
@@ -103,8 +143,16 @@ const icons = {
   'interface/close': { src: _interface_close.src, source: isServer && _interface_closeSource, width: _interface_close.width, height: _interface_close.height, aspect: _interface_close.width/_interface_close.height }, 
   'interface/copy': { src: _interface_copy.src, source: isServer && _interface_copySource, width: _interface_copy.width, height: _interface_copy.height, aspect: _interface_copy.width/_interface_copy.height }, 
   'interface/download': { src: _interface_download.src, source: isServer && _interface_downloadSource, width: _interface_download.width, height: _interface_download.height, aspect: _interface_download.width/_interface_download.height }, 
+  'interface/external_link': { src: _interface_external_link.src, source: isServer && _interface_external_linkSource, width: _interface_external_link.width, height: _interface_external_link.height, aspect: _interface_external_link.width/_interface_external_link.height }, 
+  'interface/logout': { src: _interface_logout.src, source: isServer && _interface_logoutSource, width: _interface_logout.width, height: _interface_logout.height, aspect: _interface_logout.width/_interface_logout.height }, 
+  'interface/mybets': { src: _interface_mybets.src, source: isServer && _interface_mybetsSource, width: _interface_mybets.width, height: _interface_mybets.height, aspect: _interface_mybets.width/_interface_mybets.height }, 
   'interface/no_flag': { src: _interface_no_flag.src, source: isServer && _interface_no_flagSource, width: _interface_no_flag.width, height: _interface_no_flag.height, aspect: _interface_no_flag.width/_interface_no_flag.height }, 
-  'interface/spinner': { src: _interface_spinner.src, source: isServer && _interface_spinnerSource, width: _interface_spinner.width, height: _interface_spinner.height, aspect: _interface_spinner.width/_interface_spinner.height }
+  'interface/spinner': { src: _interface_spinner.src, source: isServer && _interface_spinnerSource, width: _interface_spinner.width, height: _interface_spinner.height, aspect: _interface_spinner.width/_interface_spinner.height }, 
+  'interface/user_avatar': { src: _interface_user_avatar.src, source: isServer && _interface_user_avatarSource, width: _interface_user_avatar.width, height: _interface_user_avatar.height, aspect: _interface_user_avatar.width/_interface_user_avatar.height }, 
+  'currency/azusd': { src: _currency_azusd.src, source: isServer && _currency_azusdSource, width: _currency_azusd.width, height: _currency_azusd.height, aspect: _currency_azusd.width/_currency_azusd.height }, 
+  'currency/usdt': { src: _currency_usdt.src, source: isServer && _currency_usdtSource, width: _currency_usdt.width, height: _currency_usdt.height, aspect: _currency_usdt.width/_currency_usdt.height }, 
+  'currency/wchz': { src: _currency_wchz.src, source: isServer && _currency_wchzSource, width: _currency_wchz.width, height: _currency_wchz.height, aspect: _currency_wchz.width/_currency_wchz.height }, 
+  'currency/wxdai': { src: _currency_wxdai.src, source: isServer && _currency_wxdaiSource, width: _currency_wxdai.width, height: _currency_wxdai.height, aspect: _currency_wxdai.width/_currency_wxdai.height }
 } as const
 
 export type IconName = keyof typeof icons

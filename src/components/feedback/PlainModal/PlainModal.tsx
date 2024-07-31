@@ -17,14 +17,13 @@ export type PlainModalProps = {
   overlayClosable?: boolean
   withCloseButton?: boolean
   closeModal: (withOnClose?: boolean) => void
-  dataTestId?: string
 }
 
 const PlainModal: React.CFC<PlainModalProps> = (props) => {
   const {
     children, className, contentClassName, containerClassName,
     overlayClosable = true, withCloseButton = true,
-    closeModal, dataTestId,
+    closeModal,
   } = props
 
   useFreezeBodyScroll()
@@ -49,15 +48,15 @@ const PlainModal: React.CFC<PlainModalProps> = (props) => {
     s.container,
     containerClassName,
     'flex w-full',
-    '-wd:absolute -wd:left-0 -wd:flex-col -wd:justify-end -wd:h-full',
-    'wd:items-center wd:justify-center wd:min-h-full m-auto'
+    'mb:absolute mb:left-0 mb:flex-col mb:justify-end mb:h-full',
+    'ds:items-center ds:justify-center ds:min-h-full m-auto'
   )
 
   const modalClassName = cx(
     className,
     'relative bg-grey-10 w-full font-medium flex flex-col',
-    '-wd:max-h-full rounded-t-4',
-    'wd:max-w-[22.25rem] wd:rounded-4'
+    'mb:max-h-full rounded-t-4',
+    'ds:max-w-[22.25rem] ds:rounded-4'
   )
 
   useEffect(() => {
@@ -76,7 +75,7 @@ const PlainModal: React.CFC<PlainModalProps> = (props) => {
 
   return createPortal(
     <Overlay onClick={handleOverlayClick}>
-      <div className={rootClassName} data-testid={dataTestId}>
+      <div className={rootClassName}>
         <div
           tabIndex={0}
           role="dialog"

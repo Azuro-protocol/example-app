@@ -1,0 +1,11 @@
+@include mobile {
+
+  .modal {
+    background: $bg-60 !important;
+    border-radius: 8rem 8rem 0;
+  }
+
+  .content {
+    padding: 8rem;
+  }
+}

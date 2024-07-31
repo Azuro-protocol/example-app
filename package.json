@@ -26,6 +26,7 @@
     "axios": "^1.7.2",
     "classnames": "^2.5.1",
     "cookies-next": "^4.2.1",
+    "copy-to-clipboard": "^3.3.3",
     "dayjs": "^1.11.9",
     "formular": "3.1.6",
     "graphql": "^16.9.0",

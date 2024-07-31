@@ -36,7 +36,7 @@ const Content: React.CFC = ({ children }) => {
           {children}
         </div>
       </main>
-      <Media className={cx(ws.rightSidebar, sidebarClassName, 'overflow-auto')} wide>
+      <Media className={cx(ws.rightSidebar, sidebarClassName)} wide>
         <RightSidebar />
       </Media>
     </div>

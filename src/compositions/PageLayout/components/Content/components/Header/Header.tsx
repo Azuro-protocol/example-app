@@ -3,11 +3,14 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { openModal } from '@locmod/modal'
+import { useAccount } from 'wagmi'
 import { useFreezeBodyScroll } from 'hooks'
 
 import { Icon, Logo } from 'components/ui'
 import { Button, buttonMessages } from 'components/inputs'
 import Navigation from 'compositions/Navigation/Navigation'
+
+import Controls from '../Controls/Controls'
 
 
 const Content: React.FC = () => {
@@ -21,8 +24,9 @@ const Content: React.FC = () => {
 }
 
 const Header: React.FC = () => {
-  const [ isVisible, setVisibility ] = useState(false)
+  const { address } = useAccount()
   const pathname = usePathname()
+  const [ isVisible, setVisibility ] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
 
   const handleClick = () => {
@@ -63,12 +67,18 @@ const Header: React.FC = () => {
           </div>
           <Logo className="h-4" />
         </div>
-        <Button
-          className="ml-auto"
-          title={buttonMessages.connectWallet}
-          size={32}
-          onClick={() => openModal('ConnectModal')}
-        />
+        {
+          Boolean(address) ? (
+            <Controls />
+          ) : (
+            <Button
+              className="ml-auto"
+              title={buttonMessages.connectWallet}
+              size={32}
+              onClick={() => openModal('ConnectModal')}
+            />
+          )
+        }
       </div>
       {
         isVisible && (

@@ -2,6 +2,8 @@
 
 import React from 'react'
 
+import { GlobalModalsRegistrar } from 'compositions/modals'
+
 import { Content } from './components'
 
 
@@ -9,10 +11,14 @@ const PageLayout: React.CFC = (props) => {
   let { children } = props
 
   return (
-    <Content>
-      {children}
-      {/* <Footer /> */}
-    </Content>
+    <>
+      <Content>
+        {children}
+        {/* <Footer /> */}
+        <GlobalModalsRegistrar />
+      </Content>
+      <div id="modals" />
+    </>
   )
 }
 

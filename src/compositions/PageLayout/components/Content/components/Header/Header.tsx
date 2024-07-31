@@ -2,9 +2,11 @@
 
 import React, { useEffect, useRef, useState } from 'react'
 import { usePathname } from 'next/navigation'
+import { openModal } from '@locmod/modal'
 import { useFreezeBodyScroll } from 'hooks'
 
 import { Icon, Logo } from 'components/ui'
+import { Button, buttonMessages } from 'components/inputs'
 import Navigation from 'compositions/Navigation/Navigation'
 
 
@@ -50,15 +52,23 @@ const Header: React.FC = () => {
   }, [ pathname ])
 
   return (
-    <div ref={containerRef} className="flex items-center justify-between py-4 px-5">
-      <div className="flex items-center">
-        <div onClick={handleClick}>
-          <Icon
-            className="text-grey-60 h-6 w-6 mr-3"
-            name={isVisible ? 'interface/close' : 'interface/burger_menu'}
-          />
+    <div ref={containerRef} className="py-4 px-5">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center">
+          <div onClick={handleClick}>
+            <Icon
+              className="text-grey-60 h-6 w-6 mr-3"
+              name={isVisible ? 'interface/close' : 'interface/burger_menu'}
+            />
+          </div>
+          <Logo className="h-4" />
         </div>
-        <Logo className="h-4" />
+        <Button
+          className="ml-auto"
+          title={buttonMessages.connectWallet}
+          size={32}
+          onClick={() => openModal('ConnectModal')}
+        />
       </div>
       {
         isVisible && (

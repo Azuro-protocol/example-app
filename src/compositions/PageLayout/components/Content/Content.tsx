@@ -14,8 +14,7 @@ const Content: React.CFC = ({ children }) => {
 
   const rootClassName = cx('h-full flex flex-col wd:flex-row min-h-screen mx-auto wd:px-2 wd:pb-2', ws.root)
   const mainClassName = cx(ns.main, ws.main,
-    'bg-bg-l1 flex flex-col mx-auto px-2 max-w-full flex-1 w-full wd:h-auto',
-    'border border-grey-10 wd:rounded-l-4 -wd:rounded-t-4',
+    'mx-auto max-w-full flex-1 w-full wd:h-auto',
     {
     // [`${ws.withRightSidebar} ds:max-w-[784rem]`]: isRightSidebarVisible,
     }
@@ -31,7 +30,11 @@ const Content: React.CFC = ({ children }) => {
         <Header />
       </Media>
       <main className={mainClassName}>
-        {children}
+        {/* search block */}
+        <Media className="h-16 sticky top-0" wide />
+        <div className="flex flex-col bg-bg-l1 border border-grey-10 wd:rounded-l-4 -wd:rounded-t-4 px-2 wd:min-h-[calc(100vh_-_4.5rem)]">
+          {children}
+        </div>
       </main>
       <Media className={cx(ws.rightSidebar, sidebarClassName, 'overflow-auto')} wide>
         <RightSidebar />

@@ -1,4 +1,8 @@
 /* eslint-disable */
+import _wallets_metamask from '../../../../public/images/icons/wallets/metamask.svg?url'
+import _wallets_metamaskSource from '!!raw-loader!../../../../public/images/icons/wallets/metamask.svg'
+import _wallets_walletconnect from '../../../../public/images/icons/wallets/walletconnect.svg?url'
+import _wallets_walletconnectSource from '!!raw-loader!../../../../public/images/icons/wallets/walletconnect.svg'
 import _sport_american_football from '../../../../public/images/icons/sport/american-football.svg?url'
 import _sport_american_footballSource from '!!raw-loader!../../../../public/images/icons/sport/american-football.svg'
 import _sport_baseball from '../../../../public/images/icons/sport/baseball.svg?url'
@@ -41,6 +45,8 @@ import _sport_rugby_union from '../../../../public/images/icons/sport/rugby-unio
 import _sport_rugby_unionSource from '!!raw-loader!../../../../public/images/icons/sport/rugby-union.svg'
 import _sport_tennis from '../../../../public/images/icons/sport/tennis.svg?url'
 import _sport_tennisSource from '!!raw-loader!../../../../public/images/icons/sport/tennis.svg'
+import _interface_alert_triangle from '../../../../public/images/icons/interface/alert-triangle.svg?url'
+import _interface_alert_triangleSource from '!!raw-loader!../../../../public/images/icons/interface/alert-triangle.svg'
 import _interface_burger_menu from '../../../../public/images/icons/interface/burger_menu.svg?url'
 import _interface_burger_menuSource from '!!raw-loader!../../../../public/images/icons/interface/burger_menu.svg'
 import _interface_chevron_down from '../../../../public/images/icons/interface/chevron_down.svg?url'
@@ -55,6 +61,8 @@ import _interface_close from '../../../../public/images/icons/interface/close.sv
 import _interface_closeSource from '!!raw-loader!../../../../public/images/icons/interface/close.svg'
 import _interface_copy from '../../../../public/images/icons/interface/copy.svg?url'
 import _interface_copySource from '!!raw-loader!../../../../public/images/icons/interface/copy.svg'
+import _interface_download from '../../../../public/images/icons/interface/download.svg?url'
+import _interface_downloadSource from '!!raw-loader!../../../../public/images/icons/interface/download.svg'
 import _interface_no_flag from '../../../../public/images/icons/interface/no_flag.svg?url'
 import _interface_no_flagSource from '!!raw-loader!../../../../public/images/icons/interface/no_flag.svg'
 import _interface_spinner from '../../../../public/images/icons/interface/spinner.svg?url'
@@ -63,6 +71,8 @@ import _interface_spinnerSource from '!!raw-loader!../../../../public/images/ico
 const isServer = typeof window === 'undefined'
 
 const icons = {
+  'wallets/metamask': { src: _wallets_metamask.src, source: isServer && _wallets_metamaskSource, width: _wallets_metamask.width, height: _wallets_metamask.height, aspect: _wallets_metamask.width/_wallets_metamask.height }, 
+  'wallets/walletconnect': { src: _wallets_walletconnect.src, source: isServer && _wallets_walletconnectSource, width: _wallets_walletconnect.width, height: _wallets_walletconnect.height, aspect: _wallets_walletconnect.width/_wallets_walletconnect.height }, 
   'sport/american-football': { src: _sport_american_football.src, source: isServer && _sport_american_footballSource, width: _sport_american_football.width, height: _sport_american_football.height, aspect: _sport_american_football.width/_sport_american_football.height }, 
   'sport/baseball': { src: _sport_baseball.src, source: isServer && _sport_baseballSource, width: _sport_baseball.width, height: _sport_baseball.height, aspect: _sport_baseball.width/_sport_baseball.height }, 
   'sport/basketball': { src: _sport_basketball.src, source: isServer && _sport_basketballSource, width: _sport_basketball.width, height: _sport_basketball.height, aspect: _sport_basketball.width/_sport_basketball.height }, 
@@ -84,6 +94,7 @@ const icons = {
   'sport/rugby-league': { src: _sport_rugby_league.src, source: isServer && _sport_rugby_leagueSource, width: _sport_rugby_league.width, height: _sport_rugby_league.height, aspect: _sport_rugby_league.width/_sport_rugby_league.height }, 
   'sport/rugby-union': { src: _sport_rugby_union.src, source: isServer && _sport_rugby_unionSource, width: _sport_rugby_union.width, height: _sport_rugby_union.height, aspect: _sport_rugby_union.width/_sport_rugby_union.height }, 
   'sport/tennis': { src: _sport_tennis.src, source: isServer && _sport_tennisSource, width: _sport_tennis.width, height: _sport_tennis.height, aspect: _sport_tennis.width/_sport_tennis.height }, 
+  'interface/alert-triangle': { src: _interface_alert_triangle.src, source: isServer && _interface_alert_triangleSource, width: _interface_alert_triangle.width, height: _interface_alert_triangle.height, aspect: _interface_alert_triangle.width/_interface_alert_triangle.height }, 
   'interface/burger_menu': { src: _interface_burger_menu.src, source: isServer && _interface_burger_menuSource, width: _interface_burger_menu.width, height: _interface_burger_menu.height, aspect: _interface_burger_menu.width/_interface_burger_menu.height }, 
   'interface/chevron_down': { src: _interface_chevron_down.src, source: isServer && _interface_chevron_downSource, width: _interface_chevron_down.width, height: _interface_chevron_down.height, aspect: _interface_chevron_down.width/_interface_chevron_down.height }, 
   'interface/chevron_left': { src: _interface_chevron_left.src, source: isServer && _interface_chevron_leftSource, width: _interface_chevron_left.width, height: _interface_chevron_left.height, aspect: _interface_chevron_left.width/_interface_chevron_left.height }, 
@@ -91,6 +102,7 @@ const icons = {
   'interface/chevron_up': { src: _interface_chevron_up.src, source: isServer && _interface_chevron_upSource, width: _interface_chevron_up.width, height: _interface_chevron_up.height, aspect: _interface_chevron_up.width/_interface_chevron_up.height }, 
   'interface/close': { src: _interface_close.src, source: isServer && _interface_closeSource, width: _interface_close.width, height: _interface_close.height, aspect: _interface_close.width/_interface_close.height }, 
   'interface/copy': { src: _interface_copy.src, source: isServer && _interface_copySource, width: _interface_copy.width, height: _interface_copy.height, aspect: _interface_copy.width/_interface_copy.height }, 
+  'interface/download': { src: _interface_download.src, source: isServer && _interface_downloadSource, width: _interface_download.width, height: _interface_download.height, aspect: _interface_download.width/_interface_download.height }, 
   'interface/no_flag': { src: _interface_no_flag.src, source: isServer && _interface_no_flagSource, width: _interface_no_flag.width, height: _interface_no_flag.height, aspect: _interface_no_flag.width/_interface_no_flag.height }, 
   'interface/spinner': { src: _interface_spinner.src, source: isServer && _interface_spinnerSource, width: _interface_spinner.width, height: _interface_spinner.height, aspect: _interface_spinner.width/_interface_spinner.height }
 } as const

@@ -19,5 +19,5 @@
 
 .container {
   animation: openModal 0.35s ease;
-  will-change: transform; // this fixes high CPU usage for blurred animation
+  will-change: transform;
 }

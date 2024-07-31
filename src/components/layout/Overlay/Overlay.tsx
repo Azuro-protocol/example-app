@@ -1,6 +1,6 @@
 'use client'
 import React, { useRef, useEffect } from 'react'
-import clsx from 'clsx'
+import cx from 'classnames'
 
 import s from './Overlay.module.scss'
 
@@ -27,10 +27,10 @@ const Overlay: React.FC<React.PropsWithChildren<OverlayProps>> = ({ children, cl
     }
   })
 
-  const overlayClassNames = clsx(
+  const overlayClassNames = cx(
     s.overlay,
     className,
-    'fixed top-0 left-0 z-[999] bg-grey-90/50 w-full h-full ease-in-out-quadratic'
+    'fixed top-0 left-0 z-[999] bg-black/60 w-full h-full ease-in-out-quadratic'
   )
 
   return (

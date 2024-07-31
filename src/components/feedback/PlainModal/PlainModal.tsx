@@ -49,15 +49,15 @@ const PlainModal: React.CFC<PlainModalProps> = (props) => {
     s.container,
     containerClassName,
     'flex w-full',
-    '-sm:absolute -sm:left-0 -sm:flex-col -sm:justify-end -sm:h-full',
-    'sm:items-center sm:justify-center sm:min-h-full m-auto'
+    '-wd:absolute -wd:left-0 -wd:flex-col -wd:justify-end -wd:h-full',
+    'wd:items-center wd:justify-center wd:min-h-full m-auto'
   )
 
   const modalClassName = cx(
     className,
-    'relative bg-white w-full font-poppins font-medium flex flex-col',
-    '-sm:max-h-full rounded-t-4',
-    'sm:max-w-[26.25rem] sm:rounded-4 sm:shadow-lvl3'
+    'relative bg-grey-10 w-full font-medium flex flex-col',
+    '-wd:max-h-full rounded-t-4',
+    'wd:max-w-[22.25rem] wd:rounded-4'
   )
 
   useEffect(() => {
@@ -87,10 +87,10 @@ const PlainModal: React.CFC<PlainModalProps> = (props) => {
           {
             withCloseButton && (
               <button
-                className="absolute top-4 right-4 p-2 z-10 bg-white rounded-full text-grey-70 hocus:text-grey-90"
+                className="absolute top-4 right-4 p-2 z-10 bg-grey-15 border-grey-20 border rounded-full text-grey-70 hover:text-grey-90"
                 onClick={handleCloseButtonClick}
               >
-                <Icon className="size-5" name="interface/close" />
+                <Icon className="size-3" name="interface/close" />
               </button>
             )
           }

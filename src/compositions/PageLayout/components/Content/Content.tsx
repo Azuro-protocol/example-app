@@ -2,20 +2,12 @@
 
 import React from 'react'
 import cx from 'classnames'
-import dynamic from 'next/dynamic'
 
 import { Media } from 'components/layout'
-import NavigationSkeleton from 'compositions/Navigation/components/Skeleton/Skeleton'
+import { LeftSidebar, RightSidebar, Header } from './components'
 
 import ns from './Narrow.module.scss'
 import ws from './Wide.module.scss'
-
-
-const LeftSidebar = dynamic(() => import('./components/LeftSidebar/LeftSidebar'), {
-  loading: () => <NavigationSkeleton />,
-})
-const RightSidebar = dynamic(() => import('./components/RightSidebar/RightSidebar'))
-const Header = dynamic(() => import('./components/Header/Header'))
 
 
 const Content: React.CFC = ({ children }) => {

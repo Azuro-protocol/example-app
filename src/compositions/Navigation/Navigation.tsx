@@ -32,7 +32,7 @@ const League: React.FC<LeagueProps> = (props) => {
 
   const isActive = Boolean(leagueSlug) && countrySlug === country.slug && slug === leagueSlug
 
-  const rootClassName = cx('flex items-center justify-between py-2 px-4', {
+  const rootClassName = cx('flex items-center justify-between py-2 px-4 hover:text-grey-90', {
     'text-grey-60': !isActive,
     'text-grey-90': isActive,
   })

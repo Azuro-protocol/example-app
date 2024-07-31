@@ -9,20 +9,15 @@ import type { ButtonBaseProps } from 'components/inputs'
 import { Icon } from 'components/ui'
 import type { IconName } from 'components/ui'
 
-import s from './Button.module.scss'
-
 
 const iconSizes = {
-  26: 12,
-  32: 14,
-  36: 16,
-}
+  32: 4,
+  40: 5,
+} as const
 
-export const widths = [] as const
-export const sizes = [ 26, 32, 36, 40 ] as const
-export const styles = [ 'primary', 'secondary', 'tertiary' ] as const
+export const sizes = [ 32, 40 ] as const
+export const styles = [ 'primary' ] as const
 
-type ButtonWidth = typeof widths[number]
 export type ButtonSize = typeof sizes[number]
 export type ButtonStyle = typeof styles[number]
 
@@ -32,33 +27,36 @@ export type ButtonProps = ButtonBaseProps & OnlyOne<{
   leftIcon?: IconName
   rightIcon?: IconName
   size: ButtonSize
-  width?: ButtonWidth
   style?: ButtonStyle
   html?: boolean
-  fullWidth?: boolean
-  fullWidthOnMobile?: boolean
   dataTestId?: string
 }, 'children' | 'title'>
 
 const Button = forwardRef<HTMLAnchorElement | HTMLButtonElement, ButtonProps>((props, ref) => {
   let {
-    children, className, title, width, size, html, style = 'primary',
-    loading, disabled, fullWidth, fullWidthOnMobile,
+    children, className, title, size, html, style = 'primary',
+    loading, disabled,
     leftIcon, rightIcon,
     ...rest
   } = props
 
   if (loading) {
-    leftIcon = 'interface/spinner'
+    rightIcon = 'interface/spinner'
   }
 
-  const rootClassName = cx(s.button, className, 'button', s[`size-${size}`], {
-    [s[style]]: s[style],
-    [s[`w-${width}`]]: width,
-    'w-full': fullWidth,
-    'mb:w-full': fullWidthOnMobile,
-    [s.disabled]: loading || disabled,
-  })
+  const rootClassName = cx(className,
+    'relative flex items-center justify-center whitespace-nowrap uppercase font-bold transition-all',
+    'text-center align-top cursor-pointer select-none disabled:cursor-not-allowed disabled:transition-none',
+    {
+      'text-caption-14 h-10 px-4': size === 40,
+      'text-caption-13 h-8 px-3': size === 32,
+      // primary
+      'border-2 border-white/20 bg-brand-50 text-white rounded-4': style === 'primary',
+      'hover:text-black hover:bg-white hover:border-white': style === 'primary',
+      'disabled:text-grey-20 disabled:bg-bg-l1 disabled:border-grey-10': style === 'primary',
+    }
+  )
+  const contentClassName = cx('relative flex items-center justify-between')
 
   const content = title ? <Message value={title} html={html} /> : children
   const iconSize = iconSizes[size]
@@ -68,14 +66,14 @@ const Button = forwardRef<HTMLAnchorElement | HTMLButtonElement, ButtonProps>((p
       ref={ref}
       className={rootClassName}
       loading={loading}
-      disabled={disabled}
+      disabled={disabled || loading}
       {...rest}
     >
-      <div className={s.content}>
+      <div className={contentClassName}>
         {
           leftIcon && (
             <Icon
-              className="mr-6"
+              className={cx('mr-2', `size-${iconSize}`)}
               name={leftIcon}
             />
           )
@@ -84,7 +82,7 @@ const Button = forwardRef<HTMLAnchorElement | HTMLButtonElement, ButtonProps>((p
         {
           rightIcon && (
             <Icon
-              className="ml-6"
+              className={cx('ml-2', `size-${iconSize}`)}
               name={rightIcon}
             />
           )

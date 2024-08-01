@@ -2,8 +2,6 @@
 
 export default function Country() {
   return (
-    <>
-    3
-    </>
+    <></>
   )
 }

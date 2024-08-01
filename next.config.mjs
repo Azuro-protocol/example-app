@@ -66,48 +66,7 @@ const nextConfig = {
     ]
   },
   async redirects() {
-    return [
-      {
-        source: '/liquidity',
-        destination: '/app/liquidity',
-        permanent: true,
-      },
-      {
-        source: '/liquidity/pools',
-        destination: '/app/liquidity/pools',
-        permanent: true,
-      },
-      {
-        source: '/liquidity/deposits',
-        destination: '/app/liquidity/positions',
-        permanent: true,
-      },
-      {
-        source: '/app',
-        destination: '/app/liquidity',
-        permanent: false,
-      },
-      {
-        source: '/vesting',
-        destination: '/app/vesting',
-        permanent: false,
-      },
-      {
-        source: '/score',
-        destination: '/app/waves',
-        permanent: true,
-      },
-      {
-        source: '/app/score',
-        destination: '/app/waves',
-        permanent: true,
-      },
-      {
-        source: '/app/wave',
-        destination: '/app/waves',
-        permanent: true,
-      },
-    ]
+    return []
   },
   output: 'standalone',
   productionBrowserSourceMaps: true,

@@ -7,7 +7,7 @@ import type { IconName } from 'components/ui'
 
 type FallbackImageProps = {
   className?: string
-  src: string
+  src?: string | null
   fallback?: string
   iconFallback?: string
   alt?: string
@@ -15,7 +15,7 @@ type FallbackImageProps = {
 
 const FallbackImage: React.FC<FallbackImageProps> = (props) => {
   const { className, src, fallback, iconFallback, alt } = props
-  const [ isFallbackIcon, setFallbackIcon ] = useState(false)
+  const [ isFallbackIcon, setFallbackIcon ] = useState(!src)
 
   const ref = useRef<HTMLImageElement>(null)
 
@@ -59,7 +59,7 @@ const FallbackImage: React.FC<FallbackImageProps> = (props) => {
           <img
             ref={ref}
             className={className}
-            src={src}
+            src={src!}
             alt={alt}
           />
         )

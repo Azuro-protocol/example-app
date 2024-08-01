@@ -142,7 +142,6 @@ const Sport: React.FC<SportProps> = (props) => {
   )
 }
 
-
 const Navigation: React.FC = () => {
   const { navigation, loading } = useNavigation({
     withGameCount: true,

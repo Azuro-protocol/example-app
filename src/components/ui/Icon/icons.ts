@@ -87,6 +87,8 @@ import _interface_mybets from '../../../../public/images/icons/interface/mybets.
 import _interface_mybetsSource from '!!raw-loader!../../../../public/images/icons/interface/mybets.svg'
 import _interface_no_flag from '../../../../public/images/icons/interface/no_flag.svg?url'
 import _interface_no_flagSource from '!!raw-loader!../../../../public/images/icons/interface/no_flag.svg'
+import _interface_no_opponent from '../../../../public/images/icons/interface/no_opponent.svg?url'
+import _interface_no_opponentSource from '!!raw-loader!../../../../public/images/icons/interface/no_opponent.svg'
 import _interface_spinner from '../../../../public/images/icons/interface/spinner.svg?url'
 import _interface_spinnerSource from '!!raw-loader!../../../../public/images/icons/interface/spinner.svg'
 import _interface_user_avatar from '../../../../public/images/icons/interface/user_avatar.svg?url'
@@ -147,6 +149,7 @@ const icons = {
   'interface/logout': { src: _interface_logout.src, source: isServer && _interface_logoutSource, width: _interface_logout.width, height: _interface_logout.height, aspect: _interface_logout.width/_interface_logout.height }, 
   'interface/mybets': { src: _interface_mybets.src, source: isServer && _interface_mybetsSource, width: _interface_mybets.width, height: _interface_mybets.height, aspect: _interface_mybets.width/_interface_mybets.height }, 
   'interface/no_flag': { src: _interface_no_flag.src, source: isServer && _interface_no_flagSource, width: _interface_no_flag.width, height: _interface_no_flag.height, aspect: _interface_no_flag.width/_interface_no_flag.height }, 
+  'interface/no_opponent': { src: _interface_no_opponent.src, source: isServer && _interface_no_opponentSource, width: _interface_no_opponent.width, height: _interface_no_opponent.height, aspect: _interface_no_opponent.width/_interface_no_opponent.height }, 
   'interface/spinner': { src: _interface_spinner.src, source: isServer && _interface_spinnerSource, width: _interface_spinner.width, height: _interface_spinner.height, aspect: _interface_spinner.width/_interface_spinner.height }, 
   'interface/user_avatar': { src: _interface_user_avatar.src, source: isServer && _interface_user_avatarSource, width: _interface_user_avatar.width, height: _interface_user_avatar.height, aspect: _interface_user_avatar.width/_interface_user_avatar.height }, 
   'currency/azusd': { src: _currency_azusd.src, source: isServer && _currency_azusdSource, width: _currency_azusd.width, height: _currency_azusd.height, aspect: _currency_azusd.width/_currency_azusd.height }, 

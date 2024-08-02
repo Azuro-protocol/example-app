@@ -1,0 +1,65 @@
+'use client'
+
+import React from 'react'
+import cx from 'classnames'
+import { type GameMarkets } from '@azuro-org/toolkit'
+
+
+import Button from './components/Button/Button'
+
+
+type ButtonsProps = {
+  rows: GameMarkets[0]['outcomeRows']
+}
+
+const Buttons: React.FC<ButtonsProps> = ({ rows }) => {
+  return (
+    <div className="w-full">
+      {
+        rows.map((outcomes, index) => (
+          <div key={index} className={cx('grid gap-x-2 gap-y-3 w-full mt-2 first-of-type:mt-0', outcomes.length === 3 ? 'grid-cols-3' : 'grid-cols-2')}>
+            {
+              outcomes.map(outcome => (
+                <Button
+                  key={`${outcome.conditionId}-${outcome.outcomeId}`}
+                  outcome={outcome}
+                />
+              ))
+            }
+          </div>
+        ))
+      }
+    </div>
+  )
+}
+
+export const MarketSkeleton: React.FC = () => {
+  return (
+    <div className="w-full mt-2 first-of-type:mt-0">
+      <div className="bone w-[110px] h-4 ds:mx-auto !block" />
+      <div className="grid gap-x-2 gap-y-3 grid-cols-2 w-full mt-2">
+        <div className="bone w-full h-7" />
+        <div className="bone w-full h-7" />
+      </div>
+    </div>
+  )
+}
+
+export type MarketProps = {
+  market: GameMarkets[0]
+}
+
+const Market: React.FC<MarketProps> = ({ market }) => {
+  const { name, outcomeRows } = market
+
+  return (
+    <div className="w-full mt-2 first-of-type:mt-0">
+      <div className="mb-2 mt-auto text-caption-12 font-medium text-grey-60 ds:text-center">
+        {name}
+      </div>
+      <Buttons rows={outcomeRows} />
+    </div>
+  )
+}
+
+export default Market

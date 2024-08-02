@@ -81,6 +81,8 @@ import _interface_download from '../../../../public/images/icons/interface/downl
 import _interface_downloadSource from '!!raw-loader!../../../../public/images/icons/interface/download.svg'
 import _interface_external_link from '../../../../public/images/icons/interface/external_link.svg?url'
 import _interface_external_linkSource from '!!raw-loader!../../../../public/images/icons/interface/external_link.svg'
+import _interface_lock from '../../../../public/images/icons/interface/lock.svg?url'
+import _interface_lockSource from '!!raw-loader!../../../../public/images/icons/interface/lock.svg'
 import _interface_logout from '../../../../public/images/icons/interface/logout.svg?url'
 import _interface_logoutSource from '!!raw-loader!../../../../public/images/icons/interface/logout.svg'
 import _interface_mybets from '../../../../public/images/icons/interface/mybets.svg?url'
@@ -146,6 +148,7 @@ const icons = {
   'interface/copy': { src: _interface_copy.src, source: isServer && _interface_copySource, width: _interface_copy.width, height: _interface_copy.height, aspect: _interface_copy.width/_interface_copy.height }, 
   'interface/download': { src: _interface_download.src, source: isServer && _interface_downloadSource, width: _interface_download.width, height: _interface_download.height, aspect: _interface_download.width/_interface_download.height }, 
   'interface/external_link': { src: _interface_external_link.src, source: isServer && _interface_external_linkSource, width: _interface_external_link.width, height: _interface_external_link.height, aspect: _interface_external_link.width/_interface_external_link.height }, 
+  'interface/lock': { src: _interface_lock.src, source: isServer && _interface_lockSource, width: _interface_lock.width, height: _interface_lock.height, aspect: _interface_lock.width/_interface_lock.height }, 
   'interface/logout': { src: _interface_logout.src, source: isServer && _interface_logoutSource, width: _interface_logout.width, height: _interface_logout.height, aspect: _interface_logout.width/_interface_logout.height }, 
   'interface/mybets': { src: _interface_mybets.src, source: isServer && _interface_mybetsSource, width: _interface_mybets.width, height: _interface_mybets.height, aspect: _interface_mybets.width/_interface_mybets.height }, 
   'interface/no_flag': { src: _interface_no_flag.src, source: isServer && _interface_no_flagSource, width: _interface_no_flag.width, height: _interface_no_flag.height, aspect: _interface_no_flag.width/_interface_no_flag.height }, 

@@ -3,10 +3,12 @@
 import React from 'react'
 import { type Sport } from 'hooks'
 import cx from 'classnames'
+import { useGameStatus, useLive } from '@azuro-org/sdk'
 import { getGameDateTime } from 'helpers/getters'
 
 import { Flag, OpponentLogo } from 'components/dataDisplay'
 import { Href } from 'components/navigation'
+import Markets from 'compositions/Markets/Markets'
 
 
 type GameProps = {
@@ -17,6 +19,15 @@ type GameProps = {
 const Game: React.FC<GameProps> = ({ leagueUrl, game }) => {
   const { gameId, title, participants, startsAt } = game
   const { date, time } = getGameDateTime(+startsAt * 1000)
+
+  const { isLive } = useLive()
+  const { status } = useGameStatus({
+    graphStatus: game.status,
+    startsAt: +game.startsAt,
+    isGameExistInLive: isLive,
+  })
+
+  console.log(status, 'status')
 
   return (
     <div className="flex items-center justify-between py-2 px-4 bg-bg-l2">
@@ -34,6 +45,7 @@ const Game: React.FC<GameProps> = ({ leagueUrl, game }) => {
           <div className="text-caption-13 font-semibold">{title}</div>
         </div>
       </div>
+      <Markets gameId={gameId} gameStatus={status} />
     </div>
   )
 }

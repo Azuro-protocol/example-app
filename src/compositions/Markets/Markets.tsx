@@ -56,8 +56,8 @@ const MobileMarkets: React.FC<MobileMarketsProps> = ({ sortedMarkets, marketsByK
         onClick={handleContentClick}
       >
         <div className="flex items-center justify-between p-4 -mx-4 bg-grey-10 sticky top-0 z-10">
-          <Message className="text-caption-12 font-semibold" value={messages.markets} />
-          <div className="size-5 text-grey-90" onClick={onClose}>
+          <Message className="text-caption-13 font-semibold" value={messages.markets} />
+          <div className="size-4 text-grey-90" onClick={onClose}>
             <Icon name="interface/close" />
           </div>
         </div>
@@ -76,10 +76,10 @@ const MobileMarkets: React.FC<MobileMarketsProps> = ({ sortedMarkets, marketsByK
 
 export const MarketsSkeleton: React.FC = () => {
   return (
-    <div className="ds:p-2 mb:px-4 mb:pb-3">
+    <div className="ds:p-2">
       <div className="flex">
         <MarketSkeleton />
-        <div className="bone size-7 mt-7 ml-2" />
+        <div className="bone size-6 mt-6 ml-2 rounded-full" />
       </div>
     </div>
   )
@@ -98,16 +98,16 @@ const Content: React.FC<ContentProps> = ({ marketsByKey, sortedMarkets }) => {
 
   const isDisabled = !Boolean(otherMarkets.length)
 
-  const contentClassName = cx('w-full flex mb:border-transparent ds:p-2 mb:px-4 mb:pb-3 z-[10] border', {
+  const contentClassName = cx('w-full flex mb:border-transparent ds:p-2 z-[10] border', {
     'absolute bg-grey-10 overflow-y-auto no-scrollbar max-h-[20rem] border-grey-15 pb-2': isOpen && !isMobileView,
     'border-transparent': !isOpen,
   })
   const buttonClassName = cx(
-    'h-7 w-7 flex items-center justify-center flex-none',
-    'group border border-grey-20 text-gray-70 ml-2 mt-7 sticky top-7',
-    'disabled:cursor-not-allowed disabled:text-grey-40 disabled:border-grey-40',
+    'h-7 w-7 flex items-center justify-center flex-none rounded-2',
+    'group border border-grey-20 text-gray-70 ml-2 mt-5 sticky top-5',
+    'disabled:cursor-not-allowed disabled:text-grey-40 disabled:border-grey-10',
     {
-      'hover:text-grey-90': !isDisabled,
+      'hover:text-grey-90 hover:border-grey-40': !isDisabled,
     }
   )
 
@@ -157,7 +157,7 @@ const Content: React.FC<ContentProps> = ({ marketsByKey, sortedMarkets }) => {
           onClick={handleToggle}
         >
           <Icon
-            className={cx({ 'rotate-180 size-5': isOpen })}
+            className={cx('size-4', { 'rotate-180': isOpen })}
             name="interface/chevron_down"
           />
         </button>
@@ -195,7 +195,7 @@ const Markets: React.FC<MarketsProps> = ({ gameId, gameStatus }) => {
   }, [ markets ])
 
   if (loading) {
-    return <MarketSkeleton />
+    return <MarketsSkeleton />
   }
 
   return (
@@ -203,4 +203,4 @@ const Markets: React.FC<MarketsProps> = ({ gameId, gameStatus }) => {
   )
 }
 
-export default React.memo(Markets)
+export default Markets

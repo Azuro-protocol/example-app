@@ -3,6 +3,7 @@ import { fileURLToPath } from 'url'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: false,
   webpack: (config, { isServer, webpack }) => {
     // fixes npm packages that depend on `fs` module
     if (!isServer) {

@@ -41,8 +41,6 @@ const useMarket = ({ sortedMarkets, marketsByKey }: Props) => {
     return sortedMarkets.filter(key => key !== activeMarket)
   }, [ activeMarket, sortedMarkets ])
 
-  const activeStatus = statuses[marketsByKey[activeMarket].outcomeRows[activeConditionIndex][0].conditionId] || ConditionStatus.Created
-
   useMemo(() => {
     if (!isMobileView && !isOpen && contentRef.current) {
       contentRef.current.scrollTop = 0
@@ -72,6 +70,8 @@ const useMarket = ({ sortedMarkets, marketsByKey }: Props) => {
   }, [ isOpen, isMobileView ])
 
   useEffect(() => {
+    const activeStatus = statuses[marketsByKey[activeMarket].outcomeRows[activeConditionIndex][0].conditionId] || ConditionStatus.Created
+
     if (activeStatus === ConditionStatus.Created || isOpenRef.current) {
       return
     }
@@ -104,7 +104,7 @@ const useMarket = ({ sortedMarkets, marketsByKey }: Props) => {
         setActiveConditionIndex(nextConditionIndex)
       }
     }
-  }, [ activeMarket, activeConditionIndex, statuses ])
+  }, [ statuses ])
 
   return {
     contentRef,

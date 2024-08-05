@@ -36,10 +36,10 @@ const Buttons: React.FC<ButtonsProps> = ({ rows }) => {
 export const MarketSkeleton: React.FC = () => {
   return (
     <div className="w-full mt-2 first-of-type:mt-0">
-      <div className="bone w-[110px] h-4 ds:mx-auto !block" />
+      <div className="bone w-[110px] h-[0.875rem] ds:mx-auto !block rounded-4" />
       <div className="grid gap-x-2 gap-y-3 grid-cols-2 w-full mt-2">
-        <div className="bone w-full h-7" />
-        <div className="bone w-full h-7" />
+        <div className="bone w-full h-7 rounded-4" />
+        <div className="bone w-full h-7 rounded-4" />
       </div>
     </div>
   )
@@ -54,7 +54,7 @@ const Market: React.FC<MarketProps> = ({ market }) => {
 
   return (
     <div className="w-full mt-2 first-of-type:mt-0">
-      <div className="mb-2 mt-auto text-caption-12 font-medium text-grey-60 ds:text-center">
+      <div className="mb-[0.375rem] mt-auto text-caption-12 font-medium text-grey-60 ds:text-center">
         {name}
       </div>
       <Buttons rows={outcomeRows} />

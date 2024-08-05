@@ -2,15 +2,19 @@
 
 import { useSports } from 'hooks'
 
-import Sport from 'compositions/Sport/Sport'
-import League from 'compositions/League/League'
+import Sport, { SportSkeleton } from 'compositions/Sport/Sport'
+import League, { LeagueSkeleton } from 'compositions/League/League'
 
 
 export default function SportPage() {
   const { sports, loading } = useSports()
 
   if (loading) {
-    return null
+    return (
+      <SportSkeleton>
+        <LeagueSkeleton />
+      </SportSkeleton>
+    )
   }
 
   if (!sports) {
@@ -21,10 +25,14 @@ export default function SportPage() {
 
   return (
     <>
-      <Sport sport={sport!}>
+      <Sport sport={sport!} withLink={false}>
         {
           sport.leagues.map(league => (
-            <League key={`${league.countrySlug}-${league.slug}`} sportSlug={sport.slug} league={league} />
+            <League
+              key={`${league.countrySlug}-${league.slug}`}
+              sportSlug={sport.slug}
+              league={league}
+            />
           ))
         }
       </Sport>

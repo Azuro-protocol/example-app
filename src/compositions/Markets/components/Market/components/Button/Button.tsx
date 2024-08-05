@@ -3,6 +3,7 @@
 import React, { useRef } from 'react'
 import { type GameMarkets } from '@azuro-org/toolkit'
 import cx from 'classnames'
+import { formatToFixed } from 'helpers/formatters'
 
 import { Icon } from 'components/ui'
 // import { OddsValue, useOddsValue } from 'compositions/games'
@@ -22,7 +23,7 @@ const Button: React.FC<ButtonProps> = ({ outcome }) => {
   const { odds, isActive, isLocked, onClick } = useOddsButton(outcome)
 
   const buttonClassName = cx(
-    'group w-full relative flex items-center justify-between h-8 px-3 overflow-hidden',
+    'group w-full relative flex items-center justify-between h-7 px-3 overflow-hidden',
     'text-caption-13 font-semibold border-none rounded-2 select-none',
     {
       'hover:text-brand-50 hover:bg-brand-5': !isLocked && !isActive,
@@ -59,7 +60,7 @@ const Button: React.FC<ButtonProps> = ({ outcome }) => {
         </div>
       </div>
       {/* <OddsValue value={formatViewValue(oddsValue)} /> */}
-      <span>{odds || '--'}</span>
+      <span>{odds ? formatToFixed(odds, 2) : '--'}</span>
     </button>
   )
 }

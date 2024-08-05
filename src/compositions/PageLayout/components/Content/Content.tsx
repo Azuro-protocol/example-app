@@ -26,7 +26,7 @@ const Content: React.CFC = ({ children }) => {
       <Media className={cx(ws.leftSidebar, sidebarClassName, 'pr-2 overflow-auto')} wide>
         <LeftSidebar />
       </Media>
-      <Media className="sticky top-0" narrow mobile>
+      <Media className="sticky top-0 z-[100]" narrow mobile>
         <Header />
       </Media>
       <main className={mainClassName}>

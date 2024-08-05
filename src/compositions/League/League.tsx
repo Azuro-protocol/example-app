@@ -8,15 +8,53 @@ import { getGameDateTime } from 'helpers/getters'
 
 import { Flag, OpponentLogo } from 'components/dataDisplay'
 import { Href } from 'components/navigation'
-import Markets from 'compositions/Markets/Markets'
+import Markets, { MarketsSkeleton } from 'compositions/Markets/Markets'
 
+
+export const LeagueSkeleton: React.FC = () => {
+  return (
+    <div className="mt-1 first-of-type:mt-0">
+      <div className="rounded-t-4 flex items-center justify-between py-2 px-4 bg-bg-l2 mb-[2px]">
+        <div className="flex items-center">
+          <div className="bone size-4 mr-2 rounded-full" />
+          <div className="bone h-[0.875rem] w-[8rem] rounded-4" />
+          <div className="size-1 rounded-full mx-2 bg-grey-20" />
+          <div className="bone h-[0.875rem] w-[4rem] rounded-4" />
+        </div>
+      </div>
+      <div className="space-y-[2px]">
+        {
+          new Array(3).fill(0).map((_, index) => (
+            <div key={index} className="flex mb:flex-col ds:items-center justify-between py-2 px-4 bg-bg-l2 last-of-type:rounded-b-4">
+              <div className="flex items-center">
+                <div className="bone size-7 -mt-2 rounded-full" />
+                <div className="bone size-7 -mb-2 -ml-2 z-20 rounded-full" />
+                <div className="ml-3">
+                  <div className="mb-[2px] flex items-center">
+                    <div className="bone h-4 w-8 mr-1 rounded-4" />
+                    <span className="bone h-[0.875rem] w-20 rounded-4" />
+                  </div>
+                  <div className="bone h-4 w-24 rounded-4" />
+                </div>
+              </div>
+              <div className="w-full max-w-[26.25rem] mb:mt-2">
+                <MarketsSkeleton />
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  )
+}
 
 type GameProps = {
+  className?: string
   leagueUrl: string
   game: Sport['leagues'][0]['games'][0]
 }
 
-const Game: React.FC<GameProps> = ({ leagueUrl, game }) => {
+const Game: React.FC<GameProps> = ({ className, leagueUrl, game }) => {
   const { gameId, title, participants, startsAt } = game
   const { date, time } = getGameDateTime(+startsAt * 1000)
 
@@ -27,10 +65,8 @@ const Game: React.FC<GameProps> = ({ leagueUrl, game }) => {
     isGameExistInLive: isLive,
   })
 
-  console.log(status, 'status')
-
   return (
-    <div className="flex items-center justify-between py-2 px-4 bg-bg-l2">
+    <div className={cx('flex mb:flex-col ds:items-center justify-between py-2 px-4 bg-bg-l2', className)}>
       <div className="flex items-center">
         {
           participants.map(({ name, image }, index) => (
@@ -45,7 +81,9 @@ const Game: React.FC<GameProps> = ({ leagueUrl, game }) => {
           <div className="text-caption-13 font-semibold">{title}</div>
         </div>
       </div>
-      <Markets gameId={gameId} gameStatus={status} />
+      <div className="w-full max-w-[26.25rem] mb:mt-2">
+        <Markets gameId={gameId} gameStatus={status} />
+      </div>
     </div>
   )
 }
@@ -61,8 +99,8 @@ const League: React.FC<LeagueProps> = ({ sportSlug, league }) => {
   const leagueUrl = `/${sportSlug}/${countrySlug}/${slug}`
 
   return (
-    <div className="overflow-hidden rounded-4 mt-1 first-of-type:mt-0">
-      <div className="flex items-center justify-between py-2 px-4 bg-bg-l2 mb-[2px]">
+    <div className="mt-1 first-of-type:mt-0">
+      <div className="rounded-t-4 flex items-center justify-between py-2 px-4 bg-bg-l2 mb-[2px]">
         <Href to={leagueUrl} className="flex items-center">
           <Flag className="mr-2" country={countrySlug} />
           <div className="text-caption-12 text-grey-70">{countryName}</div>
@@ -73,7 +111,12 @@ const League: React.FC<LeagueProps> = ({ sportSlug, league }) => {
       <div className="space-y-[2px]">
         {
           games.map(game => (
-            <Game key={game.gameId} leagueUrl={leagueUrl} game={game} />
+            <Game
+              key={game.gameId}
+              className="last-of-type:rounded-b-4"
+              leagueUrl={leagueUrl}
+              game={game}
+            />
           ))
         }
       </div>

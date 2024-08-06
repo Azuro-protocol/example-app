@@ -180,11 +180,18 @@ const Navigation: React.FC<NavigationProps> = ({ className }) => {
     }
 
     return [ ...navigation ].sort((sport1, sport2) => {
-      if (!sport1.countries.length) {
+      const sport1Index = constants.sportsOrder.indexOf(sport1.slug)
+      const sport2Index = constants.sportsOrder.indexOf(sport2.slug)
+
+      if (sport1Index >= 0 && sport2Index >= 0) {
+        return sport1Index - sport2Index
+      }
+
+      if (sport1Index < 0 && sport2Index >= 0) {
         return 1
       }
 
-      if (!sport2.countries.length) {
+      if (sport1Index >= 0 && sport2Index < 0) {
         return -1
       }
 

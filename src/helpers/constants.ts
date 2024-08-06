@@ -29,10 +29,13 @@ const currencyIcons: Record<ChainId, IconName> = {
   [spicy.id]: 'currency/wchz',
 }
 
+const sportsOrder = [ 'politics', 'football', 'basketball', 'tennis', 'cricket', 'mma', 'boxing', 'ice-hockey', 'american-football', 'baseball', 'rugby-union', 'rugby-league' ]
+
 export default {
   baseUrl,
   rpcByChains,
   topPageGamePerSportLimit: 10,
   chainIcons,
   currencyIcons,
+  sportsOrder,
 }

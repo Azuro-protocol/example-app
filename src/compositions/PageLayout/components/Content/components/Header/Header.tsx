@@ -9,6 +9,7 @@ import { useFreezeBodyScroll } from 'hooks'
 import { Icon, Logo } from 'components/ui'
 import { Button, buttonMessages } from 'components/inputs'
 import Navigation from 'compositions/Navigation/Navigation'
+import LiveSwitcher from 'compositions/LiveSwitcher/LiveSwitcher'
 
 import Controls from '../Controls/Controls'
 
@@ -18,7 +19,8 @@ const Content: React.FC = () => {
 
   return (
     <div className="fixed top-14 bottom-0 left-0 nr:w-[22.5rem] mb:w-full bg-bg-l0 overflow-auto no-scrollbar">
-      <Navigation />
+      <LiveSwitcher />
+      <Navigation className="mt-2" />
     </div>
   )
 }

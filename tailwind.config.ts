@@ -66,12 +66,14 @@ const config: Config = {
       },
       backgroundImage: {
         'card-border': 'linear-gradient(180deg, rgba(239, 239, 243, 0.15) 0%, rgba(239, 239, 243, 0) 100%)',
+        'live-switcher-border': 'linear-gradient(270deg, rgba(99, 44, 42, 0.2) 0%, rgba(99, 44, 42, 0.2) 100%)',
+        'live-switcher-bg': 'linear-gradient(90deg, rgba(61, 32, 31, 0.5) 0%, rgba(61, 32, 31, 0) 100%)',
       },
     },
   },
   plugins: [
     require('@headlessui/tailwindcss'),
-    plugin(({ addComponents, addBase, theme }) => {
+    plugin(({ addComponents, matchUtilities, theme }) => {
       // addBase({
       //   'body': { backgroundColor: theme('colors.test') },
       // })

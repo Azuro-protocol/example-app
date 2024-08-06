@@ -3,7 +3,7 @@
 import React, { useMemo } from 'react'
 import { useParams } from 'next/navigation'
 import { Message } from '@locmod/intl'
-import { useNavigation } from '@azuro-org/sdk'
+import { useLive, useNavigation } from '@azuro-org/sdk'
 import { type NavigationQuery } from '@azuro-org/toolkit'
 import cx from 'classnames'
 import { constants } from 'helpers'
@@ -142,9 +142,15 @@ const Sport: React.FC<SportProps> = (props) => {
   )
 }
 
-const Navigation: React.FC = () => {
+type NavigationProps = {
+  className?: string
+}
+
+const Navigation: React.FC<NavigationProps> = ({ className }) => {
+  const { isLive } = useLive()
   const { navigation, loading } = useNavigation({
     withGameCount: true,
+    isLive,
   })
 
   const allTopGames = useMemo(() => {
@@ -191,7 +197,7 @@ const Navigation: React.FC = () => {
   }
 
   return (
-    <div>
+    <div className={className}>
       <Message className="text-caption-13 font-semibold py-2 px-4 mb-2" value={messages.title} tag="p" />
       <Sport slug="/" name={messages.top} gamesCount={allTopGames} />
       {

@@ -5,11 +5,14 @@ import { type Sport } from 'hooks'
 import cx from 'classnames'
 import { useGameStatus, useLive } from '@azuro-org/sdk'
 import { GameStatus } from '@azuro-org/toolkit'
+import { Message } from '@locmod/intl'
 import { getGameDateTime } from 'helpers/getters'
 
 import { Flag, OpponentLogo } from 'components/dataDisplay'
 import { Href } from 'components/navigation'
+import { LiveDot } from 'components/ui'
 import Markets, { MarketsSkeleton } from 'compositions/Markets/Markets'
+import message from './message'
 
 
 export const LeagueSkeleton: React.FC = () => {
@@ -66,12 +69,14 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game }) => {
     isGameExistInLive: isLive,
   })
 
+  const isInLive = status === GameStatus.Live
+
   const rootClassName = cx('group flex mb:flex-col ds:items-center justify-between py-2 px-4 bg-bg-l2 last-of-type:rounded-b-4 relative', className)
 
   return (
     <div className={rootClassName}>
       {
-        status === GameStatus.Live && (
+        isInLive && (
           <div className="border-l-[2px] border-l-accent-red absolute h-full left-0 bg-live-game-shadow w-[30%] group-last-of-type:rounded-b-4" />
         )
       }
@@ -83,8 +88,19 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game }) => {
         }
         <div className="ml-3">
           <div className="mb-[2px]">
-            <span className="text-caption-13 font-semibold text-grey-70 mr-1">{time}</span>
-            <span className="text-caption-12 text-grey-60">{date}</span>
+            {
+              isInLive ? (
+                <div className="flex items-center">
+                  <LiveDot className="mr-1" />
+                  <Message className="text-accent-red text-caption-13 font-semibold" value={message.live} />
+                </div>
+              ) : (
+                <>
+                  <span className="text-caption-13 font-semibold text-grey-70 mr-1">{time}</span>
+                  <span className="text-caption-12 text-grey-60">{date}</span>
+                </>
+              )
+            }
           </div>
           <div className="text-caption-13 font-semibold">{title}</div>
         </div>

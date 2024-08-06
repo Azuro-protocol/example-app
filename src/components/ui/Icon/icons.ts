@@ -77,6 +77,8 @@ import _interface_close from '../../../../public/images/icons/interface/close.sv
 import _interface_closeSource from '!!raw-loader!../../../../public/images/icons/interface/close.svg'
 import _interface_copy from '../../../../public/images/icons/interface/copy.svg?url'
 import _interface_copySource from '!!raw-loader!../../../../public/images/icons/interface/copy.svg'
+import _interface_delete from '../../../../public/images/icons/interface/delete.svg?url'
+import _interface_deleteSource from '!!raw-loader!../../../../public/images/icons/interface/delete.svg'
 import _interface_download from '../../../../public/images/icons/interface/download.svg?url'
 import _interface_downloadSource from '!!raw-loader!../../../../public/images/icons/interface/download.svg'
 import _interface_external_link from '../../../../public/images/icons/interface/external_link.svg?url'
@@ -148,6 +150,7 @@ const icons = {
   'interface/chevron_up': { src: _interface_chevron_up.src, source: isServer && _interface_chevron_upSource, width: _interface_chevron_up.width, height: _interface_chevron_up.height, aspect: _interface_chevron_up.width/_interface_chevron_up.height }, 
   'interface/close': { src: _interface_close.src, source: isServer && _interface_closeSource, width: _interface_close.width, height: _interface_close.height, aspect: _interface_close.width/_interface_close.height }, 
   'interface/copy': { src: _interface_copy.src, source: isServer && _interface_copySource, width: _interface_copy.width, height: _interface_copy.height, aspect: _interface_copy.width/_interface_copy.height }, 
+  'interface/delete': { src: _interface_delete.src, source: isServer && _interface_deleteSource, width: _interface_delete.width, height: _interface_delete.height, aspect: _interface_delete.width/_interface_delete.height }, 
   'interface/download': { src: _interface_download.src, source: isServer && _interface_downloadSource, width: _interface_download.width, height: _interface_download.height, aspect: _interface_download.width/_interface_download.height }, 
   'interface/external_link': { src: _interface_external_link.src, source: isServer && _interface_external_linkSource, width: _interface_external_link.width, height: _interface_external_link.height, aspect: _interface_external_link.width/_interface_external_link.height }, 
   'interface/live': { src: _interface_live.src, source: isServer && _interface_liveSource, width: _interface_live.width, height: _interface_live.height, aspect: _interface_live.width/_interface_live.height }, 

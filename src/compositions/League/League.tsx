@@ -4,6 +4,7 @@ import React from 'react'
 import { type Sport } from 'hooks'
 import cx from 'classnames'
 import { useGameStatus, useLive } from '@azuro-org/sdk'
+import { GameStatus } from '@azuro-org/toolkit'
 import { getGameDateTime } from 'helpers/getters'
 
 import { Flag, OpponentLogo } from 'components/dataDisplay'
@@ -65,9 +66,16 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game }) => {
     isGameExistInLive: isLive,
   })
 
+  const rootClassName = cx('group flex mb:flex-col ds:items-center justify-between py-2 px-4 bg-bg-l2 last-of-type:rounded-b-4 relative', className)
+
   return (
-    <div className={cx('flex mb:flex-col ds:items-center justify-between py-2 px-4 bg-bg-l2', className)}>
-      <div className="flex items-center">
+    <div className={rootClassName}>
+      {
+        status === GameStatus.Live && (
+          <div className="border-l-[2px] border-l-accent-red absolute h-full left-0 bg-live-game-shadow w-[30%] group-last-of-type:rounded-b-4" />
+        )
+      }
+      <div className="flex items-center relative z-10">
         {
           participants.map(({ name, image }, index) => (
             <OpponentLogo className={cx({ '-mt-2': !index, '-mb-2 -ml-2 z-20': !!index })} key={name} image={image} />
@@ -113,7 +121,6 @@ const League: React.FC<LeagueProps> = ({ sportSlug, league }) => {
           games.map(game => (
             <Game
               key={game.gameId}
-              className="last-of-type:rounded-b-4"
               leagueUrl={leagueUrl}
               game={game}
             />

@@ -5,14 +5,12 @@ import { type Sport } from 'hooks'
 import cx from 'classnames'
 import { useGameStatus, useLive } from '@azuro-org/sdk'
 import { GameStatus } from '@azuro-org/toolkit'
-import { Message } from '@locmod/intl'
 import { getGameDateTime } from 'helpers/getters'
 
 import { Flag, OpponentLogo } from 'components/dataDisplay'
 import { Href } from 'components/navigation'
-import { LiveDot } from 'components/ui'
-import Markets, { MarketsSkeleton } from 'compositions/Markets/Markets'
-import message from './message'
+import { LiveLabel } from 'components/ui'
+import Markets, { MarketsSkeleton } from 'compositions/events/Markets/Markets'
 
 
 export const LeagueSkeleton: React.FC = () => {
@@ -80,7 +78,7 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game }) => {
           <div className="border-l-[2px] border-l-accent-red absolute h-full left-0 bg-live-game-shadow w-[30%] group-last-of-type:rounded-b-4" />
         )
       }
-      <div className="flex items-center relative z-10">
+      <Href to={`${leagueUrl}/${gameId}`} className="flex items-center relative z-10 group/game-link">
         {
           participants.map(({ name, image }, index) => (
             <OpponentLogo className={cx({ '-mt-2': !index, '-mb-2 -ml-2 z-20': !!index })} key={name} image={image} />
@@ -90,10 +88,7 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game }) => {
           <div className="mb-[2px]">
             {
               isInLive ? (
-                <div className="flex items-center">
-                  <LiveDot className="mr-1" />
-                  <Message className="text-accent-red text-caption-13 font-semibold" value={message.live} />
-                </div>
+                <LiveLabel className="mr-1" />
               ) : (
                 <>
                   <span className="text-caption-13 font-semibold text-grey-70 mr-1">{time}</span>
@@ -102,9 +97,9 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game }) => {
               )
             }
           </div>
-          <div className="text-caption-13 font-semibold">{title}</div>
+          <div className="text-caption-13 font-semibold group-hover/game-link:underline">{title}</div>
         </div>
-      </div>
+      </Href>
       <div className="w-full max-w-[26.25rem] mb:mt-2">
         <Markets gameId={gameId} gameStatus={status} />
       </div>
@@ -125,7 +120,7 @@ const League: React.FC<LeagueProps> = ({ sportSlug, league }) => {
   return (
     <div className="mt-1 first-of-type:mt-0">
       <div className="rounded-t-4 flex items-center justify-between py-2 px-4 bg-bg-l2 mb-[2px]">
-        <Href to={leagueUrl} className="flex items-center">
+        <Href to={leagueUrl} className="flex items-center hover:underline">
           <Flag className="mr-2" country={countrySlug} />
           <div className="text-caption-12 text-grey-70">{countryName}</div>
           <div className="size-1 rounded-full mx-2 bg-grey-20" />

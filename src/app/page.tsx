@@ -2,8 +2,8 @@
 
 import { useSports } from 'hooks'
 
-import Sport, { SportSkeleton } from 'compositions/Sport/Sport'
-import League, { LeagueSkeleton } from 'compositions/League/League'
+import Sport, { SportSkeleton } from 'compositions/events/Sport/Sport'
+import League, { LeagueSkeleton } from 'compositions/events/League/League'
 
 
 export default function TopPage() {

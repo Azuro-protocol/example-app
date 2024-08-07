@@ -2,14 +2,14 @@
 
 import { useSports } from 'hooks'
 
-import League from 'compositions/League/League'
+import League, { LeagueSkeleton } from 'compositions/events/League/League'
 
 
 export default function LeaguePage() {
   const { sports, loading } = useSports()
 
   if (loading) {
-    return null
+    return <LeagueSkeleton />
   }
 
   if (!sports) {

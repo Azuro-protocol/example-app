@@ -6,8 +6,6 @@ import { constants } from 'helpers'
 const currentYear = new Date().getFullYear()
 
 const Copy: React.FC = () => {
-  console.log(constants)
-
   return (
     <div className="text-grey-70 text-caption-12">{`©${currentYear} ${constants.companyName}`}</div>
   )

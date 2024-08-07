@@ -66,7 +66,7 @@ const Sport: React.FC<SportProps> = (props) => {
   const isActive = sportSlug === slug || isTop && !sportSlug
 
   const rootClassName = cx('p-px rounded-4 overflow-hidden', {
-    'bg-card-border': isActive,
+    'bg-card-border-top': isActive,
   })
   const wrapperClassName = cx({ 'bg-bg-l1 rounded-4': isActive })
   const buttonClassName = cx('group px-4 py-2 flex w-full items-center justify-between hover:text-brand-50', {

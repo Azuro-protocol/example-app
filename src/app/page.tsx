@@ -4,9 +4,10 @@ import { useSports } from 'hooks'
 
 import Sport, { SportSkeleton } from 'compositions/events/Sport/Sport'
 import League, { LeagueSkeleton } from 'compositions/events/League/League'
+import TopEvents from 'compositions/events/TopEvents/TopEvents'
 
 
-export default function TopPage() {
+const Sports: React.FC = () => {
   const { sports, loading } = useSports()
 
   if (loading) {
@@ -34,6 +35,16 @@ export default function TopPage() {
           </Sport>
         ))
       }
+    </>
+  )
+}
+
+export default function TopPage() {
+
+  return (
+    <>
+      <TopEvents />
+      <Sports />
     </>
   )
 }

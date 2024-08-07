@@ -14,9 +14,9 @@ const Content: React.CFC = ({ children }) => {
 
   const rootClassName = cx('h-full flex flex-col wd:flex-row min-h-screen mx-auto wd:px-2 wd:pb-2', ws.root)
   const mainClassName = cx(ns.main, ws.main,
-    'mx-auto max-w-full flex-1 w-full wd:h-auto',
+    'mx-auto flex-1 w-full wd:h-auto',
     {
-    // [`${ws.withRightSidebar} ds:max-w-[784rem]`]: isRightSidebarVisible,
+      [ws.withRightSidebar]: true,
     }
   )
   const sidebarClassName = 'sticky top-0 h-[calc(100vh_-_0.5rem)] z-[100] shrink-0 no-scrollbar'

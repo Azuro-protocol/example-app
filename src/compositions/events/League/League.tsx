@@ -1,10 +1,11 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import { type Sport } from 'hooks'
 import cx from 'classnames'
 import { useGameStatus, useLive } from '@azuro-org/sdk'
 import { GameStatus } from '@azuro-org/toolkit'
+import { useEntryListener } from '@locmod/intersection-observer'
 import { getGameDateTime } from 'helpers/getters'
 
 import { Flag, OpponentLogo } from 'components/dataDisplay'
@@ -60,6 +61,15 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game }) => {
   const { gameId, title, participants, startsAt } = game
   const { date, time } = getGameDateTime(+startsAt * 1000)
 
+  const [ isMarketsVisible, setMarketsVisible ] = useState(false)
+  const [ ref ] = useEntryListener((entry) => {
+    if (entry.isIntersecting) {
+      setMarketsVisible(true)
+    }
+  }, {
+    once: true,
+  })
+
   const { isLive } = useLive()
   const { status } = useGameStatus({
     graphStatus: game.status,
@@ -72,7 +82,7 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game }) => {
   const rootClassName = cx('group flex mb:flex-col ds:items-center justify-between py-2 px-4 bg-bg-l2 last-of-type:rounded-b-4 relative', className)
 
   return (
-    <div className={rootClassName}>
+    <div className={rootClassName} ref={ref}>
       {
         isInLive && (
           <div className="border-l-[2px] border-l-accent-red absolute h-full left-0 bg-live-game-shadow w-[30%] group-last-of-type:rounded-b-4" />
@@ -101,7 +111,13 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game }) => {
         </div>
       </Href>
       <div className="w-full max-w-[26.25rem] mb:mt-2">
-        <Markets gameId={gameId} gameStatus={status} />
+        {
+          isMarketsVisible ? (
+            <Markets gameId={gameId} gameStatus={status} />
+          ) : (
+            <MarketsSkeleton />
+          )
+        }
       </div>
     </div>
   )

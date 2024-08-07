@@ -130,7 +130,7 @@ const Events: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-between mt-6">
+      <div className="flex items-center justify-between mt-6 space-x-2">
         <CardSkeleton />
         <CardSkeleton className="mb:hidden" />
         <CardSkeleton className="mb:hidden" />

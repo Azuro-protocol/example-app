@@ -2,9 +2,9 @@ import { useBaseBetslip, useSelection } from '@azuro-org/sdk'
 import { type GameMarkets } from '@azuro-org/toolkit'
 
 
-type UseOddsButtonProps = GameMarkets[0]['outcomeRows'][0][0]
+type UseButtonProps = GameMarkets[0]['outcomeRows'][0][0]
 
-const useOddsButton = (outcome: UseOddsButtonProps) => {
+const useButton = (outcome: UseButtonProps) => {
   const { odds, isLocked, isOddsFetching } = useSelection({
     selection: outcome,
     initialOdds: outcome.odds,
@@ -42,4 +42,4 @@ const useOddsButton = (outcome: UseOddsButtonProps) => {
   }
 }
 
-export default useOddsButton
+export default useButton

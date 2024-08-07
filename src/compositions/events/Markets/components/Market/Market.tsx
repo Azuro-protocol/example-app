@@ -4,8 +4,7 @@ import React from 'react'
 import cx from 'classnames'
 import { type GameMarkets } from '@azuro-org/toolkit'
 
-
-import Button from './components/Button/Button'
+import OutcomeButton from 'compositions/OutcomeButton/OutcomeButton'
 
 
 type ButtonsProps = {
@@ -20,7 +19,7 @@ const Buttons: React.FC<ButtonsProps> = ({ rows }) => {
           <div key={index} className={cx('grid gap-x-2 gap-y-3 w-full mt-2 first-of-type:mt-0', outcomes.length === 3 ? 'grid-cols-3' : 'grid-cols-2')}>
             {
               outcomes.map(outcome => (
-                <Button
+                <OutcomeButton
                   key={`${outcome.conditionId}-${outcome.outcomeId}`}
                   outcome={outcome}
                 />

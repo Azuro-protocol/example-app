@@ -5,6 +5,7 @@ import { type GameQuery } from '@azuro-org/toolkit'
 import { useParams } from 'next/navigation'
 
 import EventInfo from 'compositions/event/EventInfo/EventInfo'
+import Markets from 'compositions/event/Markets/Markets'
 
 
 type ContentProps = {
@@ -20,11 +21,14 @@ const Content: React.FC<ContentProps> = ({ game, isGameInLive }) => {
   })
 
   return (
-    <EventInfo game={game} status={status} />
+    <>
+      <EventInfo game={game} status={status} />
+      <Markets gameId={game.gameId} gameStatus={status} />
+    </>
   )
 }
 
-
+// TODO: Skeleton
 export default function EventPage() {
   const params = useParams()
 
@@ -43,8 +47,6 @@ export default function EventPage() {
   }
 
   return (
-    <>
-      <Content game={game} isGameInLive={isGameInLive} />
-    </>
+    <Content game={game} isGameInLive={isGameInLive} />
   )
 }

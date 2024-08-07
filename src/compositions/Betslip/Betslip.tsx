@@ -59,6 +59,7 @@ const Betslip: React.FC = () => {
           })
         }
       </div>
+      <div className="bg-bg-l2 p-3" />
     </div>
   )
 }

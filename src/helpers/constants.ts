@@ -4,6 +4,7 @@ import { type IconName } from 'components/ui'
 
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL as string
+const companyName = process.env.NEXT_PUBLIC_COMPANY_NAME as string
 
 const rpcByChains: Record<ChainId, string> = {
   [gnosis.id]: 'https://gnosis-rpc.publicnode.com',
@@ -31,11 +32,20 @@ const currencyIcons: Record<ChainId, IconName> = {
 
 const sportsOrder = [ 'politics', 'football', 'basketball', 'tennis', 'cricket', 'mma', 'boxing', 'ice-hockey', 'american-football', 'baseball', 'rugby-union', 'rugby-league' ]
 
+const links = {
+  docs: '',
+  terms: '',
+  policy: '',
+  faq: '',
+}
+
 export default {
   baseUrl,
+  companyName,
   rpcByChains,
   topPageGamePerSportLimit: 10,
   chainIcons,
   currencyIcons,
   sportsOrder,
+  links,
 }

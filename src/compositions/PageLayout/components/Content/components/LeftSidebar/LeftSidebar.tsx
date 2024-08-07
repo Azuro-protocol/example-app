@@ -11,7 +11,7 @@ const LeftSidebar: React.FC = () => {
   return (
     <div className="h-full">
       <div className="px-4 py-5">
-        <Logo className="h-6" withLogo />
+        <Logo className="h-6" />
       </div>
       <LiveSwitcher />
       <Navigation className="mt-2" />

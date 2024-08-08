@@ -10,9 +10,9 @@ const SkeletonItem: React.FC = () => {
   )
 }
 
-const Skeleton: React.FC = () => {
+const Skeleton: React.FC<{className?: string}> = ({ className }) => {
   return (
-    <>
+    <div className={className}>
       <div className="py-2 px-4 mb-2">
         <div className="bone h-4 w-20 rounded-4" />
       </div>
@@ -21,7 +21,7 @@ const Skeleton: React.FC = () => {
           <SkeletonItem key={index} />
         ))
       }
-    </>
+    </div>
   )
 }
 

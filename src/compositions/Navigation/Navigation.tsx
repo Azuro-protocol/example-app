@@ -208,7 +208,7 @@ const Navigation: React.FC<NavigationProps> = ({ className }) => {
   }, [ navigation ])
 
   if (loading) {
-    return <Skeleton />
+    return <Skeleton className={className} />
   }
 
   return (

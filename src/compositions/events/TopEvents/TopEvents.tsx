@@ -12,6 +12,7 @@ import { getGameDateTime } from 'helpers/getters'
 
 import { Icon, type IconName } from 'components/ui'
 import { OpponentLogo } from 'components/dataDisplay'
+import { Href } from 'components/navigation'
 import OutcomeButton from 'compositions/OutcomeButton/OutcomeButton'
 
 import messages from './messages'
@@ -34,10 +35,13 @@ const Card: React.FC<CardProps> = ({ game }) => {
     },
     league: {
       name: leagueName,
+      slug: leagueSlug,
       country: {
         name: countryName,
+        slug: countrySlug,
       },
     },
+    gameId,
     participants,
     startsAt,
     title,
@@ -55,12 +59,12 @@ const Card: React.FC<CardProps> = ({ game }) => {
   return (
     <div className="bg-card-border-bottom p-px rounded-4 overflow-hidden">
       <div className="p-4 bg-grey-10 rounded-4">
-        <div className="flex items-center justify-center text-grey-60 text-caption-13">
+        <Href to={`${sportSlug}/${countrySlug}/${leagueSlug}/${gameId}`} className="flex items-center justify-center text-grey-60 text-caption-13 hover:underline">
           <Icon className="size-4 mr-2 flex-none" name={`sport/${sportSlug}` as IconName} />
           <span className="text-ellipsis whitespace-nowrap overflow-hidden">{countryName}</span>
           <div className="size-[2px] rounded-full bg-grey-20 mx-1" />
           <span className="text-ellipsis whitespace-nowrap overflow-hidden">{leagueName}</span>
-        </div>
+        </Href>
         <div className="mt-3 flex items-center justify-between px-7">
           <OpponentLogo image={participants[0].image} size={48} />
           <div className="text-caption-12 text-center">

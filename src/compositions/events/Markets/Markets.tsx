@@ -76,10 +76,10 @@ const MobileMarkets: React.FC<MobileMarketsProps> = ({ sortedMarkets, marketsByK
 
 export const MarketsSkeleton: React.FC = () => {
   return (
-    <div className="ds:p-2">
+    <div className="ds:p-2 border border-transparent">
       <div className="flex">
         <MarketSkeleton />
-        <div className="bone size-6 mt-6 ml-2 rounded-full" />
+        <div className="bone size-7 mt-5 ml-2 rounded-2 flex-none border border-transparent" />
       </div>
     </div>
   )
@@ -107,7 +107,7 @@ const Content: React.FC<ContentProps> = ({ marketsByKey, sortedMarkets }) => {
     'border-transparent': !isOpen,
   })
   const buttonClassName = cx(
-    'h-7 w-7 flex items-center justify-center flex-none rounded-2',
+    'size-7 flex items-center justify-center flex-none rounded-2',
     'group border border-grey-20 text-gray-70 ml-2 mt-5 sticky top-5',
     'disabled:cursor-not-allowed disabled:text-grey-40 disabled:border-grey-10',
     {

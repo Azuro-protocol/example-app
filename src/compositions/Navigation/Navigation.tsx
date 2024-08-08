@@ -183,6 +183,14 @@ const Navigation: React.FC<NavigationProps> = ({ className }) => {
       const sport1Index = constants.sportsOrder.indexOf(sport1.slug)
       const sport2Index = constants.sportsOrder.indexOf(sport2.slug)
 
+      if (!sport1.countries.length || !sport1.countries[0].leagues.length) {
+        return 1
+      }
+
+      if (!sport2.countries.length || !sport2.countries[0].leagues.length) {
+        return -1
+      }
+
       if (sport1Index >= 0 && sport2Index >= 0) {
         return sport1Index - sport2Index
       }

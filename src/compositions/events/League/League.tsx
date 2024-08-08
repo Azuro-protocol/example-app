@@ -69,7 +69,7 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game }) => {
   }, {
     once: true,
     observerProps: {
-      rootMargin: '0px 0px 10% 0px',
+      rootMargin: '0px 0px 30% 0px',
     },
   })
 

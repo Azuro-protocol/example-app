@@ -139,7 +139,7 @@ const Events: React.FC = () => {
   }
 
   return (
-    <div ref={containerRef} className="glide relative group mt-6">
+    <div ref={containerRef} className="glide !static group mt-6">
       <div className="glide__track" data-glide-el="track">
         <ul className="glide__slides">
           {
@@ -150,6 +150,14 @@ const Events: React.FC = () => {
             ))
           }
         </ul>
+      </div>
+      <div className="absolute top-6 right-6 flex items-center" data-glide-el="controls">
+        <button className="w-8 h-6 flex items-center justify-center bg-bg-l0 rounded-tl-full rounded-tr-1 rounded-br-1 rounded-bl-full border border-grey-15 text-grey-60 hover:text-grey-90 transition" data-glide-dir="<">
+          <Icon className="size-5" name="interface/chevron_left" />
+        </button>
+        <button className="w-8 h-6 flex items-center justify-center bg-bg-l0 rounded-tl-1 rounded-tr-full rounded-br-full rounded-bl-1 border border-grey-15 text-grey-60 hover:text-grey-90 transition ml-1" data-glide-dir=">">
+          <Icon className="size-5" name="interface/chevron_right" />
+        </button>
       </div>
     </div>
   )

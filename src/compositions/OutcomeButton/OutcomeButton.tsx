@@ -6,7 +6,6 @@ import cx from 'classnames'
 import { formatToFixed } from 'helpers/formatters'
 
 import { Icon } from 'components/ui'
-// import { OddsValue, useOddsValue } from 'compositions/games'
 
 import useButton from './utils/useButton'
 
@@ -19,9 +18,8 @@ type OutcomeButtonProps = {
 const OutcomeButton: React.FC<OutcomeButtonProps> = ({ outcome, size = 28 }) => {
   const { selectionName } = outcome
 
-  const nodeRef = useRef<HTMLButtonElement>(null)
-  // const oddsValue = useOddsValue({ ...props, nodeRef })
-  const { odds, isActive, isLocked, onClick } = useButton(outcome)
+  const nodeRef = useRef<HTMLDivElement>(null)
+  const { odds, isActive, isLocked, onClick } = useButton({ outcome, nodeRef })
 
   const buttonClassName = cx(
     'group/button w-full relative flex items-center justify-between px-3 overflow-hidden',
@@ -41,10 +39,19 @@ const OutcomeButton: React.FC<OutcomeButtonProps> = ({ outcome, size = 28 }) => 
     'text-grey-60': !isActive,
     'text-grey-40': isLocked,
   })
+  const oddsClassName = cx('group/odds flex items-center')
+  const arrowClassName = cx(
+    'size-4 text-transparent transition-color',
+    'group-[.increased]/odds:text-accent-green',
+    'group-[.decreased]/odds:text-accent-red group-[.decreased]/odds:rotate-180'
+  )
+  const valueClassName = cx(
+    'group-[.increased]/odds:text-accent-green',
+    'group-[.decreased]/odds:text-accent-red'
+  )
 
   return (
     <button
-      ref={nodeRef}
       className={buttonClassName}
       disabled={isLocked}
       onClick={onClick}
@@ -62,8 +69,10 @@ const OutcomeButton: React.FC<OutcomeButtonProps> = ({ outcome, size = 28 }) => 
           {selectionName}
         </div>
       </div>
-      {/* <OddsValue value={formatViewValue(oddsValue)} /> */}
-      <span>{odds ? formatToFixed(odds, 2) : '--'}</span>
+      <div ref={nodeRef} className={oddsClassName}>
+        <Icon className={arrowClassName} name="interface/caret_up" />
+        <span className={valueClassName}>{odds ? formatToFixed(odds, 2) : '--'}</span>
+      </div>
     </button>
   )
 }

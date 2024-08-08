@@ -35,7 +35,7 @@ const useMarket = ({ sortedMarkets, marketsByKey }: Props) => {
     }, [])
   }, [ marketsByKey ])
 
-  const { statuses } = useStatuses({ selections })
+  const { statuses, loading } = useStatuses({ selections })
 
   const otherMarkets = useMemo(() => {
     return sortedMarkets.filter(key => key !== activeMarket)
@@ -114,6 +114,7 @@ const useMarket = ({ sortedMarkets, marketsByKey }: Props) => {
     otherMarkets,
     isOpen,
     isMobileView,
+    isFetching: loading,
     setOpen,
   }
 }

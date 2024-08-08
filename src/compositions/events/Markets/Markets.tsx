@@ -93,8 +93,12 @@ type ContentProps = {
 const Content: React.FC<ContentProps> = ({ marketsByKey, sortedMarkets }) => {
   const {
     contentRef, activeMarket, activeConditionIndex, otherMarkets,
-    isOpen, isMobileView, setOpen,
+    isOpen, isMobileView, isFetching, setOpen,
   } = useMarket({ marketsByKey, sortedMarkets })
+
+  if (isFetching) {
+    return <MarketsSkeleton />
+  }
 
   const isDisabled = !Boolean(otherMarkets.length)
 

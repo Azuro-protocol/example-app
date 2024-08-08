@@ -116,15 +116,15 @@ const Sport: React.FC<SportProps> = (props) => {
                 </>
               ) : (
                 <>
-                  <Icon className="h-4 w-4 mr-2" name={`sport/${slug}` as IconName} />
+                  <Icon className="size-4 mr-2" name={`sport/${slug}` as IconName} />
                   <div className="text-caption-13">{name}</div>
                 </>
               )
             }
           </div>
           {
-            isTop ? (
-              <div className="text-caption-12">{gamesCount}</div>
+            Boolean(isTop || !leagues?.length) ? (
+              <div className="text-caption-12 min-w-4 text-center">{gamesCount || 0}</div>
             ) : (
               <Icon className={iconClassName} name="interface/chevron_down" />
             )

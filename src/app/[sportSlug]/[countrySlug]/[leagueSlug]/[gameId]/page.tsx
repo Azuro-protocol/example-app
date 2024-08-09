@@ -4,8 +4,8 @@ import { useGame, useGameStatus } from '@azuro-org/sdk'
 import { type GameQuery } from '@azuro-org/toolkit'
 import { useParams } from 'next/navigation'
 
-import EventInfo from 'compositions/event/EventInfo/EventInfo'
-import Markets from 'compositions/event/Markets/Markets'
+import EventInfo, { EventInfoSkeleton } from 'compositions/event/EventInfo/EventInfo'
+import Markets, { MarketsSkeleton } from 'compositions/event/Markets/Markets'
 
 
 type ContentProps = {
@@ -28,7 +28,6 @@ const Content: React.FC<ContentProps> = ({ game, isGameInLive }) => {
   )
 }
 
-// TODO: Skeleton
 export default function EventPage() {
   const params = useParams()
 
@@ -37,7 +36,12 @@ export default function EventPage() {
   })
 
   if (loading) {
-    return null
+    return (
+      <>
+        <EventInfoSkeleton />
+        <MarketsSkeleton />
+      </>
+    )
   }
 
   if (!game) {

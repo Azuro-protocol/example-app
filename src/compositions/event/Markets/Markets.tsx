@@ -10,6 +10,30 @@ import OutcomeButton from 'compositions/OutcomeButton/OutcomeButton'
 import ResultButton from './components/ResultButton/ResultButton'
 
 
+export const MarketsSkeleton: React.FC = () => {
+  return (
+    <div>
+      {
+        new Array(3).fill(0).map((_, index) => (
+          <div key={index}>
+            <div className="flex items-center justify-between p-4">
+              <div className="bone h-[1.125rem] w-24 rounded-full" />
+            </div>
+            <div className="space-y-2 bg-bg-l2 rounded-3 p-2">
+              <div className="flex justify-between">
+                <div className="flex gap-2 w-full">
+                  <div className="bone h-10 w-full rounded-2" />
+                  <div className="bone h-10 w-full rounded-2" />
+                </div>
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  )
+}
+
 type ContentProps = {
   markets: GameMarkets
   betsSummary?: Record<string, string>
@@ -103,11 +127,11 @@ const ActiveMarkets: React.FC<MarketsProps> = ({ gameId, gameStatus }) => {
   })
 
   if (loading) {
-    return <div>Loading...</div>
+    return <MarketsSkeleton />
   }
 
   if (!markets) {
-    return <div>Empty</div>
+    return null
   }
 
   return (

@@ -46,6 +46,7 @@ const OutcomeButton: React.FC<OutcomeButtonProps> = ({ outcome, size = 28 }) => 
     'group-[.decreased]/odds:text-accent-red group-[.decreased]/odds:rotate-180'
   )
   const valueClassName = cx(
+    'transition-color',
     'group-[.increased]/odds:text-accent-green',
     'group-[.decreased]/odds:text-accent-red'
   )

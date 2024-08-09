@@ -25,7 +25,7 @@ export default function SportPage() {
 
   return (
     <>
-      <Sport sport={sport!} withLink={false}>
+      <Sport sport={sport!} isPage>
         {
           sport.leagues.map(league => (
             <League

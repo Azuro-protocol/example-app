@@ -9,7 +9,7 @@ export default function LeaguePage() {
   const { sports, loading } = useSports()
 
   if (loading) {
-    return <LeagueSkeleton />
+    return <LeagueSkeleton isPage />
   }
 
   if (!sports) {
@@ -21,7 +21,7 @@ export default function LeaguePage() {
 
   return (
     <>
-      <League sportSlug={sport.slug} league={league} />
+      <League sportSlug={sport.slug} league={league} isPage />
     </>
   )
 }

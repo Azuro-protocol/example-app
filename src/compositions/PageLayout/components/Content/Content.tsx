@@ -19,11 +19,11 @@ const Content: React.CFC = ({ children }) => {
       [ws.withRightSidebar]: true,
     }
   )
-  const sidebarClassName = 'sticky top-0 h-[calc(100vh_-_0.5rem)] z-[100] shrink-0 no-scrollbar'
+  const sidebarClassName = 'sticky top-0 z-[100] shrink-0 no-scrollbar'
 
   return (
     <div className={rootClassName}>
-      <Media className={cx(ws.leftSidebar, sidebarClassName, 'pr-2 overflow-auto')} wide>
+      <Media className={cx('h-screen', ws.leftSidebar, sidebarClassName, 'pr-2 overflow-auto')} wide>
         <LeftSidebar />
       </Media>
       <Media className="sticky top-0 z-[100]" narrow mobile>
@@ -36,7 +36,7 @@ const Content: React.CFC = ({ children }) => {
           {children}
         </div>
       </main>
-      <Media className={cx(ws.rightSidebar, sidebarClassName)} wide>
+      <Media className={cx('h-[calc(100vh_-_0.5rem)]', ws.rightSidebar, sidebarClassName)} wide>
         <RightSidebar />
       </Media>
     </div>

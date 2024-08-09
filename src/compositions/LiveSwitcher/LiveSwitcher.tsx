@@ -4,6 +4,7 @@ import React from 'react'
 import { Message } from '@locmod/intl'
 import { Switch as HeadlessSwitch } from '@headlessui/react'
 import { useLive } from '@azuro-org/sdk'
+import cx from 'classnames'
 
 import { Icon } from 'components/ui'
 
@@ -27,9 +28,9 @@ const Switch = () => {
   )
 }
 
-const LiveSwitcher: React.FC = () => {
+const LiveSwitcher: React.FC<{className?: string}> = ({ className }) => {
   return (
-    <div className="border border-accent-red-5 rounded-4 bg-live-switcher-bg py-2 pl-4 pr-2 flex items-center justify-between">
+    <div className={cx('border border-accent-red-5 rounded-4 bg-live-switcher-bg py-2 pl-4 pr-2 flex items-center justify-between', className)}>
       <div className="flex items-center text-accent-red">
         <Icon className="size-4 mr-2" name="interface/live" />
         <Message className="text-caption-12 font-medium" value={messages.title} />

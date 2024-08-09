@@ -60,7 +60,7 @@ const Content: React.FC<ContentProps> = (props) => {
                       placement="bottom"
                       width={400}
                     >
-                      <div className="w-fit ml-1 cursor-pointer text-grey-60 hocus:text-grey-80">
+                      <div className="w-fit ml-1 cursor-pointer text-grey-60 hover:text-grey-90">
                         <Icon className="size-4" name="interface/info-circle" />
                       </div>
                     </Tooltip>

@@ -5,6 +5,8 @@ import { GameStatus, type GameMarkets } from '@azuro-org/toolkit'
 import { useActiveMarkets, useBetsSummaryBySelection, useResolvedMarkets } from '@azuro-org/sdk'
 import { useAccount } from 'wagmi'
 
+import { Tooltip } from 'components/feedback'
+import { Icon } from 'components/ui'
 import OutcomeButton from 'compositions/OutcomeButton/OutcomeButton'
 
 import ResultButton from './components/ResultButton/ResultButton'
@@ -46,10 +48,25 @@ const Content: React.FC<ContentProps> = (props) => {
   return (
     <div>
       {
-        markets.map(({ name, outcomeRows }) => (
+        markets.map(({ name, description, outcomeRows }) => (
           <div key={name}>
             <div className="flex items-center justify-between p-4">
-              <div className="text-caption-14 font-semibold">{name}</div>
+              <div className="flex items-center">
+                <div className="text-caption-14 font-semibold">{name}</div>
+                {
+                  Boolean(description) && (
+                    <Tooltip
+                      text={description}
+                      placement="bottom"
+                      width={400}
+                    >
+                      <div className="w-fit ml-1 cursor-pointer text-grey-60 hocus:text-grey-80">
+                        <Icon className="size-4" name="interface/info-circle" />
+                      </div>
+                    </Tooltip>
+                  )
+                }
+              </div>
             </div>
             <div className="space-y-2 bg-bg-l2 rounded-3 p-2">
               {

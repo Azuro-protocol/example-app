@@ -53,6 +53,8 @@ import _networks_polygon from '../../../../public/images/icons/networks/polygon.
 import _networks_polygonSource from '!!raw-loader!../../../../public/images/icons/networks/polygon.svg'
 import _interface_alert_triangle from '../../../../public/images/icons/interface/alert_triangle.svg?url'
 import _interface_alert_triangleSource from '!!raw-loader!../../../../public/images/icons/interface/alert_triangle.svg'
+import _interface_arrow_tooltip from '../../../../public/images/icons/interface/arrow_tooltip.svg?url'
+import _interface_arrow_tooltipSource from '!!raw-loader!../../../../public/images/icons/interface/arrow_tooltip.svg'
 import _interface_burger_menu from '../../../../public/images/icons/interface/burger_menu.svg?url'
 import _interface_burger_menuSource from '!!raw-loader!../../../../public/images/icons/interface/burger_menu.svg'
 import _interface_caret_down from '../../../../public/images/icons/interface/caret_down.svg?url'
@@ -83,6 +85,8 @@ import _interface_download from '../../../../public/images/icons/interface/downl
 import _interface_downloadSource from '!!raw-loader!../../../../public/images/icons/interface/download.svg'
 import _interface_external_link from '../../../../public/images/icons/interface/external_link.svg?url'
 import _interface_external_linkSource from '!!raw-loader!../../../../public/images/icons/interface/external_link.svg'
+import _interface_info_circle from '../../../../public/images/icons/interface/info-circle.svg?url'
+import _interface_info_circleSource from '!!raw-loader!../../../../public/images/icons/interface/info-circle.svg'
 import _interface_live from '../../../../public/images/icons/interface/live.svg?url'
 import _interface_liveSource from '!!raw-loader!../../../../public/images/icons/interface/live.svg'
 import _interface_lock from '../../../../public/images/icons/interface/lock.svg?url'
@@ -138,6 +142,7 @@ const icons = {
   'networks/gnosis': { src: _networks_gnosis.src, source: isServer && _networks_gnosisSource, width: _networks_gnosis.width, height: _networks_gnosis.height, aspect: _networks_gnosis.width/_networks_gnosis.height }, 
   'networks/polygon': { src: _networks_polygon.src, source: isServer && _networks_polygonSource, width: _networks_polygon.width, height: _networks_polygon.height, aspect: _networks_polygon.width/_networks_polygon.height }, 
   'interface/alert_triangle': { src: _interface_alert_triangle.src, source: isServer && _interface_alert_triangleSource, width: _interface_alert_triangle.width, height: _interface_alert_triangle.height, aspect: _interface_alert_triangle.width/_interface_alert_triangle.height }, 
+  'interface/arrow_tooltip': { src: _interface_arrow_tooltip.src, source: isServer && _interface_arrow_tooltipSource, width: _interface_arrow_tooltip.width, height: _interface_arrow_tooltip.height, aspect: _interface_arrow_tooltip.width/_interface_arrow_tooltip.height }, 
   'interface/burger_menu': { src: _interface_burger_menu.src, source: isServer && _interface_burger_menuSource, width: _interface_burger_menu.width, height: _interface_burger_menu.height, aspect: _interface_burger_menu.width/_interface_burger_menu.height }, 
   'interface/caret_down': { src: _interface_caret_down.src, source: isServer && _interface_caret_downSource, width: _interface_caret_down.width, height: _interface_caret_down.height, aspect: _interface_caret_down.width/_interface_caret_down.height }, 
   'interface/caret_left': { src: _interface_caret_left.src, source: isServer && _interface_caret_leftSource, width: _interface_caret_left.width, height: _interface_caret_left.height, aspect: _interface_caret_left.width/_interface_caret_left.height }, 
@@ -153,6 +158,7 @@ const icons = {
   'interface/delete': { src: _interface_delete.src, source: isServer && _interface_deleteSource, width: _interface_delete.width, height: _interface_delete.height, aspect: _interface_delete.width/_interface_delete.height }, 
   'interface/download': { src: _interface_download.src, source: isServer && _interface_downloadSource, width: _interface_download.width, height: _interface_download.height, aspect: _interface_download.width/_interface_download.height }, 
   'interface/external_link': { src: _interface_external_link.src, source: isServer && _interface_external_linkSource, width: _interface_external_link.width, height: _interface_external_link.height, aspect: _interface_external_link.width/_interface_external_link.height }, 
+  'interface/info-circle': { src: _interface_info_circle.src, source: isServer && _interface_info_circleSource, width: _interface_info_circle.width, height: _interface_info_circle.height, aspect: _interface_info_circle.width/_interface_info_circle.height }, 
   'interface/live': { src: _interface_live.src, source: isServer && _interface_liveSource, width: _interface_live.width, height: _interface_live.height, aspect: _interface_live.width/_interface_live.height }, 
   'interface/lock': { src: _interface_lock.src, source: isServer && _interface_lockSource, width: _interface_lock.width, height: _interface_lock.height, aspect: _interface_lock.width/_interface_lock.height }, 
   'interface/logout': { src: _interface_logout.src, source: isServer && _interface_logoutSource, width: _interface_logout.width, height: _interface_logout.height, aspect: _interface_logout.width/_interface_logout.height }, 

@@ -51,6 +51,8 @@ import _networks_gnosis from '../../../../public/images/icons/networks/gnosis.sv
 import _networks_gnosisSource from '!!raw-loader!../../../../public/images/icons/networks/gnosis.svg'
 import _networks_polygon from '../../../../public/images/icons/networks/polygon.svg?url'
 import _networks_polygonSource from '!!raw-loader!../../../../public/images/icons/networks/polygon.svg'
+import _interface_accepted from '../../../../public/images/icons/interface/accepted.svg?url'
+import _interface_acceptedSource from '!!raw-loader!../../../../public/images/icons/interface/accepted.svg'
 import _interface_alert_triangle from '../../../../public/images/icons/interface/alert_triangle.svg?url'
 import _interface_alert_triangleSource from '!!raw-loader!../../../../public/images/icons/interface/alert_triangle.svg'
 import _interface_arrow_tooltip from '../../../../public/images/icons/interface/arrow_tooltip.svg?url'
@@ -79,6 +81,8 @@ import _interface_close from '../../../../public/images/icons/interface/close.sv
 import _interface_closeSource from '!!raw-loader!../../../../public/images/icons/interface/close.svg'
 import _interface_copy from '../../../../public/images/icons/interface/copy.svg?url'
 import _interface_copySource from '!!raw-loader!../../../../public/images/icons/interface/copy.svg'
+import _interface_declined from '../../../../public/images/icons/interface/declined.svg?url'
+import _interface_declinedSource from '!!raw-loader!../../../../public/images/icons/interface/declined.svg'
 import _interface_delete from '../../../../public/images/icons/interface/delete.svg?url'
 import _interface_deleteSource from '!!raw-loader!../../../../public/images/icons/interface/delete.svg'
 import _interface_download from '../../../../public/images/icons/interface/download.svg?url'
@@ -93,16 +97,22 @@ import _interface_lock from '../../../../public/images/icons/interface/lock.svg?
 import _interface_lockSource from '!!raw-loader!../../../../public/images/icons/interface/lock.svg'
 import _interface_logout from '../../../../public/images/icons/interface/logout.svg?url'
 import _interface_logoutSource from '!!raw-loader!../../../../public/images/icons/interface/logout.svg'
+import _interface_lose from '../../../../public/images/icons/interface/lose.svg?url'
+import _interface_loseSource from '!!raw-loader!../../../../public/images/icons/interface/lose.svg'
 import _interface_mybets from '../../../../public/images/icons/interface/mybets.svg?url'
 import _interface_mybetsSource from '!!raw-loader!../../../../public/images/icons/interface/mybets.svg'
 import _interface_no_flag from '../../../../public/images/icons/interface/no_flag.svg?url'
 import _interface_no_flagSource from '!!raw-loader!../../../../public/images/icons/interface/no_flag.svg'
 import _interface_no_opponent from '../../../../public/images/icons/interface/no_opponent.svg?url'
 import _interface_no_opponentSource from '!!raw-loader!../../../../public/images/icons/interface/no_opponent.svg'
+import _interface_pending from '../../../../public/images/icons/interface/pending.svg?url'
+import _interface_pendingSource from '!!raw-loader!../../../../public/images/icons/interface/pending.svg'
 import _interface_spinner from '../../../../public/images/icons/interface/spinner.svg?url'
 import _interface_spinnerSource from '!!raw-loader!../../../../public/images/icons/interface/spinner.svg'
 import _interface_user_avatar from '../../../../public/images/icons/interface/user_avatar.svg?url'
 import _interface_user_avatarSource from '!!raw-loader!../../../../public/images/icons/interface/user_avatar.svg'
+import _interface_win from '../../../../public/images/icons/interface/win.svg?url'
+import _interface_winSource from '!!raw-loader!../../../../public/images/icons/interface/win.svg'
 import _currency_azusd from '../../../../public/images/icons/currency/azusd.svg?url'
 import _currency_azusdSource from '!!raw-loader!../../../../public/images/icons/currency/azusd.svg'
 import _currency_usdt from '../../../../public/images/icons/currency/usdt.svg?url'
@@ -141,6 +151,7 @@ const icons = {
   'networks/chiliz': { src: _networks_chiliz.src, source: isServer && _networks_chilizSource, width: _networks_chiliz.width, height: _networks_chiliz.height, aspect: _networks_chiliz.width/_networks_chiliz.height }, 
   'networks/gnosis': { src: _networks_gnosis.src, source: isServer && _networks_gnosisSource, width: _networks_gnosis.width, height: _networks_gnosis.height, aspect: _networks_gnosis.width/_networks_gnosis.height }, 
   'networks/polygon': { src: _networks_polygon.src, source: isServer && _networks_polygonSource, width: _networks_polygon.width, height: _networks_polygon.height, aspect: _networks_polygon.width/_networks_polygon.height }, 
+  'interface/accepted': { src: _interface_accepted.src, source: isServer && _interface_acceptedSource, width: _interface_accepted.width, height: _interface_accepted.height, aspect: _interface_accepted.width/_interface_accepted.height }, 
   'interface/alert_triangle': { src: _interface_alert_triangle.src, source: isServer && _interface_alert_triangleSource, width: _interface_alert_triangle.width, height: _interface_alert_triangle.height, aspect: _interface_alert_triangle.width/_interface_alert_triangle.height }, 
   'interface/arrow_tooltip': { src: _interface_arrow_tooltip.src, source: isServer && _interface_arrow_tooltipSource, width: _interface_arrow_tooltip.width, height: _interface_arrow_tooltip.height, aspect: _interface_arrow_tooltip.width/_interface_arrow_tooltip.height }, 
   'interface/burger_menu': { src: _interface_burger_menu.src, source: isServer && _interface_burger_menuSource, width: _interface_burger_menu.width, height: _interface_burger_menu.height, aspect: _interface_burger_menu.width/_interface_burger_menu.height }, 
@@ -155,6 +166,7 @@ const icons = {
   'interface/chevron_up': { src: _interface_chevron_up.src, source: isServer && _interface_chevron_upSource, width: _interface_chevron_up.width, height: _interface_chevron_up.height, aspect: _interface_chevron_up.width/_interface_chevron_up.height }, 
   'interface/close': { src: _interface_close.src, source: isServer && _interface_closeSource, width: _interface_close.width, height: _interface_close.height, aspect: _interface_close.width/_interface_close.height }, 
   'interface/copy': { src: _interface_copy.src, source: isServer && _interface_copySource, width: _interface_copy.width, height: _interface_copy.height, aspect: _interface_copy.width/_interface_copy.height }, 
+  'interface/declined': { src: _interface_declined.src, source: isServer && _interface_declinedSource, width: _interface_declined.width, height: _interface_declined.height, aspect: _interface_declined.width/_interface_declined.height }, 
   'interface/delete': { src: _interface_delete.src, source: isServer && _interface_deleteSource, width: _interface_delete.width, height: _interface_delete.height, aspect: _interface_delete.width/_interface_delete.height }, 
   'interface/download': { src: _interface_download.src, source: isServer && _interface_downloadSource, width: _interface_download.width, height: _interface_download.height, aspect: _interface_download.width/_interface_download.height }, 
   'interface/external_link': { src: _interface_external_link.src, source: isServer && _interface_external_linkSource, width: _interface_external_link.width, height: _interface_external_link.height, aspect: _interface_external_link.width/_interface_external_link.height }, 
@@ -162,11 +174,14 @@ const icons = {
   'interface/live': { src: _interface_live.src, source: isServer && _interface_liveSource, width: _interface_live.width, height: _interface_live.height, aspect: _interface_live.width/_interface_live.height }, 
   'interface/lock': { src: _interface_lock.src, source: isServer && _interface_lockSource, width: _interface_lock.width, height: _interface_lock.height, aspect: _interface_lock.width/_interface_lock.height }, 
   'interface/logout': { src: _interface_logout.src, source: isServer && _interface_logoutSource, width: _interface_logout.width, height: _interface_logout.height, aspect: _interface_logout.width/_interface_logout.height }, 
+  'interface/lose': { src: _interface_lose.src, source: isServer && _interface_loseSource, width: _interface_lose.width, height: _interface_lose.height, aspect: _interface_lose.width/_interface_lose.height }, 
   'interface/mybets': { src: _interface_mybets.src, source: isServer && _interface_mybetsSource, width: _interface_mybets.width, height: _interface_mybets.height, aspect: _interface_mybets.width/_interface_mybets.height }, 
   'interface/no_flag': { src: _interface_no_flag.src, source: isServer && _interface_no_flagSource, width: _interface_no_flag.width, height: _interface_no_flag.height, aspect: _interface_no_flag.width/_interface_no_flag.height }, 
   'interface/no_opponent': { src: _interface_no_opponent.src, source: isServer && _interface_no_opponentSource, width: _interface_no_opponent.width, height: _interface_no_opponent.height, aspect: _interface_no_opponent.width/_interface_no_opponent.height }, 
+  'interface/pending': { src: _interface_pending.src, source: isServer && _interface_pendingSource, width: _interface_pending.width, height: _interface_pending.height, aspect: _interface_pending.width/_interface_pending.height }, 
   'interface/spinner': { src: _interface_spinner.src, source: isServer && _interface_spinnerSource, width: _interface_spinner.width, height: _interface_spinner.height, aspect: _interface_spinner.width/_interface_spinner.height }, 
   'interface/user_avatar': { src: _interface_user_avatar.src, source: isServer && _interface_user_avatarSource, width: _interface_user_avatar.width, height: _interface_user_avatar.height, aspect: _interface_user_avatar.width/_interface_user_avatar.height }, 
+  'interface/win': { src: _interface_win.src, source: isServer && _interface_winSource, width: _interface_win.width, height: _interface_win.height, aspect: _interface_win.width/_interface_win.height }, 
   'currency/azusd': { src: _currency_azusd.src, source: isServer && _currency_azusdSource, width: _currency_azusd.width, height: _currency_azusd.height, aspect: _currency_azusd.width/_currency_azusd.height }, 
   'currency/usdt': { src: _currency_usdt.src, source: isServer && _currency_usdtSource, width: _currency_usdt.width, height: _currency_usdt.height, aspect: _currency_usdt.width/_currency_usdt.height }, 
   'currency/wchz': { src: _currency_wchz.src, source: isServer && _currency_wchzSource, width: _currency_wchz.width, height: _currency_wchz.height, aspect: _currency_wchz.width/_currency_wchz.height }, 

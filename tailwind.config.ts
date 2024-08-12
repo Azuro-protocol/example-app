@@ -53,6 +53,8 @@ const config: Config = {
         'accent-red': '#F42E52',
         'accent-red-10': '#632C2A',
         'accent-red-5': '#3D1F24',
+
+        'accent-blue': '#7B58ED',
       },
       borderRadius: {
         '2px': '2px',
@@ -63,6 +65,9 @@ const config: Config = {
         '8': '2rem',
         '12': '3rem',
         '16': '4rem',
+        'sm': '0.75rem',
+        'md': '1rem',
+        'lg': '1.25rem',
       },
       backgroundImage: ({ theme }) => ({
         'card-border-top': 'linear-gradient(180deg, rgba(239, 239, 243, 0.15) 0%, rgba(239, 239, 243, 0) 100%)',
@@ -70,8 +75,11 @@ const config: Config = {
         'live-switcher-bg': 'linear-gradient(90deg, rgba(61, 32, 31, 0.5) 0%, rgba(61, 32, 31, 0) 100%)',
         'betslip-item-bg': `linear-gradient(90.08deg, ${theme('colors.bg-l2')} 0.06%, ${theme('colors.brand-10')} 300%)`,
         'live-game-shadow': `linear-gradient(90deg, ${theme('colors.accent-red')} -1000%, ${theme('colors.bg-l2')} 100%)`,
+        'live-bet-shadow': `linear-gradient(90deg, ${theme('colors.bg-l3')} 0%, ${theme('colors.accent-red')} 800%)`,
         'result-button-won': `linear-gradient(180deg, ${theme('colors.grey-15')} 0%, ${theme('colors.accent-green')} 1500%)`,
         'result-button-lost': `linear-gradient(90deg, ${theme('colors.grey-15')} 0%, ${theme('colors.accent-red')} 1500%)`,
+        'bet-game-won': `linear-gradient(180deg, ${theme('colors.bg-l3')} 0%, ${theme('colors.accent-green')} 1000%)`,
+        'bet-game-lost': `linear-gradient(180deg, ${theme('colors.bg-l3')} 0%, ${theme('colors.accent-red')} 1000%)`,
       }),
     },
   },

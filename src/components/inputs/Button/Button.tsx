@@ -16,7 +16,7 @@ const iconSizes = {
 } as const
 
 export const sizes = [ 32, 40 ] as const
-export const styles = [ 'primary' ] as const
+export const styles = [ 'primary', 'secondary' ] as const
 
 export type ButtonSize = typeof sizes[number]
 export type ButtonStyle = typeof styles[number]
@@ -45,15 +45,18 @@ const Button = forwardRef<HTMLAnchorElement | HTMLButtonElement, ButtonProps>((p
   }
 
   const rootClassName = cx(className,
-    'relative flex items-center justify-center whitespace-nowrap uppercase font-bold transition-all',
+    'relative flex items-center justify-center whitespace-nowrap uppercase font-bold transition-all border rounded-sm',
     'text-center align-top cursor-pointer select-none disabled:cursor-not-allowed disabled:transition-none',
     {
       'text-caption-14 h-10 px-4': size === 40,
       'text-caption-13 h-8 px-3': size === 32,
       // primary
-      'border-2 border-white/20 bg-brand-50 text-white rounded-4': style === 'primary',
+      'border-white/20 bg-brand-50 text-grey-90': style === 'primary',
       'hover:text-black hover:bg-white hover:border-white': style === 'primary',
-      'disabled:text-grey-20 disabled:bg-bg-l1 disabled:border-grey-10': style === 'primary',
+      'disabled:text-grey-20 disabled:bg-bg-l1 disabled:border-grey-10': style === 'primary' || style === 'secondary',
+      // secondary
+      'border-white/20 bg-grey-20 text-grey-90': style === 'secondary',
+      'hover:text-black hover:bg-grey-90 hover:border-grey-90': style === 'secondary',
     }
   )
   const contentClassName = cx('relative flex items-center justify-between')

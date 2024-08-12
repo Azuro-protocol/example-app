@@ -149,7 +149,6 @@ const Content: React.FC = () => {
               target="_blank"
               rel="noreferrer"
               className={cx(buttonClassName, 'ml-1')}
-              onClick={handleCopyClick}
             >
               <Icon className="size-4" name="interface/external_link" />
             </a>
@@ -179,7 +178,7 @@ const Controls: React.FC<ControlsProps> = ({ className }) => {
   const { address } = useAccount()
   const { appChain } = useChain()
 
-  const rootClassName = cx('wd:h-10 -wd:h-8 bg-transparent flex items-center justify-between border border-grey-15 px-3 w-fit text-grey-60 ui-open:text-grey-90 hover:text-grey-90 ui-open:bg-grey-10 hover:bg-grey-10 ui-open:border-grey-20 hover:border-grey-20 transition-all mb:w-full')
+  const rootClassName = cx('wd:h-10 -wd:h-8 bg-transparent flex items-center justify-between border border-grey-15 px-3 w-fit text-grey-60 ui-open:text-grey-90 hover:text-grey-90 ui-open:bg-grey-10 hover:bg-grey-10 ui-open:border-grey-20 hover:border-grey-20 transition-all mb:w-full rounded-md')
 
   return (
     <Dropdown

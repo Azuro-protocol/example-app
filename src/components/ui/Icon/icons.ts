@@ -111,6 +111,8 @@ import _interface_spinner from '../../../../public/images/icons/interface/spinne
 import _interface_spinnerSource from '!!raw-loader!../../../../public/images/icons/interface/spinner.svg'
 import _interface_user_avatar from '../../../../public/images/icons/interface/user_avatar.svg?url'
 import _interface_user_avatarSource from '!!raw-loader!../../../../public/images/icons/interface/user_avatar.svg'
+import _interface_warning from '../../../../public/images/icons/interface/warning.svg?url'
+import _interface_warningSource from '!!raw-loader!../../../../public/images/icons/interface/warning.svg'
 import _interface_win from '../../../../public/images/icons/interface/win.svg?url'
 import _interface_winSource from '!!raw-loader!../../../../public/images/icons/interface/win.svg'
 import _currency_azusd from '../../../../public/images/icons/currency/azusd.svg?url'
@@ -181,6 +183,7 @@ const icons = {
   'interface/pending': { src: _interface_pending.src, source: isServer && _interface_pendingSource, width: _interface_pending.width, height: _interface_pending.height, aspect: _interface_pending.width/_interface_pending.height }, 
   'interface/spinner': { src: _interface_spinner.src, source: isServer && _interface_spinnerSource, width: _interface_spinner.width, height: _interface_spinner.height, aspect: _interface_spinner.width/_interface_spinner.height }, 
   'interface/user_avatar': { src: _interface_user_avatar.src, source: isServer && _interface_user_avatarSource, width: _interface_user_avatar.width, height: _interface_user_avatar.height, aspect: _interface_user_avatar.width/_interface_user_avatar.height }, 
+  'interface/warning': { src: _interface_warning.src, source: isServer && _interface_warningSource, width: _interface_warning.width, height: _interface_warning.height, aspect: _interface_warning.width/_interface_warning.height }, 
   'interface/win': { src: _interface_win.src, source: isServer && _interface_winSource, width: _interface_win.width, height: _interface_win.height, aspect: _interface_win.width/_interface_win.height }, 
   'currency/azusd': { src: _currency_azusd.src, source: isServer && _currency_azusdSource, width: _currency_azusd.width, height: _currency_azusd.height, aspect: _currency_azusd.width/_currency_azusd.height }, 
   'currency/usdt': { src: _currency_usdt.src, source: isServer && _currency_usdtSource, width: _currency_usdt.width, height: _currency_usdt.height, aspect: _currency_usdt.width/_currency_usdt.height }, 

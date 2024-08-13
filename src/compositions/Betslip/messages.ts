@@ -16,4 +16,7 @@ export default {
   combo: {
     en: 'Combo bet',
   },
+  betAmount: {
+    en: 'Bet amount',
+  },
 }

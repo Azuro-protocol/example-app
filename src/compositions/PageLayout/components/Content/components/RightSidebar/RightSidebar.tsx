@@ -16,7 +16,7 @@ const RightSidebar: React.FC = () => {
 
   return (
     <>
-      <div className="px-6 py-3 sticky top-0">
+      <div className="px-6 py-3 sticky top-0 z-20">
         {
           Boolean(address) ? (
             <Controls className="ml-auto" />

@@ -1,10 +1,13 @@
+'use client'
+
 import React from 'react'
 import { useBaseBetslip, useDetailedBetslip } from '@azuro-org/sdk'
 import { Message } from '@locmod/intl'
+import cx from 'classnames'
 
 import { Icon } from 'components/ui'
 import messages from './messages'
-import { Card } from './components'
+import { AmountInput, BetButton, Card, Chips } from './components'
 
 
 const EmptyContent: React.FC = () => {
@@ -41,7 +44,7 @@ const Betslip: React.FC = () => {
           <Icon className="size-5" name="interface/delete" />
         </button>
       </div>
-      <div className="space-y-2">
+      <div className="space-y-2 max-h-[16rem] overflow-auto no-scrollbar pb-6">
         {
           items.map((item) => {
             const { conditionId, outcomeId, coreAddress } = item
@@ -59,7 +62,17 @@ const Betslip: React.FC = () => {
           })
         }
       </div>
-      <div className="bg-bg-l2 p-3" />
+      <div
+        className={
+          cx('bg-bg-l2 p-3 rounded-lg -mt-4 z-10 relative', {
+            'shadow-betslip': items.length > 2,
+          })
+        }
+      >
+        <AmountInput />
+        <Chips />
+        <BetButton />
+      </div>
     </div>
   )
 }

@@ -12,7 +12,7 @@ const Desktop = forwardRef<HTMLDivElement, DropdownProps>((props, ref) => {
   } = props
 
   const rootClassName = cx('relative flex w-fit', className)
-  const menuClassName = cx(dropListClassName, 'absolute w-fit', {
+  const menuClassName = cx(dropListClassName, 'absolute w-fit z-[100]', {
     'top-[calc(100%_+_0.5rem)] left-1/2 -translate-x-1/2': placement === 'center',
     'top-[calc(100%_+_0.5rem)] right-0': placement === 'bottomRight',
     'top-[calc(100%_+_0.5rem)] left-0': placement === 'bottomLeft',

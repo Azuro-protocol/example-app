@@ -78,7 +78,7 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
       <div className="flex items-center justify-between py-2 px-3">
         <div className="flex items-center text-caption-13">
           <Message className="font-semibold" value={isCombo ? messages.combo : messages.single} />
-          <div className="size-1 bg-grey-20 rounded-full mx-2" />
+          <div className="size-1 flex-none bg-grey-20 rounded-full mx-2" />
           <a
             className="flex items-center text-grey-60 hover:text-grey-90 hover:underline"
             href={`${appChain.blockExplorers!.default.url}/tx/${txHash}`}
@@ -120,21 +120,18 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
             const { date, time } = getGameDateTime(+startsAt * 1000)
             const gameStatus = getGameStatus({ graphStatus: graphGameStatus, startsAt: +startsAt, isGameInLive: isLive })
 
-            // const className = cx("", {
-            //   'bg-zinc-200': !isWin && !isLose,
-            //   'bg-green-100': isWin,
-            //   'bg-red-100': isLose,
-            // })
+            const marketBoxClassName = 'text-caption-13 mb:flex mb:items-center mb:justify-between'
+            const marketClassName = cx('font-semibold', { 'text-grey-40': gameStatus === GameStatus.Canceled })
 
             return (
               <div key={gameId} className="rounded-sm overflow-hidden">
-                <div className="bg-bg-l3 flex items-center justify-between py-2 px-3 relative">
+                <div className="bg-bg-l3 flex items-center justify-between py-2 ds:px-3 mb:px-2 relative">
                   <div className="flex items-center text-caption-12">
                     <div className="text-grey-70 flex items-center">
                       <Icon className="size-4 mr-2" name={`sport/${sportSlug}` as IconName} />
                       <span>{countryName}</span>
                     </div>
-                    <div className="size-1 bg-grey-40 rounded-full mx-2" />
+                    <div className="size-1 flex-none bg-grey-40 rounded-full mx-2" />
                     <span>{leagueName}</span>
                   </div>
                   {
@@ -151,7 +148,7 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
                 </div>
                 <div
                   className={
-                    cx('mt-px flex items-center justify-between p-3', {
+                    cx('mt-px flex ds:items-center ds:justify-between p-3 mb:px-2 mb:flex-col', {
                       'bg-bet-game-won': isWin,
                       'bg-bet-game-lost': isLose,
                       'bg-bg-l3': !isWin && !isLose,
@@ -173,7 +170,7 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
                             <>
                               {
                                 [ GameStatus.Canceled, GameStatus.Live, GameStatus.Resolved ].includes(gameStatus) && (
-                                  <div className="size-1 bg-grey-40 rounded-full mx-2" />
+                                  <div className="size-1 flex-none bg-grey-40 rounded-full mx-2" />
                                 )
                               }
                               {
@@ -209,22 +206,22 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
                       <div className="text-caption-13 font-semibold mt-[2px] group-hover/link:underline">{title}</div>
                     </div>
                   </Href>
-                  <div className="grid grid-cols-3 gap-4 w-full ds:max-w-[50%]">
-                    <div className="text-caption-13">
+                  <div className="ds:grid ds:grid-cols-3 ds:gap-4 w-full ds:max-w-[50%] mb:space-y-2 mb:pt-2 mb:border-t mb:border-t-grey-20 mb:mt-2">
+                    <div className={marketBoxClassName}>
                       <Message className="text-grey-60" value={messages.market} />
-                      <div className={cx('font-semibold', { 'text-grey-40': gameStatus === GameStatus.Canceled })}>
+                      <div className={marketClassName}>
                         {marketName}
                       </div>
                     </div>
-                    <div className="text-caption-13">
+                    <div className={marketBoxClassName}>
                       <Message className="text-grey-60" value={messages.outcome} />
-                      <div className={cx('font-semibold', { 'text-grey-40': gameStatus === GameStatus.Canceled })}>
+                      <div className={marketClassName}>
                         {selectionName}
                       </div>
                     </div>
-                    <div className="text-caption-13">
+                    <div className={marketBoxClassName}>
                       <Message className="text-grey-60" value={messages.odds} />
-                      <div className={cx('font-semibold', { 'text-grey-40': gameStatus === GameStatus.Canceled })}>
+                      <div className={marketClassName}>
                         {formatToFixed(odds, 2)}
                       </div>
                     </div>
@@ -235,13 +232,13 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
           })
         }
       </div>
-      <div className="py-4 px-3 flex items-center justify-between">
-        <div className="flex items-center text-caption-13">
+      <div className="ds:py-4 mb:py-2 ds:px-3 mb:px-2 flex ds:items-center ds:justify-between mb:flex-col mb:space-y-2">
+        <div className="flex items-center text-caption-13 mb:justify-between">
           <Message className="text-grey-70 mr-1" value={messages.betAmount} />
           <span>{amount} {betToken.symbol}</span>
         </div>
-        <div className="flex items-center">
-          <div className="flex items-center text-caption-13">
+        <div className="flex ds:items-center mb:flex-col space-y-3">
+          <div className="flex items-center text-caption-13 mb:justify-between">
             <span className="text-grey-70 mr-1">{resultTitle}</span>
             <span
               className={
@@ -256,7 +253,7 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
           {
             Boolean(!isRedeemed && (isWin || isCanceled)) && (
               <Button
-                className="ml-3"
+                className="ds:ml-3"
                 style="secondary"
                 title={isWin ? messages.redeem : messages.refund}
                 size={32}

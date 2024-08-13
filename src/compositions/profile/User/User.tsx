@@ -33,17 +33,17 @@ const User: React.FC = () => {
   const itemClassName = 'flex items-center text-grey-60 transition hover:text-grey-90 text-caption-13 hover:underline ml-3 cursor-pointer'
 
   return (
-    <div className="p-6 flex items-center">
-      <Icon className="size-16 mr-4 stroke-grey-70 fill-transparent" name="interface/user_avatar" />
-      <div>
+    <div className="p-6 flex items-center border-b border-b-grey-10 -mx-2 mb-4">
+      <Icon className="ds:size-16 mb:size-12 mr-4 stroke-grey-70 fill-transparent flex-none" name="interface/user_avatar" />
+      <div className="mb:w-full">
         <Message className="text-heading-h3 font-bold" value={messages.user} tag="p" />
-        <div className="flex items-center mt-2">
+        <div className="flex items-center mt-2 mb:w-full">
           <div className="text-caption-14">{shortenAddress(address!)}</div>
-          <div className={itemClassName} onClick={handleCopyClick}>
+          <div className={cx(itemClassName, 'mb:ml-auto')} onClick={handleCopyClick}>
             <div className={cx({ '!text-accent-green': isCopied })}>
               <Icon className="size-4" name={isCopied ? 'interface/check' : 'interface/copy'} />
             </div>
-            <Message className="ml-1" value={messages.copy} />
+            <Message className="ml-1 mb:hidden" value={messages.copy} />
           </div>
           <a
             href={`${appChain.blockExplorers!.default.url}/address/${address}`}
@@ -52,7 +52,7 @@ const User: React.FC = () => {
             className={itemClassName}
           >
             <Icon className="size-4" name="interface/external_link" />
-            <Message className="ml-1" value={messages.view} />
+            <Message className="ml-1 mb:hidden" value={messages.view} />
           </a>
         </div>
       </div>

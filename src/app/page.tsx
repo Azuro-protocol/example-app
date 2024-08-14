@@ -5,6 +5,7 @@ import { useSports } from 'hooks'
 import Sport, { SportSkeleton } from 'compositions/events/Sport/Sport'
 import League, { LeagueSkeleton } from 'compositions/events/League/League'
 import TopEvents from 'compositions/events/TopEvents/TopEvents'
+import EmptyContent from 'compositions/events/EmptyContent/EmptyContent'
 
 
 const Sports: React.FC = () => {
@@ -19,7 +20,7 @@ const Sports: React.FC = () => {
   }
 
   if (!sports) {
-    return null
+    return <EmptyContent />
   }
 
   return (

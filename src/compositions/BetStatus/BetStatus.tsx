@@ -18,27 +18,27 @@ const statusData: Data = {
   [TBetStatus.Accepted]: {
     icon: 'interface/accepted',
     title: messages[TBetStatus.Accepted],
-    color: 'accent-pink',
+    color: 'text-accent-pink',
   },
   [TBetStatus.Live]: {
     icon: <LiveDot />,
     title: messages[TBetStatus.Live],
-    color: 'grey-50',
+    color: 'text-grey-50',
   },
   [TBetStatus.Canceled]: {
     icon: 'interface/declined',
     title: messages[TBetStatus.Canceled],
-    color: 'grey-60',
+    color: 'text-grey-60',
   },
   [TBetStatus.PendingResolution]: {
     icon: 'interface/pending',
     title: messages[TBetStatus.PendingResolution],
-    color: 'accent-blue',
+    color: 'text-accent-blue',
   },
   [TBetStatus.Resolved]: {
     icon: 'interface/win',
     title: messages[TBetStatus.Resolved],
-    color: 'accent-green',
+    color: 'text-accent-green',
   },
 }
 
@@ -75,7 +75,7 @@ const BetStatus: React.FC<BetStatusProps> = ({ graphBetStatus, games, isLiveBet,
   }
 
   return (
-    <div className={cx('flex items-center', `text-${color}`)}>
+    <div className={cx('flex items-center', `${color}`)}>
       {
         typeof icon === 'string' ? (
           <Icon className="size-4" name={icon as IconName} />

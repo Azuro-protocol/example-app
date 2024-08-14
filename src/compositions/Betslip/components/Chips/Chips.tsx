@@ -58,7 +58,7 @@ const Chips: React.FC = () => {
       }
       <Chip
         title={messages.max}
-        isActive={formatToFixed((balance || 0), 2) === +betAmount}
+        isActive={Boolean(+betAmount) && formatToFixed((balance || 0), 2) === +betAmount}
         isDisabled={loading}
         onClick={() => changeBetAmount(balance!)}
       />

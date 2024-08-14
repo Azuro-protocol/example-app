@@ -237,7 +237,7 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
           <Message className="text-grey-70 mr-1" value={messages.betAmount} />
           <span>{amount} {betToken.symbol}</span>
         </div>
-        <div className="flex ds:items-center mb:flex-col space-y-3">
+        <div className="flex ds:items-center mb:flex-col mb:space-y-3">
           <div className="flex items-center text-caption-13 mb:justify-between">
             <span className="text-grey-70 mr-1">{resultTitle}</span>
             <span
@@ -294,11 +294,11 @@ const useBets = () => {
 const Bets: React.FC = () => {
   const { bets, loading } = useBets()
 
+  console.log(bets, loading, 'bets')
+
   if (loading) {
     return null
   }
-
-  console.log(bets, 'bets')
 
   return (
     <div className="space-y-2">

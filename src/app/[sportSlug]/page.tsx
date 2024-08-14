@@ -4,6 +4,7 @@ import { useSports } from 'hooks'
 
 import Sport, { SportSkeleton } from 'compositions/events/Sport/Sport'
 import League, { LeagueSkeleton } from 'compositions/events/League/League'
+import EmptyContent from 'compositions/events/EmptyContent/EmptyContent'
 
 
 export default function SportPage() {
@@ -18,7 +19,7 @@ export default function SportPage() {
   }
 
   if (!sports) {
-    return null
+    return <EmptyContent />
   }
 
   const sport = sports[0]

@@ -11,22 +11,24 @@ const useOddsChange = ({ odds, nodeRef }: Props) => {
   const timerRef = useRef<NodeJS.Timeout | null>(null)
 
   useMemo(() => {
-    if (prevOdds.current) {
-      if (prevOdds.current === odds) {
-        return
+    if (odds) {
+      if (prevOdds.current) {
+        if (prevOdds.current === odds) {
+          return
+        }
+
+        nodeRef.current?.classList.remove('increased', 'decreased')
+        clearTimeout(timerRef.current!)
+
+        nodeRef.current?.classList.add(odds > prevOdds.current ? 'increased' : 'decreased')
+
+        timerRef.current = setTimeout(() => {
+          nodeRef.current?.classList.remove('increased', 'decreased')
+        }, 1500)
       }
 
-      nodeRef.current?.classList.remove('increased', 'decreased')
-      clearTimeout(timerRef.current!)
-
-      nodeRef.current?.classList.add(odds > prevOdds.current ? 'increased' : 'decreased')
-
-      timerRef.current = setTimeout(() => {
-        nodeRef.current?.classList.remove('increased', 'decreased')
-      }, 1500)
+      prevOdds.current = odds
     }
-
-    prevOdds.current = odds
   }, [ odds ])
 }
 

@@ -1,13 +1,13 @@
 'use client'
 
 import React from 'react'
-import { useBaseBetslip, useDetailedBetslip } from '@azuro-org/sdk'
+import { useBaseBetslip, useChain, useDetailedBetslip } from '@azuro-org/sdk'
 import { Message } from '@locmod/intl'
 import cx from 'classnames'
 
 import { Icon } from 'components/ui'
 import messages from './messages'
-import { AmountInput, BetButton, Card, Chips } from './components'
+import { AmountInput, BetButton, Card, Chips, Warning } from './components'
 
 
 const EmptyContent: React.FC = () => {
@@ -21,8 +21,9 @@ const EmptyContent: React.FC = () => {
 }
 
 const Betslip: React.FC = () => {
+  const { betToken } = useChain()
   const { items, clear } = useBaseBetslip()
-  const { odds, statuses, isOddsFetching, isStatusesFetching, isBatch } = useDetailedBetslip()
+  const { odds, statuses, minBet, maxBet, disableReason, isOddsFetching, isStatusesFetching, isBatch } = useDetailedBetslip()
 
   if (!items.length) {
     return (
@@ -71,6 +72,18 @@ const Betslip: React.FC = () => {
       >
         <AmountInput />
         <Chips />
+        {
+          Boolean(disableReason) && (
+            <Warning
+              className="mt-3"
+              text={
+                { ...messages.warnings[disableReason!],
+                  values: { minBet, maxBet, symbol: betToken.symbol },
+                }
+              }
+            />
+          )
+        }
         <BetButton />
       </div>
     </div>

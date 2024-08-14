@@ -4,11 +4,12 @@ import React, { useRef } from 'react'
 import { useBaseBetslip, useChain, type BetslipItem } from '@azuro-org/sdk'
 import { ConditionStatus } from '@azuro-org/toolkit'
 import cx from 'classnames'
-import { Message } from '@locmod/intl'
 import { formatToFixed } from 'helpers/formatters'
 
 import useOddsChange from 'src/hooks/useOddsChange'
 import { Icon, LiveDot, type IconName } from 'components/ui'
+import Warning from '../Warning/Warning'
+
 import messages from './messages'
 
 
@@ -85,10 +86,7 @@ const Card: React.FC<ItemProps> = (props) => {
       <div className={bottomBoxClassName}>
         {
           isDisabled ? (
-            <div className="bg-accent-yellow-10 p-2 flex items-center text-accent-yellow w-full rounded-sm">
-              <Icon className="size-4 mr-2" name="interface/warning" />
-              <Message className="text-caption-13 font-medium" value={messages.locked} />
-            </div>
+            <Warning text={messages.locked} />
           ) : (
             <>
               <div className="text-caption-12">

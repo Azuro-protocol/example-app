@@ -23,7 +23,7 @@ const Content: React.FC<ContentProps> = ({ game, isGameInLive }) => {
   return (
     <>
       <EventInfo game={game} status={status} />
-      <Markets gameId={game.gameId} gameStatus={status} />
+      <Markets gameId={game.gameId} gameStatus={status} startsAt={game.startsAt} />
     </>
   )
 }

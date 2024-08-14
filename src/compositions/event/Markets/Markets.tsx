@@ -1,15 +1,19 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { GameStatus, type GameMarkets } from '@azuro-org/toolkit'
 import { useActiveMarkets, useBetsSummaryBySelection, useResolvedMarkets } from '@azuro-org/sdk'
 import { useAccount } from 'wagmi'
+import dayjs from 'dayjs'
 
 import { Tooltip } from 'components/feedback'
 import { Icon } from 'components/ui'
 import OutcomeButton from 'compositions/OutcomeButton/OutcomeButton'
+import EmptyContent from 'compositions/EmptyContent/EmptyContent'
 
 import ResultButton from './components/ResultButton/ResultButton'
+
+import messages from './messages'
 
 
 export const MarketsSkeleton: React.FC = () => {
@@ -112,6 +116,7 @@ const Content: React.FC<ContentProps> = (props) => {
 type MarketsProps = {
   gameId: string
   gameStatus: GameStatus
+  startsAt: string
 }
 
 const ResolvedMarkets: React.FC<MarketsProps> = ({ gameId, gameStatus }) => {
@@ -136,19 +141,76 @@ const ResolvedMarkets: React.FC<MarketsProps> = ({ gameId, gameStatus }) => {
   )
 }
 
-const ActiveMarkets: React.FC<MarketsProps> = ({ gameId, gameStatus }) => {
+
+const WAIT_TIME = 600000
+
+const ActiveMarkets: React.FC<MarketsProps> = ({ gameId, gameStatus, startsAt }) => {
   const { loading, markets } = useActiveMarkets({
     gameId,
     gameStatus,
     livePollInterval: 10000,
   })
+  const isLive = gameStatus === GameStatus.Live
+
+  const startDate = +startsAt * 1000
+  const shouldWait = () => isLive && dayjs().diff(startDate) < WAIT_TIME
+  const [ waitingTime, setWaitingTime ] = useState(
+    shouldWait() ? WAIT_TIME - dayjs().diff(startDate) : 0
+  )
+
+  useEffect(() => {
+    if (shouldWait() && !markets?.length) {
+      const interval = setInterval(() => {
+        const newWaitingTime = Math.max(WAIT_TIME - dayjs().diff(startDate), 0)
+
+        if (newWaitingTime === 0) {
+          clearInterval(interval)
+        }
+        setWaitingTime(newWaitingTime)
+      }, 1000)
+
+      return () => {
+        clearInterval(interval)
+      }
+    }
+  }, [ gameStatus, markets ])
 
   if (loading) {
     return <MarketsSkeleton />
   }
 
   if (!markets) {
-    return null
+    if (isLive) {
+      if (waitingTime) {
+        const time = dayjs.duration(waitingTime).format('mm:ss')
+
+        return (
+          <EmptyContent
+            image="/images/illustrations/smile_sad.png"
+            title={messages.livePending.title}
+            text={{ ...messages.livePending.text, values: { time } }}
+          />
+        )
+      }
+      else {
+        return (
+          <EmptyContent
+            image="/images/illustrations/smile_sad.png"
+            title={messages.empty.live.title}
+            text={messages.empty.live.text}
+          />
+        )
+      }
+    }
+
+    return (
+      <EmptyContent
+        className="py-20"
+        image="/images/illustrations/smile_sad.png"
+        title={messages.empty.prematch.title}
+        text={messages.empty.prematch.text}
+      />
+    )
   }
 
   return (
@@ -161,6 +223,17 @@ const Markets: React.FC<MarketsProps> = (props) => {
 
   if (gameStatus === GameStatus.Resolved) {
     return <ResolvedMarkets {...props} />
+  }
+
+  if (gameStatus === GameStatus.Canceled || gameStatus === GameStatus.PendingResolution) {
+    return (
+      <EmptyContent
+        className="py-20"
+        image="/images/illustrations/smile_sad.png"
+        title={messages.ended.title}
+        text={messages.ended.text}
+      />
+    )
   }
 
   return (

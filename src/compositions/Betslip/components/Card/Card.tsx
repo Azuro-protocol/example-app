@@ -1,8 +1,8 @@
 'use client'
 
 import React, { useRef } from 'react'
-import { useBaseBetslip, useChain, type BetslipItem } from '@azuro-org/sdk'
-import { ConditionStatus } from '@azuro-org/toolkit'
+import { useBaseBetslip, type BetslipItem } from '@azuro-org/sdk'
+import { ConditionStatus, liveHostAddress } from '@azuro-org/toolkit'
 import cx from 'classnames'
 import { formatToFixed } from 'helpers/formatters'
 
@@ -25,13 +25,12 @@ const Card: React.FC<ItemProps> = (props) => {
   const { item, odds, status, isOddsFetching, isStatusesFetching } = props
   const { marketName, selectionName, coreAddress, game: { sportSlug, countryName, leagueName, title } } = item
 
-  const { contracts } = useChain()
   const { removeItem } = useBaseBetslip()
   const nodeRef = useRef<HTMLDivElement>(null)
   useOddsChange({ odds, nodeRef })
 
   const isDisabled = !isStatusesFetching && status !== ConditionStatus.Created
-  const isLive = contracts.liveCore && coreAddress === contracts.liveCore.address
+  const isLive = coreAddress === liveHostAddress
 
   const bottomBoxClassName = cx(
     'px-4 py-2 flex items-center justify-between mt-px',

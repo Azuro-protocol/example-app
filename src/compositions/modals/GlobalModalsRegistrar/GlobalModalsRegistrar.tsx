@@ -6,8 +6,8 @@ import { ModalsRenderer, registerModals } from '@locmod/modal'
 
 import { Overlay } from 'components/layout'
 import { Icon } from 'components/ui'
-// import InfoModal from 'compositions/app/modals/InfoModal/InfoModal'
-// import ErrorModal from 'compositions/app/modals/ErrorModal/ErrorModal'
+import InfoModal from 'compositions/modals/InfoModal/InfoModal'
+import ErrorModal from 'compositions/modals/ErrorModal/ErrorModal'
 
 
 export const ModalSkeleton = (loadingProps?: DynamicOptionsLoadingProps) => {
@@ -28,9 +28,10 @@ export const ModalSkeleton = (loadingProps?: DynamicOptionsLoadingProps) => {
 const loading = ModalSkeleton
 
 const registry = {
+  InfoModal,
+  ErrorModal,
   ConnectModal: dynamic(() => import('compositions/modals/ConnectModal/ConnectModal'), { loading }),
-  // ErrorModal,
-  // InfoModal,
+  SuccessModal: dynamic(() => import('compositions/modals/SuccessModal/SuccessModal'), { loading }),
 }
 
 registerModals(registry)

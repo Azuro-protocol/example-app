@@ -4,9 +4,11 @@ import { useBaseBetslip, useBetTokenBalance, useChain, useDetailedBetslip, usePr
 import { type Address } from 'viem'
 import { Message } from '@locmod/intl'
 import { useAccount } from 'wagmi'
+import { openModal } from '@locmod/modal'
 import { formatToFixed } from 'helpers/formatters'
-import { buttonMessages } from 'components/inputs'
+
 import { Icon } from 'components/ui'
+import { buttonMessages } from 'components/inputs'
 
 import messages from './messages'
 
@@ -42,7 +44,13 @@ const BetButton: React.FC = () => {
     totalOdds,
     freeBet: selectedFreeBet,
     onSuccess: () => {
+      openModal('SuccessModal', {
+        title: messages.success.title,
+      })
       clear()
+    },
+    onError: () => {
+      openModal('ErrorModal')
     },
   })
 

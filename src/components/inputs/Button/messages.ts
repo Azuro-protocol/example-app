@@ -20,4 +20,7 @@ export default {
   placeBet: {
     en: 'Place a bet',
   },
+  okay: {
+    en: 'Okay',
+  },
 }

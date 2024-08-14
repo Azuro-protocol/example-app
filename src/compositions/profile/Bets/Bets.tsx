@@ -15,6 +15,7 @@ import { OpponentLogo } from 'components/dataDisplay'
 import { Href } from 'components/navigation'
 import { Button } from 'components/inputs'
 import BetStatus from 'compositions/BetStatus/BetStatus'
+import EmptyContent from 'compositions/EmptyContent/EmptyContent'
 
 import messages from './messages'
 
@@ -112,8 +113,10 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
               },
               league: {
                 name: leagueName,
+                slug: leagueSlug,
                 country: {
                   name: countryName,
+                  slug: countrySlug,
                 },
               },
             } = game
@@ -156,7 +159,7 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
                     })
                   }
                 >
-                  <Href to="" className="flex items-center group/link">
+                  <Href to={`${sportSlug}/${countrySlug}/${leagueSlug}/${gameId}`} className="flex items-center group/link">
                     {
                       participants.map(({ name, image }, index) => (
                         <OpponentLogo className={cx({ '-mt-2': !index, '-mb-2 -ml-2 z-20': !!index })} key={name} image={image} />
@@ -316,6 +319,17 @@ const Bets: React.FC = () => {
       <div className="py-20">
         <Icon className="size-12 mx-auto" name="interface/spinner" />
       </div>
+    )
+  }
+
+  if (!bets?.length) {
+    return (
+      <EmptyContent
+        className="py-20"
+        image="/images/illustrations/smile_sad.png"
+        title={messages.empty.title}
+        text={messages.empty.text}
+      />
     )
   }
 

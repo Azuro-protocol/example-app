@@ -52,4 +52,12 @@ export default {
       en: 'Live\’',
     },
   },
+  empty: {
+    title: {
+      en: 'No bets to be displayed',
+    },
+    text: {
+      en: 'You have not placed any bets yet. Place your first bet and it will appear here.',
+    },
+  },
 }

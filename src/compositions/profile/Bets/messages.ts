@@ -23,6 +23,9 @@ export default {
   possibleWin: {
     en: 'Possible win:',
   },
+  freebet: {
+    en: 'Freebet',
+  },
   winning: {
     en: 'Winning:',
   },

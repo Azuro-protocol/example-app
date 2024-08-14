@@ -37,6 +37,7 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
   const isCombo = outcomes.length > 1
   const isLoading = isPending || isProcessing
   const isFreeBet = Boolean(freebetId)
+  const withButton = !isRedeemed && (isWin || isCanceled)
 
   const { resultTitle, resultAmount } = useMemo(() => {
     if (isWin) {
@@ -232,9 +233,25 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
           })
         }
       </div>
-      <div className="ds:py-4 mb:py-2 ds:px-3 mb:px-2 flex ds:items-center ds:justify-between mb:flex-col mb:space-y-2">
+      <div
+        className={
+          cx('ds:px-3 mb:px-2 flex ds:items-center ds:justify-between mb:flex-col mb:space-y-2', {
+            'ds:py-2 mb:py-2': withButton,
+            'ds:py-4 mb:py-2': !withButton,
+          })
+        }
+      >
         <div className="flex items-center text-caption-13 mb:justify-between">
-          <Message className="text-grey-70 mr-1" value={messages.betAmount} />
+          {
+            isFreeBet ? (
+              <div className="flex items-center text-accent-green mr-1">
+                <Icon className="size-4" name="interface/gift" />
+                <Message className="text-label font-semibold uppercase ml-1" value={messages.freebet} />
+              </div>
+            ) : (
+              <Message className="text-grey-70 mr-1" value={messages.betAmount} />
+            )
+          }
           <span>{amount} {betToken.symbol}</span>
         </div>
         <div className="flex ds:items-center mb:flex-col mb:space-y-3">
@@ -251,7 +268,7 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
             </span>
           </div>
           {
-            Boolean(!isRedeemed && (isWin || isCanceled)) && (
+            withButton && (
               <Button
                 className="ds:ml-3"
                 style="secondary"
@@ -294,10 +311,12 @@ const useBets = () => {
 const Bets: React.FC = () => {
   const { bets, loading } = useBets()
 
-  console.log(bets, loading, 'bets')
-
   if (loading) {
-    return null
+    return (
+      <div className="py-20">
+        <Icon className="size-12 mx-auto" name="interface/spinner" />
+      </div>
+    )
   }
 
   return (

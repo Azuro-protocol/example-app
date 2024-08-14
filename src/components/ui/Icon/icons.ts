@@ -89,6 +89,8 @@ import _interface_download from '../../../../public/images/icons/interface/downl
 import _interface_downloadSource from '!!raw-loader!../../../../public/images/icons/interface/download.svg'
 import _interface_external_link from '../../../../public/images/icons/interface/external_link.svg?url'
 import _interface_external_linkSource from '!!raw-loader!../../../../public/images/icons/interface/external_link.svg'
+import _interface_gift from '../../../../public/images/icons/interface/gift.svg?url'
+import _interface_giftSource from '!!raw-loader!../../../../public/images/icons/interface/gift.svg'
 import _interface_info_circle from '../../../../public/images/icons/interface/info-circle.svg?url'
 import _interface_info_circleSource from '!!raw-loader!../../../../public/images/icons/interface/info-circle.svg'
 import _interface_live from '../../../../public/images/icons/interface/live.svg?url'
@@ -172,6 +174,7 @@ const icons = {
   'interface/delete': { src: _interface_delete.src, source: isServer && _interface_deleteSource, width: _interface_delete.width, height: _interface_delete.height, aspect: _interface_delete.width/_interface_delete.height }, 
   'interface/download': { src: _interface_download.src, source: isServer && _interface_downloadSource, width: _interface_download.width, height: _interface_download.height, aspect: _interface_download.width/_interface_download.height }, 
   'interface/external_link': { src: _interface_external_link.src, source: isServer && _interface_external_linkSource, width: _interface_external_link.width, height: _interface_external_link.height, aspect: _interface_external_link.width/_interface_external_link.height }, 
+  'interface/gift': { src: _interface_gift.src, source: isServer && _interface_giftSource, width: _interface_gift.width, height: _interface_gift.height, aspect: _interface_gift.width/_interface_gift.height }, 
   'interface/info-circle': { src: _interface_info_circle.src, source: isServer && _interface_info_circleSource, width: _interface_info_circle.width, height: _interface_info_circle.height, aspect: _interface_info_circle.width/_interface_info_circle.height }, 
   'interface/live': { src: _interface_live.src, source: isServer && _interface_liveSource, width: _interface_live.width, height: _interface_live.height, aspect: _interface_live.width/_interface_live.height }, 
   'interface/lock': { src: _interface_lock.src, source: isServer && _interface_lockSource, width: _interface_lock.width, height: _interface_lock.height, aspect: _interface_lock.width/_interface_lock.height }, 

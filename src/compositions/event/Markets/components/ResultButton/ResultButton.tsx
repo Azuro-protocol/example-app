@@ -25,7 +25,7 @@ const OutcomeButton: React.FC<OutcomeButtonProps> = ({ outcome, summary, size = 
 
   const buttonClassName = cx(
     'w-full relative flex items-center justify-between px-3 overflow-hidden',
-    'text-caption-13 font-semibold border-none rounded-2 select-none',
+    'text-caption-13 font-semibold border-none rounded-min select-none',
     {
       'h-7': size === 28,
       'h-10': size === 40,

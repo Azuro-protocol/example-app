@@ -82,7 +82,7 @@ const Tooltip: React.FC<TooltipProps> = (props) => {
   ])
 
   const tooltipClassNames = cx(
-    'z-[1001] w-fit p-3 bg-bg-l2 rounded-4 text-grey-60 border border-grey-20',
+    'z-[1001] w-fit p-3 bg-bg-l2 rounded-md text-grey-60 border border-grey-20',
     '-sm:max-w-[95vw] sm:max-w-[20rem]'
   )
   const arrowClassNames = cx('absolute block w-4 h-2 text-bg-l2', {

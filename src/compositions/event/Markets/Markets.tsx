@@ -25,11 +25,11 @@ export const MarketsSkeleton: React.FC = () => {
             <div className="flex items-center justify-between p-4">
               <div className="bone h-[1.125rem] w-24 rounded-full" />
             </div>
-            <div className="space-y-2 bg-bg-l2 rounded-3 p-2">
+            <div className="space-y-2 bg-bg-l2 rounded-sm p-2">
               <div className="flex justify-between">
                 <div className="flex gap-2 w-full">
-                  <div className="bone h-10 w-full rounded-2" />
-                  <div className="bone h-10 w-full rounded-2" />
+                  <div className="bone h-10 w-full rounded-min" />
+                  <div className="bone h-10 w-full rounded-min" />
                 </div>
               </div>
             </div>
@@ -72,7 +72,7 @@ const Content: React.FC<ContentProps> = (props) => {
                 }
               </div>
             </div>
-            <div className="space-y-2 bg-bg-l2 rounded-3 p-2">
+            <div className="space-y-2 bg-bg-l2 rounded-sm p-2">
               {
                 outcomeRows.map((outcomes, index) => (
                   <div key={`${index}-${outcomes.length}`} className="flex justify-between">

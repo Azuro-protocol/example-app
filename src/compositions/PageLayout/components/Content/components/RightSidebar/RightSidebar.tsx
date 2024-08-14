@@ -30,7 +30,7 @@ const RightSidebar: React.FC = () => {
           )
         }
       </div>
-      <div className="bg-bg-l1 border border-grey-10 rounded-r-4 -ml-px overflow-auto wd:h-[calc(100vh_-_4.5rem)] no-scrollbar px-2">
+      <div className="bg-bg-l1 border border-grey-10 rounded-r-md -ml-px overflow-auto wd:h-[calc(100vh_-_4.5rem)] no-scrollbar px-2">
         <Betslip />
       </div>
     </>

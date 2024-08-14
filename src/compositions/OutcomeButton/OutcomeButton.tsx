@@ -23,7 +23,7 @@ const OutcomeButton: React.FC<OutcomeButtonProps> = ({ outcome, size = 28 }) => 
 
   const buttonClassName = cx(
     'group/button w-full relative flex items-center justify-between px-3 overflow-hidden',
-    'text-caption-13 font-semibold border-none rounded-2 select-none',
+    'text-caption-13 font-semibold border-none rounded-min select-none',
     {
       'hover:text-brand-50 hover:bg-brand-5': !isLocked && !isActive,
       'text-grey-10 bg-grey-90': isActive,

@@ -23,12 +23,12 @@ export const LeagueSkeleton: React.FC<{isPage?: boolean}> = ({ isPage = false })
             <div className="bone h-[1.375rem] w-44 rounded-full" />
           </div>
         ) : (
-          <div className="rounded-t-4 flex items-center justify-between py-2 px-4 bg-bg-l2 mb-[2px]">
+          <div className="rounded-t-md flex items-center justify-between py-2 px-4 bg-bg-l2 mb-[2px]">
             <div className="flex items-center">
               <div className="bone size-4 mr-2 rounded-full" />
-              <div className="bone h-[0.875rem] w-[8rem] rounded-4" />
+              <div className="bone h-[0.875rem] w-[8rem] rounded-md" />
               <div className="size-1 rounded-full mx-2 bg-grey-20" />
-              <div className="bone h-[0.875rem] w-[4rem] rounded-4" />
+              <div className="bone h-[0.875rem] w-[4rem] rounded-md" />
             </div>
           </div>
         )
@@ -36,8 +36,8 @@ export const LeagueSkeleton: React.FC<{isPage?: boolean}> = ({ isPage = false })
       <div className="space-y-[2px]">
         {
           new Array(3).fill(0).map((_, index) => {
-            const className = cx('flex mb:flex-col ds:items-center justify-between py-2 px-4 bg-bg-l2 last-of-type:rounded-b-4', {
-              'first-of-type:rounded-t-4': isPage,
+            const className = cx('flex mb:flex-col ds:items-center justify-between py-2 px-4 bg-bg-l2 last-of-type:rounded-b-md', {
+              'first-of-type:rounded-t-md': isPage,
             })
 
             return (
@@ -47,10 +47,10 @@ export const LeagueSkeleton: React.FC<{isPage?: boolean}> = ({ isPage = false })
                   <div className="bone size-7 -mb-2 -ml-2 z-20 rounded-full" />
                   <div className="ml-3">
                     <div className="mb-[2px] flex items-center">
-                      <div className="bone h-4 w-8 mr-1 rounded-4" />
-                      <span className="bone h-[0.875rem] w-20 rounded-4" />
+                      <div className="bone h-4 w-8 mr-1 rounded-md" />
+                      <span className="bone h-[0.875rem] w-20 rounded-md" />
                     </div>
-                    <div className="bone h-4 w-24 rounded-4" />
+                    <div className="bone h-4 w-24 rounded-md" />
                   </div>
                 </div>
                 <div className="w-full max-w-[26.25rem] mb:mt-2">
@@ -99,16 +99,16 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game, withTopRadios }
 
   const rootClassName = cx(
     'group flex mb:flex-col ds:items-center justify-between',
-    'py-2 px-4 bg-bg-l2 last-of-type:rounded-b-4 relative',
+    'py-2 px-4 bg-bg-l2 last-of-type:rounded-b-md relative',
     className,
     {
-      'first-of-type:rounded-t-4': withTopRadios,
+      'first-of-type:rounded-t-md': withTopRadios,
     })
   const liveClassName = cx(
     'border-l-[2px] border-l-accent-red absolute h-full',
-    'left-0 bg-live-game-shadow w-[30%] group-last-of-type:rounded-b-4',
+    'left-0 bg-live-game-shadow w-[30%] group-last-of-type:rounded-b-md',
     {
-      'group-first-of-type:rounded-t-4': withTopRadios,
+      'group-first-of-type:rounded-t-md': withTopRadios,
     }
   )
 
@@ -173,7 +173,7 @@ const League: React.FC<LeagueProps> = ({ sportSlug, league, isPage = false }) =>
             <div className="text-heading-h4 font-semibold">{name}</div>
           </div>
         ) : (
-          <div className="rounded-t-4 flex items-center justify-between py-2 px-4 bg-bg-l2 mb-[2px]">
+          <div className="rounded-t-md flex items-center justify-between py-2 px-4 bg-bg-l2 mb-[2px]">
             <Href to={leagueUrl} className="flex items-center hover:underline">
               <Flag className="mr-2" country={countrySlug} />
               <div className="text-caption-12 text-grey-70">{countryName}</div>

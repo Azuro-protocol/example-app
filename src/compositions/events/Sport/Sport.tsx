@@ -15,7 +15,7 @@ export const SportSkeleton: React.CFC = ({ children }) => {
       <div className="flex items-center justify-between py-3 px-4">
         <div className="flex items-center">
           <div className="bone size-6 mr-3 rounded-full" />
-          <div className="bone h-6 w-20 rounded-4" />
+          <div className="bone h-6 w-20 rounded-md" />
         </div>
       </div>
       <div>{children}</div>

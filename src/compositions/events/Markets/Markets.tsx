@@ -52,7 +52,7 @@ const MobileMarkets: React.FC<MobileMarketsProps> = ({ sortedMarkets, marketsByK
   return (
     <Overlay className="flex items-end" onClick={onClose}>
       <div
-        className="relative w-full bg-grey-10 rounded-t-2 px-4 pb-4 max-h-[70vh] overflow-auto no-scrollbar"
+        className="relative w-full bg-grey-10 rounded-t-min px-4 pb-4 max-h-[70vh] overflow-auto no-scrollbar"
         onClick={handleContentClick}
       >
         <div className="flex items-center justify-between p-4 -mx-4 bg-grey-10 sticky top-0 z-10">
@@ -79,7 +79,7 @@ export const MarketsSkeleton: React.FC = () => {
     <div className="ds:p-2 border border-transparent">
       <div className="flex">
         <MarketSkeleton />
-        <div className="bone size-7 mt-5 ml-2 rounded-2 flex-none border border-transparent" />
+        <div className="bone size-7 mt-5 ml-2 rounded-min flex-none border border-transparent" />
       </div>
     </div>
   )
@@ -107,7 +107,7 @@ const Content: React.FC<ContentProps> = ({ marketsByKey, sortedMarkets }) => {
     'border-transparent': !isOpen,
   })
   const buttonClassName = cx(
-    'size-7 flex items-center justify-center flex-none rounded-2',
+    'size-7 flex items-center justify-center flex-none rounded-min',
     'group border border-grey-20 text-gray-70 ml-2 mt-5 sticky top-5',
     'disabled:cursor-not-allowed disabled:text-grey-40 disabled:border-grey-10',
     {

@@ -55,8 +55,8 @@ const PlainModal: React.CFC<PlainModalProps> = (props) => {
   const modalClassName = cx(
     className,
     'relative bg-grey-10 w-full font-medium flex flex-col',
-    'mb:max-h-full rounded-t-4',
-    'ds:max-w-[22.25rem] ds:rounded-4'
+    'mb:max-h-full rounded-t-md',
+    'ds:max-w-[22.25rem] ds:rounded-md'
   )
 
   useEffect(() => {

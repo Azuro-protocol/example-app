@@ -68,6 +68,7 @@ const config: Config = {
         '12': '3rem',
         '16': '4rem',
         'ssm': '0.375rem',
+        'min': '0.5rem',
         'sm': '0.75rem',
         'md': '1rem',
         'lg': '1.25rem',

@@ -44,13 +44,13 @@ const Card: React.FC<ItemProps> = (props) => {
   )
   const oddsClassName = cx(
     'h-5 flex items-center px-[0.375rem] bg-brand-5 border',
-    'border-brand-10 rounded-3 text-brand-50 text-caption-12',
+    'border-brand-10 rounded-sm text-brand-50 text-caption-12',
     'group-[.increased]/card:bg-accent-green-5 group-[.increased]/card:border-accent-green-10 group-[.increased]/card:text-accent-green',
     'group-[.decreased]/card:bg-accent-red-5 group-[.decreased]/card:border-accent-red-10 group-[.decreased]/card:text-accent-red'
   )
 
   return (
-    <div ref={nodeRef} className="group/card rounded-4 overflow-hidden">
+    <div ref={nodeRef} className="group/card rounded-md overflow-hidden">
       <div className="bg-bg-l2 py-2 px-4">
         <div className="flex items-center justify-between">
           <div

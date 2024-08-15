@@ -48,7 +48,7 @@ const ChainSelect: React.FC = () => {
   const { appChain, setAppChainId } = useChain()
 
   return (
-    <div className="border border-grey-20 p-1">
+    <div className="border border-grey-20 p-1 rounded-md">
       <Listbox value={appChain.id} onChange={setAppChainId}>
         <Listbox.Button
           className="p-2 flex items-center justify-between w-full group/select"
@@ -73,7 +73,7 @@ const ChainSelect: React.FC = () => {
                 <Listbox.Option
                   key={chain.id}
                   value={chain.id}
-                  className="flex items-center justify-between p-2 cursor-pointer bg-bg-l3"
+                  className="flex items-center justify-between p-2 cursor-pointer bg-bg-l3 first-of-type:rounded-t-sm last-of-type:rounded-b-sm"
                 >
                   <div className="flex items-center">
                     <ChainCurrency
@@ -130,9 +130,9 @@ const Content: React.FC = () => {
   const buttonClassName = 'px-2 py-1 border border-grey-15 text-grey-60 hover:text-grey-90 transition cursor-pointer'
 
   return (
-    <div className="border border-grey-20 p-2 ds:w-[18.75rem] bg-bg-l2">
+    <div className="border border-grey-20 p-2 ds:w-[18.75rem] bg-bg-l2 rounded-md overflow-hidden">
       <ChainSelect />
-      <div className="p-1 bg-bg-l1 mt-2">
+      <div className="p-1 bg-bg-l1 mt-2 rounded-md">
         <div className="flex items-center justify-between px-2 py-1">
           <div className="flex items-center">
             <div className="p-1 rounded-full bg-grey-10 border border-grey-15 mr-2">

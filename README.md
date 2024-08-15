@@ -3,7 +3,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 ## Customization
 
 ### Theme
-This project utilizes a [Tailwind CSS](https://tailwindcss.com/docs/theme) theme configuration, allowing you to customize theme colors, element border-radius, and typography sizes to suit your needs. Check [tailwind.config.ts](/blob/main/tailwind.config.ts) file.
+This project utilizes a [Tailwind CSS](https://tailwindcss.com/docs/theme) theme configuration, allowing you to customize theme colors, element border-radius, and typography sizes to suit your needs. Check [tailwind.config.ts](/tailwind.config.ts) file.
 
 ## Run project
 

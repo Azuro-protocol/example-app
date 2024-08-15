@@ -1,5 +1,7 @@
 import cx from 'classnames'
 
+import { Href } from 'components/navigation'
+
 
 type LogoProps = {
   className?: string
@@ -9,7 +11,7 @@ const Logo: React.FC<LogoProps> = (props) => {
   const { className } = props
 
   return (
-    <div className={cx('flex items-center', className)}>
+    <Href to="/" className={cx('flex items-center', className)}>
       <svg
         className="h-full"
         width="71"
@@ -24,7 +26,7 @@ const Logo: React.FC<LogoProps> = (props) => {
           fill="currentColor"
         />
       </svg>
-    </div>
+    </Href>
   )
 }
 

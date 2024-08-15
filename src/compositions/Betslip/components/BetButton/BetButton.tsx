@@ -74,7 +74,7 @@ const BetButton: React.FC = () => {
     isLoading
     || !address
     || !isBetAllowed
-    || !isEnoughBalance
+    || (!isEnoughBalance && !isApproveRequired)
     || !+betAmount
   )
 
@@ -88,7 +88,7 @@ const BetButton: React.FC = () => {
   })
 
   return (
-    <button className={rootClassName} onClick={submit}>
+    <button className={rootClassName} onClick={submit} disabled={isDisabled}>
       <div className="w-full text-center px-1">
         {
           isLoading ? (

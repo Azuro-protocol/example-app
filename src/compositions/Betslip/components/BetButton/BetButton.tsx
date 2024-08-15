@@ -5,6 +5,7 @@ import { type Address } from 'viem'
 import { Message } from '@locmod/intl'
 import { useAccount } from 'wagmi'
 import { openModal } from '@locmod/modal'
+import { isUserRejectedRequestError } from 'helpers'
 import { formatToFixed } from 'helpers/formatters'
 
 import { Icon } from 'components/ui'
@@ -49,8 +50,10 @@ const BetButton: React.FC = () => {
       })
       clear()
     },
-    onError: () => {
-      openModal('ErrorModal')
+    onError: (err) => {
+      if (!isUserRejectedRequestError(err)) {
+        openModal('ErrorModal')
+      }
     },
   })
 

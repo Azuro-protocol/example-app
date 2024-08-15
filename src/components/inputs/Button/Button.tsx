@@ -26,6 +26,7 @@ export type ButtonProps = ButtonBaseProps & OnlyOne<{
   title?: string | Intl.Message
   leftIcon?: IconName
   rightIcon?: IconName
+  rightNode?: React.ReactElement
   size: ButtonSize
   style?: ButtonStyle
   html?: boolean
@@ -36,7 +37,7 @@ const Button = forwardRef<HTMLAnchorElement | HTMLButtonElement, ButtonProps>((p
   let {
     children, className, title, size, html, style = 'primary',
     loading, disabled,
-    leftIcon, rightIcon,
+    leftIcon, rightIcon, rightNode,
     ...rest
   } = props
 
@@ -45,7 +46,7 @@ const Button = forwardRef<HTMLAnchorElement | HTMLButtonElement, ButtonProps>((p
   }
 
   const rootClassName = cx(className,
-    'relative flex items-center justify-center whitespace-nowrap uppercase font-bold transition-all border rounded-sm',
+    'flex items-center justify-center whitespace-nowrap uppercase font-bold transition-all border rounded-sm',
     'text-center align-top cursor-pointer select-none disabled:cursor-not-allowed disabled:transition-none',
     {
       'text-caption-14 h-10 px-4': size === 40,
@@ -88,6 +89,11 @@ const Button = forwardRef<HTMLAnchorElement | HTMLButtonElement, ButtonProps>((p
               className={cx('ml-2', `size-${iconSize}`)}
               name={rightIcon}
             />
+          )
+        }
+        {
+          Boolean(rightNode) && (
+            rightNode
           )
         }
       </div>

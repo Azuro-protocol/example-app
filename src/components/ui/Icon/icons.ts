@@ -57,6 +57,8 @@ import _interface_alert_triangle from '../../../../public/images/icons/interface
 import _interface_alert_triangleSource from '!!raw-loader!../../../../public/images/icons/interface/alert_triangle.svg'
 import _interface_arrow_tooltip from '../../../../public/images/icons/interface/arrow_tooltip.svg?url'
 import _interface_arrow_tooltipSource from '!!raw-loader!../../../../public/images/icons/interface/arrow_tooltip.svg'
+import _interface_betslip from '../../../../public/images/icons/interface/betslip.svg?url'
+import _interface_betslipSource from '!!raw-loader!../../../../public/images/icons/interface/betslip.svg'
 import _interface_burger_menu from '../../../../public/images/icons/interface/burger_menu.svg?url'
 import _interface_burger_menuSource from '!!raw-loader!../../../../public/images/icons/interface/burger_menu.svg'
 import _interface_caret_down from '../../../../public/images/icons/interface/caret_down.svg?url'
@@ -158,6 +160,7 @@ const icons = {
   'interface/accepted': { src: _interface_accepted.src, source: isServer && _interface_acceptedSource, width: _interface_accepted.width, height: _interface_accepted.height, aspect: _interface_accepted.width/_interface_accepted.height }, 
   'interface/alert_triangle': { src: _interface_alert_triangle.src, source: isServer && _interface_alert_triangleSource, width: _interface_alert_triangle.width, height: _interface_alert_triangle.height, aspect: _interface_alert_triangle.width/_interface_alert_triangle.height }, 
   'interface/arrow_tooltip': { src: _interface_arrow_tooltip.src, source: isServer && _interface_arrow_tooltipSource, width: _interface_arrow_tooltip.width, height: _interface_arrow_tooltip.height, aspect: _interface_arrow_tooltip.width/_interface_arrow_tooltip.height }, 
+  'interface/betslip': { src: _interface_betslip.src, source: isServer && _interface_betslipSource, width: _interface_betslip.width, height: _interface_betslip.height, aspect: _interface_betslip.width/_interface_betslip.height }, 
   'interface/burger_menu': { src: _interface_burger_menu.src, source: isServer && _interface_burger_menuSource, width: _interface_burger_menu.width, height: _interface_burger_menu.height, aspect: _interface_burger_menu.width/_interface_burger_menu.height }, 
   'interface/caret_down': { src: _interface_caret_down.src, source: isServer && _interface_caret_downSource, width: _interface_caret_down.width, height: _interface_caret_down.height, aspect: _interface_caret_down.width/_interface_caret_down.height }, 
   'interface/caret_left': { src: _interface_caret_left.src, source: isServer && _interface_caret_leftSource, width: _interface_caret_left.width, height: _interface_caret_left.height, aspect: _interface_caret_left.width/_interface_caret_left.height }, 

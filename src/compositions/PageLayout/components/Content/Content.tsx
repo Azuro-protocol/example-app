@@ -4,6 +4,7 @@ import React from 'react'
 import cx from 'classnames'
 
 import { Media } from 'components/layout'
+import MobileBetslipButton from 'compositions/MobileBetslipButton/MobileBetslipButton'
 import { LeftSidebar, RightSidebar, Header } from './components'
 
 import ns from './Narrow.module.scss'
@@ -38,6 +39,9 @@ const Content: React.CFC = ({ children }) => {
       </main>
       <Media className={cx('h-[calc(100vh_-_0.5rem)]', ws.rightSidebar, sidebarClassName)} wide>
         <RightSidebar />
+      </Media>
+      <Media narrow mobile>
+        <MobileBetslipButton />
       </Media>
     </div>
   )

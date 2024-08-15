@@ -58,7 +58,7 @@ const Header: React.FC = () => {
   }, [ pathname ])
 
   return (
-    <div ref={containerRef} className="py-4 px-5 bg-bg-l0">
+    <div ref={containerRef} className="py-2 px-5 bg-bg-l0">
       <div className="flex items-center justify-between">
         <div className="flex items-center">
           <div onClick={handleClick}>

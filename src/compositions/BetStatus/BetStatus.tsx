@@ -65,12 +65,12 @@ const BetStatus: React.FC<BetStatusProps> = ({ graphBetStatus, games, isLiveBet,
     if (isWin) {
       icon = 'interface/win'
       title = messages.win
-      color = 'accent-green'
+      color = 'text-accent-green'
     }
     else {
       icon = 'interface/lose'
       title = messages.lose
-      color = 'accent-red'
+      color = 'text-accent-red'
     }
   }
 

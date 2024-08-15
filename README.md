@@ -9,7 +9,7 @@ This project utilizes a [Tailwind CSS](https://tailwindcss.com/docs/theme) theme
 Change the `NEXT_PUBLIC_AFFILIATE_ADDRESS` variable in [.env](/.env) file with your address and other related to project information.
 
 ### Logo
-To add your project logo change [Logo](/src/components/ui/logo/Logo.tsx) component.
+To add your project logo change [Logo](/src/components/ui/Logo/Logo.tsx) component.
 
 ## Run project
 

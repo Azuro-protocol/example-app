@@ -78,7 +78,7 @@ const BetButton: React.FC = () => {
     || !+betAmount
   )
 
-  const rootClassName = cx('flex items-center justify-between py-1 pr-1 border rounded-md mt-3 w-full', {
+  const rootClassName = cx('flex items-center justify-between py-1 pr-1 border rounded-md mt-3 only:mt-0 w-full', {
     'bg-bg-l1 border-grey-10 cursor-not-allowed': isDisabled,
     'bg-brand-50 text-grey-90 border-white/20': !isDisabled,
   })

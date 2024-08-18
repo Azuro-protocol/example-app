@@ -79,6 +79,8 @@ import _interface_chevron_right from '../../../../public/images/icons/interface/
 import _interface_chevron_rightSource from '!!raw-loader!../../../../public/images/icons/interface/chevron_right.svg'
 import _interface_chevron_up from '../../../../public/images/icons/interface/chevron_up.svg?url'
 import _interface_chevron_upSource from '!!raw-loader!../../../../public/images/icons/interface/chevron_up.svg'
+import _interface_clear from '../../../../public/images/icons/interface/clear.svg?url'
+import _interface_clearSource from '!!raw-loader!../../../../public/images/icons/interface/clear.svg'
 import _interface_close from '../../../../public/images/icons/interface/close.svg?url'
 import _interface_closeSource from '!!raw-loader!../../../../public/images/icons/interface/close.svg'
 import _interface_copy from '../../../../public/images/icons/interface/copy.svg?url'
@@ -171,6 +173,7 @@ const icons = {
   'interface/chevron_left': { src: _interface_chevron_left.src, source: isServer && _interface_chevron_leftSource, width: _interface_chevron_left.width, height: _interface_chevron_left.height, aspect: _interface_chevron_left.width/_interface_chevron_left.height }, 
   'interface/chevron_right': { src: _interface_chevron_right.src, source: isServer && _interface_chevron_rightSource, width: _interface_chevron_right.width, height: _interface_chevron_right.height, aspect: _interface_chevron_right.width/_interface_chevron_right.height }, 
   'interface/chevron_up': { src: _interface_chevron_up.src, source: isServer && _interface_chevron_upSource, width: _interface_chevron_up.width, height: _interface_chevron_up.height, aspect: _interface_chevron_up.width/_interface_chevron_up.height }, 
+  'interface/clear': { src: _interface_clear.src, source: isServer && _interface_clearSource, width: _interface_clear.width, height: _interface_clear.height, aspect: _interface_clear.width/_interface_clear.height }, 
   'interface/close': { src: _interface_close.src, source: isServer && _interface_closeSource, width: _interface_close.width, height: _interface_close.height, aspect: _interface_close.width/_interface_close.height }, 
   'interface/copy': { src: _interface_copy.src, source: isServer && _interface_copySource, width: _interface_copy.width, height: _interface_copy.height, aspect: _interface_copy.width/_interface_copy.height }, 
   'interface/declined': { src: _interface_declined.src, source: isServer && _interface_declinedSource, width: _interface_declined.width, height: _interface_declined.height, aspect: _interface_declined.width/_interface_declined.height }, 

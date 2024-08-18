@@ -7,7 +7,7 @@ import cx from 'classnames'
 
 import { Icon } from 'components/ui'
 import messages from './messages'
-import { AmountInput, BetButton, Card, Chips, Warning } from './components'
+import { AmountInput, BetButton, Card, Chips, FreeBet, Warning } from './components'
 
 
 const EmptyContent: React.FC = () => {
@@ -23,7 +23,12 @@ const EmptyContent: React.FC = () => {
 const Betslip: React.FC = () => {
   const { betToken } = useChain()
   const { items, clear } = useBaseBetslip()
-  const { odds, statuses, minBet, maxBet, disableReason, isOddsFetching, isStatusesFetching, isBatch } = useDetailedBetslip()
+  const {
+    odds, statuses, minBet, maxBet, disableReason, selectedFreeBet,
+    isOddsFetching, isStatusesFetching, isBatch,
+  } = useDetailedBetslip()
+
+  const isSingle = items.length === 1
 
   if (!items.length) {
     return (
@@ -45,7 +50,14 @@ const Betslip: React.FC = () => {
           <Icon className="size-5" name="interface/delete" />
         </button>
       </div>
-      <div className="space-y-2 max-h-[16rem] overflow-auto no-scrollbar pb-6">
+      <div
+        className={
+          cx('space-y-2 max-h-[16rem] overflow-auto no-scrollbar', {
+            'pb-6': !isSingle,
+            'pb-2': isSingle,
+          })
+        }
+      >
         {
           items.map((item) => {
             const { conditionId, outcomeId, coreAddress } = item
@@ -63,15 +75,23 @@ const Betslip: React.FC = () => {
           })
         }
       </div>
+      <FreeBet />
       <div
         className={
-          cx('bg-bg-l2 p-3 rounded-lg -mt-4 z-10 relative', {
+          cx('bg-bg-l2 p-3 rounded-lg z-10 relative', {
+            '-mt-4': !isSingle,
             'shadow-betslip': items.length > 2,
           })
         }
       >
-        <AmountInput />
-        <Chips />
+        {
+          !selectedFreeBet && (
+            <>
+              <AmountInput />
+              <Chips />
+            </>
+          )
+        }
         {
           Boolean(disableReason) && (
             <Warning

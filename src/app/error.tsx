@@ -3,7 +3,8 @@
 import Error from 'compositions/Error/Error'
 
 
-export default function CountryPage() {
+export default function ErrorPage() {
+
   return (
     <Error />
   )

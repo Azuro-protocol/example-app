@@ -8,7 +8,7 @@ import Bets from 'compositions/profile/Bets/Bets'
 import User from 'compositions/profile/User/User'
 
 
-export default function Profile() {
+export default function ProfilePage() {
   const { account, isReconnecting } = useWallet()
   const router = useRouter()
 

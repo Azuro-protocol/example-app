@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { useBaseBetslip, useChain, useDetailedBetslip } from '@azuro-org/sdk'
+import { useBaseBetslip, useBetTokenBalance, useChain, useDetailedBetslip } from '@azuro-org/sdk'
 import { Message } from '@locmod/intl'
 import cx from 'classnames'
 
@@ -24,11 +24,14 @@ const Betslip: React.FC = () => {
   const { betToken } = useChain()
   const { items, clear } = useBaseBetslip()
   const {
-    odds, statuses, minBet, maxBet, disableReason, selectedFreeBet,
+    odds, statuses, minBet, maxBet, disableReason, selectedFreeBet, betAmount,
     isOddsFetching, isStatusesFetching, isBatch,
   } = useDetailedBetslip()
+  const { balance, loading: isBalanceFetching } = useBetTokenBalance()
 
   const isSingle = items.length === 1
+
+  const isEnoughBalance = isBalanceFetching || !Boolean(+betAmount) ? true : Boolean(+balance! > +betAmount)
 
   if (!items.length) {
     return (
@@ -87,7 +90,7 @@ const Betslip: React.FC = () => {
         {
           !selectedFreeBet && (
             <>
-              <AmountInput />
+              <AmountInput isEnoughBalance={isEnoughBalance} />
               <Chips />
             </>
           )
@@ -104,7 +107,7 @@ const Betslip: React.FC = () => {
             />
           )
         }
-        <BetButton />
+        <BetButton isEnoughBalance={isEnoughBalance} isBalanceFetching={isBalanceFetching} />
       </div>
     </div>
   )

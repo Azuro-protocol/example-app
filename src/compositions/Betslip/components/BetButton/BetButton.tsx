@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import cx from 'classnames'
-import { useBaseBetslip, useBetTokenBalance, useChain, useDetailedBetslip, usePrepareBet } from '@azuro-org/sdk'
+import { useBaseBetslip, useChain, useDetailedBetslip, usePrepareBet } from '@azuro-org/sdk'
 import { type Address } from 'viem'
 import { Message } from '@locmod/intl'
 import { useAccount } from 'wagmi'
@@ -14,20 +14,22 @@ import { buttonMessages } from 'components/inputs'
 import messages from './messages'
 
 
-const BetButton: React.FC = () => {
+type BetButtonProps = {
+  isEnoughBalance: boolean
+  isBalanceFetching: boolean
+}
+
+const BetButton: React.FC<BetButtonProps> = ({ isEnoughBalance, isBalanceFetching }) => {
   const { address } = useAccount()
   const { betToken } = useChain()
   const { items, clear } = useBaseBetslip()
   const { betAmount, odds, totalOdds, selectedFreeBet, isBetAllowed, isOddsFetching, isStatusesFetching } = useDetailedBetslip()
-  const { balance, loading: isBalanceFetching } = useBetTokenBalance()
 
   const totalOddsRef = useRef(totalOdds)
 
   if (!isOddsFetching) {
     totalOddsRef.current = totalOdds
   }
-
-  const isEnoughBalance = isBalanceFetching || !Boolean(+betAmount) ? true : Boolean(+balance! > +betAmount)
 
   const {
     submit,

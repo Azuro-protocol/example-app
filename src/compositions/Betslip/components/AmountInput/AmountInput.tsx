@@ -6,7 +6,11 @@ import { constants } from 'helpers'
 import { Icon } from 'components/ui'
 
 
-const AmountInput = () => {
+type AmountInputProps = {
+  isEnoughBalance: boolean
+}
+
+const AmountInput: React.FC<AmountInputProps> = ({ isEnoughBalance }) => {
   const { appChain } = useChain()
   const { betAmount, changeBetAmount, disableReason } = useDetailedBetslip()
 
@@ -28,7 +32,7 @@ const AmountInput = () => {
     handleChange(event.target.value)
   }
 
-  const isError = [
+  const isError = !isEnoughBalance || [
     BetslipDisableReason.BetAmountGreaterThanMaxBet,
     BetslipDisableReason.BetAmountLowerThanMinBet,
   ].includes(disableReason!)

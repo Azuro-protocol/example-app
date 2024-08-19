@@ -60,7 +60,7 @@ const ChainSelect: React.FC = () => {
             />
             <div className="text-caption-13">{appChain.name}</div>
           </div>
-          <Icon className="size-4 text-grey-60 hover:text-grey-90 transition-colors group-aria-[controls]/select:rotate-180" name="interface/chevron_down" />
+          <Icon className="size-4 text-grey-60 group-hover/select:text-grey-90 transition-colors group-aria-[controls]/select:rotate-180" name="interface/chevron_down" />
         </Listbox.Button>
         <Listbox.Options className="w-full space-y-[2px]">
           {

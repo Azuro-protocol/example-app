@@ -23,4 +23,7 @@ export default {
   okay: {
     en: 'Okay',
   },
+  gotIt: {
+    en: 'Got it',
+  },
 }

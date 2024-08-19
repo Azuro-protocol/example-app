@@ -10,6 +10,8 @@ import { AzuroSDKProvider, LiveProvider } from '@azuro-org/sdk'
 import { WagmiProvider } from 'wallet'
 import { DeviceProvider } from 'contexts'
 
+import NewFreeBetsChecker from 'compositions/NewFreeBetsChecker/NewFreeBetsChecker'
+
 
 type Props = {
   userAgent: string
@@ -31,6 +33,7 @@ const Providers: React.CFC<Props> = (props) => {
               <LiveProvider initialLiveState={initialLiveState}>
                 {children}
               </LiveProvider>
+              <NewFreeBetsChecker />
             </AzuroSDKProvider>
           </WagmiProvider>
         </IntlProvider>

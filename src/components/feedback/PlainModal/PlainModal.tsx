@@ -86,7 +86,7 @@ const PlainModal: React.CFC<PlainModalProps> = (props) => {
           {
             withCloseButton && (
               <button
-                className="absolute top-4 right-4 p-2 z-10 bg-grey-15 border-grey-20 border rounded-full text-grey-70 hover:text-grey-90"
+                className="absolute top-4 right-4 p-2 z-40 bg-grey-15 border-grey-20 border rounded-full text-grey-70 hover:text-grey-90"
                 onClick={handleCloseButtonClick}
               >
                 <Icon className="size-3" name="interface/close" />

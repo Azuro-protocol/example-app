@@ -5,4 +5,12 @@ export default {
   disconnect: {
     en: 'Disconnect',
   },
+  wave: {
+    title: {
+      en: 'Azuro Wave Points',
+    },
+    text: {
+      en: 'Level: {level}',
+    },
+  },
 }

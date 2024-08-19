@@ -1,13 +1,15 @@
 'use client'
 
 import React, { useState } from 'react'
-import { useChain } from '@azuro-org/sdk'
+import { useChain, useWaveStats } from '@azuro-org/sdk'
+import { WaveLevelName } from '@azuro-org/toolkit'
 import { useAccount, useDisconnect } from 'wagmi'
 import copy from 'copy-to-clipboard'
 import { useIsMounted } from 'hooks'
 import { Message } from '@locmod/intl'
 import cx from 'classnames'
-import { shortenAddress } from 'helpers'
+import { constants, shortenAddress } from 'helpers'
+import { formatToFixed } from 'helpers/formatters'
 
 import { Icon } from 'components/ui'
 import { Href } from 'components/navigation'
@@ -15,6 +17,61 @@ import { Dropdown } from 'components/inputs'
 
 import messages from './messages'
 
+
+const azuroIconClassNameByLevel: Record<WaveLevelName, string> = {
+  [WaveLevelName.Grey]: 'fill-gradient-azuro-waves-grey',
+  [WaveLevelName.Mist]: 'fill-gradient-azuro-waves-mist',
+  [WaveLevelName.Sky]: 'fill-gradient-azuro-waves-sky',
+  [WaveLevelName.Blue]: 'fill-gradient-azuro-waves-blue',
+  [WaveLevelName.Ultramarine]: 'fill-gradient-azuro-waves-ultramarine',
+  [WaveLevelName.Bright]: 'fill-gradient-azuro-waves-bright',
+  [WaveLevelName.Brilliant]: 'fill-gradient-azuro-waves-brilliant',
+  [WaveLevelName.Royal]: 'fill-gradient-azuro-waves-royal',
+}
+
+const AzuroWaves: React.FC = () => {
+  const { address } = useAccount()
+  const { data, isFetching } = useWaveStats({
+    account: address!,
+  })
+
+  const { points, levelDescription: { name } } = data || { points: '0', levelDescription: { name: WaveLevelName.Grey } }
+
+  return (
+    <Href
+      className="rounded-4 p-2 mt-2 bg-grey-10 rounded-sm block"
+      toTab={constants.links.waves}
+    >
+      <div className="flex items-center w-full justify-between">
+        <div className="flex items-center">
+          <Icon
+            name="interface/azuro_wave"
+            className={cx('size-6', azuroIconClassNameByLevel[name])}
+          />
+          <div className="ml-2">
+            <Message
+              className="text-caption-12 font-semibold capitalize"
+              value={messages.wave.title}
+              tag="p"
+            />
+            <Message
+              className="text-caption-12 text-grey-60 mt-[2px]"
+              value={{ ...messages.wave.text, values: { level: name } }}
+              tag="p"
+            />
+          </div>
+        </div>
+        {
+          isFetching ? (
+            <div className="bone h-[0.875rem] w-5 rounded-full" />
+          ) : (
+            <div className="text-caption-12 font-semibold">{formatToFixed(points || 0, 2)}</div>
+          )
+        }
+      </div>
+    </Href>
+  )
+}
 
 const Content: React.FC = () => {
   const { address } = useAccount()
@@ -60,6 +117,7 @@ const Content: React.FC = () => {
             </a>
           </div>
         </div>
+        <AzuroWaves />
       </div>
       <Href to="/profile" className="mt-2 p-2 flex items-center text-grey-60 hover:text-grey-90 transition-all">
         <Icon className="size-4 mr-2" name="interface/mybets" />

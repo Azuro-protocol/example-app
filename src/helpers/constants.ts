@@ -37,6 +37,7 @@ const links = {
   terms: '',
   policy: '',
   faq: '',
+  waves: 'https://azuro.org/app/waves',
 }
 
 export default {

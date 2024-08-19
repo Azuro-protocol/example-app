@@ -82,6 +82,17 @@ const config: Config = {
       boxShadow: ({ theme }) => ({
         'betslip': `0px -10px 30px ${theme('colors.bg-l1')}`,
       }),
+      fill: {
+        'gradient-azuro-waves-grey': '#c4cfe4',
+        'gradient-azuro-waves-mist': '#a5d0e6',
+        // ATTN: check /local_modules/svg-provider/SvgSprite.tsx
+        'gradient-azuro-waves-sky': 'url(#gradient-azuro-waves-sky)',
+        'gradient-azuro-waves-blue': 'url(#gradient-azuro-waves-blue)',
+        'gradient-azuro-waves-ultramarine': 'url(#gradient-azuro-waves-ultramarine)',
+        'gradient-azuro-waves-bright': 'url(#gradient-azuro-waves-bright)',
+        'gradient-azuro-waves-brilliant': 'url(#gradient-azuro-waves-brilliant)',
+        'gradient-azuro-waves-royal': 'url(#gradient-azuro-waves-royal)',
+      },
     },
   },
   plugins: [

@@ -22,7 +22,7 @@ const OutcomeButton: React.FC<OutcomeButtonProps> = ({ outcome, size = 28 }) => 
   const { odds, isActive, isLocked, onClick } = useButton({ outcome, nodeRef })
 
   const buttonClassName = cx(
-    'group/button w-full relative flex items-center justify-between px-3 overflow-hidden',
+    'group/button w-full relative flex items-center justify-between ds:px-3 mb:px-2 overflow-hidden',
     'text-caption-13 font-semibold border-none rounded-min select-none',
     {
       'hover:text-brand-50 hover:bg-brand-5': !isLocked && !isActive,

@@ -99,14 +99,14 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game, withTopRadios }
 
   const rootClassName = cx(
     'group flex mb:flex-col ds:items-center justify-between',
-    'py-2 px-4 bg-bg-l2 last-of-type:rounded-b-md relative',
+    'py-2 ds:px-4 mb:px-2 bg-bg-l2 last-of-type:rounded-b-md relative',
     className,
     {
       'first-of-type:rounded-t-md': withTopRadios,
     })
   const liveClassName = cx(
     'border-l-[2px] border-l-accent-red absolute h-full',
-    'left-0 bg-live-game-shadow w-[30%] group-last-of-type:rounded-b-md',
+    'left-0 top-0 bg-live-game-shadow w-[30%] group-last-of-type:rounded-b-md',
     {
       'group-first-of-type:rounded-t-md': withTopRadios,
     }
@@ -141,7 +141,7 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game, withTopRadios }
           <div className="text-caption-13 font-semibold group-hover/game-link:underline">{title}</div>
         </div>
       </Href>
-      <div className="w-full max-w-[26.25rem] mb:mt-2">
+      <div className="w-full max-w-[26.25rem] mb:mt-2 z-10">
         {
           isMarketsVisible ? (
             <Markets gameId={gameId} gameStatus={status} />

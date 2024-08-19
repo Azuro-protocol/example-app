@@ -129,7 +129,7 @@ const ResolvedMarkets: React.FC<MarketsProps> = ({ gameId, gameStatus }) => {
   })
 
   if (loading) {
-    return <div>Loading...</div>
+    return <MarketsSkeleton />
   }
 
   if (!groupedMarkets?.length) {

@@ -102,8 +102,8 @@ const Content: React.FC<ContentProps> = ({ marketsByKey, sortedMarkets }) => {
 
   const isDisabled = !Boolean(otherMarkets.length)
 
-  const contentClassName = cx('w-full flex mb:border-transparent ds:p-2 z-[10] border', {
-    'absolute bg-grey-10 overflow-y-auto no-scrollbar max-h-[20rem] border-grey-15 pb-2': isOpen && !isMobileView,
+  const contentClassName = cx('w-full flex mb:border-transparent ds:p-2 border', {
+    'absolute bg-grey-10 overflow-y-auto no-scrollbar max-h-[20rem] border-grey-15 pb-2 z-30': isOpen && !isMobileView,
     'border-transparent': !isOpen,
   })
   const buttonClassName = cx(

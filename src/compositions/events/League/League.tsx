@@ -141,7 +141,7 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game, withTopRadios }
           <div className="text-caption-13 font-semibold group-hover/game-link:underline">{title}</div>
         </div>
       </Href>
-      <div className="w-full max-w-[26.25rem] mb:mt-2 z-10">
+      <div className="w-full max-w-[26.25rem] mb:mt-2">
         {
           isMarketsVisible ? (
             <Markets gameId={gameId} gameStatus={status} />

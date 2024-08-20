@@ -101,6 +101,7 @@ const Content: React.FC<ContentProps> = ({ marketsByKey, sortedMarkets }) => {
   }
 
   const isDisabled = !Boolean(otherMarkets.length)
+  const headMarket = marketsByKey[activeMarket]
 
   const contentClassName = cx('w-full flex mb:border-transparent ds:p-2 border', {
     'absolute bg-grey-10 overflow-y-auto no-scrollbar max-h-[20rem] border-grey-15 pb-2 z-30 rounded-md': isOpen && !isMobileView,
@@ -127,11 +128,15 @@ const Content: React.FC<ContentProps> = ({ marketsByKey, sortedMarkets }) => {
     <div className="w-full ds:relative ds:h-16">
       <div ref={contentRef} className={contentClassName}>
         <div className="w-full h-fit">
-          <HeadMarket
-            conditionIndex={activeConditionIndex}
-            market={marketsByKey[activeMarket]}
-            isOpen={isOpen}
-          />
+          {
+            Boolean(headMarket) && (
+              <HeadMarket
+                conditionIndex={activeConditionIndex}
+                market={marketsByKey[activeMarket]}
+                isOpen={isOpen}
+              />
+            )
+          }
           {
             isOpen && (
               <>

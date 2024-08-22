@@ -7,7 +7,7 @@ import cx from 'classnames'
 
 import { Icon } from 'components/ui'
 import messages from './messages'
-import { AmountInput, BetButton, Card, Chips, FreeBet, Warning, Slippage } from './components'
+import { AmountInput, BetButton, Card, Chips, FreeBet, Warning, Slippage, QuickBet } from './components'
 
 
 const EmptyContent: React.FC = () => {
@@ -33,7 +33,10 @@ const Settings: React.FC<SettingsProps> = ({ onClose }) => {
           <Icon className="size-5" name="interface/close" />
         </button>
       </div>
-      <Slippage />
+      <div className="space-y-2">
+        <Slippage />
+        <QuickBet />
+      </div>
     </div>
   )
 }

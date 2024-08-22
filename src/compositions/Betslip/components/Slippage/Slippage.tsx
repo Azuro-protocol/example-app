@@ -1,6 +1,7 @@
 import { Message, useIntl } from '@locmod/intl'
 import React, { useState } from 'react'
 import cx from 'classnames'
+import localStorage from '@locmod/local-storage'
 import { constants } from 'helpers'
 
 import { Input } from 'components/inputs'

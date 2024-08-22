@@ -5,6 +5,7 @@ import { type Address } from 'viem'
 import { Message } from '@locmod/intl'
 import { useAccount } from 'wagmi'
 import { openModal } from '@locmod/modal'
+import localStorage from '@locmod/local-storage'
 import { constants, isUserRejectedRequestError } from 'helpers'
 import { formatToFixed } from 'helpers/formatters'
 

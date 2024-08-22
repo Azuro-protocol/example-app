@@ -5,6 +5,8 @@ import { Message } from '@locmod/intl'
 import { useAccount } from 'wagmi'
 import { formatToFixed } from 'helpers/formatters'
 
+import { getQuickBetStorageValue } from '../QuickBet/QuickBet'
+
 import messages from './messages'
 
 
@@ -29,8 +31,6 @@ const Chip: React.FC<ChipProps> = ({ title, isActive, isDisabled, onClick }) => 
   )
 }
 
-const chips = [ 50, 100 ]
-
 const Chips: React.FC = () => {
   const { address } = useAccount()
   const { betAmount, changeBetAmount } = useDetailedBetslip()
@@ -40,11 +40,13 @@ const Chips: React.FC = () => {
     return null
   }
 
+  const chips = getQuickBetStorageValue()
+
   return (
     <div className="flex items-center space-x-[2px] mt-1">
       {
         chips.map(chipValue => {
-          const isActive = +betAmount === chipValue
+          const isActive = +betAmount === +chipValue
 
           return (
             <Chip

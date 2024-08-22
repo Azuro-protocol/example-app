@@ -41,9 +41,11 @@ const links = {
 }
 
 const defaultSlippageValues = [ '5', '10', '15' ]
+const defaultQuickBetsValues = [ '50', '100' ]
 
 const localStorageKeys = {
   slippage: 'slippage',
+  quickBet: 'quickBet',
 }
 
 export default {
@@ -57,5 +59,6 @@ export default {
   links,
   defaultSlippageValues,
   defaultSlippage: '10',
+  defaultQuickBetsValues,
   localStorageKeys,
 }

@@ -10,6 +10,9 @@ export default {
       en: 'To add a bet to your betslip, choose a market and make your selection',
     },
   },
+  settings: {
+    en: 'Settings',
+  },
   single: {
     en: 'Single bet',
   },

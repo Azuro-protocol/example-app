@@ -5,7 +5,7 @@ import { type Address } from 'viem'
 import { Message } from '@locmod/intl'
 import { useAccount } from 'wagmi'
 import { openModal } from '@locmod/modal'
-import { isUserRejectedRequestError } from 'helpers'
+import { constants, isUserRejectedRequestError } from 'helpers'
 import { formatToFixed } from 'helpers/formatters'
 
 import { Icon } from 'components/ui'
@@ -31,6 +31,8 @@ const BetButton: React.FC<BetButtonProps> = ({ isEnoughBalance, isBalanceFetchin
     totalOddsRef.current = totalOdds
   }
 
+  const slippage = +(localStorage.getItem(constants.localStorageKeys.slippage) as string || constants.defaultSlippage)
+
   const {
     submit,
     approveTx,
@@ -40,7 +42,7 @@ const BetButton: React.FC<BetButtonProps> = ({ isEnoughBalance, isBalanceFetchin
     isApproveRequired,
   } = usePrepareBet({
     betAmount,
-    slippage: 10,
+    slippage,
     affiliate: process.env.NEXT_PUBLIC_AFFILIATE_ADDRESS as Address,
     selections: items,
     odds,

@@ -40,6 +40,12 @@ const links = {
   waves: 'https://azuro.org/app/waves',
 }
 
+const defaultSlippageValues = [ '5', '10', '15' ]
+
+const localStorageKeys = {
+  slippage: 'slippage',
+}
+
 export default {
   baseUrl,
   companyName,
@@ -49,4 +55,7 @@ export default {
   currencyIcons,
   sportsOrder,
   links,
+  defaultSlippageValues,
+  defaultSlippage: '10',
+  localStorageKeys,
 }

@@ -1,13 +1,13 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import { useBaseBetslip, useBetTokenBalance, useChain, useDetailedBetslip } from '@azuro-org/sdk'
 import { Message } from '@locmod/intl'
 import cx from 'classnames'
 
 import { Icon } from 'components/ui'
 import messages from './messages'
-import { AmountInput, BetButton, Card, Chips, FreeBet, Warning } from './components'
+import { AmountInput, BetButton, Card, Chips, FreeBet, Warning, Slippage } from './components'
 
 
 const EmptyContent: React.FC = () => {
@@ -20,7 +20,29 @@ const EmptyContent: React.FC = () => {
   )
 }
 
-const Betslip: React.FC = () => {
+type SettingsProps = {
+  onClose: () => void
+}
+
+const Settings: React.FC<SettingsProps> = ({ onClose }) => {
+  return (
+    <div>
+      <div className="py-3 px-4 flex items-center justify-between">
+        <Message className="text-caption-14 font-semibold" value={messages.settings} />
+        <button className="text-grey-60 hover:text-grey-90 transition" onClick={onClose}>
+          <Icon className="size-5" name="interface/close" />
+        </button>
+      </div>
+      <Slippage />
+    </div>
+  )
+}
+
+type ContentProps = {
+  openSettings: () => void
+}
+
+const Content: React.FC<ContentProps> = ({ openSettings }) => {
   const { betToken } = useChain()
   const { items, clear } = useBaseBetslip()
   const {
@@ -33,12 +55,6 @@ const Betslip: React.FC = () => {
 
   const isEnoughBalance = isBalanceFetching || !Boolean(+betAmount) ? true : Boolean(+balance! > +betAmount)
 
-  if (!items.length) {
-    return (
-      <EmptyContent />
-    )
-  }
-
   let title = messages.single
 
   if ( items.length > 1 ) {
@@ -49,9 +65,14 @@ const Betslip: React.FC = () => {
     <div>
       <div className="py-3 px-4 flex items-center justify-between">
         <Message className="text-caption-14 font-semibold" value={title} />
-        <button className="text-grey-60 hover:text-grey-90 transition" onClick={clear}>
-          <Icon className="size-5" name="interface/delete" />
-        </button>
+        <div className="flex items-center space-x-3">
+          <button className="text-grey-60 hover:text-grey-90 transition" onClick={openSettings}>
+            <Icon className="size-5" name="interface/settings" />
+          </button>
+          <button className="text-grey-60 hover:text-grey-90 transition" onClick={clear}>
+            <Icon className="size-5" name="interface/delete" />
+          </button>
+        </div>
       </div>
       <div
         className={
@@ -110,6 +131,29 @@ const Betslip: React.FC = () => {
         <BetButton isEnoughBalance={isEnoughBalance} isBalanceFetching={isBalanceFetching} />
       </div>
     </div>
+  )
+}
+
+const Betslip: React.FC = () => {
+  const { items } = useBaseBetslip()
+  const [ isSettingsVisible, setSettingsVisible ] = useState(false)
+
+  if (!items.length) {
+    return (
+      <EmptyContent />
+    )
+  }
+
+  return (
+    <>
+      {
+        isSettingsVisible ? (
+          <Settings onClose={() => setSettingsVisible(false)} />
+        ) : (
+          <Content openSettings={() => setSettingsVisible(true)} />
+        )
+      }
+    </>
   )
 }
 

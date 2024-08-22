@@ -115,6 +115,10 @@ import _interface_no_opponent from '../../../../public/images/icons/interface/no
 import _interface_no_opponentSource from '!!raw-loader!../../../../public/images/icons/interface/no_opponent.svg'
 import _interface_pending from '../../../../public/images/icons/interface/pending.svg?url'
 import _interface_pendingSource from '!!raw-loader!../../../../public/images/icons/interface/pending.svg'
+import _interface_percentage from '../../../../public/images/icons/interface/percentage.svg?url'
+import _interface_percentageSource from '!!raw-loader!../../../../public/images/icons/interface/percentage.svg'
+import _interface_settings from '../../../../public/images/icons/interface/settings.svg?url'
+import _interface_settingsSource from '!!raw-loader!../../../../public/images/icons/interface/settings.svg'
 import _interface_spinner from '../../../../public/images/icons/interface/spinner.svg?url'
 import _interface_spinnerSource from '!!raw-loader!../../../../public/images/icons/interface/spinner.svg'
 import _interface_user_avatar from '../../../../public/images/icons/interface/user_avatar.svg?url'
@@ -193,6 +197,8 @@ const icons = {
   'interface/no_flag': { src: _interface_no_flag.src, source: isServer && _interface_no_flagSource, width: _interface_no_flag.width, height: _interface_no_flag.height, aspect: _interface_no_flag.width/_interface_no_flag.height }, 
   'interface/no_opponent': { src: _interface_no_opponent.src, source: isServer && _interface_no_opponentSource, width: _interface_no_opponent.width, height: _interface_no_opponent.height, aspect: _interface_no_opponent.width/_interface_no_opponent.height }, 
   'interface/pending': { src: _interface_pending.src, source: isServer && _interface_pendingSource, width: _interface_pending.width, height: _interface_pending.height, aspect: _interface_pending.width/_interface_pending.height }, 
+  'interface/percentage': { src: _interface_percentage.src, source: isServer && _interface_percentageSource, width: _interface_percentage.width, height: _interface_percentage.height, aspect: _interface_percentage.width/_interface_percentage.height }, 
+  'interface/settings': { src: _interface_settings.src, source: isServer && _interface_settingsSource, width: _interface_settings.width, height: _interface_settings.height, aspect: _interface_settings.width/_interface_settings.height }, 
   'interface/spinner': { src: _interface_spinner.src, source: isServer && _interface_spinnerSource, width: _interface_spinner.width, height: _interface_spinner.height, aspect: _interface_spinner.width/_interface_spinner.height }, 
   'interface/user_avatar': { src: _interface_user_avatar.src, source: isServer && _interface_user_avatarSource, width: _interface_user_avatar.width, height: _interface_user_avatar.height, aspect: _interface_user_avatar.width/_interface_user_avatar.height }, 
   'interface/warning': { src: _interface_warning.src, source: isServer && _interface_warningSource, width: _interface_warning.width, height: _interface_warning.height, aspect: _interface_warning.width/_interface_warning.height }, 

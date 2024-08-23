@@ -97,6 +97,8 @@ import _interface_external_link from '../../../../public/images/icons/interface/
 import _interface_external_linkSource from '!!raw-loader!../../../../public/images/icons/interface/external_link.svg'
 import _interface_gift from '../../../../public/images/icons/interface/gift.svg?url'
 import _interface_giftSource from '!!raw-loader!../../../../public/images/icons/interface/gift.svg'
+import _interface_horizontal_view from '../../../../public/images/icons/interface/horizontal_view.svg?url'
+import _interface_horizontal_viewSource from '!!raw-loader!../../../../public/images/icons/interface/horizontal_view.svg'
 import _interface_info_circle from '../../../../public/images/icons/interface/info-circle.svg?url'
 import _interface_info_circleSource from '!!raw-loader!../../../../public/images/icons/interface/info-circle.svg'
 import _interface_live from '../../../../public/images/icons/interface/live.svg?url'
@@ -123,6 +125,8 @@ import _interface_spinner from '../../../../public/images/icons/interface/spinne
 import _interface_spinnerSource from '!!raw-loader!../../../../public/images/icons/interface/spinner.svg'
 import _interface_user_avatar from '../../../../public/images/icons/interface/user_avatar.svg?url'
 import _interface_user_avatarSource from '!!raw-loader!../../../../public/images/icons/interface/user_avatar.svg'
+import _interface_vertical_view from '../../../../public/images/icons/interface/vertical_view.svg?url'
+import _interface_vertical_viewSource from '!!raw-loader!../../../../public/images/icons/interface/vertical_view.svg'
 import _interface_warning from '../../../../public/images/icons/interface/warning.svg?url'
 import _interface_warningSource from '!!raw-loader!../../../../public/images/icons/interface/warning.svg'
 import _interface_win from '../../../../public/images/icons/interface/win.svg?url'
@@ -188,6 +192,7 @@ const icons = {
   'interface/download': { src: _interface_download.src, source: isServer && _interface_downloadSource, width: _interface_download.width, height: _interface_download.height, aspect: _interface_download.width/_interface_download.height }, 
   'interface/external_link': { src: _interface_external_link.src, source: isServer && _interface_external_linkSource, width: _interface_external_link.width, height: _interface_external_link.height, aspect: _interface_external_link.width/_interface_external_link.height }, 
   'interface/gift': { src: _interface_gift.src, source: isServer && _interface_giftSource, width: _interface_gift.width, height: _interface_gift.height, aspect: _interface_gift.width/_interface_gift.height }, 
+  'interface/horizontal_view': { src: _interface_horizontal_view.src, source: isServer && _interface_horizontal_viewSource, width: _interface_horizontal_view.width, height: _interface_horizontal_view.height, aspect: _interface_horizontal_view.width/_interface_horizontal_view.height }, 
   'interface/info-circle': { src: _interface_info_circle.src, source: isServer && _interface_info_circleSource, width: _interface_info_circle.width, height: _interface_info_circle.height, aspect: _interface_info_circle.width/_interface_info_circle.height }, 
   'interface/live': { src: _interface_live.src, source: isServer && _interface_liveSource, width: _interface_live.width, height: _interface_live.height, aspect: _interface_live.width/_interface_live.height }, 
   'interface/lock': { src: _interface_lock.src, source: isServer && _interface_lockSource, width: _interface_lock.width, height: _interface_lock.height, aspect: _interface_lock.width/_interface_lock.height }, 
@@ -201,6 +206,7 @@ const icons = {
   'interface/settings': { src: _interface_settings.src, source: isServer && _interface_settingsSource, width: _interface_settings.width, height: _interface_settings.height, aspect: _interface_settings.width/_interface_settings.height }, 
   'interface/spinner': { src: _interface_spinner.src, source: isServer && _interface_spinnerSource, width: _interface_spinner.width, height: _interface_spinner.height, aspect: _interface_spinner.width/_interface_spinner.height }, 
   'interface/user_avatar': { src: _interface_user_avatar.src, source: isServer && _interface_user_avatarSource, width: _interface_user_avatar.width, height: _interface_user_avatar.height, aspect: _interface_user_avatar.width/_interface_user_avatar.height }, 
+  'interface/vertical_view': { src: _interface_vertical_view.src, source: isServer && _interface_vertical_viewSource, width: _interface_vertical_view.width, height: _interface_vertical_view.height, aspect: _interface_vertical_view.width/_interface_vertical_view.height }, 
   'interface/warning': { src: _interface_warning.src, source: isServer && _interface_warningSource, width: _interface_warning.width, height: _interface_warning.height, aspect: _interface_warning.width/_interface_warning.height }, 
   'interface/win': { src: _interface_win.src, source: isServer && _interface_winSource, width: _interface_win.width, height: _interface_win.height, aspect: _interface_win.width/_interface_win.height }, 
   'currency/azusd': { src: _currency_azusd.src, source: isServer && _currency_azusdSource, width: _currency_azusd.width, height: _currency_azusd.height, aspect: _currency_azusd.width/_currency_azusd.height }, 

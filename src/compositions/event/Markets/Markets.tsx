@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
+import { XMasonry, XBlock } from 'react-xmasonry'
 import { GameStatus, type GameMarkets } from '@azuro-org/toolkit'
 import { useActiveMarkets, useBetsSummaryBySelection, useResolvedMarkets } from '@azuro-org/sdk'
 import { useAccount } from 'wagmi'
@@ -12,6 +13,9 @@ import OutcomeButton from 'compositions/OutcomeButton/OutcomeButton'
 import EmptyContent from 'compositions/EmptyContent/EmptyContent'
 
 import ResultButton from './components/ResultButton/ResultButton'
+import Headline from './components/Headline/Headline'
+
+import useView from './utils/useView'
 
 import messages from './messages'
 
@@ -19,6 +23,7 @@ import messages from './messages'
 export const MarketsSkeleton: React.FC = () => {
   return (
     <div>
+      <div className="bone rounded-full w-full h-[2.875rem]" />
       {
         new Array(3).fill(0).map((_, index) => (
           <div key={index}>
@@ -49,67 +54,82 @@ type ContentProps = {
 const Content: React.FC<ContentProps> = (props) => {
   const { markets, betsSummary, isResult } = props
 
+  const { activeView, changeView } = useView()
+
   return (
-    <div>
-      {
-        markets.map(({ name, description, outcomeRows }) => (
-          <div key={name}>
-            <div className="flex items-center justify-between p-4">
-              <div className="flex items-center">
-                <div className="text-caption-14 font-semibold">{name}</div>
-                {
-                  Boolean(description) && (
-                    <Tooltip
-                      text={description}
-                      placement="bottom"
-                      width={400}
-                    >
-                      <div className="w-fit ml-1 cursor-pointer text-grey-60 hover:text-grey-90">
-                        <Icon className="size-4" name="interface/info-circle" />
-                      </div>
-                    </Tooltip>
-                  )
-                }
-              </div>
-            </div>
-            <div className="space-y-2 bg-bg-l2 rounded-sm p-2">
-              {
-                outcomeRows.map((outcomes, index) => (
-                  <div key={`${index}-${outcomes.length}`} className="flex justify-between">
-                    <div className="flex gap-2 w-full">
+    <>
+      <Headline activeView={activeView} onChangeView={changeView} />
+      <div className="-mx-2">
+        <XMasonry
+          maxColumns={10}
+          targetBlockWidth={478}
+        >
+          {
+            markets.map(({ name, description, outcomeRows }) => (
+              <XBlock
+                key={name}
+                width={activeView === 'columns' ? 1 : 2}
+              >
+                <div className="px-2">
+                  <div className="flex items-center justify-between p-4">
+                    <div className="flex items-center">
+                      <div className="text-caption-14 font-semibold">{name}</div>
                       {
-                        outcomes.map((outcome) => {
-                          const key = outcome.outcomeId
-
-                          if (isResult) {
-                            return (
-                              <ResultButton
-                                key={key}
-                                outcome={outcome}
-                                summary={betsSummary?.[key]}
-                                size={40}
-                              />
-                            )
-                          }
-
-                          return (
-                            <OutcomeButton
-                              key={key}
-                              outcome={outcome}
-                              size={40}
-                            />
-                          )
-                        })
+                        Boolean(description) && (
+                          <Tooltip
+                            text={description}
+                            placement="bottom"
+                            width={400}
+                          >
+                            <div className="w-fit ml-1 cursor-pointer text-grey-60 hover:text-grey-90">
+                              <Icon className="size-4" name="interface/info-circle" />
+                            </div>
+                          </Tooltip>
+                        )
                       }
                     </div>
                   </div>
-                ))
-              }
-            </div>
-          </div>
-        ))
-      }
-    </div>
+                  <div className="space-y-2 bg-bg-l2 rounded-sm p-2">
+                    {
+                      outcomeRows.map((outcomes, index) => (
+                        <div key={`${index}-${outcomes.length}`} className="flex justify-between">
+                          <div className="flex gap-2 w-full">
+                            {
+                              outcomes.map((outcome) => {
+                                const key = outcome.outcomeId
+
+                                if (isResult) {
+                                  return (
+                                    <ResultButton
+                                      key={key}
+                                      outcome={outcome}
+                                      summary={betsSummary?.[key]}
+                                      size={40}
+                                    />
+                                  )
+                                }
+
+                                return (
+                                  <OutcomeButton
+                                    key={key}
+                                    outcome={outcome}
+                                    size={40}
+                                  />
+                                )
+                              })
+                            }
+                          </div>
+                        </div>
+                      ))
+                    }
+                  </div>
+                </div>
+              </XBlock>
+            ))
+          }
+        </XMasonry>
+      </div>
+    </>
   )
 }
 

@@ -46,6 +46,7 @@ const defaultQuickBetsValues = [ '50', '100' ]
 const localStorageKeys = {
   slippage: 'slippage',
   quickBet: 'quickBet',
+  gameMarketsView: 'gameMarketsView',
 }
 
 export default {

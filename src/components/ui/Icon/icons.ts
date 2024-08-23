@@ -85,6 +85,8 @@ import _interface_clear from '../../../../public/images/icons/interface/clear.sv
 import _interface_clearSource from '!!raw-loader!../../../../public/images/icons/interface/clear.svg'
 import _interface_close from '../../../../public/images/icons/interface/close.svg?url'
 import _interface_closeSource from '!!raw-loader!../../../../public/images/icons/interface/close.svg'
+import _interface_collapse from '../../../../public/images/icons/interface/collapse.svg?url'
+import _interface_collapseSource from '!!raw-loader!../../../../public/images/icons/interface/collapse.svg'
 import _interface_copy from '../../../../public/images/icons/interface/copy.svg?url'
 import _interface_copySource from '!!raw-loader!../../../../public/images/icons/interface/copy.svg'
 import _interface_declined from '../../../../public/images/icons/interface/declined.svg?url'
@@ -93,6 +95,8 @@ import _interface_delete from '../../../../public/images/icons/interface/delete.
 import _interface_deleteSource from '!!raw-loader!../../../../public/images/icons/interface/delete.svg'
 import _interface_download from '../../../../public/images/icons/interface/download.svg?url'
 import _interface_downloadSource from '!!raw-loader!../../../../public/images/icons/interface/download.svg'
+import _interface_expand from '../../../../public/images/icons/interface/expand.svg?url'
+import _interface_expandSource from '!!raw-loader!../../../../public/images/icons/interface/expand.svg'
 import _interface_external_link from '../../../../public/images/icons/interface/external_link.svg?url'
 import _interface_external_linkSource from '!!raw-loader!../../../../public/images/icons/interface/external_link.svg'
 import _interface_gift from '../../../../public/images/icons/interface/gift.svg?url'
@@ -186,10 +190,12 @@ const icons = {
   'interface/chevron_up': { src: _interface_chevron_up.src, source: isServer && _interface_chevron_upSource, width: _interface_chevron_up.width, height: _interface_chevron_up.height, aspect: _interface_chevron_up.width/_interface_chevron_up.height }, 
   'interface/clear': { src: _interface_clear.src, source: isServer && _interface_clearSource, width: _interface_clear.width, height: _interface_clear.height, aspect: _interface_clear.width/_interface_clear.height }, 
   'interface/close': { src: _interface_close.src, source: isServer && _interface_closeSource, width: _interface_close.width, height: _interface_close.height, aspect: _interface_close.width/_interface_close.height }, 
+  'interface/collapse': { src: _interface_collapse.src, source: isServer && _interface_collapseSource, width: _interface_collapse.width, height: _interface_collapse.height, aspect: _interface_collapse.width/_interface_collapse.height }, 
   'interface/copy': { src: _interface_copy.src, source: isServer && _interface_copySource, width: _interface_copy.width, height: _interface_copy.height, aspect: _interface_copy.width/_interface_copy.height }, 
   'interface/declined': { src: _interface_declined.src, source: isServer && _interface_declinedSource, width: _interface_declined.width, height: _interface_declined.height, aspect: _interface_declined.width/_interface_declined.height }, 
   'interface/delete': { src: _interface_delete.src, source: isServer && _interface_deleteSource, width: _interface_delete.width, height: _interface_delete.height, aspect: _interface_delete.width/_interface_delete.height }, 
   'interface/download': { src: _interface_download.src, source: isServer && _interface_downloadSource, width: _interface_download.width, height: _interface_download.height, aspect: _interface_download.width/_interface_download.height }, 
+  'interface/expand': { src: _interface_expand.src, source: isServer && _interface_expandSource, width: _interface_expand.width, height: _interface_expand.height, aspect: _interface_expand.width/_interface_expand.height }, 
   'interface/external_link': { src: _interface_external_link.src, source: isServer && _interface_external_linkSource, width: _interface_external_link.width, height: _interface_external_link.height, aspect: _interface_external_link.width/_interface_external_link.height }, 
   'interface/gift': { src: _interface_gift.src, source: isServer && _interface_giftSource, width: _interface_gift.width, height: _interface_gift.height, aspect: _interface_gift.width/_interface_gift.height }, 
   'interface/horizontal_view': { src: _interface_horizontal_view.src, source: isServer && _interface_horizontal_viewSource, width: _interface_horizontal_view.width, height: _interface_horizontal_view.height, aspect: _interface_horizontal_view.width/_interface_horizontal_view.height }, 

@@ -47,6 +47,7 @@ const localStorageKeys = {
   slippage: 'slippage',
   quickBet: 'quickBet',
   gameMarketsView: 'gameMarketsView',
+  collapsedMarkets: 'collapsedMarkets',
 }
 
 export default {

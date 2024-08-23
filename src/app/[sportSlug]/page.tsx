@@ -5,6 +5,7 @@ import { useSports } from 'hooks'
 import Sport, { SportSkeleton } from 'compositions/events/Sport/Sport'
 import League, { LeagueSkeleton } from 'compositions/events/League/League'
 import EmptyContent from 'compositions/events/EmptyContent/EmptyContent'
+import Navbar from 'compositions/events/Navbar/Navbar'
 
 
 export default function SportPage() {
@@ -26,6 +27,7 @@ export default function SportPage() {
 
   return (
     <>
+      <Navbar />
       <Sport sport={sport!} isPage>
         {
           sport.leagues.map(league => (

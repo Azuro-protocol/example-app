@@ -4,6 +4,7 @@ import { useSports } from 'hooks'
 
 import League, { LeagueSkeleton } from 'compositions/events/League/League'
 import EmptyContent from 'compositions/events/EmptyContent/EmptyContent'
+import Navbar from 'compositions/events/Navbar/Navbar'
 
 
 export default function LeaguePage() {
@@ -22,6 +23,7 @@ export default function LeaguePage() {
 
   return (
     <>
+      <Navbar />
       <League sportSlug={sport.slug} league={league} isPage />
     </>
   )

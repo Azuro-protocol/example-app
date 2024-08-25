@@ -3,9 +3,10 @@
 import { useSports } from 'hooks'
 
 import Sport, { SportSkeleton } from 'compositions/events/Sport/Sport'
-import League, { LeagueSkeleton } from 'compositions/events/League/League'
+import { LeagueSkeleton } from 'compositions/events/League/League'
 import EmptyContent from 'compositions/events/EmptyContent/EmptyContent'
 import Navbar from 'compositions/events/Navbar/Navbar'
+import FilteredLeagues from 'compositions/events/FilteredLeagues/FilteredLeagues'
 
 
 export default function SportPage() {
@@ -24,21 +25,16 @@ export default function SportPage() {
   }
 
   const sport = sports[0]
+  const { slug, leagues } = sport
 
   return (
-    <>
-      <Navbar />
+    <Navbar>
       <Sport sport={sport!} isPage>
-        {
-          sport.leagues.map(league => (
-            <League
-              key={`${league.countrySlug}-${league.slug}`}
-              sportSlug={sport.slug}
-              league={league}
-            />
-          ))
-        }
+        <FilteredLeagues
+          sportSlug={slug}
+          leagues={leagues}
+        />
       </Sport>
-    </>
+    </Navbar>
   )
 }

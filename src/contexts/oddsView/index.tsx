@@ -93,7 +93,7 @@ export const OddsViewProvider: React.CFC = ({ children }) => {
       return decimalToAmerican(+value).toString()
     }
 
-    return value.toString()
+    return formatToFixed(value, 2).toString()
   }
 
   const context: Context = {

@@ -4,10 +4,10 @@ import React, { useRef } from 'react'
 import { useBaseBetslip, type BetslipItem } from '@azuro-org/sdk'
 import { ConditionStatus, liveHostAddress } from '@azuro-org/toolkit'
 import cx from 'classnames'
-import { formatToFixed } from 'helpers/formatters'
 
 import useOddsChange from 'src/hooks/useOddsChange'
 import { Icon, LiveDot, type IconName } from 'components/ui'
+import OddsValue from 'compositions/OddsValue/OddsValue'
 import Warning from '../Warning/Warning'
 
 import messages from './messages'
@@ -96,9 +96,7 @@ const Card: React.FC<ItemProps> = (props) => {
                 isOddsFetching ? (
                   <Icon className="size-5" name="interface/spinner" />
                 ) : (
-                  <div className={oddsClassName}>
-                    {formatToFixed(odds || 0, 2)}
-                  </div>
+                  <OddsValue className={oddsClassName} odds={odds} />
                 )
               }
             </>

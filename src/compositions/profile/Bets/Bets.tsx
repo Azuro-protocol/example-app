@@ -16,6 +16,7 @@ import { Href } from 'components/navigation'
 import { Button } from 'components/inputs'
 import BetStatus from 'compositions/BetStatus/BetStatus'
 import EmptyContent from 'compositions/EmptyContent/EmptyContent'
+import OddsValue from 'compositions/OddsValue/OddsValue'
 
 import messages from './messages'
 
@@ -225,9 +226,7 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
                     </div>
                     <div className={marketBoxClassName}>
                       <Message className="text-grey-60" value={messages.odds} />
-                      <div className={marketClassName}>
-                        {formatToFixed(odds, 2)}
-                      </div>
+                      <OddsValue className={marketClassName} odds={odds} />
                     </div>
                   </div>
                 </div>

@@ -3,9 +3,9 @@
 import React, { useRef } from 'react'
 import { type GameMarkets } from '@azuro-org/toolkit'
 import cx from 'classnames'
-import { formatToFixed } from 'helpers/formatters'
 
 import { Icon } from 'components/ui'
+import OddsValue from 'compositions/OddsValue/OddsValue'
 
 import useButton from './utils/useButton'
 
@@ -72,7 +72,7 @@ const OutcomeButton: React.FC<OutcomeButtonProps> = ({ outcome, size = 28 }) => 
       </div>
       <div ref={nodeRef} className={oddsClassName}>
         <Icon className={arrowClassName} name="interface/caret_up" />
-        <span className={valueClassName}>{odds ? formatToFixed(odds, 2) : '--'}</span>
+        <OddsValue className={valueClassName} odds={odds} />
       </div>
     </button>
   )

@@ -7,6 +7,7 @@ import { useLive } from '@azuro-org/sdk'
 
 import { Icon, type IconName } from 'components/ui'
 import TimeFilter, { FilterByTimeProvider } from 'compositions/events/TimeFilter/TimeFilter'
+import ChangeOddsView from 'compositions/ChangeOddsView/ChangeOddsView'
 
 import messages from './messages'
 
@@ -25,12 +26,13 @@ const Navbar: React.CFC = ({ children }) => {
           <Icon className="size-6 mr-3 text-brand-50" name={icon} />
           <Message className="text-heading-h2 font-bold" value={messages[sportSlug] || sportSlug} />
         </div>
-        <div className="flex items-center">
+        <div className="flex items-center space-x-2">
           {
             !isLive && (
               <TimeFilter className="ds:h-14 mb:h-10" />
             )
           }
+          <ChangeOddsView />
         </div>
       </div>
       {children}

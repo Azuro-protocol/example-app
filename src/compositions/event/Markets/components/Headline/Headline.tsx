@@ -3,6 +3,7 @@
 import React from 'react'
 
 import { Icon } from 'components/ui'
+import ChangeOddsView from 'compositions/ChangeOddsView/ChangeOddsView'
 
 import { View, type ViewProps } from './components'
 
@@ -16,7 +17,7 @@ const Headline: React.FC<HeadlineProps> = (props) => {
   const { activeView, isCollapsed, onChangeView, onCollapse } = props
 
   return (
-    <div className="bg-card-border-bottom p-px rounded-lg overflow-hidden">
+    <div className="bg-card-border-bottom p-px rounded-lg">
       <div className="py-2 px-4 flex items-center justify-between bg-grey-10 rounded-lg">
         <div />
         <div className="flex items-center space-x-2">
@@ -27,6 +28,7 @@ const Headline: React.FC<HeadlineProps> = (props) => {
               name={isCollapsed ? 'interface/expand' : 'interface/collapse'}
             />
           </button>
+          <ChangeOddsView />
         </div>
       </div>
     </div>

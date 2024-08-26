@@ -1,4 +1,7 @@
 export default {
+  top: {
+    en: 'The On-Chain Crypto Bookmaker',
+  },
   // Sports
   politics: {
     en: 'Politics',

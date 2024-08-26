@@ -48,6 +48,7 @@ const localStorageKeys = {
   quickBet: 'quickBet',
   gameMarketsView: 'gameMarketsView',
   collapsedMarkets: 'collapsedMarkets',
+  oddsView: 'oddsView',
 }
 
 export default {

@@ -127,6 +127,8 @@ import _interface_settings from '../../../../public/images/icons/interface/setti
 import _interface_settingsSource from '!!raw-loader!../../../../public/images/icons/interface/settings.svg'
 import _interface_spinner from '../../../../public/images/icons/interface/spinner.svg?url'
 import _interface_spinnerSource from '!!raw-loader!../../../../public/images/icons/interface/spinner.svg'
+import _interface_top from '../../../../public/images/icons/interface/top.svg?url'
+import _interface_topSource from '!!raw-loader!../../../../public/images/icons/interface/top.svg'
 import _interface_user_avatar from '../../../../public/images/icons/interface/user_avatar.svg?url'
 import _interface_user_avatarSource from '!!raw-loader!../../../../public/images/icons/interface/user_avatar.svg'
 import _interface_vertical_view from '../../../../public/images/icons/interface/vertical_view.svg?url'
@@ -211,6 +213,7 @@ const icons = {
   'interface/percentage': { src: _interface_percentage.src, source: isServer && _interface_percentageSource, width: _interface_percentage.width, height: _interface_percentage.height, aspect: _interface_percentage.width/_interface_percentage.height }, 
   'interface/settings': { src: _interface_settings.src, source: isServer && _interface_settingsSource, width: _interface_settings.width, height: _interface_settings.height, aspect: _interface_settings.width/_interface_settings.height }, 
   'interface/spinner': { src: _interface_spinner.src, source: isServer && _interface_spinnerSource, width: _interface_spinner.width, height: _interface_spinner.height, aspect: _interface_spinner.width/_interface_spinner.height }, 
+  'interface/top': { src: _interface_top.src, source: isServer && _interface_topSource, width: _interface_top.width, height: _interface_top.height, aspect: _interface_top.width/_interface_top.height }, 
   'interface/user_avatar': { src: _interface_user_avatar.src, source: isServer && _interface_user_avatarSource, width: _interface_user_avatar.width, height: _interface_user_avatar.height, aspect: _interface_user_avatar.width/_interface_user_avatar.height }, 
   'interface/vertical_view': { src: _interface_vertical_view.src, source: isServer && _interface_vertical_viewSource, width: _interface_vertical_view.width, height: _interface_vertical_view.height, aspect: _interface_vertical_view.width/_interface_vertical_view.height }, 
   'interface/warning': { src: _interface_warning.src, source: isServer && _interface_warningSource, width: _interface_warning.width, height: _interface_warning.height, aspect: _interface_warning.width/_interface_warning.height }, 

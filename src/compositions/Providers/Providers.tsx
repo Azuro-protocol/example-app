@@ -8,7 +8,7 @@ import { IntlProvider } from '@locmod/intl'
 import { SvgProvider, SvgSprite } from 'svg-provider'
 import { AzuroSDKProvider, LiveProvider } from '@azuro-org/sdk'
 import { WagmiProvider } from 'wallet'
-import { DeviceProvider } from 'contexts'
+import { DeviceProvider, OddsViewProvider } from 'contexts'
 
 import NewFreeBetsChecker from 'compositions/NewFreeBetsChecker/NewFreeBetsChecker'
 
@@ -31,7 +31,9 @@ const Providers: React.CFC<Props> = (props) => {
           <WagmiProvider initialState={initialState}>
             <AzuroSDKProvider initialChainId={initialChainId} affiliate={process.env.NEXT_PUBLIC_AFFILIATE_ADDRESS as Address}>
               <LiveProvider initialLiveState={initialLiveState}>
-                {children}
+                <OddsViewProvider>
+                  {children}
+                </OddsViewProvider>
               </LiveProvider>
               <NewFreeBetsChecker />
             </AzuroSDKProvider>

@@ -3,9 +3,11 @@
 import { useSports } from 'hooks'
 
 import Sport, { SportSkeleton } from 'compositions/events/Sport/Sport'
-import League, { LeagueSkeleton } from 'compositions/events/League/League'
+import { LeagueSkeleton } from 'compositions/events/League/League'
 import TopEvents from 'compositions/events/TopEvents/TopEvents'
 import EmptyContent from 'compositions/events/EmptyContent/EmptyContent'
+import Navbar from 'compositions/events/Navbar/Navbar'
+import FilteredLeagues from 'compositions/events/FilteredLeagues/FilteredLeagues'
 
 
 const Sports: React.FC = () => {
@@ -24,19 +26,18 @@ const Sports: React.FC = () => {
   }
 
   return (
-    <>
+    <Navbar>
       {
         sports.map(sport => (
           <Sport key={sport.slug} sport={sport}>
-            {
-              sport.leagues.map(league => (
-                <League key={`${league.countrySlug}-${league.slug}`} sportSlug={sport.slug} league={league} />
-              ))
-            }
+            <FilteredLeagues
+              sportSlug={sport.slug}
+              leagues={sport.leagues}
+            />
           </Sport>
         ))
       }
-    </>
+    </Navbar>
   )
 }
 

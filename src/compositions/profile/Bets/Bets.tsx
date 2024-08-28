@@ -1,12 +1,13 @@
 'use client'
 
-import { useChain, useLiveBets, usePrematchBets, useRedeemBet, type Bet } from '@azuro-org/sdk'
-import { OrderDirection, getGameStatus, GameStatus } from '@azuro-org/toolkit'
+import { useChain, useRedeemBet, BetType, type Bet } from '@azuro-org/sdk'
+import { getGameStatus, GameStatus } from '@azuro-org/toolkit'
 import { Message, useIntl } from '@locmod/intl'
 import React, { useMemo } from 'react'
-import { useAccount } from 'wagmi'
 import dayjs from 'dayjs'
+import { useSearchParams, useRouter, usePathname } from 'next/navigation'
 import cx from 'classnames'
+import { useBets } from 'hooks'
 import { getGameDateTime } from 'helpers/getters'
 import { formatToFixed } from 'helpers/formatters'
 
@@ -287,33 +288,61 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
   )
 }
 
-const useBets = () => {
-  const { address } = useAccount()
+const tabs = [
+  {
+    title: messages.tabs.all,
+    value: undefined,
+  },
+  {
+    title: messages.tabs.unredeemed,
+    value: BetType.Unredeemed,
+  },
+  {
+    title: messages.tabs.accepted,
+    value: BetType.Accepted,
+  },
+  {
+    title: messages.tabs.settled,
+    value: BetType.Settled,
+  },
+]
 
-  const props = {
-    filter: {
-      bettor: address!,
-    },
-    orderDir: OrderDirection.Desc,
-  }
-
-  const { loading: isPrematchLoading, bets: prematchBets } = usePrematchBets(props)
-  const { loading: isLiveLoading, bets: liveBets } = useLiveBets(props)
-
-  const bets = useMemo(() => {
-    return [ ...liveBets, ...prematchBets ].sort((betA, betB) => betB.createdAt - betA.createdAt)
-  }, [ prematchBets, liveBets ])
-
-  return {
-    bets,
-    loading: isPrematchLoading || isLiveLoading,
-  }
+type NavbarProps = {
+  activeType: BetType | undefined
+  onClick: (type: BetType | undefined) => void
 }
 
-const Bets: React.FC = () => {
-  const { bets, loading } = useBets()
+const Navbar: React.FC<NavbarProps> = ({ activeType, onClick }) => {
+  return (
+    <div className="flex items-center space-x-2 px-3">
+      {
+        tabs.map(({ title, value }) => {
+          const isActive = activeType === value
 
-  if (loading) {
+          const className = cx('flex items-center p-1 cursor-pointer', {
+            'text-grey-60 hover:text-grey-90': !isActive,
+            'text-grey-90': isActive,
+          })
+
+          return (
+            <button key={value || 'all'} className={className} onClick={() => onClick(value)}>
+              <Message className="text-caption-13 font-semibold" value={title} />
+            </button>
+          )
+        })
+      }
+    </div>
+  )
+}
+
+type ContentProps = {
+  bets: Bet[]
+  isFetching: boolean
+}
+
+const Content: React.FC<ContentProps> = ({ bets, isFetching }) => {
+
+  if (isFetching) {
     return (
       <div className="py-20">
         <Icon className="size-12 mx-auto" name="interface/spinner" />
@@ -339,6 +368,36 @@ const Bets: React.FC = () => {
           <Bet key={`${bet.createdAt}-${bet.tokenId}`} bet={bet} />
         ))
       }
+    </div>
+  )
+}
+
+const Bets: React.FC = () => {
+  const searchParams = useSearchParams()
+  const router = useRouter()
+  const pathname = usePathname()
+
+  const tab = searchParams.get('tab') as BetType || undefined
+
+  const { bets, loading } = useBets(tab)
+
+  const handleTabChange = (type: BetType | undefined) => {
+    const params = new URLSearchParams(searchParams.toString())
+
+    if (type) {
+      params.set('tab', type)
+    }
+    else {
+      params.delete('tab')
+    }
+
+    router.replace(pathname + '?' + params)
+  }
+
+  return (
+    <div className="space-y-3">
+      <Navbar activeType={tab} onClick={(type) => handleTabChange(type)} />
+      <Content bets={bets} isFetching={loading} />
     </div>
   )
 }

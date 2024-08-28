@@ -40,7 +40,7 @@ const League: React.FC<LeagueProps> = (props) => {
   return (
     <Href to={url} className={rootClassName}>
       <div className="flex items-center overflow-hidden">
-        <Flag className="mr-2" country={country.slug} />
+        <Flag className="mr-2 flex-none" country={country.slug} />
         <div className="text-caption-13 text-ellipsis whitespace-nowrap overflow-hidden">{name}</div>
       </div>
       <div className="bg-grey-10 px-1 py-px ml-2 text-caption-12">{games?.length || 0}</div>

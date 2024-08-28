@@ -16,7 +16,7 @@ const iconSizes = {
 } as const
 
 export const sizes = [ 32, 40 ] as const
-export const styles = [ 'primary', 'secondary' ] as const
+export const styles = [ 'primary', 'secondary', 'tertiary' ] as const
 
 export type ButtonSize = typeof sizes[number]
 export type ButtonStyle = typeof styles[number]
@@ -58,6 +58,10 @@ const Button = forwardRef<HTMLAnchorElement | HTMLButtonElement, ButtonProps>((p
       // secondary
       'border-white/20 bg-grey-20 text-grey-90': style === 'secondary',
       'hover:text-black hover:bg-grey-90 hover:border-grey-90': style === 'secondary',
+      // tertiary
+      'border-grey-10 bg-transparent text-grey-60': style === 'tertiary',
+      'hover:text-brand-60': style === 'tertiary',
+      'disabled:text-grey-20': style === 'tertiary',
     }
   )
   const contentClassName = cx('relative flex items-center justify-between')

@@ -135,7 +135,6 @@ const TimeFilter: React.FC<TimeFilterProps> = ({ className }) => {
               <button className="cursor-pointer" onClick={() => setFilterByTime(value)}>
                 <Message
                   className={className}
-                  tag="button"
                   value={title}
                 />
               </button>

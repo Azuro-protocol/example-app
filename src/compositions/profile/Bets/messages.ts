@@ -1,3 +1,6 @@
+import { BetType } from '@azuro-org/sdk'
+
+
 export default {
   single: {
     en: 'Single',
@@ -58,6 +61,20 @@ export default {
     },
     text: {
       en: 'You have not placed any bets yet. Place your first bet and it will appear here.',
+    },
+  },
+  tabs: {
+    all: {
+      en: 'All',
+    },
+    [BetType.Unredeemed]: {
+      en: 'Unredeemed',
+    },
+    [BetType.Accepted]: {
+      en: 'Accepted',
+    },
+    [BetType.Settled]: {
+      en: 'Settled',
     },
   },
 }

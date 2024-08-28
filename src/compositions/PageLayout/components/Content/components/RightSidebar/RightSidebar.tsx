@@ -6,7 +6,7 @@ import { openModal } from '@locmod/modal'
 import { useAccount } from 'wagmi'
 
 import { Button, buttonMessages } from 'components/inputs'
-import Betslip from 'compositions/Betslip/Betslip'
+import TabbedBetslip from 'compositions/TabbedBetslip/TabbedBetslip'
 
 import Controls from '../Controls/Controls'
 
@@ -30,8 +30,8 @@ const RightSidebar: React.FC = () => {
           )
         }
       </div>
-      <div className="bg-bg-l1 border border-grey-10 rounded-r-md -ml-px overflow-auto wd:h-[calc(100vh_-_4.5rem)] no-scrollbar px-2">
-        <Betslip />
+      <div className="bg-bg-l1 border border-grey-10 rounded-r-md -ml-px overflow-auto wd:h-[calc(100vh_-_4.5rem)] no-scrollbar px-2 pt-1">
+        <TabbedBetslip />
       </div>
     </>
   )

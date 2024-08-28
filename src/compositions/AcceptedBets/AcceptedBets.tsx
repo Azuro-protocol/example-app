@@ -9,6 +9,7 @@ import useBets from 'src/hooks/useBets'
 import { Icon, type IconName } from 'components/ui'
 import { Button } from 'components/inputs'
 import BetStatus from 'compositions/BetStatus/BetStatus'
+import EmptyContentComp from 'compositions/EmptyContent/EmptyContent'
 
 import messages from './messages'
 
@@ -105,6 +106,17 @@ const BetCard: React.FC<BetCardProps> = ({ bet }) => {
   )
 }
 
+const EmptyContent: React.FC = () => {
+  return (
+    <EmptyContentComp
+      className="py-6"
+      image="/images/illustrations/smile_sad.png"
+      title={messages.empty.title}
+      text={messages.empty.text}
+    />
+  )
+}
+
 const AcceptedBets: React.FC = () => {
   const { bets, loading } = useBets(BetType.Accepted)
 
@@ -115,7 +127,9 @@ const AcceptedBets: React.FC = () => {
   }
 
   if (!bets?.length) {
-    return null
+    return (
+      <EmptyContent />
+    )
   }
 
   return (
@@ -123,7 +137,7 @@ const AcceptedBets: React.FC = () => {
       <div className="p-3">
         <Message className="text-caption-14 font-semibold" value={{ ...messages.title, values: { count: bets.length } }} />
       </div>
-      <div className="space-y-2 max-h-[24rem] overflow-auto no-scrollbar">
+      <div className="space-y-2 max-h-[28rem] overflow-auto no-scrollbar">
         {
           bets.map(bet => (
             <BetCard key={bet.tokenId} bet={bet} />

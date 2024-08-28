@@ -20,4 +20,12 @@ export default {
   allBets: {
     en: 'All Bets',
   },
+  empty: {
+    title: {
+      en: 'No accepted bets',
+    },
+    text: {
+      en: 'All accepted bets will be listed here',
+    },
+  },
 }

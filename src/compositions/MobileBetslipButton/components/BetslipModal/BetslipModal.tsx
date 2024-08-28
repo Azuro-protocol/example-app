@@ -3,7 +3,7 @@ import React from 'react'
 import { standaloneModal, type ModalComponent } from '@locmod/modal'
 
 import { PlainModal } from 'components/feedback'
-import Betslip from 'compositions/Betslip/Betslip'
+import TabbedBetslip from 'compositions/TabbedBetslip/TabbedBetslip'
 
 
 type BetslipModalProps = {
@@ -14,7 +14,7 @@ const BetslipModal: ModalComponent<BetslipModalProps> = (props) => {
 
   return (
     <PlainModal contentClassName="pt-8" closeModal={closeModal}>
-      <Betslip />
+      <TabbedBetslip />
     </PlainModal>
   )
 }

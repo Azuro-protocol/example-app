@@ -247,9 +247,9 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
         <div className="flex items-center text-caption-13 mb:justify-between">
           {
             isFreeBet ? (
-              <div className="flex items-center text-accent-green mr-1">
+              <div className="flex items-center text-accent-green mr-2">
                 <Icon className="size-4" name="interface/gift" />
-                <Message className="text-label font-semibold uppercase ml-1" value={messages.freebet} />
+                <Message className="font-semibold uppercase ml-1" value={messages.freebet} />
               </div>
             ) : (
               <Message className="text-grey-70 mr-1" value={messages.betAmount} />

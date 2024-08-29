@@ -36,14 +36,6 @@ const BetCard: React.FC<BetCardProps> = ({ bet }) => {
           <div className="text-grey-60 text-caption-12 font-medium">
             {`#${tokenId} / ${dayjs(+createdAt * 1000).format('DD.MM.YYYY, HH:mm')}`}
           </div>
-          {
-            isFreeBet && (
-              <div className="flex items-center text-accent-green ml-2">
-                <Icon className="size-4" name="interface/gift" />
-                <Message className="text-label font-semibold uppercase ml-1" value={messages.freebet} />
-              </div>
-            )
-          }
         </div>
         <BetStatus
           graphBetStatus={graphBetStatus}
@@ -99,7 +91,17 @@ const BetCard: React.FC<BetCardProps> = ({ bet }) => {
               )
             }
           </div>
-          <div className="text-caption-12 font-semibold">{amount} {betToken.symbol}</div>
+          <div className="flex items-center">
+            <div className="text-caption-12 font-semibold">{amount} {betToken.symbol}</div>
+            {
+              isFreeBet && (
+                <div className="flex items-center text-accent-green ml-2">
+                  <Icon className="size-3" name="interface/gift" />
+                  <Message className="text-caption-12 font-semibold uppercase ml-1" value={messages.freebet} />
+                </div>
+              )
+            }
+          </div>
         </div>
       </div>
     </div>

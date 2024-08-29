@@ -22,7 +22,7 @@ const Headline: React.FC<HeadlineProps> = (props) => {
         <div />
         <div className="flex items-center space-x-2">
           <View activeView={activeView} onChangeView={onChangeView} />
-          <button className="p-1" onClick={onCollapse}>
+          <button className="p-1 text-grey-60 hover:text-grey-90" onClick={onCollapse}>
             <Icon
               className="size-5"
               name={isCollapsed ? 'interface/expand' : 'interface/collapse'}

@@ -8,7 +8,10 @@ import iconAzuroImage from 'src/app/icon.png'
 const injectedConnector = injected({ shimDisconnect: true, unstable_shimAsyncInject: true })
 
 export const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_ID as string
+
 const isDevEnabled = Boolean(JSON.parse(process.env.AZURO_UNSTABLE_DEV_ENABLED || 'false'))
+
+console.debug(isDevEnabled ? 'azuro dev' : 'azuro prod')
 
 const walletConnectConnector = walletConnect({
   projectId,

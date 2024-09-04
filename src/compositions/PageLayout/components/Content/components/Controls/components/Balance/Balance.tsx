@@ -2,11 +2,12 @@
 
 import React from 'react'
 import { useBetTokenBalance, useBetsSummary, useChain, useNativeBalance } from '@azuro-org/sdk'
-import { chainsData, type ChainId } from '@azuro-org/toolkit'
+import { type ChainId } from '@azuro-org/toolkit'
 import { Listbox } from '@headlessui/react'
 import { Message } from '@locmod/intl'
 import cx from 'classnames'
 import { useAccount } from 'wagmi'
+import { config } from 'wallet'
 import { constants } from 'helpers'
 
 import { formatToFixed } from 'helpers/formatters'
@@ -64,7 +65,7 @@ const ChainSelect: React.FC = () => {
         </Listbox.Button>
         <Listbox.Options className="w-full space-y-[2px]">
           {
-            Object.values(chainsData).map(({ chain }) => {
+            config.chains.map((chain) => {
               const isActive = appChain.id === chain.id
 
               return (

@@ -8,7 +8,7 @@ import { userAgent } from 'next/server'
 import { cookieToInitialState } from 'wagmi'
 import { type ChainId } from '@azuro-org/toolkit'
 import { config } from 'wallet'
-import { polygon } from 'viem/chains'
+import { polygonAmoy } from 'viem/chains'
 import { constants } from 'helpers'
 
 import Providers from 'compositions/Providers/Providers'
@@ -43,7 +43,7 @@ export default function RootLayout({
   const initialLiveState = JSON.parse(cookieStore.get('live')?.value || 'false')
 
   const initialChainId = _initialChainId &&
-                  (config.chains.find(chain => chain.id === +_initialChainId)?.id as ChainId) || polygon.id
+                  (config.chains.find(chain => chain.id === +_initialChainId)?.id as ChainId) || polygonAmoy.id
 
   return (
     <html lang="en">

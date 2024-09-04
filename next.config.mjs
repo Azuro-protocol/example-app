@@ -3,6 +3,9 @@ import { fileURLToPath } from 'url'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  env: {
+    AZURO_UNSTABLE_DEV_ENABLED: process.env.AZURO_UNSTABLE_DEV_ENABLED,
+  },
   reactStrictMode: false,
   webpack: (config, { isServer, webpack }) => {
     // fixes npm packages that depend on `fs` module

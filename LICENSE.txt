@@ -1,59 +1,16 @@
 WE (Divine Foundation on behalf of the Azuro DAO”)) ARE WILLING TO LICENSE THIS SOFTWARE TO YOU (a licensee “You”) ONLY ON THE CONDITION THAT YOU ACCEPT ALL OF THE TERMS CONTAINED IN THE FOLLOWING AGREEMENT. PLEASE READ THE AGREEMENT CAREFULLY BEFORE DOWNLOADING THE SOFTWARE. BY EXERCISING THE OPTION TO DOWNLOAD THE SOFTWARE YOU AGREE TO BE BOUND BY THE TERMS OF THE AGREEMENT.
 	
-
-
-
 License agreement
 
-
-	
-
 	-----------------------------------------------------------------------------
+
+Parameters
 	
-
+Licensor: Divine Foundation on behalf of the Azuro DAO
 	
-
-
-
+Licensed Work: The Licensed Work is AZURO SDK template (c) 2024 Divine Foundation on behalf of the Azuro DAO
 	
-
-	Parameters
-	
-
-	
-
-
-
-	
-
-	Licensor:             Divine Foundation on behalf of the Azuro DAO
-	
-
-	
-
-
-
-	
-
-	Licensed Work:        AZURO SDK template 
-	
-
-	                      The Licensed Work is (c) 2024 Divine Foundation on behalf                                 of the Azuro DAO
-	
-
-	
-
-
-
-	
-
-	
-
-
-
-	
-
-	Change License:       GNU General Public License v2.0 or later
+Change License: GNU General Public License v2.0 or later
 	
 
 Acceptance

@@ -8,7 +8,8 @@ Parameters
 	
 Licensor: Divine Foundation on behalf of the Azuro DAO
 	
-Licensed Work: The Licensed Work is AZURO SDK template (c) 2024 Divine Foundation on behalf of the Azuro DAO
+Licensed Work: AZURO SDK template
+The Licensed Work is (c) 2024 Divine Foundation on behalf of the Azuro DAO
 	
 Change License: GNU General Public License v2.0 or later
 	

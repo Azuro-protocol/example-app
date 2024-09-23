@@ -28,6 +28,7 @@ const BetCard: React.FC<BetCardProps> = ({ bet }) => {
 
   const isCombo = outcomes.length > 1
   const isFreeBet = Boolean(freebetId)
+  const isUnique = outcomes[0].game.sport.slug === 'unique'
 
   return (
     <div className="rounded-sm overflow-hidden">
@@ -58,9 +59,17 @@ const BetCard: React.FC<BetCardProps> = ({ bet }) => {
               </>
             ) : (
               <>
-                <span>{outcomes[0].game.sport.name}</span>
-                <div className="size-1 bg-grey-20 rounded-full mx-1" />
-                <span className="text-ellipsis whitespace-nowrap overflow-hidden">{outcomes[0].game.league.name}</span>
+                {
+                  isUnique ? (
+                    <div className="text-ellipsis whitespace-nowrap overflow-hidden">{outcomes[0].marketName}</div>
+                  ) : (
+                    <>
+                      <span>{outcomes[0].game.sport.name}</span>
+                      <div className="size-1 bg-grey-20 rounded-full mx-1" />
+                      <span className="text-ellipsis whitespace-nowrap overflow-hidden">{outcomes[0].game.league.name}</span>
+                    </>
+                  )
+                }
               </>
             )
           }
@@ -85,7 +94,11 @@ const BetCard: React.FC<BetCardProps> = ({ bet }) => {
                 </>
               ) : (
                 <>
-                  <div className="text-grey-60 mr-1">{outcomes[0].marketName}:</div>
+                  {
+                    !isUnique && (
+                      <div className="text-grey-60 mr-1">{outcomes[0].marketName}:</div>
+                    )
+                  }
                   <div>{outcomes[0].selectionName}</div>
                 </>
               )

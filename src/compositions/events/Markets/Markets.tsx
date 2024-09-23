@@ -76,7 +76,7 @@ const MobileMarkets: React.FC<MobileMarketsProps> = ({ sortedMarkets, marketsByK
 
 export const MarketsSkeleton: React.FC = () => {
   return (
-    <div className="ds:p-2 border border-transparent">
+    <div className="ds:py-2 border border-transparent">
       <div className="flex">
         <MarketSkeleton />
         <div className="bone size-7 mt-5 ml-2 rounded-min flex-none border border-transparent" />
@@ -103,7 +103,7 @@ const Content: React.FC<ContentProps> = ({ marketsByKey, sortedMarkets }) => {
   const isDisabled = !Boolean(otherMarkets.length)
   const headMarket = marketsByKey[activeMarket]
 
-  const contentClassName = cx('w-full flex mb:border-transparent ds:p-2 border', {
+  const contentClassName = cx('w-full flex mb:border-transparent ds:py-2 border', {
     'absolute bg-grey-10 overflow-y-auto no-scrollbar max-h-[20rem] border-grey-15 pb-2 z-30 rounded-md': isOpen && !isMobileView,
     'border-transparent': !isOpen,
   })

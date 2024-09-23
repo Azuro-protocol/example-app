@@ -125,6 +125,7 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
 
             const { date, time } = getGameDateTime(+startsAt * 1000)
             const gameStatus = getGameStatus({ graphStatus: graphGameStatus, startsAt: +startsAt, isGameInLive: isLive })
+            const isUnique = sportSlug === 'unique'
 
             const marketBoxClassName = 'text-caption-13 mb:flex mb:items-center mb:justify-between'
             const marketClassName = cx('font-semibold', { 'text-grey-40': gameStatus === GameStatus.Canceled })
@@ -133,12 +134,18 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
               <div key={gameId} className="rounded-sm overflow-hidden">
                 <div className="bg-bg-l3 flex items-center justify-between py-2 ds:px-3 mb:px-2 relative">
                   <div className="flex items-center text-caption-12">
-                    <div className="text-grey-70 flex items-center">
-                      <Icon className="size-4 mr-2" name={`sport/${sportSlug}` as IconName} />
-                      <span>{countryName}</span>
-                    </div>
-                    <div className="size-1 flex-none bg-grey-40 rounded-full mx-2" />
-                    <span>{leagueName}</span>
+                    <Icon className="size-4 mr-2 text-grey-70" name={`sport/${sportSlug}` as IconName} />
+                    {
+                      isUnique ? (
+                        <Message className="text-grey-70" value={messages.unique} />
+                      ) : (
+                        <>
+                          <span className="text-grey-70">{countryName}</span>
+                          <div className="size-1 flex-none bg-grey-40 rounded-full mx-2" />
+                          <span>{leagueName}</span>
+                        </>
+                      )
+                    }
                   </div>
                   {
                     isLive && (
@@ -163,11 +170,11 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
                 >
                   <Href to={`${sportSlug}/${countrySlug}/${leagueSlug}/${gameId}`} className="flex items-center group/link">
                     {
-                      participants.map(({ name, image }, index) => (
+                      !isUnique && participants.map(({ name, image }, index) => (
                         <OpponentLogo className={cx({ '-mt-2': !index, '-mb-2 -ml-2 z-20': !!index })} key={name} image={image} />
                       ))
                     }
-                    <div className="ml-3">
+                    <div className={cx({ 'ml-3': !isUnique })}>
                       <div className="text-caption-12 flex items-center">
                         <span className="text-grey-70 font-medium">{date}</span>
                         <span className="text-grey-60 ml-1">{time}</span>

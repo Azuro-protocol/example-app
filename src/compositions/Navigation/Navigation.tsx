@@ -64,6 +64,7 @@ const Sport: React.FC<SportProps> = (props) => {
 
   const isTop = slug === '/'
   const isActive = sportSlug === slug || isTop && !sportSlug
+  const isUnique = slug === 'unique'
 
   const rootClassName = cx('p-px rounded-md overflow-hidden', {
     'bg-card-border-top': isActive,
@@ -76,6 +77,7 @@ const Sport: React.FC<SportProps> = (props) => {
   const iconClassName = cx('h-4 w-4', {
     'rotate-180': isActive,
   })
+  const icon: IconName = isTop || isUnique ? 'interface/top' : `sport/${slug}` as IconName
 
   const leagues = useMemo(() => {
     if (!countries) {
@@ -99,31 +101,11 @@ const Sport: React.FC<SportProps> = (props) => {
       <div className={wrapperClassName}>
         <Href to={`/${slug}`} className={buttonClassName}>
           <div className="flex items-center">
-            {
-              isTop ? (
-                <>
-                  <div className="flex items-center justify-center w-4 h-4 mr-2">
-                    <div
-                      className={
-                        cx('w-[13px] h-[13px] rounded-full', {
-                          'bg-grey-60': !isActive,
-                          'bg-brand-50': isActive,
-                        })
-                      }
-                    />
-                  </div>
-                  <Message className="text-caption-13" value={name} />
-                </>
-              ) : (
-                <>
-                  <Icon className="size-4 mr-2" name={`sport/${slug}` as IconName} />
-                  <div className="text-caption-13">{name}</div>
-                </>
-              )
-            }
+            <Icon className="size-4 mr-2" name={icon} />
+            <Message className="text-caption-13" value={name} />
           </div>
           {
-            Boolean(isTop || !leagues?.length) ? (
+            Boolean(isTop || isUnique || !leagues?.length) ? (
               <div className="text-caption-12 min-w-4 text-center">{gamesCount || 0}</div>
             ) : (
               <Icon className={iconClassName} name="interface/chevron_down" />
@@ -131,7 +113,7 @@ const Sport: React.FC<SportProps> = (props) => {
           }
         </Href>
         {
-          Boolean(isActive && leagues) && (
+          Boolean(!isUnique && isActive && leagues) && (
             leagues?.map((league) => (
               <League key={`${league.country.slug}-${league.slug}`} {...league} />
             ))

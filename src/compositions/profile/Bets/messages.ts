@@ -11,6 +11,9 @@ export default {
   live: {
     en: 'LIVE BET',
   },
+  unique: {
+    en: 'Unique Events',
+  },
   market: {
     en: 'Market',
   },

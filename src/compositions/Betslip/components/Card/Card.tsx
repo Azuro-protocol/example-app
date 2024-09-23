@@ -31,6 +31,7 @@ const Card: React.FC<ItemProps> = (props) => {
 
   const isDisabled = !isStatusesFetching && status !== ConditionStatus.Created
   const isLive = coreAddress === liveHostAddress
+  const isUnique = sportSlug === 'unique'
 
   const bottomBoxClassName = cx(
     'px-4 py-2 flex items-center justify-between mt-px',
@@ -58,9 +59,17 @@ const Card: React.FC<ItemProps> = (props) => {
             }
           >
             <Icon className="size-4 mr-1 flex-none" name={`sport/${sportSlug}` as IconName} />
-            <div className="whitespace-nowrap">{countryName}</div>
-            <div className="size-1 rounded-full bg-grey-20 mx-1" />
-            <div className="text-ellipsis whitespace-nowrap overflow-hidden">{leagueName}</div>
+            {
+              isUnique ? (
+                <div className="text-ellipsis whitespace-nowrap overflow-hidden">{marketName}</div>
+              ) : (
+                <>
+                  <div className="whitespace-nowrap">{countryName}</div>
+                  <div className="size-1 rounded-full bg-grey-20 mx-1" />
+                  <div className="text-ellipsis whitespace-nowrap overflow-hidden">{leagueName}</div>
+                </>
+              )
+            }
           </div>
           <button className="text-grey-60 hover:text-grey-90 transition ml-2 p-1" onClick={() => removeItem(item)}>
             <Icon className="size-3" name="interface/close" />
@@ -89,7 +98,11 @@ const Card: React.FC<ItemProps> = (props) => {
           ) : (
             <>
               <div className="text-caption-12">
-                <span className="text-grey-60 mr-1">{marketName}:</span>
+                {
+                  !isUnique && (
+                    <span className="text-grey-60 mr-1">{marketName}:</span>
+                  )
+                }
                 <span>{selectionName}</span>
               </div>
               {

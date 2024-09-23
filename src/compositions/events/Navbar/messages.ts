@@ -51,4 +51,7 @@ export default {
   lol: {
     en: 'League of Legends',
   },
+  unique: {
+    en: 'Unique Events',
+  },
 }

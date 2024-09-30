@@ -24,7 +24,10 @@ const BetButton: React.FC<BetButtonProps> = ({ isEnoughBalance, isBalanceFetchin
   const { address } = useAccount()
   const { betToken } = useChain()
   const { items, clear } = useBaseBetslip()
-  const { betAmount, odds, totalOdds, selectedFreeBet, isBetAllowed, isOddsFetching, isStatusesFetching } = useDetailedBetslip()
+  const {
+    betAmount, odds, totalOdds, selectedFreeBet, batchBetAmounts,
+    isBetAllowed, isOddsFetching, isStatusesFetching, isBatch,
+  } = useDetailedBetslip()
 
   const totalOddsRef = useRef(totalOdds)
 
@@ -42,7 +45,7 @@ const BetButton: React.FC<BetButtonProps> = ({ isEnoughBalance, isBalanceFetchin
     isAllowanceLoading,
     isApproveRequired,
   } = usePrepareBet({
-    betAmount,
+    betAmount: isBatch ? batchBetAmounts : betAmount,
     slippage,
     affiliate: process.env.NEXT_PUBLIC_AFFILIATE_ADDRESS as Address,
     selections: items,
@@ -99,7 +102,10 @@ const BetButton: React.FC<BetButtonProps> = ({ isEnoughBalance, isBalanceFetchin
           isLoading ? (
             <Icon className="size-4 mx-auto" name="interface/spinner" />
           ) : (
-            <Message className="font-bold text-caption-14" value={isApproveRequired ? buttonMessages.approve : buttonMessages.placeBet} />
+            <Message
+              className="font-bold text-caption-14"
+              value={isApproveRequired ? buttonMessages.approve : buttonMessages.placeBet}
+            />
           )
         }
       </div>

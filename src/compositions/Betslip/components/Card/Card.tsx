@@ -1,11 +1,15 @@
 'use client'
 
 import React, { useRef } from 'react'
-import { useBaseBetslip, type BetslipItem } from '@azuro-org/sdk'
+import { useBaseBetslip, useChain, type BetslipItem } from '@azuro-org/sdk'
 import { ConditionStatus, liveHostAddress } from '@azuro-org/toolkit'
 import cx from 'classnames'
+import { Message } from '@locmod/intl'
+import { constants } from 'helpers'
 
+import { formatToFixed } from 'helpers/formatters'
 import useOddsChange from 'src/hooks/useOddsChange'
+import { Input } from 'components/inputs'
 import { Icon, LiveDot, type IconName } from 'components/ui'
 import OddsValue from 'compositions/OddsValue/OddsValue'
 import Warning from '../Warning/Warning'
@@ -15,26 +19,35 @@ import messages from './messages'
 
 type ItemProps = {
   item: BetslipItem
+  batchBetAmount: string
   status: ConditionStatus
   odds: number
   isStatusesFetching: boolean
   isOddsFetching: boolean
+  isBatch: boolean
+  onBatchAmountChange: (value: string) => void
 }
 
 const Card: React.FC<ItemProps> = (props) => {
-  const { item, odds, status, isOddsFetching, isStatusesFetching } = props
+  const { item, batchBetAmount, odds, status, isOddsFetching, isStatusesFetching, isBatch, onBatchAmountChange } = props
   const { marketName, selectionName, coreAddress, game: { sportSlug, countryName, leagueName, title } } = item
 
+  const { appChain, betToken } = useChain()
   const { removeItem } = useBaseBetslip()
   const nodeRef = useRef<HTMLDivElement>(null)
   useOddsChange({ odds, nodeRef })
+  const oddsRef = useRef(odds)
+
+  if (!isOddsFetching) {
+    oddsRef.current = odds
+  }
 
   const isDisabled = !isStatusesFetching && status !== ConditionStatus.Created
   const isLive = coreAddress === liveHostAddress
   const isUnique = sportSlug === 'unique'
 
   const bottomBoxClassName = cx(
-    'px-4 py-2 flex items-center justify-between mt-px',
+    'px-4 py-2 mt-px',
     'group-[.increased]/card:bg-betslip-item-bg-inc',
     'group-[.decreased]/card:bg-betslip-item-bg-dec',
     {
@@ -97,19 +110,41 @@ const Card: React.FC<ItemProps> = (props) => {
             <Warning text={messages.locked} />
           ) : (
             <>
-              <div className="text-caption-12">
+              <div className="flex items-center justify-between">
+                <div className="text-caption-12">
+                  {
+                    !isUnique && (
+                      <span className="text-grey-60 mr-1">{marketName}:</span>
+                    )
+                  }
+                  <span>{selectionName}</span>
+                </div>
                 {
-                  !isUnique && (
-                    <span className="text-grey-60 mr-1">{marketName}:</span>
+                  isOddsFetching ? (
+                    <Icon className="size-5" name="interface/spinner" />
+                  ) : (
+                    <OddsValue className={oddsClassName} odds={odds} />
                   )
                 }
-                <span>{selectionName}</span>
               </div>
               {
-                isOddsFetching ? (
-                  <Icon className="size-5" name="interface/spinner" />
-                ) : (
-                  <OddsValue className={oddsClassName} odds={odds} />
+                isBatch && (
+                  <div className="flex items-center mt-2">
+                    <Input
+                      className="bg-grey-15"
+                      type="number"
+                      value={batchBetAmount}
+                      placeholder="0.00"
+                      leftNode={<Icon className="size-4 mr-2" name={constants.currencyIcons[appChain.id]} />}
+                      onChange={onBatchAmountChange}
+                    />
+                    <div className="text-right ml-3">
+                      <Message className="text-caption-12 text-grey-60 w-max" value={messages.possibleWin} tag="p" />
+                      <div className="text-caption-13 text-brand-50 font-semibold mt-0.5 w-max text-right ml-auto">
+                        {formatToFixed(oddsRef.current * +batchBetAmount, 2)} {betToken.symbol}
+                      </div>
+                    </div>
+                  </div>
                 )
               }
             </>

@@ -17,13 +17,16 @@ export default {
     en: 'Single bet',
   },
   batch: {
-    en: 'Batch bet',
+    en: 'Single bets ({count})',
   },
   combo: {
-    en: 'Combo bet',
+    en: 'Combo ({count})',
   },
   betAmount: {
     en: 'Bet amount',
+  },
+  totalBet: {
+    en: 'Total bet',
   },
   warnings: {
     [BetslipDisableReason.ComboWithForbiddenItem]: {

@@ -1,7 +1,7 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## License
-[This license](/LICENSE.txt) applies to all code contained in this repository.
+[This license](/LICENSE.md) applies to all code contained in this repository.
 
 ## Customization
 

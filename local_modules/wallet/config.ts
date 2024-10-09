@@ -7,6 +7,13 @@ import iconAzuroImage from 'src/app/icon.png'
 
 
 const injectedConnector = injected({ shimDisconnect: true, unstable_shimAsyncInject: true })
+const particleConnector = particleWagmiWallet({
+  options: {
+    projectId: constants.particleProjectId,
+    clientKey: constants.particleClientKey,
+    appId: constants.particleAppId,
+  },
+})
 
 export const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_ID as string
 
@@ -33,13 +40,7 @@ const wagmiConfig = createConfig({
     [spicy.id]: http(constants.rpcByChains[spicy.id]),
   },
   connectors: [
-    particleWagmiWallet({
-      options: {
-        projectId: constants.particleProjectId,
-        clientKey: constants.particleClientKey,
-        appId: constants.particleAppId,
-      },
-    }),
+    particleConnector,
     injectedConnector,
     walletConnectConnector,
   ],

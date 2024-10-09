@@ -1,6 +1,6 @@
 import { http, createConfig, cookieStorage, createStorage } from 'wagmi'
 import { injected, walletConnect } from 'wagmi/connectors'
-// import { particleWagmiWallet } from '@azuro-org/sdk-social-aa-connector'
+import { particleWagmiWallet } from '@azuro-org/sdk-social-aa-connector'
 import { polygon, polygonAmoy, gnosis, chiliz, spicy } from 'viem/chains'
 import { constants } from 'helpers'
 import iconAzuroImage from 'src/app/icon.png'
@@ -11,8 +11,6 @@ const injectedConnector = injected({ shimDisconnect: true, unstable_shimAsyncInj
 export const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_ID as string
 
 const isDevEnabled = Boolean(JSON.parse(process.env.AZURO_UNSTABLE_DEV_ENABLED || 'false'))
-
-console.debug(isDevEnabled ? 'azuro dev' : 'azuro prod')
 
 const walletConnectConnector = walletConnect({
   projectId,
@@ -35,13 +33,13 @@ const wagmiConfig = createConfig({
     [spicy.id]: http(constants.rpcByChains[spicy.id]),
   },
   connectors: [
-    // particleWagmiWallet({
-    //   options: {
-    //     projectId: '0d035c36-2b19-4145-a283-1b740058ef0e',
-    //     clientKey: 'cjbManuVXiwRZ404UjXXAfDz64Hg8t1ac9MCRTdG',
-    //     appId: 'e3ea3e33-a460-4b73-a1fc-3bb49fed43fd',
-    //   },
-    // }),
+    particleWagmiWallet({
+      options: {
+        projectId: constants.particleProjectId,
+        clientKey: constants.particleClientKey,
+        appId: constants.particleAppId,
+      },
+    }),
     injectedConnector,
     walletConnectConnector,
   ],

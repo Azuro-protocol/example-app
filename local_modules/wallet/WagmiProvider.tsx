@@ -43,6 +43,7 @@ const WagmiProvider: React.CFC<{ initialState?: State }> = (props) => {
               projectId: constants.particleProjectId,
               clientKey: constants.particleClientKey,
               appId: constants.particleAppId,
+              enableSessions: true,
               wallet: {
                 visible: true,
               },

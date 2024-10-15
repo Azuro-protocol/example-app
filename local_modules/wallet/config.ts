@@ -12,6 +12,7 @@ const particleConnector = particleWagmiWallet({
     projectId: constants.particleProjectId,
     clientKey: constants.particleClientKey,
     appId: constants.particleAppId,
+    enableSessions: true,
   },
 })
 

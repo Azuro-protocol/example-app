@@ -12,7 +12,7 @@ const particleAppId = process.env.NEXT_PUBLIC_PARTICLE_APP_ID as string
 const rpcByChains: Record<ChainId, string> = {
   [gnosis.id]: 'https://gnosis-rpc.publicnode.com',
   [polygon.id]: 'https://polygon-bor-rpc.publicnode.com',
-  [polygonAmoy.id]: 'https://polygon-amoy-bor-rpc.publicnode.com',
+  [polygonAmoy.id]: 'https://polygon-amoy.gateway.tenderly.co',
   [chiliz.id]: 'https://chiliz-rpc.publicnode.com',
   [spicy.id]: 'https://chiliz-spicy-rpc.publicnode.com',
 } as const

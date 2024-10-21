@@ -54,7 +54,9 @@ type Top = {
   gamesCount?: number
 }
 
-type SportProps = NavigationQuery['sports'][0] | Top
+type SportProps = {
+  gamesCount?: number
+} & (Top | NavigationQuery['sports'][0])
 
 const Sport: React.FC<SportProps> = (props) => {
   const { slug, name, countries } = props as NavigationQuery['sports'][0]
@@ -135,25 +137,29 @@ const Navigation: React.FC<NavigationProps> = ({ className }) => {
     isLive,
   })
 
-  const allTopGames = useMemo(() => {
+  const { allTopGames, gamesPerSport } = useMemo(() => {
     if (!navigation) {
-      return
+      return {}
     }
 
     let result = 0
+    const gamesPerSport: Record<string, number> = {}
 
-    Object.values(navigation).forEach(({ countries }) => {
+    Object.values(navigation).forEach(({ sportId, countries }) => {
       let gamesCount = 0
 
       countries.forEach(({ leagues }) => {
         gamesCount += leagues.reduce((acc, { games }) => acc + games!.length, 0)
       })
 
-
+      gamesPerSport[sportId] = gamesCount
       result += Math.min(gamesCount, constants.topPageGamePerSportLimit)
     })
 
-    return result
+    return {
+      allTopGames: result,
+      gamesPerSport,
+    }
   }, [ navigation ])
 
   const sortedSports = useMemo(() => {
@@ -199,7 +205,7 @@ const Navigation: React.FC<NavigationProps> = ({ className }) => {
       <Sport slug="/" name={messages.top} gamesCount={allTopGames} />
       {
         sortedSports?.map(sport => (
-          <Sport key={sport.slug} {...sport} />
+          <Sport key={sport.slug} gamesCount={gamesPerSport?.[sport.sportId] || 0} {...sport} />
         ))
       }
     </div>

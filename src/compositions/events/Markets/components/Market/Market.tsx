@@ -16,7 +16,7 @@ const Buttons: React.FC<ButtonsProps> = ({ rows }) => {
     <div className="w-full">
       {
         rows.map((outcomes, index) => (
-          <div key={index} className={cx('grid gap-x-2 gap-y-3 w-full mt-2 first-of-type:mt-0', outcomes?.length === 3 ? 'grid-cols-3' : 'grid-cols-2')}>
+          <div key={index} className={cx('grid gap-x-2 gap-y-3 w-full mt-2 first-of-type:mt-0', outcomes?.length > 2 ? 'grid-cols-3' : 'grid-cols-2')}>
             {
               outcomes.map(outcome => (
                 <OutcomeButton

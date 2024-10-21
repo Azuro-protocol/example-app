@@ -28,7 +28,7 @@ const HeadMarket: React.FC<HeadMarketProps> = ({ market, conditionIndex, isOpen 
 
   const headMarket = {
     ...market,
-    outcomeRows: isOpen ? outcomeRows : [ outcomeRows[conditionIndex] ],
+    outcomeRows: isOpen ? outcomeRows : [ outcomeRows[conditionIndex].slice(0, 3) ],
   }
 
   return (
@@ -100,8 +100,8 @@ const Content: React.FC<ContentProps> = ({ marketsByKey, sortedMarkets }) => {
     return <MarketsSkeleton />
   }
 
-  const isDisabled = !Boolean(otherMarkets.length)
   const headMarket = marketsByKey[activeMarket]
+  const isDisabled = !Boolean(otherMarkets.length) && headMarket.outcomeRows.length === 1 && headMarket.outcomeRows[0].length <= 3
 
   const contentClassName = cx('w-full flex mb:border-transparent ds:p-2 border', {
     'absolute bg-grey-10 overflow-y-auto no-scrollbar max-h-[20rem] border-grey-15 pb-2 z-30 rounded-md': isOpen && !isMobileView,

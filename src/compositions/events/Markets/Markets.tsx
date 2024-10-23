@@ -28,7 +28,13 @@ const HeadMarket: React.FC<HeadMarketProps> = ({ market, conditionIndex, isOpen 
 
   const headMarket = {
     ...market,
-    outcomeRows: isOpen ? outcomeRows : [ outcomeRows[conditionIndex].slice(0, 3) ],
+    outcomeRows: isOpen ? outcomeRows : [
+      outcomeRows[conditionIndex].length > 3 ? (
+        outcomeRows[conditionIndex].slice(0, 2)
+      ) : (
+        outcomeRows[conditionIndex]
+      ),
+    ],
   }
 
   return (

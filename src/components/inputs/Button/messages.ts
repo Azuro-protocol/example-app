@@ -5,6 +5,9 @@ export default {
   connectWallet: {
     en: 'Connect wallet',
   },
+  changeNetwork: {
+    en: 'Change network',
+  },
   loading: {
     en: 'Loading',
   },

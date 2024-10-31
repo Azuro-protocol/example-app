@@ -6,6 +6,7 @@ import { Message } from '@locmod/intl'
 import cx from 'classnames'
 
 import { Icon } from 'components/ui'
+import ConnectButtonWrapper from 'compositions/ConnectButtonWrapper/ConnectButtonWrapper'
 import messages from './messages'
 import { AmountInput, BetButton, Card, Chips, FreeBet, Warning, Slippage, QuickBet } from './components'
 
@@ -184,7 +185,11 @@ const Content: React.FC<ContentProps> = ({ openSettings }) => {
             </div>
           )
         }
-        <BetButton isEnoughBalance={isEnoughBalance} isBalanceFetching={isBalanceFetching} />
+        <div className="mt-3">
+          <ConnectButtonWrapper>
+            <BetButton isEnoughBalance={isEnoughBalance} isBalanceFetching={isBalanceFetching} />
+          </ConnectButtonWrapper>
+        </div>
       </div>
     </div>
   )

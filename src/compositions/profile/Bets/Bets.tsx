@@ -19,6 +19,7 @@ import BetStatus from 'compositions/BetStatus/BetStatus'
 import EmptyContent from 'compositions/EmptyContent/EmptyContent'
 import OddsValue from 'compositions/OddsValue/OddsValue'
 
+import ConnectButtonWrapper from 'compositions/ConnectButtonWrapper/ConnectButtonWrapper'
 import messages from './messages'
 
 
@@ -279,14 +280,16 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
           </div>
           {
             withButton && (
-              <Button
-                className="ds:ml-3"
-                style="secondary"
-                title={isWin ? messages.redeem : messages.refund}
-                size={32}
-                loading={isLoading}
-                onClick={handleRedeem}
-              />
+              <ConnectButtonWrapper>
+                <Button
+                  className="ds:ml-3"
+                  style="secondary"
+                  title={isWin ? messages.redeem : messages.refund}
+                  size={32}
+                  loading={isLoading}
+                  onClick={handleRedeem}
+                />
+              </ConnectButtonWrapper>
             )
           }
         </div>

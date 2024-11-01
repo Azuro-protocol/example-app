@@ -1,4 +1,5 @@
 import { svgRuntime } from './SvgProvider'
+import { memo } from 'react'
 
 
 const containerId = 'svg-sprite'
@@ -18,7 +19,7 @@ const baseInnerHtml = `
 // if SSR is enabled, content should be static and synced on the client hydration
 const clientWithSSRInnerHTML = typeof document !== 'undefined' && document.getElementById(containerId)?.innerHTML
 
-const SvgSprite: React.FC<{ withSSR?: boolean }> = ({ withSSR = true }) => {
+const SvgSprite = memo<{ withSSR?: boolean }>(({ withSSR = true }) => {
   const isClientWithSSRFlow = withSSR && typeof window !== 'undefined'
 
   let innerHtml = (isClientWithSSRFlow ? clientWithSSRInnerHTML : baseInnerHtml) || baseInnerHtml
@@ -34,6 +35,8 @@ const SvgSprite: React.FC<{ withSSR?: boolean }> = ({ withSSR = true }) => {
       dangerouslySetInnerHTML={{ __html: innerHtml }}
     />
   )
-}
+})
+
+SvgSprite.displayName = 'SvgSprite'
 
 export default SvgSprite

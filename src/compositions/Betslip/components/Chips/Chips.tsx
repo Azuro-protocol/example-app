@@ -2,7 +2,7 @@ import React from 'react'
 import cx from 'classnames'
 import { useBetTokenBalance, useDetailedBetslip } from '@azuro-org/sdk'
 import { Message } from '@locmod/intl'
-import { useAccount } from 'wagmi'
+import { useAccount } from '@azuro-org/sdk-social-aa-connector'
 import { formatToFixed } from 'helpers/formatters'
 
 import { getQuickBetStorageValue } from '../QuickBet/QuickBet'

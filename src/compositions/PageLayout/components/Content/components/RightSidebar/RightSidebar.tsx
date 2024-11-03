@@ -2,8 +2,9 @@
 
 import React from 'react'
 
-import { openModal } from '@locmod/modal'
-import { useAccount } from 'wagmi'
+// import { openModal } from '@locmod/modal'
+import { useAccount } from '@azuro-org/sdk-social-aa-connector'
+import { usePrivy } from '@privy-io/react-auth'
 
 import { Button, buttonMessages } from 'components/inputs'
 import TabbedBetslip from 'compositions/TabbedBetslip/TabbedBetslip'
@@ -13,6 +14,7 @@ import Controls from '../Controls/Controls'
 
 const RightSidebar: React.FC = () => {
   const { address } = useAccount()
+  const { connectOrCreateWallet, ready } = usePrivy()
 
   return (
     <>
@@ -25,7 +27,8 @@ const RightSidebar: React.FC = () => {
               className="ml-auto"
               title={buttonMessages.connectWallet}
               size={40}
-              onClick={() => openModal('ConnectModal')}
+              loading={!ready}
+              onClick={() => connectOrCreateWallet()}
             />
           )
         }

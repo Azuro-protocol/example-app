@@ -9,7 +9,7 @@
     ],
     "jsx": "preserve",
     "module": "ESNext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "allowJs": true,
     "sourceMap": true,
     "sourceRoot": "/",
@@ -36,6 +36,9 @@
       ],
       "wallet": [
         "local_modules/wallet"
+      ],
+      "wallet/*": [
+        "local_modules/wallet/*"
       ],
       "analytics": [
         "local_modules/analytics"

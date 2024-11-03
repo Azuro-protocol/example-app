@@ -1,7 +1,7 @@
 import { useLiveBets, usePrematchBets, type BetType } from '@azuro-org/sdk'
 import { OrderDirection } from '@azuro-org/toolkit'
 import { useMemo } from 'react'
-import { useAccount } from 'wagmi'
+import { useAccount } from '@azuro-org/sdk-social-aa-connector'
 
 
 const useBets = (type: BetType | undefined) => {

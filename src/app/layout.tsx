@@ -5,11 +5,11 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { cookies, headers } from 'next/headers'
 import { userAgent } from 'next/server'
-import { cookieToInitialState } from 'wagmi'
+// import { cookieToInitialState } from 'wagmi'
 import { type ChainId } from '@azuro-org/toolkit'
-import { config } from 'wallet'
 import { polygonAmoy } from 'viem/chains'
 import { constants } from 'helpers'
+import { appChains } from 'wallet/chains'
 
 import Providers from 'compositions/Providers/Providers'
 import PageLayout from 'compositions/PageLayout/PageLayout'
@@ -37,19 +37,19 @@ export default function RootLayout({
   const headersList = headers()
   const cookieStore = cookies()
 
-  const initialState = cookieToInitialState(config, headers().get('cookie'))
+  // const initialState = cookieToInitialState(config, headers().get('cookie'))
   const userAgentValue = userAgent({ headers: headersList })
   const _initialChainId = cookieStore.get('appChainId')?.value
   const initialLiveState = JSON.parse(cookieStore.get('live')?.value || 'false')
 
   const initialChainId = _initialChainId &&
-                  (config.chains.find(chain => chain.id === +_initialChainId)?.id as ChainId) || polygonAmoy.id
+                  (appChains.find(chain => chain.id === +_initialChainId)?.id as ChainId) || polygonAmoy.id
 
   return (
     <html lang="en">
       <body className={inter.className}>
         <Providers
-          initialState={initialState}
+          // initialState={initialState}
           userAgent={userAgentValue.ua}
           initialLiveState={initialLiveState}
           initialChainId={initialChainId}

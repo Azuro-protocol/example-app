@@ -6,7 +6,7 @@ const nextConfig = {
   env: {
     AZURO_UNSTABLE_DEV_ENABLED: process.env.AZURO_UNSTABLE_DEV_ENABLED,
   },
-  reactStrictMode: false,
+  reactStrictMode: true,
   webpack: (config, { isServer, webpack }) => {
     // fixes npm packages that depend on `fs` module
     if (!isServer) {
@@ -91,9 +91,6 @@ const nextConfig = {
       'components/ui',
       'wallet',
       'contexts',
-      'graph/liquidity',
-      'graph/stake',
-      'graph/uniswap',
       'helpers',
       'helpers/getters',
       'hooks'

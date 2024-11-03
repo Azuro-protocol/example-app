@@ -2,7 +2,8 @@
 
 import { type ReactNode, useEffect } from 'react'
 import { type ModalComponent } from '@locmod/modal'
-import { type Connector, useAccount, useConnect } from 'wagmi'
+import { type Connector, useConnect } from 'wagmi'
+import { useAccount } from '@azuro-org/sdk-social-aa-connector'
 import { Message } from '@locmod/intl'
 import { useDevice } from 'contexts'
 

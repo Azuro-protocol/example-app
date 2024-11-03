@@ -3,7 +3,7 @@ import cx from 'classnames'
 import { useBaseBetslip, useChain, useDetailedBetslip, usePrepareBet } from '@azuro-org/sdk'
 import { type Address } from 'viem'
 import { Message } from '@locmod/intl'
-import { useAccount } from 'wagmi'
+import { useAccount } from '@azuro-org/sdk-social-aa-connector'
 import { openModal } from '@locmod/modal'
 import localStorage from '@locmod/local-storage'
 import { constants, isUserRejectedRequestError } from 'helpers'
@@ -62,6 +62,8 @@ const BetButton: React.FC<BetButtonProps> = ({ isEnoughBalance, isBalanceFetchin
       if (!isUserRejectedRequestError(err)) {
         openModal('ErrorModal')
       }
+
+      console.log('Bet err:', err)
     },
   })
 

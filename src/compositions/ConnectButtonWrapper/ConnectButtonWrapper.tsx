@@ -4,6 +4,7 @@ import React from 'react'
 import { openModal } from '@locmod/modal'
 import { useChain } from '@azuro-org/sdk'
 import { useWallet } from 'wallet'
+import { usePrivy } from '@privy-io/react-auth'
 
 import { Button, buttonMessages, type ButtonProps } from 'components/inputs'
 
@@ -15,11 +16,13 @@ type ConnectButtonWrapperProps = {
 const ConnectButtonWrapper: React.FC<ConnectButtonWrapperProps> = ({ children }) => {
   const { appChain } = useChain()
   const { account, chainId } = useWallet()
+  const { connectOrCreateWallet, ready } = usePrivy()
   const { onClick, title, disabled, ...props } = children.props
 
   if (!account) {
     const handleClick = () => {
-      openModal('ConnectModal')
+      // openModal('ConnectModal')
+      connectOrCreateWallet()
     }
 
     return (
@@ -27,6 +30,7 @@ const ConnectButtonWrapper: React.FC<ConnectButtonWrapperProps> = ({ children })
         {...props}
         title={buttonMessages.connectWallet}
         size={props?.size || 40}
+        loading={!ready}
         className={props?.className || 'w-full'}
         onClick={handleClick}
       />

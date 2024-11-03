@@ -6,11 +6,11 @@ import { type ChainId } from '@azuro-org/toolkit'
 import { Listbox } from '@headlessui/react'
 import { Message } from '@locmod/intl'
 import cx from 'classnames'
-import { useAccount } from 'wagmi'
+import { useAccount } from '@azuro-org/sdk-social-aa-connector'
 import { config } from 'wallet'
 import { constants } from 'helpers'
-
 import { formatToFixed } from 'helpers/formatters'
+
 import { Icon } from 'components/ui'
 import { Dropdown } from 'components/inputs'
 

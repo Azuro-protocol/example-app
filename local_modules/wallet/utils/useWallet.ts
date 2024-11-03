@@ -1,11 +1,12 @@
 'use client'
 
-import { useAccount, useChains } from 'wagmi'
+import { useChains } from 'wagmi'
+import { useAccount } from '@azuro-org/sdk-social-aa-connector'
 import { ConnectorName } from 'wallet'
 
 
 export const useWallet = () => {
-  const { address, connector, isConnected, isConnecting, isReconnecting, chain, chainId } = useAccount()
+  const { address, connector, isConnected, isConnecting, isReconnecting, chain, chainId, isAAWallet } = useAccount()
   const chains = useChains()
 
   const isWalletConnect = connector?.name === ConnectorName.WalletConnect
@@ -20,5 +21,6 @@ export const useWallet = () => {
     isConnecting,
     isReconnecting,
     isWalletConnect,
+    isAAWallet,
   }
 }

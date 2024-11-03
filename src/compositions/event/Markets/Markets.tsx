@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { XMasonry, XBlock } from 'react-xmasonry'
 import { GameStatus, type GameMarkets } from '@azuro-org/toolkit'
 import { useActiveMarkets, useBetsSummaryBySelection, useResolvedMarkets } from '@azuro-org/sdk'
-import { useAccount } from 'wagmi'
+import { useAccount } from '@azuro-org/sdk-social-aa-connector'
 import dayjs from 'dayjs'
 import cx from 'classnames'
 

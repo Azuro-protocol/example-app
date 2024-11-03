@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import { Message } from '@locmod/intl'
-import { useAccount } from 'wagmi'
+import { useAccount } from '@azuro-org/sdk-social-aa-connector'
 import { useIsMounted } from 'hooks'
 import copy from 'copy-to-clipboard'
 import cx from 'classnames'

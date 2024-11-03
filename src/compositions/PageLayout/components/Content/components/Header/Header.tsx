@@ -2,8 +2,9 @@
 
 import React, { useEffect, useRef, useState } from 'react'
 import { usePathname } from 'next/navigation'
-import { openModal } from '@locmod/modal'
-import { useAccount } from 'wagmi'
+// import { openModal } from '@locmod/modal'
+import { useAccount } from '@azuro-org/sdk-social-aa-connector'
+import { usePrivy } from '@privy-io/react-auth'
 import { useFreezeBodyScroll } from 'hooks'
 
 import { Icon, Logo } from 'components/ui'
@@ -28,6 +29,7 @@ const Content: React.FC = () => {
 const Header: React.FC = () => {
   const { address } = useAccount()
   const pathname = usePathname()
+  const { connectOrCreateWallet, ready } = usePrivy()
   const [ isVisible, setVisibility ] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -77,7 +79,8 @@ const Header: React.FC = () => {
               className="ml-auto"
               title={buttonMessages.connectWallet}
               size={32}
-              onClick={() => openModal('ConnectModal')}
+              loading={!ready}
+              onClick={() => connectOrCreateWallet()}
             />
           )
         }

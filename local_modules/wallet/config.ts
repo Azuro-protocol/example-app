@@ -1,23 +1,34 @@
-import { http, createConfig, cookieStorage, createStorage } from 'wagmi'
+'use client'
+
+import { http, cookieStorage, createStorage } from 'wagmi'
 import { injected, walletConnect } from 'wagmi/connectors'
-import { particleWagmiWallet } from '@azuro-org/sdk-social-aa-connector'
+import type {PrivyClientConfig} from '@privy-io/react-auth'
+import { createConfig } from '@privy-io/wagmi'
 import { polygon, polygonAmoy, gnosis, chiliz, spicy } from 'viem/chains'
 import { constants } from 'helpers'
 import iconAzuroImage from 'src/app/icon.png'
 
+import { appChains } from './chains'
+
 
 const injectedConnector = injected({ shimDisconnect: true, unstable_shimAsyncInject: true })
-const particleConnector = particleWagmiWallet({
-  options: {
-    projectId: constants.particleProjectId,
-    clientKey: constants.particleClientKey,
-    appId: constants.particleAppId,
+
+// Replace this with your Privy config
+export const privyConfig: PrivyClientConfig = {
+  embeddedWallets: {
+    createOnLogin: 'users-without-wallets',
+    requireUserPasswordOnCreate: false,
+    // waitForTransactionConfirmation: false,
+    showWalletUIs: false,
   },
-})
+  loginMethods: ['email', 'google', 'twitter', 'wallet', 'farcaster', 'discord', 'instagram' ],
+  appearance: {
+    theme: 'dark',
+    showWalletLoginFirst: true,
+  },
+};
 
 export const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_ID as string
-
-const isDevEnabled = Boolean(JSON.parse(process.env.AZURO_UNSTABLE_DEV_ENABLED || 'false'))
 
 const walletConnectConnector = walletConnect({
   projectId,
@@ -31,7 +42,7 @@ const walletConnectConnector = walletConnect({
 })
 
 const wagmiConfig = createConfig({
-  chains: isDevEnabled ? [ polygonAmoy, gnosis, spicy ] : [ polygon, polygonAmoy, gnosis, chiliz, spicy ],
+  chains: appChains,
   transports: {
     [polygon.id]: http(constants.rpcByChains[polygon.id]),
     [polygonAmoy.id]: http(constants.rpcByChains[polygonAmoy.id]),
@@ -40,7 +51,6 @@ const wagmiConfig = createConfig({
     [spicy.id]: http(constants.rpcByChains[spicy.id]),
   },
   connectors: [
-    particleConnector,
     injectedConnector,
     walletConnectConnector,
   ],

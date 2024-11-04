@@ -15,7 +15,7 @@ type ConnectButtonWrapperProps = {
 
 const ConnectButtonWrapper: React.FC<ConnectButtonWrapperProps> = ({ children }) => {
   const { appChain } = useChain()
-  const { account, chainId } = useWallet()
+  const { account, chainId, isAAWallet } = useWallet()
   const { connectOrCreateWallet, ready } = usePrivy()
   const { onClick, title, disabled, ...props } = children.props
 
@@ -39,7 +39,7 @@ const ConnectButtonWrapper: React.FC<ConnectButtonWrapperProps> = ({ children })
 
   const isRightNetwork = appChain.id === chainId
 
-  if (!isRightNetwork) {
+  if (!isRightNetwork && !isAAWallet) {
     const handleClick = () => {
       openModal('SwitchNetworkModal', {
         chainId: appChain.id,

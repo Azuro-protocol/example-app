@@ -5,9 +5,7 @@ import { type IconName } from 'components/ui'
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL as string
 const companyName = process.env.NEXT_PUBLIC_COMPANY_NAME as string
-const particleProjectId = process.env.NEXT_PUBLIC_PARTICLE_PROJECT_ID as string
-const particleClientKey = process.env.NEXT_PUBLIC_PARTICLE_CLIENT_KEY as string
-const particleAppId = process.env.NEXT_PUBLIC_PARTICLE_APP_ID as string
+const privyAppId = process.env.NEXT_PUBLIC_PRIVY_APP_ID as string
 
 const rpcByChains: Record<ChainId, string> = {
   [gnosis.id]: 'https://gnosis-rpc.publicnode.com',
@@ -67,7 +65,5 @@ export default {
   defaultSlippage: '10',
   defaultQuickBetsValues,
   localStorageKeys,
-  particleClientKey,
-  particleProjectId,
-  particleAppId,
+  privyAppId,
 }

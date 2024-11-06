@@ -11,6 +11,8 @@ import iconAzuroImage from 'src/app/icon.png'
 import { appChains } from './chains'
 
 
+export const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_ID as string
+
 const injectedConnector = injected({ shimDisconnect: true, unstable_shimAsyncInject: true })
 
 // Replace this with your Privy config
@@ -22,13 +24,16 @@ export const privyConfig: PrivyClientConfig = {
     showWalletUIs: false,
   },
   loginMethods: ['email', 'google', 'twitter', 'wallet', 'farcaster', 'discord', 'instagram' ],
+  // loginMethodsAndOrder: {
+  //   primary: [ 'detected_ethereum_wallets', 'metamask', 'wallet_connect' ],
+  //   overflow: [ 'email', 'google', 'twitter', 'farcaster', 'discord', 'instagram' ],
+  // },
   appearance: {
     theme: 'dark',
     showWalletLoginFirst: true,
   },
+  walletConnectCloudProjectId: projectId,
 };
-
-export const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_ID as string
 
 const walletConnectConnector = walletConnect({
   projectId,

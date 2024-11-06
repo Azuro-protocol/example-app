@@ -35,7 +35,7 @@ const WagmiProvider: React.CFC<{ initialState?: State }> = (props) => {
   return (
     <QueryClientProvider client={queryClient}>
       <PrivyProvider
-        appId='cm1p6gkel04f362oq6bxn2nal'
+        appId={constants.privyAppId}
         privyConfig={privyConfig}
         wagmiConfig={config}
         initialWagmiState={initialState}

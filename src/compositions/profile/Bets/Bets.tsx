@@ -191,9 +191,7 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
     skip: graphBetStatus !== GraphBetStatus.Accepted,
   })
 
-  // const totalCashoutMultiplier = '0.58713929914822885184'
   const cashoutAmount = formatToFixed(possibleWin * +totalCashoutMultiplier, 2)
-  // const isCashoutAvailable = true
 
   const isCombo = outcomes.length > 1
   const isLoading = isPending || isProcessing

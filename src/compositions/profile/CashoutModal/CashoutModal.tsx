@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { standaloneModal, type ModalComponent } from '@locmod/modal'
+import { openModal, standaloneModal, type ModalComponent } from '@locmod/modal'
 import { Message } from '@locmod/intl'
 import { useChain, useCalculatedCashout } from '@azuro-org/sdk'
 import dayjs from 'dayjs'
@@ -25,7 +25,7 @@ const CashoutModal: ModalComponent<CashoutModalProps> = (props) => {
 
   const { betToken } = useChain()
   const { address } = useAccount()
-  const { data, refetch, isFetching } = useCalculatedCashout({
+  const { data, refetch, isFetching, error } = useCalculatedCashout({
     account: address!,
     betId,
     isLive: false,
@@ -62,6 +62,17 @@ const CashoutModal: ModalComponent<CashoutModalProps> = (props) => {
       }
     }
   }, [ expiredAt ])
+
+  useEffect(() => {
+    if (error) {
+      closeModal()
+      openModal('InfoModal', {
+        title: messages.error.title,
+        text: messages.error.text,
+        icon: <img src="/images/illustrations/smile_sad.png" alt="" />,
+      })
+    }
+  }, [ error ])
 
   return (
     <PlainModal

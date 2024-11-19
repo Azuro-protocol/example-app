@@ -20,4 +20,12 @@ export default {
   request: {
     en: 'Request new amount',
   },
+  error: {
+    title: {
+      en: 'Cashout is no longer available',
+    },
+    text: {
+      en: 'Unfortunately, cash-out time is over for this bet',
+    },
+  },
 }

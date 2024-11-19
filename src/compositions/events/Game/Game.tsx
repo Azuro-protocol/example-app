@@ -12,6 +12,7 @@ import { OpponentLogo } from 'components/dataDisplay'
 import { Href } from 'components/navigation'
 import { LiveLabel } from 'components/ui'
 import Markets, { MarketsSkeleton } from 'compositions/events/Markets/Markets'
+import UniqueMarkets from 'compositions/events/UniqueMarkets/UniqueMarkets'
 
 
 export const GameSkeleton: React.FC<{ className?: string }> = ({ className }) => {
@@ -69,6 +70,7 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game, withTopRadius, 
   })
 
   const isInLive = status === GameStatus.Live
+  const MarketsComp = isUnique ? UniqueMarkets : Markets
 
   const rootClassName = cx(
     'group flex mb:flex-col ds:items-center justify-between',
@@ -95,16 +97,12 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game, withTopRadius, 
       <Href to={`${leagueUrl}/${gameId}`} className="flex items-center relative z-10 group/game-link">
         {
           !isUnique && (
-            <>
-              {
-                participants.map(({ name, image }, index) => (
-                  <OpponentLogo className={cx({ '-mt-2': !index, '-mb-2 -ml-2 z-20': !!index })} key={name} image={image} />
-                ))
-              }
-            </>
+            participants.map(({ name, image }, index) => (
+              <OpponentLogo className={cx({ '-mt-2': !index, '-mb-2 -ml-2 z-20': !!index })} key={name} image={image} />
+            ))
           )
         }
-        <div className="ml-3">
+        <div className={cx({ 'ml-3': !isUnique })}>
           <div className="mb-[2px]">
             {
               isInLive ? (
@@ -123,7 +121,7 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game, withTopRadius, 
       <div className="w-full ds:max-w-[26.25rem] mb:mt-2">
         {
           isMarketsVisible ? (
-            <Markets gameId={gameId} gameStatus={status} />
+            <MarketsComp gameId={gameId} gameStatus={status} />
           ) : (
             <MarketsSkeleton />
           )

@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { openModal, standaloneModal, type ModalComponent } from '@locmod/modal'
 import { Message } from '@locmod/intl'
-import { useChain, useCalculatedCashout } from '@azuro-org/sdk'
+import { useChain, useCalculatedCashout, type Bet } from '@azuro-org/sdk'
 import dayjs from 'dayjs'
 import cx from 'classnames'
 
@@ -18,16 +18,18 @@ import messages from './messages'
 
 export type CashoutModalProps = {
   betId: string
+  outcomes: Bet['outcomes']
 }
 
 const CashoutModal: ModalComponent<CashoutModalProps> = (props) => {
-  const { closeModal, betId } = props
+  const { closeModal, betId, outcomes } = props
 
   const { betToken } = useChain()
   const { address } = useAccount()
   const { data, refetch, isFetching, error } = useCalculatedCashout({
     account: address!,
     betId,
+    selections: outcomes,
     isLive: false,
   })
 

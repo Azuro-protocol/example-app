@@ -188,7 +188,7 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
   const { submit, isPending, isProcessing } = useRedeemBet()
   const { totalMultiplier: totalCashoutMultiplier, isCashoutAvailable } = usePrecalculatedCashouts({
     selections: outcomes,
-    skip: graphBetStatus !== GraphBetStatus.Accepted,
+    graphBetStatus,
   })
 
   const cashoutAmount = formatToFixed(possibleWin * +totalCashoutMultiplier, 2)
@@ -318,7 +318,7 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
                   }
                 }
                 size={32}
-                onClick={() => openModal('CashoutModal', { betId: tokenId })}
+                onClick={() => openModal('CashoutModal', { betId: tokenId, outcomes })}
               />
             )
           }

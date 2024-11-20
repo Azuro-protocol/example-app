@@ -55,16 +55,9 @@ const wagmiConfig = createConfig({
     [chiliz.id]: http(constants.rpcByChains[chiliz.id]),
     [spicy.id]: http(constants.rpcByChains[spicy.id]),
   },
-  connectors: [
-    injectedConnector,
-    walletConnectConnector,
-  ],
-  ssr: true,
+  ssr: false,
   syncConnectedChain: true,
   multiInjectedProviderDiscovery: true,
-  storage: createStorage({
-    storage: cookieStorage,
-  }),
 })
 
 declare module 'wagmi' {

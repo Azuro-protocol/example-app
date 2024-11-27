@@ -1,8 +1,10 @@
 'use client'
 
+import { useEffect } from 'react'
 import { useGame, useGameStatus } from '@azuro-org/sdk'
 import { type GameQuery } from '@azuro-org/toolkit'
 import { useParams } from 'next/navigation'
+import { liveStatisticsGameIdStore } from 'helpers/stores'
 
 import EventInfo, { EventInfoSkeleton } from 'compositions/event/EventInfo/EventInfo'
 import Markets, { MarketsSkeleton } from 'compositions/event/Markets/Markets'
@@ -19,6 +21,12 @@ const Content: React.FC<ContentProps> = ({ game, isGameInLive }) => {
     startsAt: +game.startsAt,
     isGameExistInLive: isGameInLive,
   })
+
+  useEffect(() => {
+    if (isGameInLive) {
+      liveStatisticsGameIdStore.setGameId(game.gameId)
+    }
+  }, [ isGameInLive ])
 
   return (
     <>

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useMemo, useState, useSyncExternalStore } from 'react'
+import React, { useEffect, useMemo, useState, useSyncExternalStore } from 'react'
 import { useParams } from 'next/navigation'
 import { Message } from '@locmod/intl'
 import cx from 'classnames'
@@ -9,6 +9,8 @@ import { GameStatus, type MainGameInfoFragment, MainGameInfoFragmentDoc } from '
 import { liveStatisticsGameIdStore } from 'helpers/stores'
 
 import { Icon } from 'components/ui'
+import { Warning } from 'components/feedback'
+import EmptyContent from 'compositions/EmptyContent/EmptyContent'
 
 import { Statistics } from './components'
 
@@ -24,6 +26,7 @@ const LiveStatistics: React.FC = () => {
     liveStatisticsGameIdStore.getSnapshot,
     () => ''
   )
+  const [ isWarningVisible, setWarningVisible ] = useState(false)
 
   const game = useMemo(() => {
     return liveClient!.cache.readFragment<MainGameInfoFragment>({
@@ -40,18 +43,28 @@ const LiveStatistics: React.FC = () => {
     enabled: Boolean(game),
   })
 
-  if (!gameId) {
-    return null
-  }
-
   const isGamePage = Boolean(params.gameId)
 
-  if (isFetching) {
-    return 'Loading'
-  }
+  useEffect(() => {
+    if (!isGamePage) {
+      return
+    }
 
-  if (!statistics?.stats) {
-    return 'Empty'
+    if (gameId && gameId !== params.gameId) {
+      setWarningVisible(true)
+
+      const timeout = setTimeout(() => {
+        setWarningVisible(false)
+      }, 5000)
+
+      return () => {
+        clearTimeout(timeout)
+      }
+    }
+  }, [ gameId, params.gameId ])
+
+  if (!gameId) {
+    return null
   }
 
   return (
@@ -77,7 +90,30 @@ const LiveStatistics: React.FC = () => {
       {
         isVisible && (
           <div className="bg-bg-l2 p-1 mt-px">
-            <Statistics stats={statistics!.stats} />
+            {
+              isFetching ? (
+                <div className="bone !rounded-sm w-full h-[160px]" />
+              ) : (
+                Boolean(statistics?.stats) ? (
+                  <>
+                    <Statistics stats={statistics!.stats} />
+                    {
+                      isWarningVisible && (
+                        <div className="px-2 pb-2 mt-3">
+                          <Warning text={messages.warning} />
+                        </div>
+                      )
+                    }
+                  </>
+                ) : (
+                  <EmptyContent
+                    className="py-20"
+                    image="/images/illustrations/smile_sad.png"
+                    title={messages.empty.title}
+                  />
+                )
+              )
+            }
           </div>
         )
       }

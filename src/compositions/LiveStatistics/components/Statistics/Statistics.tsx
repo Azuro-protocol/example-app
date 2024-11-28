@@ -1,7 +1,7 @@
 import { Message } from '@locmod/intl'
 import React, { useEffect, useState } from 'react'
 import { type LiveStatistics } from '@azuro-org/sdk'
-import cx from 'classnames';
+import cx from 'classnames'
 
 import messages from './messages'
 
@@ -12,7 +12,7 @@ type LineProps = {
   g: number
 }
 
-const Line: React.FC<LineProps> = ({className, h, g}) => {
+const Line: React.FC<LineProps> = ({ className, h, g }) => {
   const [ width, setWidth ] = useState('5%')
 
   useEffect(() => {
@@ -29,13 +29,13 @@ const Line: React.FC<LineProps> = ({className, h, g}) => {
 
   return (
     <div
-    className={cx('h-full transition-all', className)}
-    style={
-      {
-        width,
+      className={cx('h-full transition-all', className)}
+      style={
+        {
+          width,
+        }
       }
-    }
-  />
+    />
   )
 }
 

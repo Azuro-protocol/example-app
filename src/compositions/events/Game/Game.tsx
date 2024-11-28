@@ -1,9 +1,9 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useSyncExternalStore } from 'react'
 import { type Sport } from 'hooks'
 import cx from 'classnames'
-import { useGameStatus, useLive } from '@azuro-org/sdk'
+import { useGameStatus, useLive, LIVE_STATISTICS_SUPPORTED_SPORTS } from '@azuro-org/sdk'
 import { GameStatus } from '@azuro-org/toolkit'
 import { useEntryListener } from '@locmod/intersection-observer'
 import { getGameDateTime } from 'helpers/getters'
@@ -68,8 +68,15 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game, withTopRadius, 
     startsAt: +game.startsAt,
     isGameExistInLive: isLive,
   })
+  const statisticsGameId = useSyncExternalStore(
+    liveStatisticsGameIdStore.subscribe,
+    liveStatisticsGameIdStore.getSnapshot,
+    () => ''
+  )
 
   const isInLive = status === GameStatus.Live
+  const isStatisticsAvailable = LIVE_STATISTICS_SUPPORTED_SPORTS.includes(+game.sport.sportId) && isLive
+  const isSelectedForStatistics = isStatisticsAvailable && statisticsGameId === gameId
   const MarketsComp = isUnique ? UniqueMarkets : Markets
 
   const rootClassName = cx(
@@ -119,12 +126,21 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game, withTopRadius, 
             <div className="text-caption-13 font-semibold group-hover/game-link:underline">{title}</div>
           </div>
         </Href>
-        <button
-          className="text-grey-70 hover:text-brand-50"
-          onClick={() => liveStatisticsGameIdStore.setGameId(gameId)}
-        >
-          <Icon className="size-4" name="interface/statistics" />
-        </button>
+        {
+          isStatisticsAvailable && (
+            <button
+              className={
+                cx('hover:text-brand-50', {
+                  'text-brand-50': isSelectedForStatistics,
+                  'text-grey-70': !isSelectedForStatistics,
+                })
+              }
+              onClick={() => liveStatisticsGameIdStore.setGameId(gameId)}
+            >
+              <Icon className="size-4" name="interface/statistics" />
+            </button>
+          )
+        }
       </div>
       <div className="w-full ds:max-w-[26.25rem] mb:mt-2">
         {

@@ -3,6 +3,7 @@ export default {
     en: 'Statistics',
   },
   stats: {
+    // soccer start
     attacks: {
       en: 'Attacks',
     },
@@ -78,5 +79,99 @@ export default {
     kickoffs: {
       en: 'Kickoffs',
     },
+    // soccer end
+    // basketball start
+    fouls: {
+      en: 'Fouls',
+    },
+    freeThrows: {
+      en: 'Free Throws',
+    },
+    freeThrowsScoredPerc: {
+      en: 'Free Throws Scored Percentage',
+    },
+    twoPointers: {
+      en: 'Two Pointers',
+    },
+    threePointers: {
+      en: 'Three Pointers',
+    },
+    timeoutsTaken: {
+      en: 'Timeouts Taken',
+    },
+    timeoutsRemaining: {
+      en: 'Timeouts Remaining',
+    },
+    jumpBalls: {
+      en: 'Jump Balls',
+    },
+    assists: {
+      en: 'Assists',
+    },
+    offensiveRebounds: {
+      en: 'Offensive Rebounds',
+    },
+    defensiveRebounds: {
+      en: 'Defensive Rebounds',
+    },
+    totalRebounds: {
+      en: 'Total Rebounds',
+    },
+    turnovers: {
+      en: 'Turnovers',
+    },
+    steals: {
+      en: 'Steals',
+    },
+    blocks: {
+      en: 'Blocks',
+    },
+    playersDisqualified: {
+      en: 'Players Disqualified',
+    },
+    // basketball end
+    // tennis start
+    serviceFaults: {
+      en: 'Service Faults',
+    },
+    doubleFaults: {
+      en: 'Double Faults',
+    },
+    aces: {
+      en: 'Aces',
+    },
+    breakPoints: {
+      en: 'Break Points',
+    },
+    breakPointsConversion: {
+      en: 'Break Points Conversion',
+    },
+    winFirstServePerc: {
+      en: 'Win First Serve Percentage',
+    },
+    winSecondServePerc: {
+      en: 'Win Second Serve Percentage',
+    },
+    pointsOnOwnServe: {
+      en: 'Points on Own Serve',
+    },
+    totalPointsWon: {
+      en: 'Total Points Won',
+    },
+    // tennis end
+    // volleyball start
+    longestStreak: {
+      en: 'Longest Streak',
+    },
+    pointsWonOnOwnServe: {
+      en: 'Points Won on Own Serve',
+    },
+    pointsWonOnOpponentServe: {
+      en: 'Points Won on Opponent Serve',
+    },
+    serviceErrors: {
+      en: 'Service Errors',
+    },
+    // volleyball end
   },
 }

@@ -101,7 +101,7 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game, withTopRadius, 
           <div className={liveClassName} />
         )
       }
-      <div className="flex items-center justify-between w-full">
+      <div className="flex items-end w-full">
         <Href to={`${leagueUrl}/${gameId}`} className="flex items-center relative z-10 group/game-link">
           {
             !isUnique && (
@@ -130,7 +130,7 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game, withTopRadius, 
           isStatisticsAvailable && (
             <button
               className={
-                cx('hover:text-brand-50', {
+                cx('hover:text-brand-50 ml-2', {
                   'text-brand-50': isSelectedForStatistics,
                   'text-grey-70': !isSelectedForStatistics,
                 })

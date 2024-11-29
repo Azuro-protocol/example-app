@@ -1,5 +1,5 @@
 import { Message } from '@locmod/intl'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { type LiveStatistics } from '@azuro-org/sdk'
 import cx from 'classnames'
 
@@ -48,21 +48,11 @@ type StatItemProps = {
 }
 
 const StatItem: React.FC<StatItemProps> = ({ statKey, stat }) => {
-  if (stat.h === -1 && stat.g === -1) {
-    return null
-  }
-
-  const title: Intl.Message = messages.stats[statKey]
-
-  if (!title) {
-    return null
-  }
-
   return (
     <div className="">
       <div className="flex items-center justify-between text-caption-13">
         <div className="font-semibold">{stat.h}</div>
-        <Message className="text-grey-60" value={title} />
+        <Message className="text-grey-60" value={messages.stats[statKey]} />
         <div className="font-semibold">{stat.g}</div>
       </div>
       <div className="bg-bg-l2 h-0.5 rounded-t-ssm flex justify-center mt-1">
@@ -77,17 +67,67 @@ const StatItem: React.FC<StatItemProps> = ({ statKey, stat }) => {
   )
 }
 
+const itemsOnPage = 6
+
 type StatisticsProps = {
   stats: LiveStatistics['stats']
 }
 
 const Statistics: React.FC<StatisticsProps> = ({ stats }) => {
+  const activeStats = useMemo(() => {
+    if (stats === null) {
+      return {}
+    }
+
+    return Object.keys(stats).reduce<Partial<LiveStatistics['stats']>>((acc, key) => {
+      if (stats[key].h !== -1 && stats[key].g !== -1 && messages.stats[key]) {
+        acc![key] = stats[key]
+      }
+
+      return acc
+    }, {})
+  }, [ stats ])
+
+  const pages = Math.ceil(Object.keys(activeStats!).length / itemsOnPage)
+  const [ activePage, setActivePage ] = useState(1)
+
   return (
-    <div className="p-2 bg-grey-15 rounded-sm">
-      <Message className="text-heading-h5 font-bold" value={messages.title} />
+    <div className="p-2 bg-bg-l3 rounded-sm">
+      <div className="flex items-center justify-between">
+        <Message className="text-heading-h5 font-bold" value={messages.title} />
+        {
+          Boolean(pages > 1) && (
+            <div className="flex items-center bg-bg-l1 rounded-min p-0.5 space-x-0.5">
+              {
+                new Array(pages).fill(0).map((_, index) => {
+                  const isActive = index + 1 === activePage
+
+                  return (
+                    <button
+                      key={index}
+                      className={
+                        cx('flex items-center justify-center rounded-ssm text-caption-13 w-7 h-6', {
+                          'text-grey-40 hover:text-grey-90': !isActive,
+                          'text-grey-90 bg-bg-l3': isActive,
+                        })
+                      }
+                      onClick={() => setActivePage(index + 1)}
+                    >
+                      {index + 1}
+                    </button>
+                  )
+                })
+              }
+            </div>
+          )
+        }
+      </div>
       <div className="space-y-2 mt-2">
         {
-          Object.keys(stats!).map((statKey) => (
+          Object.keys(activeStats!).slice(
+            (activePage - 1) * itemsOnPage,
+            activePage * itemsOnPage
+          ).map((statKey) => (
             <StatItem key={statKey} statKey={statKey} stat={stats![statKey]} />
           ))
         }

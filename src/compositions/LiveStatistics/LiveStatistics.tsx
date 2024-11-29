@@ -6,6 +6,7 @@ import { Message } from '@locmod/intl'
 import cx from 'classnames'
 import { useApolloClients, useLiveStatistics } from '@azuro-org/sdk'
 import { GameStatus, type MainGameInfoFragment, MainGameInfoFragmentDoc } from '@azuro-org/toolkit'
+import { useIsMounted } from 'hooks'
 import { liveStatisticsGameIdStore } from 'helpers/stores'
 
 import { Icon } from 'components/ui'
@@ -19,14 +20,15 @@ import messages from './messages'
 
 const LiveStatistics: React.FC = () => {
   const params = useParams()
+  const isMounted = useIsMounted()
   const [ isVisible, setVisible ] = useState(true)
+  const [ isWarningVisible, setWarningVisible ] = useState(false)
   const { liveClient } = useApolloClients()
   const gameId = useSyncExternalStore(
     liveStatisticsGameIdStore.subscribe,
     liveStatisticsGameIdStore.getSnapshot,
     () => ''
   )
-  const [ isWarningVisible, setWarningVisible ] = useState(false)
 
   const game = useMemo(() => {
     return liveClient!.cache.readFragment<MainGameInfoFragment>({
@@ -53,13 +55,11 @@ const LiveStatistics: React.FC = () => {
     if (gameId && gameId !== params.gameId) {
       setWarningVisible(true)
 
-      const timeout = setTimeout(() => {
-        setWarningVisible(false)
+      setTimeout(() => {
+        if (isMounted()) {
+          setWarningVisible(false)
+        }
       }, 5000)
-
-      return () => {
-        clearTimeout(timeout)
-      }
     }
   }, [ gameId, params.gameId ])
 
@@ -107,7 +107,7 @@ const LiveStatistics: React.FC = () => {
                   </>
                 ) : (
                   <EmptyContent
-                    className="py-20"
+                    className="py-10"
                     image="/images/illustrations/smile_sad.png"
                     title={messages.empty.title}
                   />

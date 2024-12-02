@@ -5,6 +5,7 @@ import { type Sport } from 'hooks'
 import cx from 'classnames'
 import { useGameStatus, useLive, LIVE_STATISTICS_SUPPORTED_SPORTS } from '@azuro-org/sdk'
 import { GameStatus } from '@azuro-org/toolkit'
+import { openModal } from '@locmod/modal'
 import { useEntryListener } from '@locmod/intersection-observer'
 import { getGameDateTime } from 'helpers/getters'
 import { liveStatisticsGameIdStore } from 'helpers/stores'
@@ -79,6 +80,11 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game, withTopRadius, 
   const isSelectedForStatistics = isStatisticsAvailable && statisticsGameId === gameId
   const MarketsComp = isUnique ? UniqueMarkets : Markets
 
+  const handleStatisticsClick = () => {
+    liveStatisticsGameIdStore.setGameId(gameId)
+    openModal('StatisticsModal')
+  }
+
   const rootClassName = cx(
     'group flex mb:flex-col ds:items-center justify-between',
     'py-2 ds:px-4 mb:px-2 bg-bg-l2 last-of-type:rounded-b-md relative',
@@ -101,8 +107,8 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game, withTopRadius, 
           <div className={liveClassName} />
         )
       }
-      <div className="flex items-end w-full">
-        <Href to={`${leagueUrl}/${gameId}`} className="flex items-center relative z-10 group/game-link">
+      <div className="flex items-end w-full relative z-10">
+        <Href to={`${leagueUrl}/${gameId}`} className="flex items-center group/game-link">
           {
             !isUnique && (
               participants.map(({ name, image }, index) => (
@@ -135,7 +141,7 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game, withTopRadius, 
                   'text-grey-70': !isSelectedForStatistics,
                 })
               }
-              onClick={() => liveStatisticsGameIdStore.setGameId(gameId)}
+              onClick={handleStatisticsClick}
             >
               <Icon className="size-4" name="interface/statistics" />
             </button>

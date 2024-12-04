@@ -71,6 +71,8 @@ import _interface_caret_right from '../../../../public/images/icons/interface/ca
 import _interface_caret_rightSource from '!!raw-loader!../../../../public/images/icons/interface/caret_right.svg'
 import _interface_caret_up from '../../../../public/images/icons/interface/caret_up.svg?url'
 import _interface_caret_upSource from '!!raw-loader!../../../../public/images/icons/interface/caret_up.svg'
+import _interface_cash_out from '../../../../public/images/icons/interface/cash_out.svg?url'
+import _interface_cash_outSource from '!!raw-loader!../../../../public/images/icons/interface/cash_out.svg'
 import _interface_check from '../../../../public/images/icons/interface/check.svg?url'
 import _interface_checkSource from '!!raw-loader!../../../../public/images/icons/interface/check.svg'
 import _interface_chevron_down from '../../../../public/images/icons/interface/chevron_down.svg?url'
@@ -185,6 +187,7 @@ const icons = {
   'interface/caret_left': { src: _interface_caret_left.src, source: isServer && _interface_caret_leftSource, width: _interface_caret_left.width, height: _interface_caret_left.height, aspect: _interface_caret_left.width/_interface_caret_left.height }, 
   'interface/caret_right': { src: _interface_caret_right.src, source: isServer && _interface_caret_rightSource, width: _interface_caret_right.width, height: _interface_caret_right.height, aspect: _interface_caret_right.width/_interface_caret_right.height }, 
   'interface/caret_up': { src: _interface_caret_up.src, source: isServer && _interface_caret_upSource, width: _interface_caret_up.width, height: _interface_caret_up.height, aspect: _interface_caret_up.width/_interface_caret_up.height }, 
+  'interface/cash_out': { src: _interface_cash_out.src, source: isServer && _interface_cash_outSource, width: _interface_cash_out.width, height: _interface_cash_out.height, aspect: _interface_cash_out.width/_interface_cash_out.height }, 
   'interface/check': { src: _interface_check.src, source: isServer && _interface_checkSource, width: _interface_check.width, height: _interface_check.height, aspect: _interface_check.width/_interface_check.height }, 
   'interface/chevron_down': { src: _interface_chevron_down.src, source: isServer && _interface_chevron_downSource, width: _interface_chevron_down.width, height: _interface_chevron_down.height, aspect: _interface_chevron_down.width/_interface_chevron_down.height }, 
   'interface/chevron_left': { src: _interface_chevron_left.src, source: isServer && _interface_chevron_leftSource, width: _interface_chevron_left.width, height: _interface_chevron_left.height, aspect: _interface_chevron_left.width/_interface_chevron_left.height }, 

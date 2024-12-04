@@ -3,51 +3,69 @@
 import { useEffect, useState } from 'react'
 import { openModal, standaloneModal, type ModalComponent } from '@locmod/modal'
 import { Message } from '@locmod/intl'
-import { useChain, useCalculatedCashout, type Bet } from '@azuro-org/sdk'
+import { useChain, useCashout, type Bet } from '@azuro-org/sdk'
 import dayjs from 'dayjs'
 import cx from 'classnames'
-
-import { useAccount } from 'wagmi'
 import { formatToFixed } from 'helpers/formatters'
-import { PlainModal } from 'components/feedback'
-import { Button } from 'components/inputs'
 
+import { PlainModal } from 'components/feedback'
 import { Icon } from 'components/ui'
+import { Button, buttonMessages } from 'components/inputs'
+
 import messages from './messages'
 
 
 export type CashoutModalProps = {
-  betId: string
+  tokenId: string
   outcomes: Bet['outcomes']
 }
 
 const CashoutModal: ModalComponent<CashoutModalProps> = (props) => {
-  const { closeModal, betId, outcomes } = props
-
-  const { betToken } = useChain()
-  const { address } = useAccount()
-  const { data, refetch, isFetching, error } = useCalculatedCashout({
-    account: address!,
-    betId,
-    selections: outcomes,
-    isLive: false,
-  })
-
-  const { cashoutAmount, expiredAt } = data || {}
+  const { closeModal, tokenId, outcomes } = props
 
   const [ secondsLeft, setSecondsLeft ] = useState(0)
+  const { betToken } = useChain()
+  const {
+    submit,
+    calculationQuery,
+    cashoutTx,
+    approveTx,
+    isAllowanceFetching,
+    isApproveRequired,
+    isCashoutAvailable,
+  } = useCashout({
+    tokenId,
+    selections: outcomes,
+    onSuccess: () => {
+      closeModal()
+    },
+    onError: (err) => {
+      console.log(err, 'err')
+    },
+  })
 
-  const isOver = !isFetching && !secondsLeft
+  const { data, error, isFetching: isCalculationFetching, refetch } = calculationQuery
+  const { cashoutAmount, approveExpiredAt } = data || {}
+
+  const isPending = approveTx.isPending || cashoutTx.isPending
+  const isProcessing = approveTx.isProcessing || cashoutTx.isProcessing
+  const isLoading = (
+    isCalculationFetching ||
+    isAllowanceFetching ||
+    isPending ||
+    isProcessing
+  )
+  const isOver = !isCalculationFetching && !secondsLeft
 
   useEffect(() => {
-    if (!expiredAt) {
+    if (!approveExpiredAt) {
       return
     }
 
-    setSecondsLeft(dayjs(expiredAt).diff(dayjs(), 'seconds'))
+    setSecondsLeft(dayjs(approveExpiredAt).diff(dayjs(), 'seconds'))
 
     const interval = setInterval(() => {
-      const diff = dayjs(expiredAt).diff(dayjs(), 'seconds')
+      const diff = dayjs(approveExpiredAt).diff(dayjs(), 'seconds')
 
       if (diff > 0) {
         setSecondsLeft(diff)
@@ -63,7 +81,7 @@ const CashoutModal: ModalComponent<CashoutModalProps> = (props) => {
         clearInterval(interval)
       }
     }
-  }, [ expiredAt ])
+  }, [ approveExpiredAt ])
 
   useEffect(() => {
     if (error) {
@@ -87,7 +105,7 @@ const CashoutModal: ModalComponent<CashoutModalProps> = (props) => {
         <div className="rounded-md overflow-hidden mt-3 space-y-px">
           <div className="bg-grey-15 p-3 flex items-center justify-between">
             {
-              isFetching ? (
+              isCalculationFetching ? (
                 <Icon className="size-6" name="interface/spinner" />
               ) : (
                 <div
@@ -110,10 +128,11 @@ const CashoutModal: ModalComponent<CashoutModalProps> = (props) => {
         <div className="px-3">
           <Button
             className="mt-5 w-full"
-            title={messages.buttonTitle}
+            title={isApproveRequired ? buttonMessages.approve : messages.buttonTitle}
             size={40}
-            loading={isFetching}
-            disabled={isOver}
+            loading={isLoading}
+            disabled={isOver || !isCashoutAvailable}
+            onClick={submit}
           />
         </div>
         <div className="mt-3 text-center">

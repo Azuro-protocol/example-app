@@ -23,4 +23,7 @@ export default {
   lose: {
     en: 'Lost',
   },
+  cachedOut: {
+    en: 'Cashed-Out',
+  },
 }

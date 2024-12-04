@@ -57,6 +57,8 @@ const config: Config = {
         'accent-red-10': '#632C2A',
 
         'accent-blue': '#7B58ED',
+
+        'accent-purple': '#CA5AFF',
       },
       borderRadius: {
         'ssm': '0.375rem',

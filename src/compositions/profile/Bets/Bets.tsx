@@ -1,7 +1,7 @@
 'use client'
 
 import { useChain, useRedeemBet, BetType, type Bet, type BetOutcome, usePrecalculatedCashouts } from '@azuro-org/sdk'
-import { getGameStatus, GameStatus, GraphBetStatus } from '@azuro-org/toolkit'
+import { getGameStatus, GameStatus } from '@azuro-org/toolkit'
 import { Message, useIntl } from '@locmod/intl'
 import React, { useMemo } from 'react'
 import dayjs from 'dayjs'
@@ -179,8 +179,8 @@ type BetProps = {
 const Bet: React.FC<BetProps> = ({ bet }) => {
   const {
     createdAt, status: graphBetStatus, amount, outcomes,
-    payout, possibleWin, freebetId, txHash,
-    isWin, isLose, isCanceled, isRedeemed, isLive, tokenId,
+    payout, possibleWin, freebetId, txHash, tokenId,
+    isWin, isLose, isCanceled, isRedeemed, isLive, isCashedOut,
   } = bet
 
   const intl = useIntl()
@@ -189,6 +189,7 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
   const { totalMultiplier: totalCashoutMultiplier, isCashoutAvailable } = usePrecalculatedCashouts({
     selections: outcomes,
     graphBetStatus,
+    enabled: !isCashedOut,
   })
 
   const cashoutAmount = formatToFixed(possibleWin * +totalCashoutMultiplier, 2)
@@ -196,7 +197,7 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
   const isCombo = outcomes.length > 1
   const isLoading = isPending || isProcessing
   const isFreeBet = Boolean(freebetId)
-  const withButton = !isRedeemed && (isWin || isCanceled)
+  const withButton = !isRedeemed && !isCashedOut && (isWin || isCanceled)
 
   const { resultTitle, resultAmount } = useMemo(() => {
     if (isWin) {
@@ -254,7 +255,7 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
           games={outcomes.map(({ game }) => game)}
           isLiveBet={isLive}
           isWin={isWin}
-          isLose={isLose}
+          isCashedOut={isCashedOut}
         />
       </div>
       <div className="space-y-1">
@@ -318,7 +319,7 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
                   }
                 }
                 size={32}
-                onClick={() => openModal('CashoutModal', { betId: tokenId, outcomes })}
+                onClick={() => openModal('CashoutModal', { tokenId, outcomes })}
               />
             )
           }

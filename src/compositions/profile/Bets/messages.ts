@@ -79,6 +79,9 @@ export default {
     [BetType.Accepted]: {
       en: 'Accepted',
     },
+    [BetType.CashedOut]: {
+      en: 'Cached-Out',
+    },
     [BetType.Settled]: {
       en: 'Settled',
     },

@@ -357,6 +357,10 @@ const tabs = [
     value: BetType.Accepted,
   },
   {
+    title: messages.tabs.cashedOut,
+    value: BetType.CashedOut,
+  },
+  {
     title: messages.tabs.settled,
     value: BetType.Settled,
   },

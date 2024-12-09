@@ -123,6 +123,8 @@ import _interface_pending from '../../../../public/images/icons/interface/pendin
 import _interface_pendingSource from '!!raw-loader!../../../../public/images/icons/interface/pending.svg'
 import _interface_percentage from '../../../../public/images/icons/interface/percentage.svg?url'
 import _interface_percentageSource from '!!raw-loader!../../../../public/images/icons/interface/percentage.svg'
+import _interface_search from '../../../../public/images/icons/interface/search.svg?url'
+import _interface_searchSource from '!!raw-loader!../../../../public/images/icons/interface/search.svg'
 import _interface_settings from '../../../../public/images/icons/interface/settings.svg?url'
 import _interface_settingsSource from '!!raw-loader!../../../../public/images/icons/interface/settings.svg'
 import _interface_spinner from '../../../../public/images/icons/interface/spinner.svg?url'
@@ -213,6 +215,7 @@ const icons = {
   'interface/no_opponent': { src: _interface_no_opponent.src, source: isServer && _interface_no_opponentSource, width: _interface_no_opponent.width, height: _interface_no_opponent.height, aspect: _interface_no_opponent.width/_interface_no_opponent.height }, 
   'interface/pending': { src: _interface_pending.src, source: isServer && _interface_pendingSource, width: _interface_pending.width, height: _interface_pending.height, aspect: _interface_pending.width/_interface_pending.height }, 
   'interface/percentage': { src: _interface_percentage.src, source: isServer && _interface_percentageSource, width: _interface_percentage.width, height: _interface_percentage.height, aspect: _interface_percentage.width/_interface_percentage.height }, 
+  'interface/search': { src: _interface_search.src, source: isServer && _interface_searchSource, width: _interface_search.width, height: _interface_search.height, aspect: _interface_search.width/_interface_search.height }, 
   'interface/settings': { src: _interface_settings.src, source: isServer && _interface_settingsSource, width: _interface_settings.width, height: _interface_settings.height, aspect: _interface_settings.width/_interface_settings.height }, 
   'interface/spinner': { src: _interface_spinner.src, source: isServer && _interface_spinnerSource, width: _interface_spinner.width, height: _interface_spinner.height, aspect: _interface_spinner.width/_interface_spinner.height }, 
   'interface/statistics': { src: _interface_statistics.src, source: isServer && _interface_statisticsSource, width: _interface_statistics.width, height: _interface_statistics.height, aspect: _interface_statistics.width/_interface_statistics.height }, 

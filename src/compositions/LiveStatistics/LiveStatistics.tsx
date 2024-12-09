@@ -14,7 +14,7 @@ import { Icon } from 'components/ui'
 import { Warning } from 'components/feedback'
 import EmptyContent from 'compositions/EmptyContent/EmptyContent'
 
-import { Statistics } from './components'
+import { ScoreBoard, Statistics } from './components'
 
 import messages from './messages'
 
@@ -113,10 +113,17 @@ const LiveStatistics: React.FC<LiveStatisticsProps> = ({ withCollapse = true, wi
               ) : (
                 Boolean(statistics?.stats) ? (
                   <div className="space-y-2">
-                    <div className="p-2 bg-bg-l3 rounded-sm text-caption-13 font-semibold text-brand-50 text-center">
+                    {/* <div className="p-2 bg-bg-l3 rounded-sm text-caption-13 font-semibold text-brand-50 text-center">
                       {game!.title}
-                    </div>
-                    <Statistics stats={statistics!.stats} />
+                    </div> */}
+                    <ScoreBoard
+                      sportId={game!.sport.sportId}
+                      participants={game!.participants}
+                      scoreBoard={statistics!.scoreBoard}
+                    />
+                    <Statistics
+                      stats={statistics!.stats}
+                    />
                     {
                       isWarningVisible && (
                         <div className="pb-2 mt-3">

@@ -19,7 +19,7 @@ const Content: React.FC = () => {
   useFreezeBodyScroll()
 
   return (
-    <div className="fixed top-14 bottom-0 left-0 nr:w-[22.5rem] mb:w-full bg-bg-l0 overflow-auto no-scrollbar">
+    <div className="fixed top-[54px] bottom-0 left-0 nr:w-[22.5rem] mb:w-full bg-bg-l0 overflow-auto no-scrollbar">
       <LiveSwitcher />
       <Navigation className="mt-2" />
     </div>

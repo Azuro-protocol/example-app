@@ -111,8 +111,6 @@ const Result: React.FC<ResultProps> = ({ field }) => {
     )
   }
 
-  console.log(sports, 'sports')
-
   return (
     <div className="space-y-4 bg-bg-l1 rounded-md border border-grey-10 px-2 pb-2">
       {

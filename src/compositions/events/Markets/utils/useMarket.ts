@@ -77,8 +77,8 @@ const useMarket = ({ sortedMarkets, marketsByKey }: Props) => {
     }
 
     // try to find condition with Created status in active market
-    let nextConditionIndex = marketsByKey[activeMarket].outcomeRows[activeConditionIndex].findIndex(({ conditionId }) => {
-      return statuses[conditionId] === ConditionStatus.Created
+    let nextConditionIndex = marketsByKey[activeMarket].outcomeRows.findIndex((outcomes) => {
+      return outcomes.some(({ conditionId }) => statuses[conditionId] === ConditionStatus.Created)
     })
 
     if (nextConditionIndex !== -1) {

@@ -213,6 +213,10 @@ const Markets: React.FC<MarketsProps> = ({ gameId, gameStatus }) => {
     return <MarketsSkeleton />
   }
 
+  if (!markets?.length) {
+    return null
+  }
+
   return (
     <Content marketsByKey={marketsByKey} sortedMarkets={sortedMarkets} />
   )

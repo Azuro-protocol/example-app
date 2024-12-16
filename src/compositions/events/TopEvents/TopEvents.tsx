@@ -83,7 +83,7 @@ const Card: React.FC<CardProps> = ({ game }) => {
                 <div className="bone w-full h-7 rounded-sm" />
               </>
             ) : (
-              marketsRow.map(outcome => (
+              marketsRow?.map(outcome => (
                 <OutcomeButton key={outcome.outcomeId} outcome={outcome} />
               ))
             )

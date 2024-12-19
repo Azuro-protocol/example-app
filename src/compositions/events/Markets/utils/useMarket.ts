@@ -1,45 +1,55 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { useStatuses } from '@azuro-org/sdk'
-import { type Selection, ConditionStatus } from '@azuro-org/toolkit'
+import { useActiveMarket, useStatuses } from '@azuro-org/sdk'
+import { type Selection, ConditionStatus, type GameMarkets } from '@azuro-org/toolkit'
 import { useMedia } from 'contexts'
 
 import { type MarketsByKey } from '../Markets'
 
 
 type Props = {
-  sortedMarkets: string[]
-  marketsByKey: MarketsByKey
+  // sortedMarkets: string[]
+  // marketsByKey: MarketsByKey
+  markets: GameMarkets
 }
 
-const useMarket = ({ sortedMarkets, marketsByKey }: Props) => {
+const useMarket = ({ markets }: Props) => {
   const [ isOpen, setOpen ] = useState(false)
-  const [ activeMarket, setActiveMarket ] = useState(sortedMarkets[0])
-  const [ activeConditionIndex, setActiveConditionIndex ] = useState(0)
+  // const [ activeMarket, setActiveMarket ] = useState(sortedMarkets[0])
+  // const [ activeConditionIndex, setActiveConditionIndex ] = useState(0)
   const { isMobileView } = useMedia()
 
   const contentRef = useRef<HTMLDivElement>(null)
   const isOpenRef = useRef(isOpen)
   isOpenRef.current = isOpen
 
-  const selections = useMemo(() => {
-    return Object.values(marketsByKey).reduce<Selection[]>((acc, market) => {
-      const { outcomeRows } = market
+  const {
+    activeMarketKey,
+    activeConditionIndex,
+    marketsByKey,
+    otherMarkets,
+    loading,
+  } = useActiveMarket({
+    markets,
+  })
+  // const selections = useMemo(() => {
+  //   return Object.values(marketsByKey).reduce<Selection[]>((acc, market) => {
+  //     const { outcomeRows } = market
 
-      outcomeRows.forEach(outcomes => {
-        outcomes.forEach((outcome) => {
-          acc.push(outcome)
-        })
-      })
+  //     outcomeRows.forEach(outcomes => {
+  //       outcomes.forEach((outcome) => {
+  //         acc.push(outcome)
+  //       })
+  //     })
 
-      return acc
-    }, [])
-  }, [ marketsByKey ])
+  //     return acc
+  //   }, [])
+  // }, [ marketsByKey ])
 
-  const { statuses, loading } = useStatuses({ selections })
+  // const { statuses, loading } = useStatuses({ selections })
 
-  const otherMarkets = useMemo(() => {
-    return sortedMarkets.filter(key => key !== activeMarket)
-  }, [ activeMarket, sortedMarkets ])
+  // const otherMarkets = useMemo(() => {
+  //   return sortedMarkets.filter(key => key !== activeMarket)
+  // }, [ activeMarket, sortedMarkets ])
 
   useMemo(() => {
     if (!isMobileView && !isOpen && contentRef.current) {
@@ -69,48 +79,49 @@ const useMarket = ({ sortedMarkets, marketsByKey }: Props) => {
     }
   }, [ isOpen, isMobileView ])
 
-  useEffect(() => {
-    const activeStatus = statuses[marketsByKey[activeMarket].outcomeRows[activeConditionIndex][0].conditionId] || ConditionStatus.Created
+  // useEffect(() => {
+  //   const activeStatus = statuses[marketsByKey[activeMarket].outcomeRows[activeConditionIndex][0].conditionId] || ConditionStatus.Created
 
-    if (activeStatus === ConditionStatus.Created || isOpenRef.current) {
-      return
-    }
+  //   if (activeStatus === ConditionStatus.Created || isOpenRef.current) {
+  //     return
+  //   }
 
-    // try to find condition with Created status in active market
-    let nextConditionIndex = marketsByKey[activeMarket].outcomeRows.findIndex((outcomes) => {
-      return outcomes.some(({ conditionId }) => statuses[conditionId] === ConditionStatus.Created)
-    })
+  //   // try to find condition with Created status in active market
+  //   let nextConditionIndex = marketsByKey[activeMarket].outcomeRows.findIndex((outcomes) => {
+  //     return outcomes.some(({ conditionId }) => statuses[conditionId] === ConditionStatus.Created)
+  //   })
 
-    if (nextConditionIndex !== -1) {
-      setActiveConditionIndex(nextConditionIndex)
-    }
-    else {
-      // try to find next market and condition with Created status
-      nextConditionIndex = 0
-      const nextMarket = sortedMarkets.find(marketId => {
-        return marketsByKey[marketId].outcomeRows.find((conditions, index) => {
-          const isMatch = statuses[conditions[0].conditionId] === ConditionStatus.Created
+  //   if (nextConditionIndex !== -1) {
+  //     setActiveConditionIndex(nextConditionIndex)
+  //   }
+  //   else {
+  //     // try to find next market and condition with Created status
+  //     nextConditionIndex = 0
+  //     const nextMarket = sortedMarkets.find(marketId => {
+  //       return marketsByKey[marketId].outcomeRows.find((conditions, index) => {
+  //         const isMatch = statuses[conditions[0].conditionId] === ConditionStatus.Created
 
-          if (isMatch) {
-            nextConditionIndex = index
-          }
+  //         if (isMatch) {
+  //           nextConditionIndex = index
+  //         }
 
-          return isMatch
-        })
-      })
+  //         return isMatch
+  //       })
+  //     })
 
-      if (nextMarket) {
-        setActiveMarket(nextMarket)
-        setActiveConditionIndex(nextConditionIndex)
-      }
-    }
-  }, [ statuses ])
+  //     if (nextMarket) {
+  //       setActiveMarket(nextMarket)
+  //       setActiveConditionIndex(nextConditionIndex)
+  //     }
+  //   }
+  // }, [ statuses ])
 
   return {
     contentRef,
-    statuses,
-    activeMarket,
+    // statuses,
+    activeMarketKey,
     activeConditionIndex,
+    marketsByKey,
     otherMarkets,
     isOpen,
     isMobileView,

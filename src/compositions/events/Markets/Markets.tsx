@@ -97,7 +97,7 @@ type ContentProps = {
 
 const Content: React.FC<ContentProps> = ({ markets }) => {
   const {
-    contentRef, activeMarketKey, marketsByKey, activeConditionIndex, otherMarkets,
+    contentRef, activeMarketKey, marketsByKey, activeConditionIndex, otherMarkets, sortedMarketKeys,
     isOpen, isMobileView, isFetching, setOpen,
   } = useMarket({ markets })
 
@@ -148,8 +148,7 @@ const Content: React.FC<ContentProps> = ({ markets }) => {
                 {
                   isMobileView ? (
                     <MobileMarkets
-                      // sortedMarkets={sortedMarkets}
-                      sortedMarkets={otherMarkets}
+                      sortedMarkets={sortedMarketKeys}
                       marketsByKey={marketsByKey}
                       onClose={handleClose}
                     />

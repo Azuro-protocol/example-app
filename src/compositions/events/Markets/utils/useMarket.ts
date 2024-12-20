@@ -1,14 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { useActiveMarket, useStatuses } from '@azuro-org/sdk'
-import { type Selection, ConditionStatus, type GameMarkets } from '@azuro-org/toolkit'
+import { useActiveMarket } from '@azuro-org/sdk'
+import { type GameMarkets } from '@azuro-org/toolkit'
 import { useMedia } from 'contexts'
-
-import { type MarketsByKey } from '../Markets'
 
 
 type Props = {
-  // sortedMarkets: string[]
-  // marketsByKey: MarketsByKey
   markets: GameMarkets
 }
 
@@ -27,9 +23,7 @@ const useMarket = ({ markets }: Props) => {
     otherMarkets,
     sortedMarketKeys,
     loading,
-  } = useActiveMarket({
-    markets,
-  })
+  } = useActiveMarket({ markets })
 
   useMemo(() => {
     if (!isMobileView && !isOpen && contentRef.current) {

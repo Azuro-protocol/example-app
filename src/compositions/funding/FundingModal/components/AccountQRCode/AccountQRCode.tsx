@@ -1,20 +1,19 @@
 import { Message } from '@locmod/intl'
 import cx from 'classnames'
-import { useChain } from 'context'
-import { useConnect } from 'wallet'
+import { useWallet } from 'wallet'
 
+import TokenChainWarning from 'compositions/modals/FundingModal/components/TokenChainWarning/TokenChainWarning'
 import { Button, ButtonBase, buttonMessages } from 'components/inputs'
 import { Icon } from 'components/ui'
 import { QRCode } from 'components/feedback'
 
-import TokenChainWarning from 'compositions/modals/FundingModal/components/TokenChainWarning/TokenChainWarning'
 
 import messages from './messages'
 
 
 const AccountQRCode: React.FC<{ className?: string, onBackClick(): void }> = (props) => {
   const { className, onBackClick } = props
-  const { account } = useConnect()
+  const { account } = useWallet()
   const { betToken, chain } = useChain()
 
   return (

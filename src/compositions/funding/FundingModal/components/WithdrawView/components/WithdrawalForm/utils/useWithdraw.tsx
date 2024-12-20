@@ -18,7 +18,7 @@ const validateGreaterThanZero = (value: string) => parseFloat(value) > 0 ? undef
 
 const useWithdraw = () => {
   const { appChain, betToken } = useChain()
-  const { balance } = useBetTokenBalance()
+  const { balance, refetch: refetchBetTokenBalance } = useBetTokenBalance()
   const { aaWalletClient, isReady } = useWallet()
   const isMounted = useIsMounted()
   const publicClient = usePublicClient()
@@ -56,7 +56,7 @@ const useWithdraw = () => {
 
       const successText = { ...messages.success.text, values: { amount: formattedAmount, symbol: betToken.symbol } }
 
-      // mutate([ '/balances', account, selectedChainId ])
+      refetchBetTokenBalance()
 
       openModal('SuccessModal', {
         title: messages.success.title,

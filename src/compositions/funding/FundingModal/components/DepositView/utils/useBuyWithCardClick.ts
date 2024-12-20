@@ -1,30 +1,19 @@
 import { closeModal, openModal } from '@locmod/modal'
 import { useSignMessage } from 'wagmi'
-import { useConnect } from 'wallet'
-import logger from 'logger'
-import { useChain } from 'context'
+import { useWallet } from 'wallet'
+import { useChain } from '@azuro-org/sdk'
+import { gnosis, polygon } from 'viem/chains'
 import { constants } from 'helpers'
-import { object } from 'helpers/primitives'
-import { ChainId } from 'helpers/enums'
-import { mixpanel } from 'modules/analytics'
-
-import messages from './messages'
 
 
-// const logo = `${process.env.NEXT_PUBLIC_BASE_URL}/images/logos/logo-symbol.png`
-const logo = 'https://bookmaker.xyz/images/logos/logo-symbol.png'
+const logo = `${process.env.NEXT_PUBLIC_BASE_URL}/images/logos/logo-symbol.png`
 
 const useBuyWithCardClick = () => {
-  const { account, isAAWallet, aaWalletClient } = useConnect()
-  const { selectedChainId, nativeToken, betToken } = useChain()
+  const { account, isAAWallet, aaWalletClient } = useWallet()
+  const { appChain, betToken } = useChain()
   const { signMessageAsync } = useSignMessage()
 
   const initProvider = async () => {
-    openModal('WaitingModal', { title: isAAWallet ? undefined : messages.signTransaction })
-
-    mixpanel.track('getcrypto fiat widget click', {
-      onramp_solution: 'pelerin',
-    })
 
     try {
       const code = Math.floor(1000 + Math.random() * 9000)
@@ -37,32 +26,32 @@ const useBuyWithCardClick = () => {
       const hash = Buffer.from(signature.replace('0x', ''), 'hex').toString('base64')
 
       // https://developers.mtpelerin.com/integration-guides/parameters-and-customization/basic-customization
-      const net = ({
-        [ChainId.Gnosis]: 'xdai_mainnet',
-        [ChainId.Polygon]: 'matic_mainnet',
-        [ChainId.Arbitrum]: 'arbitrum_mainnet',
-      })[selectedChainId]
+      const net: string = ({
+        [gnosis.id]: 'xdai_mainnet',
+        [polygon.id]: 'matic_mainnet',
+      })[appChain.id]
 
-      const crys = betToken.isNative || isAAWallet ? [
+      // betToken.isNative ||
+      const crys = isAAWallet ? [
         betToken.symbol.toUpperCase(),
       ] : [
-        nativeToken.symbol.toUpperCase(),
+        appChain.nativeCurrency.symbol.toUpperCase(),
         betToken.symbol.toUpperCase(),
       ]
 
-      const providerParams = object.toQueryString({
+      const providerParams = new URLSearchParams({
         lang: 'en',
         tab: 'buy',
-        tabs: [ 'buy' ],
+        tabs: JSON.stringify([ 'buy' ]),
         bdc: betToken.symbol.toUpperCase(),
-        crys,
+        crys: JSON.stringify(crys),
         net,
-        nets: [ net ],
+        nets: JSON.stringify([ net ]),
         chain: net,
-        addr: account,
+        addr: account!,
         mylogo: logo,
         hash,
-        code,
+        code: String(code),
         mode: 'dark',
         success: '#ababfc',
         primary: '#ababfc',
@@ -75,10 +64,7 @@ const useBuyWithCardClick = () => {
       })
     }
     catch (err) {
-      logger.error(err)
-    }
-    finally {
-      closeModal('WaitingModal')
+      console.log(err)
     }
   }
 

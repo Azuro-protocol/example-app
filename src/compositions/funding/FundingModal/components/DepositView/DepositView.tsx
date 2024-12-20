@@ -27,7 +27,7 @@ const DepositView: React.FC<DepositViewProps> = (props) => {
 
   const { account, isAAWallet } = useWallet()
   const { appChain, betToken } = useChain()
-  const { balance, loading: isBalancesFetching } = useBetTokenBalance()
+  const { balance, loading: isBalancesFetching, refetch: refetchBetTokenBalance } = useBetTokenBalance()
 
   const handleBuyCryptoClick = useBuyWithCardClick()
 
@@ -68,15 +68,15 @@ const DepositView: React.FC<DepositViewProps> = (props) => {
     closeModal('FundingModal')
   }
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     mutate([ '/balances', account ])
-  //   }, 5000)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      refetchBetTokenBalance()
+    }, 5000)
 
-  //   return () => {
-  //     clearInterval(interval)
-  //   }
-  // }, [ account ])
+    return () => {
+      clearInterval(interval)
+    }
+  }, [ account ])
 
   return (
     <div className={className}>

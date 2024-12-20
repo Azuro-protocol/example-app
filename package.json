@@ -21,7 +21,7 @@
     "@azuro-org/sdk-social-aa-connector": "^1.0.4",
     "@floating-ui/react-dom-interactions": "^0.13.3",
     "@glidejs/glide": "^3.6.2",
-    "@headlessui/react": "1.7.19",
+    "@headlessui/react": "2.2.0",
     "@headlessui/tailwindcss": "0.2.1",
     "@locmod/intersection-observer": "^1.0.1",
     "@locmod/intl": "1.0.5",

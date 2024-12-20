@@ -1,0 +1,159 @@
+'use client'
+
+import { Message } from '@locmod/intl'
+import { closeModal, openModal } from '@locmod/modal'
+import { useEffect, useMemo } from 'react'
+import { useWallet } from 'wallet'
+import { mixpanel } from 'modules/analytics'
+
+import { useBetTokenBalance, useChain } from '@azuro-org/sdk'
+import { constants } from 'helpers'
+import { Tooltip } from 'components/feedback'
+import { Icon } from 'components/ui'
+import type { FundingExchangeModalProps } from 'compositions/funding/FundingExchangeModal/FundingExchangeModal'
+
+import AddressSection from './components/AddressSection/AddressSection'
+import OtherMethodCard from './components/OtherMethodCard/OtherMethodCard'
+import useBuyWithCardClick from './utils/useBuyWithCardClick'
+import messages from './messages'
+
+
+export type DepositViewProps = FundingExchangeModalProps & {
+  className?: string
+  showQR: () => void
+}
+
+const DepositView: React.FC<DepositViewProps> = (props) => {
+  const { className, showQR, toAmount, type } = props
+
+  const { account, isAAWallet } = useWallet()
+  const { appChain, betToken } = useChain()
+  const { balance, loading: isBalancesFetching } = useBetTokenBalance()
+
+  const handleBuyCryptoClick = useBuyWithCardClick()
+
+  const steps = useMemo(() => {
+    const iconClassName = 'inline grayscale w-16 h-16 align-text-top'
+
+    return [
+      {
+        ...messages.steps[0],
+        values: {
+          symbol: betToken.symbol,
+        },
+        components: {
+          Tooltip: ({ text, children }) => <Tooltip placement="top" text={text}><button className="border-b border-dotted border-current hover:text-white">{children}</button></Tooltip>,
+        },
+      },
+      {
+        ...messages.steps[1],
+        values: {
+          isAAWallet,
+          symbol: betToken.symbol,
+          chain: appChain.name,
+        },
+        components: {
+          TokenIcon: () => <Icon className={iconClassName} name={betToken.icon} />,
+          ChainIcon: () => <Icon className={iconClassName} name={chain.icon} />,
+        },
+      },
+    ]
+  }, [ isAAWallet, appChain, betToken ])
+
+  const handleExchangeClick = () => {
+    openModal('FundingExchangeModal', {
+      toAmount,
+      type,
+    })
+
+    closeModal('FundingModal')
+  }
+
+  useEffect(() => {
+    mixpanel.track('funding deposit show')
+  }, [])
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      mutate([ '/balances', account ])
+    }, 5000)
+
+    return () => {
+      clearInterval(interval)
+    }
+  }, [ account ])
+
+  return (
+    <div className={className}>
+      <div className="py-24 px-16 text-center">
+        <div className="inline-flex relative w-48 h-48 mx-auto">
+          <Icon className="size-full" name={constants.currencyIcons[appChain.id]} />
+          <Icon className="absolute top-full left-full -ml-16 -mt-16 w-24 h-24 border-2 border-bg-60 rounded-full" name={constants.chainIcons[appChain.id]} />
+        </div>
+        <Message
+          className="mt-24 text-fsm-title-4-bold text-white"
+          tag="h3"
+          value={{ ...messages.title, values: { symbol: betToken.symbol, chain: appChain.name } }}
+        />
+        <p className="mt-12 text-paragraph-medium text-white flex items-baseline justify-center">
+          <Message
+            className="text-gray-50"
+            value={messages.balance}
+          />
+          &nbsp;
+          {
+            isBalancesFetching ? (
+              // <Loader className="w-12 h-12" />
+              1
+            ) : (
+              `${balance || 0} ${betToken.symbol}`
+            )
+          }
+        </p>
+      </div>
+      <ol className="mx-16 bg-60 rounded-8 text-paragraph-medium divide-y divide-dark-gray-70">
+        {
+          steps.map((message, index) => (
+            <li key={index} className="py-8 px-12 flex items-center">
+              <span className="flex-none flex items-center justify-center w-24 h-24 rounded-8 bg-50">
+                <span className="text-fill-transparent bg-gradient-primary">{index + 1}</span>
+              </span>
+              <Message
+                className="ml-12 text-gray-50 text-left"
+                tag="p"
+                value={message}
+                html
+              />
+            </li>
+          ))
+        }
+      </ol>
+      <AddressSection className="p-16" showQR={showQR} />
+      <div className="flex items-center gap-8">
+        <hr className="flex-1 border-dark-gray-80" />
+        <Message className="flex-none text-gray-60 text-label font-medium" value={messages.other} />
+        <hr className="flex-1 border-dark-gray-80" />
+      </div>
+      <div className="p-16 grid gap-12">
+        <OtherMethodCard
+          title={messages.noCrypto}
+          icons={[ 'logo/visa', 'logo/mastercard', 'logo/paypal', 'logo/apple_pay', 'logo/google_pay' ]}
+          buttonTitle={messages.buyCard}
+          onClick={handleBuyCryptoClick}
+        />
+        {
+          !isAAWallet && (
+            <OtherMethodCard
+              title={messages.bridgeSwap}
+              icons={[ 'currency/usdc', 'currency/dai', 'networks/ethereum', 'divider', 'networks/arbitrum', 'networks/base' ]}
+              buttonTitle={messages.exchange}
+              onClick={handleExchangeClick}
+            />
+          )
+        }
+      </div>
+    </div>
+  )
+}
+
+export default DepositView

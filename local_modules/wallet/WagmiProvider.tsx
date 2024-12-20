@@ -4,7 +4,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { type State } from 'wagmi'
 import { PrivyProvider } from '@azuro-org/sdk-social-aa-connector'
 import { constants } from 'helpers'
-import iconImage from 'src/app/icon.png'
 import config, { privyConfig } from './config'
 
 

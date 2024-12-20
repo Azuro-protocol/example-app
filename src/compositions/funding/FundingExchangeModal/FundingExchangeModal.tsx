@@ -3,11 +3,11 @@
 import type { WidgetConfig } from '@lifi/widget'
 import { ChainType, LiFiWidget } from '@lifi/widget'
 import type { ModalComponent } from '@locmod/modal'
+import { useChain } from '@azuro-org/sdk'
 import { openModal } from '@locmod/modal'
 
-import { useChain } from 'context'
 import { useEffect } from 'react'
-import { useConnect } from 'wallet'
+import { useWallet } from 'wallet'
 import { PlainModal } from 'components/feedback'
 
 
@@ -76,8 +76,8 @@ export type FundingExchangeModalProps = {
 const FundingExchangeModal: ModalComponent<FundingExchangeModalProps> = (props) => {
   const { closeModal, type = 'bet', toAmount } = props
 
-  const { account, isAAWallet } = useConnect()
-  const { selectedChainId, betToken, nativeToken } = useChain()
+  const { account, isAAWallet } = useWallet()
+  const { appChain, betToken } = useChain()
 
   const shouldClose = isAAWallet
 
@@ -99,10 +99,10 @@ const FundingExchangeModal: ModalComponent<FundingExchangeModalProps> = (props) 
     >
       <LiFiWidget
         integrator="bookxyz"
-        toToken={type === 'gas' ? nativeToken.symbol : betToken.symbol}
+        toToken={type === 'gas' ? appChain.nativeCurrency.symbol : betToken.symbol}
         toAmount={toAmount}
         toAddress={{ address: account!, chainType: ChainType.EVM }}
-        toChain={selectedChainId}
+        toChain={appChain.id}
         config={config}
         open
         onClose={() => closeModal()}

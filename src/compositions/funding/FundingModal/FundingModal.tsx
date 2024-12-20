@@ -61,7 +61,7 @@ const FundingModal: ModalComponent<FundingModalProps> = (props) => {
 
   return (
     <PlainModal
-      className={cx('ds:max-w-[540rem] transition-transform preserve-3d duration-300', isQRVisible ? 'rotate-y-180' : 'rotate-y-0')}
+      className={cx('ds:max-w-[540px] transition-transform preserve-3d duration-300', isQRVisible ? 'rotate-y-180' : 'rotate-y-0')}
       withCloseButton={!isQRVisible}
       closeModal={closeModal}
     >
@@ -79,13 +79,13 @@ const FundingModal: ModalComponent<FundingModalProps> = (props) => {
               isAAWallet ? (
                 <>
                   <TabGroup defaultIndex={initialTabIndex}>
-                    <TabList className="flex h-46 items-stretch gap-16 justify-center border-b border-dark-gray-80">
+                    <TabList className="flex h-12 items-stretch gap-4 justify-center border-b border-dark-gray-80">
                       {
                         tabs.map((tab) => (
                           <Tab key={tab.id} className="relative inline-flex items-center gap-4 data-[selected]:text-brand-50 text-gray-50 group data-[hover]:text-brand-50">
-                            <Icon name={tab.iconName} className="w-20 h-20" />
+                            <Icon name={tab.iconName} className="size-5" />
                             <Message value={tab.title} className="text-body font-semibold" />
-                            <span className="absolute left-0 bottom-0 w-full h-2 bg-brand-50 rounded-t-full scale-x-0 group-data-[selected]:scale-x-100 transition-transform" />
+                            <span className="absolute left-0 bottom-0 w-full h-0.5 bg-brand-50 rounded-t-full scale-x-0 group-data-[selected]:scale-x-100 transition-transform" />
                           </Tab>
                         ))
                       }

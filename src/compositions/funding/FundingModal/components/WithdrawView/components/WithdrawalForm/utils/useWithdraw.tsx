@@ -1,16 +1,13 @@
 import { useEffect, useState } from 'react'
-import { encodeFunctionData, parseUnits } from 'viem'
-import { closeModal, openModal } from '@locmod/modal'
-import { useChain } from 'context'
+import { type Address, encodeFunctionData, erc20Abi, parseUnits } from 'viem'
+import { openModal } from '@locmod/modal'
+import { useBetTokenBalance, useChain } from '@azuro-org/sdk'
 import { useForm } from 'formular'
-import { useBalances, useIsMounted } from 'hooks'
-import { mutate } from 'swr'
-import { useConnect } from 'wallet'
-import { waitTx } from 'helpers'
-import { formatDecimals } from 'helpers/formatters'
+import { useIsMounted } from 'hooks'
+import { usePublicClient } from 'wagmi'
+import { useWallet } from 'wallet'
+import { formatToFixed } from 'helpers/formatters'
 import { ethAddress, required } from 'helpers/validators'
-import { mixpanel } from 'modules/analytics'
-import { erc20Abi } from 'modules/contracts'
 
 import { buttonMessages } from 'components/inputs'
 
@@ -20,11 +17,11 @@ import messages from './messages'
 const validateGreaterThanZero = (value: string) => parseFloat(value) > 0 ? undefined : 'Must be greater than 0'
 
 const useWithdraw = () => {
-  const { selectedChainId, betToken } = useChain()
-  const { betBalance } = useBalances()
-  const { account, isAAWallet, aaWalletClient, isReady } = useConnect()
+  const { appChain, betToken } = useChain()
+  const { balance } = useBetTokenBalance()
+  const { aaWalletClient, isReady } = useWallet()
   const isMounted = useIsMounted()
-  // const getTxLink = useGetExplorerTxLink()
+  const publicClient = usePublicClient()
 
   const [ isSubmitting, setSubmitting ] = useState(false)
 
@@ -37,16 +34,8 @@ const useWithdraw = () => {
 
   const confirmSubmit = async (address: string, amount: string) => {
     try {
-      openModal('WaitingModal')
-
-      const formattedAmount = formatDecimals(amount, betToken.decimals)
+      const formattedAmount = formatToFixed(amount, betToken.decimals)
       const rawAmount = parseUnits(formattedAmount, betToken.decimals)
-
-
-      mixpanel.track('funding withdraw click', {
-        address,
-        amount: formattedAmount,
-      })
 
       const data = encodeFunctionData({
         abi: erc20Abi,
@@ -54,22 +43,20 @@ const useWithdraw = () => {
         args: [ address as Address, rawAmount ],
       })
 
-      await aaWalletClient!.switchChain({ id: selectedChainId })
+      await aaWalletClient!.switchChain({ id: appChain.id })
       const txHash = await aaWalletClient!.sendTransaction({
         account: aaWalletClient!.account,
         to: betToken.address!,
         data,
       })
 
-      await waitTx({ hash: txHash, chainId: selectedChainId })
-
-      closeModal('WaitingModal')
+      await publicClient!.waitForTransactionReceipt({
+        hash: txHash,
+      })
 
       const successText = { ...messages.success.text, values: { amount: formattedAmount, symbol: betToken.symbol } }
 
-      mixpanel.track('funding withdraw success')
-
-      mutate([ '/balances', account, selectedChainId ])
+      // mutate([ '/balances', account, selectedChainId ])
 
       openModal('SuccessModal', {
         title: messages.success.title,
@@ -77,29 +64,9 @@ const useWithdraw = () => {
         buttonProps: {
           title: buttonMessages.gotIt,
         },
-        // bottomNode: (
-        //   <a
-        //     href={getTxLink(txHash)}
-        //     className="mt-10 inline-flex items-center text-gray-50 hover:text-white"
-        //     target="_blank"
-        //     rel="noreferrer"
-        //   >
-        //     <Icon
-        //       name="interface/external_link"
-        //       size={16}
-        //       className="mr-2"
-        //     />
-        //     <Message className="text-label font-medium" value={messages.viewExplorer} />
-        //   </a>
-        // ),
       })
     }
     catch (err) {
-      mixpanel.track('funding withdraw error', {
-        error_msg: err?.message,
-      })
-
-      closeModal('WaitingModal')
       openModal('ErrorModal', {
         text: err?.message,
       })
@@ -131,7 +98,7 @@ const useWithdraw = () => {
       const modalText = { ...messages.confirm.text, values: { address } }
 
       openModal('InfoModal', {
-        icon: '/images/icons/3d/transactions_60.png',
+        icon: <img src="/images/illustrations/win.png" alt="" />,
         title: messages.confirm.title,
         text: modalText,
         withCloseButton: true,
@@ -158,11 +125,9 @@ const useWithdraw = () => {
     }
   }, [ form ])
 
-  const maxValue = betBalance
-
   return {
     form,
-    maxValue,
+    maxValue: balance,
     submit,
     isSubmitting,
     isReady,

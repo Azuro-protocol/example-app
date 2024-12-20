@@ -6,9 +6,12 @@ import { Message } from '@locmod/intl'
 import cx from 'classnames'
 
 import { Icon } from 'components/ui'
+import { Warning } from 'components/feedback'
 import ConnectButtonWrapper from 'compositions/ConnectButtonWrapper/ConnectButtonWrapper'
+
+import { AmountInput, BetButton, Card, Chips, FreeBet, Slippage, QuickBet } from './components'
+
 import messages from './messages'
-import { AmountInput, BetButton, Card, Chips, FreeBet, Warning, Slippage, QuickBet } from './components'
 
 
 const EmptyContent: React.FC = () => {

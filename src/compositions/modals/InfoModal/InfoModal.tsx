@@ -20,6 +20,7 @@ export type InfoModalProps = {
   buttonProps?: Omit<ButtonProps, 'styling' | 'size'>
   closeOnButtonClick?: boolean
   overlayClosable?: boolean
+  withCloseButton?: boolean
   onClose?: () => void
 }
 
@@ -27,7 +28,7 @@ const InfoModal: ModalComponent<InfoModalProps> = (props) => {
   const {
     closeModal, children, bottomChildren, className, contentClassName,
     icon, title, text, closeOnButtonClick = true,
-    overlayClosable = true, buttonProps,
+    withCloseButton = true, overlayClosable = true, buttonProps,
   } = props
 
   const handleClick: ButtonProps['onClick'] = (event) => {
@@ -49,6 +50,7 @@ const InfoModal: ModalComponent<InfoModalProps> = (props) => {
       className={cx(className)}
       closeModal={handleClose}
       overlayClosable={overlayClosable}
+      withCloseButton={withCloseButton}
     >
       <div className={cx('text-center flex items-center flex-col', contentClassName)}>
         <div className="size-16 flex items-center justify-center">

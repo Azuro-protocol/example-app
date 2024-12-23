@@ -1,11 +1,11 @@
 import { Message } from '@locmod/intl'
 import cx from 'classnames'
 import { useWallet } from 'wallet'
+import { useChain } from '@azuro-org/sdk'
 
-import TokenChainWarning from 'compositions/modals/FundingModal/components/TokenChainWarning/TokenChainWarning'
 import { Button, ButtonBase, buttonMessages } from 'components/inputs'
 import { Icon } from 'components/ui'
-import { QRCode } from 'components/feedback'
+import { QRCode, Warning } from 'components/feedback'
 
 
 import messages from './messages'
@@ -14,7 +14,7 @@ import messages from './messages'
 const AccountQRCode: React.FC<{ className?: string, onBackClick(): void }> = (props) => {
   const { className, onBackClick } = props
   const { account } = useWallet()
-  const { betToken, chain } = useChain()
+  const { betToken, appChain } = useChain()
 
   return (
     <div className={cx(className, 'flex flex-col')}>
@@ -44,17 +44,17 @@ const AccountQRCode: React.FC<{ className?: string, onBackClick(): void }> = (pr
         />
         <Message
           className="mt-8 px-20 text-gray-50 text-captions-large"
-          value={{ ...messages.text, values: { symbol: betToken.symbol, chain: chain.name } }}
+          value={{ ...messages.text, values: { symbol: betToken.symbol, chain: appChain.name } }}
           tag="p"
         />
         <Button
           className="w-full mt-20"
           title={buttonMessages.gotIt}
-          size={36}
+          size={40}
           style="secondary"
           onClick={onBackClick}
         />
-        <TokenChainWarning className="mt-12" />
+        <Warning text={{ ...messages.warning, values: { symbol: betToken.symbol, chain: appChain.name } }} />
       </div>
     </div>
   )

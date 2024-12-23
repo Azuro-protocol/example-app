@@ -1,6 +1,6 @@
 'use client'
 
-import { http } from 'wagmi'
+import { cookieStorage, createStorage, http } from 'wagmi'
 import { type PrivyConfig } from '@azuro-org/sdk-social-aa-connector'
 import { createConfig } from '@privy-io/wagmi'
 import { polygon, polygonAmoy, gnosis, chiliz, spicy } from 'viem/chains'
@@ -43,6 +43,9 @@ const wagmiConfig = createConfig({
   ssr: false,
   syncConnectedChain: true,
   multiInjectedProviderDiscovery: true,
+  storage: createStorage({
+    storage: cookieStorage,
+  })
 })
 
 declare module 'wagmi' {

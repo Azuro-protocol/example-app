@@ -2,16 +2,12 @@ import { useEffect, useState } from 'react'
 import type { QueryOptions } from '@apollo/client'
 import { type Field, useFieldState } from 'formular'
 import { useApolloClients } from '@azuro-org/sdk'
-import { type GamesQuery, type GamesQueryVariables, GamesDocument, Game_OrderBy, type SportsQuery, OrderDirection } from '@azuro-org/toolkit'
-import { Sport as TSport, useDebounce, useIsMounted } from 'hooks'
-// import { formatSportsData } from 'helpers/formatters'
-// import { Game_OrderBy, GamesDocument, type GamesQuery, type GamesQueryVariables, OrderDirection } from 'graph/protocol'
+import { type GamesQuery, type GamesQueryVariables, GamesDocument, Game_OrderBy, OrderDirection } from '@azuro-org/toolkit'
+import { type Sport as TSport, useDebounce, useIsMounted } from 'hooks'
 
 import EmptyContent from 'compositions/EmptyContent/EmptyContent'
 import Sport, { SportSkeleton } from 'compositions/events/Sport/Sport'
 import League, { LeagueSkeleton } from 'compositions/events/League/League'
-
-// import Sport from './components/Sport/Sport'
 
 import messages from './messages'
 import formatGamesIntoSports from './utils/formatGamesIntoSports'
@@ -114,8 +110,6 @@ const Result: React.FC<ResultProps> = ({ field }) => {
       />
     )
   }
-
-  console.log(sports, 'sports')
 
   return (
     <div className="space-y-4 bg-bg-l1 rounded-md border border-grey-10 px-2 pb-2">

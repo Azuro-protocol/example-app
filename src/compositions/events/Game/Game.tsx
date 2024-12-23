@@ -54,13 +54,10 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game, withTopRadius, 
 
   const [ isMarketsVisible, setMarketsVisible ] = useState(false)
   const [ ref ] = useEntryListener((entry) => {
-    if (entry.isIntersecting) {
-      setMarketsVisible(true)
-    }
+    setMarketsVisible(entry.isIntersecting)
   }, {
-    once: true,
     observerProps: {
-      rootMargin: '0px 0px 30% 0px',
+      rootMargin: '50% 0px 30% 0px',
     },
   })
   const { isLive } = useLive()

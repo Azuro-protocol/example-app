@@ -71,7 +71,7 @@ const useBuyWithCardClick = () => {
   return () => {
     if (!account) {
       openModal('ConnectModal', {
-        onSuccess: initProvider,
+        onFinish: initProvider,
       })
     }
     else {

@@ -134,7 +134,7 @@ const Tooltip: React.FC<TooltipProps> = (props) => {
               Boolean(text) && (
                 <Message
                   value={text}
-                  className="text-body-14-p font-medium whitespace-normal"
+                  className="text-caption-14-14-p font-medium whitespace-normal"
                   html
                 />
               )

@@ -84,7 +84,7 @@ const FundingModal: ModalComponent<FundingModalProps> = (props) => {
                         tabs.map((tab) => (
                           <Tab key={tab.id} className="relative inline-flex items-center gap-4 data-[selected]:text-brand-50 text-gray-50 group data-[hover]:text-brand-50">
                             <Icon name={tab.iconName} className="size-5" />
-                            <Message value={tab.title} className="text-body font-semibold" />
+                            <Message value={tab.title} className="text-caption-14 font-semibold" />
                             <span className="absolute left-0 bottom-0 w-full h-0.5 bg-brand-50 rounded-t-full scale-x-0 group-data-[selected]:scale-x-100 transition-transform" />
                           </Tab>
                         ))

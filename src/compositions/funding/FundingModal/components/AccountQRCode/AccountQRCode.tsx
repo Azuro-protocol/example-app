@@ -5,7 +5,8 @@ import { useChain } from '@azuro-org/sdk'
 
 import { Button, ButtonBase, buttonMessages } from 'components/inputs'
 import { Icon } from 'components/ui'
-import { QRCode, Warning } from 'components/feedback'
+import { QRCode } from 'components/feedback'
+import TokenChainWarning from 'compositions/funding/FundingModal/components/TokenChainWarning/TokenChainWarning'
 
 
 import messages from './messages'
@@ -18,9 +19,9 @@ const AccountQRCode: React.FC<{ className?: string, onBackClick(): void }> = (pr
 
   return (
     <div className={cx(className, 'flex flex-col')}>
-      <div className="relative flex-1 w-full min-h-[234rem] flex items-center justify-center bg-brand-70 rounded-t-8">
+      <div className="relative flex-1 w-full min-h-[234px] flex items-center justify-center bg-brand-50 rounded-t-md">
         <ButtonBase
-          className="absolute top-14 left-14 bg-overlay-black/20 rounded-full p-4 w-28 h-28"
+          className="absolute top-3.5 left-3.5 bg-overlay-black/20 rounded-full p-1 size-7"
           ariaLabel="Back"
           onClick={onBackClick}
         >
@@ -29,32 +30,32 @@ const AccountQRCode: React.FC<{ className?: string, onBackClick(): void }> = (pr
         {
           Boolean(account) && (
             <QRCode
-              className="w-[134rem] h-[134rem] rounded-8 bg-white p-10"
+              className="w-[134px] h-[134px] rounded-md bg-white p-2.5"
               uri={account!}
               size={134}
             />
           )
         }
       </div>
-      <div className="flex-1 pt-24 px-16 pb-16 text-center">
+      <div className="flex-1 pt-6 px-4 pb-4 text-center">
         <Message
-          className="text-white text-fsm-title-4-bold"
+          className="text-grey-90 text-heading-h3 font-bold"
           value={messages.title}
           tag="h3"
         />
         <Message
-          className="mt-8 px-20 text-gray-50 text-captions-large"
+          className="mt-2 px-5 text-grey-60 text-captions-large"
           value={{ ...messages.text, values: { symbol: betToken.symbol, chain: appChain.name } }}
           tag="p"
         />
         <Button
-          className="w-full mt-20"
+          className="w-full mt-5"
           title={buttonMessages.gotIt}
           size={40}
           style="secondary"
           onClick={onBackClick}
         />
-        <Warning text={{ ...messages.warning, values: { symbol: betToken.symbol, chain: appChain.name } }} />
+        <TokenChainWarning className="mt-3" />
       </div>
     </div>
   )

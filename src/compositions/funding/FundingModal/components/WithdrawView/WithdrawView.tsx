@@ -2,7 +2,8 @@
 
 import { Message } from '@locmod/intl'
 import Image from 'next/image'
-import fundingImage from 'public/images/icons/3d/continue_funding_wallet_60.png'
+import cx from 'classnames'
+import fundingImage from 'public/images/illustrations/betslip.png'
 
 import { Tooltip } from 'components/feedback'
 
@@ -20,7 +21,7 @@ const steps = [
     components: {
       Tooltip: ({ text, children }) => (
         <Tooltip placement="top" text={text}>
-          <button className="border-b border-dotted border-current hover:text-white">
+          <button className="border-b border-dotted border-current hover:text-grey-90">
             {children}
           </button>
         </Tooltip>
@@ -34,7 +35,7 @@ const WithdrawView: React.FC<WithdrawViewProps> = (props) => {
   const { className } = props
 
   return (
-    <div className="pt-6 px-4 pb-4">
+    <div className={cx('pt-6 px-4 pb-4', className)}>
       <Image
         className="size-12 mx-auto"
         src={fundingImage}

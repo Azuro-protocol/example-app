@@ -41,7 +41,7 @@ const DepositView: React.FC<DepositViewProps> = (props) => {
           symbol: betToken.symbol,
         },
         components: {
-          Tooltip: ({ text, children }) => <Tooltip placement="top" text={text}><button className="border-b border-dotted border-current hover:text-white">{children}</button></Tooltip>,
+          Tooltip: ({ text, children }) => <Tooltip placement="top" text={text}><button className="border-b border-dotted border-current hover:text-grey-90">{children}</button></Tooltip>,
         },
       },
       {

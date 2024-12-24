@@ -31,6 +31,7 @@ const WithdrawalForm: React.FC<{ className?: string }> = ({ className }) => {
             },
           }
         }
+        tag="p"
       />
       <Input
         value={form.fields.address.state.value}
@@ -40,14 +41,8 @@ const WithdrawalForm: React.FC<{ className?: string }> = ({ className }) => {
       />
       <Message
         className="text-caption-13 mt-4"
-        value={
-          { ...messages.address.label,
-            values: {
-              symbol: betToken.symbol,
-              chain: appChain.name,
-            },
-          }
-        }
+        value={messages.amount.label}
+        tag="p"
       />
       <Input
         value={form.fields.amount.state.value}

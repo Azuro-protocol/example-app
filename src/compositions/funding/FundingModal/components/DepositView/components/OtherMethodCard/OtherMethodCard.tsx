@@ -17,8 +17,8 @@ const OtherMethodCard: React.FC<OtherMethodCardProps> = (props) => {
   const { title, buttonTitle, onClick, icons } = props
 
   return (
-    <div className="bg-brand-60 rounded-md p-3 flex items-center mb:flex-col gap-3">
-      <Message className="text-grey-90 text-heading-h3" value={title} />
+    <div className="bg-bg-l3 rounded-md p-3 flex items-center mb:flex-col gap-3">
+      <Message className="text-grey-90 text-heading-h5" value={title} />
       <div className="flex-1 mb:order-last mb:pt-1 text-grey-90 flex items-center gap-2 ds:justify-end">
         {
           icons.map((icon, index) => {

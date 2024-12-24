@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import { type ModalComponentProps, standaloneModal } from '@locmod/modal'
+import { type ModalComponentProps } from '@locmod/modal'
 import cx from 'classnames'
 
 import { PlainModal } from 'components/feedback'
+import { ModalSkeleton } from 'compositions/modals'
 
 
 type FiatProviderModalProps = {
@@ -15,30 +16,34 @@ const FiatProviderModal: React.FC<FiatProviderModalProps & ModalComponentProps> 
 
   const paramsWithPrefix = providerParams ? `?${providerParams}` : ''
 
+  console.log(providerParams, isLoading, 'providerParams')
+
   const onLoad = () => {
     setIsLoading(false)
   }
 
   const modalClassName = cx(
-    'mb:overflow-y-hidden', {
+    'mb:overflow-y-hidden',
+    {
       'ds:rounded-[26px]': !isLoading,
       'ds:rounded-t-md': isLoading,
-    })
+    }
+  )
   const iframeClassName = cx(
-    'w-full', {
+    'w-full h-full', {
       'hidden': isLoading,
-    })
+    }
+  )
 
   return (
     <PlainModal
       className={modalClassName}
-      withCloseButton={false}
       closeModal={closeModal}
-      contentClassName="flex ds:h-[625px] mb:h-[80vh] -mb-3"
+      contentClassName="flex-none ds:h-[625px] mb:h-[80vh] -mb-3"
     >
       {
         isLoading && (
-          <div className="bone self-center mx-auto" />
+          <ModalSkeleton />
         )
       }
       <iframe
@@ -55,4 +60,4 @@ declare global {
   interface ModalsRegistry extends ExtendModalsRegistry<{ FiatProviderModal: typeof FiatProviderModal }> {}
 }
 
-export default standaloneModal('FiatProviderModal', FiatProviderModal)
+export default FiatProviderModal

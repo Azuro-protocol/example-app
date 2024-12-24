@@ -2,7 +2,6 @@
 
 import { Message } from '@locmod/intl'
 import Image from 'next/image'
-import cx from 'classnames'
 import fundingImage from 'public/images/illustrations/betslip.png'
 
 import { Tooltip } from 'components/feedback'
@@ -35,7 +34,7 @@ const WithdrawView: React.FC<WithdrawViewProps> = (props) => {
   const { className } = props
 
   return (
-    <div className={cx('pt-6 px-4 pb-4', className)}>
+    <div className={className}>
       <Image
         className="size-12 mx-auto"
         src={fundingImage}
@@ -46,7 +45,7 @@ const WithdrawView: React.FC<WithdrawViewProps> = (props) => {
         value={messages.title}
         tag="h3"
       />
-      <ol className="mt-6 bg-60 rounded-md text-caption-14 divide-y divide-grey-70">
+      <ol className="mt-6 bg-bg-l3 rounded-md text-caption-14 divide-y divide-grey-20">
         {
           steps.map((message, index) => (
             <li key={index} className="py-2 px-3 flex items-center">
@@ -54,7 +53,7 @@ const WithdrawView: React.FC<WithdrawViewProps> = (props) => {
                 <span className="">{index + 1}</span>
               </span>
               <Message
-                className="ml-12 text-gray-50 text-left"
+                className="ml-3 text-gray-50 text-left"
                 tag="p"
                 value={message}
                 html

@@ -79,7 +79,7 @@ const FundingModal: ModalComponent<FundingModalProps> = (props) => {
               isAAWallet ? (
                 <>
                   <TabGroup defaultIndex={initialTabIndex}>
-                    <TabList className="flex h-12 items-stretch gap-4 justify-center border-b border-dark-gray-80">
+                    <TabList className="flex h-12 items-stretch gap-4 justify-center border-b border-grey-20 mb-4">
                       {
                         tabs.map((tab) => (
                           <Tab key={tab.id} className="relative inline-flex items-center gap-4 data-[selected]:text-brand-50 text-gray-50 group data-[hover]:text-brand-50">

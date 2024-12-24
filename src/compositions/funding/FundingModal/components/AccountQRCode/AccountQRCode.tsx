@@ -30,7 +30,7 @@ const AccountQRCode: React.FC<{ className?: string, onBackClick(): void }> = (pr
         {
           Boolean(account) && (
             <QRCode
-              className="w-[134px] h-[134px] rounded-md bg-white p-2.5"
+              className="h-40 w-40 rounded-md bg-white p-2.5"
               uri={account!}
               size={134}
             />

@@ -58,10 +58,10 @@ const useBuyWithCardClick = () => {
         _ctkn: constants.mtPelerinToken,
       })
 
-      closeModal('FundingModal')
       openModal('FiatProviderModal', {
         providerParams,
       })
+      closeModal('FundingModal')
     }
     catch (err) {
       console.log(err)

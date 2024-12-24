@@ -32,7 +32,7 @@ const DepositView: React.FC<DepositViewProps> = (props) => {
   const handleBuyCryptoClick = useBuyWithCardClick()
 
   const steps = useMemo(() => {
-    const iconClassName = 'inline grayscale w-16 h-16 align-text-top'
+    const iconClassName = 'inline grayscale size-4 align-text-top'
 
     return [
       {
@@ -80,17 +80,17 @@ const DepositView: React.FC<DepositViewProps> = (props) => {
 
   return (
     <div className={className}>
-      <div className="py-6 px-4 text-center">
+      <div className="text-center">
         <div className="inline-flex relative size-12 mx-auto">
           <Icon className="size-full" name={constants.currencyIcons[appChain.id]} />
           <Icon className="absolute top-full left-full -ml-4 -mt-4 size-6 border-2 border-bg-60 rounded-full" name={constants.chainIcons[appChain.id]} />
         </div>
         <Message
-          className="mt-6 text-heading-h2 font-bold"
+          className="mt-1.5 text-heading-h2 font-bold"
           tag="h3"
           value={{ ...messages.title, values: { symbol: betToken.symbol, chain: appChain.name } }}
         />
-        <p className="mt-12 text-caption-14 flex items-baseline justify-center">
+        <p className="mt-3 text-caption-14 flex items-baseline justify-center">
           <Message
             className="text-gray-50"
             value={messages.balance}
@@ -105,10 +105,10 @@ const DepositView: React.FC<DepositViewProps> = (props) => {
           }
         </p>
       </div>
-      <ol className="mx-4 bg-60 rounded-md text-caption-14 divide-y divide-grey-70">
+      <ol className="bg-bg-l3 rounded-md text-caption-13 divide-y divide-grey-20 mt-2">
         {
           steps.map((message, index) => (
-            <li key={index} className="py-2 px-3 flex items-center">
+            <li key={index} className="flex items-center py-3 px-2">
               <span className="flex-none flex items-center justify-center size-6 rounded-md bg-brand-50">
                 <span className="">{index + 1}</span>
               </span>
@@ -123,29 +123,39 @@ const DepositView: React.FC<DepositViewProps> = (props) => {
         }
       </ol>
       <AddressSection className="p-4" showQR={showQR} />
-      <div className="flex items-center gap-2">
-        <hr className="flex-1 border-grey-70" />
-        <Message className="flex-none text-grey-60 text-label font-medium" value={messages.other} />
-        <hr className="flex-1 border-grey-70" />
-      </div>
-      <div className="p-4 grid gap-3">
-        <OtherMethodCard
-          title={messages.noCrypto}
-          icons={[ 'logo/visa', 'logo/mastercard', 'logo/paypal', 'logo/apple_pay', 'logo/google_pay' ]}
-          buttonTitle={messages.buyCard}
-          onClick={handleBuyCryptoClick}
-        />
-        {
-          !isAAWallet && (
-            <OtherMethodCard
-              title={messages.bridgeSwap}
-              icons={[ 'currency/usdc', 'currency/dai', 'networks/ethereum', 'divider', 'networks/arbitrum', 'networks/base' ]}
-              buttonTitle={messages.exchange}
-              onClick={handleExchangeClick}
-            />
-          )
-        }
-      </div>
+      {
+        Boolean(Boolean(constants.mtPelerinToken) || !isAAWallet) && (
+          <>
+            <div className="flex items-center gap-2">
+              <hr className="flex-1 border-grey-20" />
+              <Message className="flex-none text-grey-60 text-label font-medium" value={messages.other} />
+              <hr className="flex-1 border-grey-20" />
+            </div>
+            <div className="p-4 grid gap-3">
+              {
+                Boolean(constants.mtPelerinToken) && (
+                  <OtherMethodCard
+                    title={messages.noCrypto}
+                    icons={[ 'logo/visa', 'logo/mastercard', 'logo/paypal', 'logo/apple_pay', 'logo/google_pay' ]}
+                    buttonTitle={messages.buyCard}
+                    onClick={handleBuyCryptoClick}
+                  />
+                )
+              }
+              {
+                !isAAWallet && (
+                  <OtherMethodCard
+                    title={messages.bridgeSwap}
+                    icons={[ 'currency/usdc', 'currency/dai', 'networks/ethereum', 'divider', 'networks/arbitrum', 'networks/base' ]}
+                    buttonTitle={messages.exchange}
+                    onClick={handleExchangeClick}
+                  />
+                )
+              }
+            </div>
+          </>
+        )
+      }
     </div>
   )
 }

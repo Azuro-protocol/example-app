@@ -18,36 +18,36 @@ const config: Partial<WidgetConfig> = {
   theme: {
     palette: {
       primary: {
-        main: '#ababf6',
+        main: '#ED742E',
       },
       secondary: {
-        main: '#F5B5FF',
+        main: '#111111',
       },
     },
     typography: {
       fontFamily: 'Inter, sans-serif',
     },
     container: {
-      fontSize: '16rem',
+      fontSize: '16px',
       boxShadow: '0px 8px 32px rgba(0, 0, 0, 0.08)',
-      borderRadius: '16rem',
+      borderRadius: '16px',
     },
     components: {
       MuiButton: {
         styleOverrides: {
           root: {
-            fontSize: '16rem',
+            fontSize: '16px',
           },
           icon: {
-            fontSize: '16rem !important',
+            fontSize: '16px !important',
           },
         },
       },
       MuiIconButton: {
         styleOverrides: {
           root: {
-            width: '16rem',
-            height: '16rem',
+            width: '16px',
+            height: '16px',
           },
         },
       },

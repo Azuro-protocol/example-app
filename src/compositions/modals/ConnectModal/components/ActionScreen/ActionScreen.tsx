@@ -46,12 +46,12 @@ const ActionScreen: React.FC<ActionScreenProps> = (props) => {
         />
       </div>
       <Message
-        className="mt-4 text-body-22 font-semibold"
+        className="mt-4 text-caption-14-22 font-semibold"
         value={title}
         tag="h2"
       />
       <Message
-        className="mt-4 text-body-16-p text-grey-70 font-medium"
+        className="mt-4 text-caption-14-16-p text-grey-70 font-medium"
         value={text}
         tag="p"
       />

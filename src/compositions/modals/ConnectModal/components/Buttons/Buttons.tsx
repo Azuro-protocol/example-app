@@ -27,7 +27,7 @@ let Button: React.FC<ButtonProps> = (props) => {
   const { name, disabled, providedImageSrc, onClick, downloadLink } = props
 
   const btnClassName = cx(
-    'w-full h-10 p-2 text-white hover:text-grey-60 group text-heading-h5',
+    'w-full h-10 p-2 text-grey-90 hover:text-grey-60 group text-heading-h5',
     {
       'cursor-not-allowed grayscale': disabled,
     }

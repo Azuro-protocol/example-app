@@ -113,9 +113,6 @@ const LiveStatistics: React.FC<LiveStatisticsProps> = ({ withCollapse = true, wi
               ) : (
                 Boolean(statistics?.stats) ? (
                   <div className="space-y-2">
-                    {/* <div className="p-2 bg-bg-l3 rounded-sm text-caption-13 font-semibold text-brand-50 text-center">
-                      {game!.title}
-                    </div> */}
                     <ScoreBoard
                       sportId={game!.sport.sportId}
                       participants={game!.participants}

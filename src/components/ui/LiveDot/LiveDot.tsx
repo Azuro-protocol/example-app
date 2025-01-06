@@ -22,7 +22,7 @@ const LiveDot: React.FC<LiveDotProps> = ({ className, inverse = false }) => {
         className={
           cx('absolute inset-0 m-auto size-1.5 animate-ping rounded-full', {
             'bg-accent-red': !inverse,
-            'bg-grey-90': !inverse,
+            'bg-grey-90': inverse,
           })
         }
       />

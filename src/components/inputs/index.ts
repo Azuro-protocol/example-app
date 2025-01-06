@@ -3,3 +3,4 @@ export { default as ButtonBase, type ButtonBaseProps } from './ButtonBase/Button
 export { default as buttonMessages } from './Button/messages'
 export { default as Dropdown } from './Dropdown/Dropdown'
 export { default as Input } from './Input/Input'
+export { default as Form } from './Form/Form'

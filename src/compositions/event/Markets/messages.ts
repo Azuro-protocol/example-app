@@ -30,7 +30,7 @@ export default {
       en: 'Live status: Information pending',
     },
     text: {
-      en: 'We are awaiting information on the availability of live markets for this match. Estimated waiting time <span class="text-white">{time}</span>',
+      en: 'We are awaiting information on the availability of live markets for this match. Estimated waiting time <span class="text-grey-90">{time}</span>',
     },
   },
 }

@@ -47,7 +47,7 @@ const OutcomeButton: React.FC<OutcomeButtonProps> = ({ outcome, summary, size = 
       </div>
       {
         isCanceled && (
-          <Message className="text-white" value={messages.refunded} />
+          <Message className="text-grey-90" value={messages.refunded} />
         )
       }
       {

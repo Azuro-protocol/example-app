@@ -29,4 +29,7 @@ export default {
   gotIt: {
     en: 'Got it',
   },
+  continue: {
+    en: 'Continue',
+  },
 }

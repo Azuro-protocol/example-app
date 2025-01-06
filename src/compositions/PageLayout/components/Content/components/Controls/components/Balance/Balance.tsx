@@ -6,6 +6,7 @@ import { type ChainId } from '@azuro-org/toolkit'
 import { Listbox } from '@headlessui/react'
 import { Message } from '@locmod/intl'
 import cx from 'classnames'
+import { openModal } from '@locmod/modal'
 import { useAccount } from '@azuro-org/sdk-social-aa-connector'
 import { config } from 'wallet'
 import { constants } from 'helpers'
@@ -180,6 +181,12 @@ const Balance = () => {
   const { appChain } = useChain()
   const { balance, loading } = useBetTokenBalance()
 
+  const handleGetTokensClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.stopPropagation()
+
+    openModal('FundingModal')
+  }
+
   const rootClassName = cx('wd:h-10 -wd:h-8 bg-transparent flex items-center justify-between border border-grey-15 px-3 w-fit text-grey-60 ui-open:text-grey-90 hover:text-grey-90 ui-open:bg-grey-10 hover:bg-grey-10 ui-open:border-grey-20 hover:border-grey-20 transition-all mb:w-full rounded-md')
 
   return (
@@ -205,6 +212,13 @@ const Balance = () => {
             )
           }
           <Icon className="size-4 ui-open:rotate-180" name="interface/caret_down" />
+        </div>
+        <div
+          className="flex items-center justify-center size-6 rounded-min bg-brand-50 ml-2 cursor-pointer text-grey-90 flex-none"
+          onClick={handleGetTokensClick}
+          onMouseEnter={(event: React.MouseEvent<HTMLDivElement>) => event.stopPropagation()}
+        >
+          <Icon className="size-4" name="interface/plus" />
         </div>
       </div>
     </Dropdown>

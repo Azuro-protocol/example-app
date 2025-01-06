@@ -1,6 +1,6 @@
 'use client'
 
-import { useChain, useRedeemBet, BetType, type Bet } from '@azuro-org/sdk'
+import { useChain, useRedeemBet, BetType, type Bet, type BetOutcome, usePrecalculatedCashouts } from '@azuro-org/sdk'
 import { getGameStatus, GameStatus } from '@azuro-org/toolkit'
 import { Message, useIntl } from '@locmod/intl'
 import React, { useMemo } from 'react'
@@ -8,6 +8,7 @@ import dayjs from 'dayjs'
 import { useSearchParams, useRouter, usePathname } from 'next/navigation'
 import cx from 'classnames'
 import { useBets } from 'hooks'
+import { openModal } from '@locmod/modal'
 import { getGameDateTime } from 'helpers/getters'
 import { formatToFixed } from 'helpers/formatters'
 
@@ -23,6 +24,154 @@ import ConnectButtonWrapper from 'compositions/ConnectButtonWrapper/ConnectButto
 import messages from './messages'
 
 
+type OutcomeProps = {
+  outcome: BetOutcome
+  isLive: boolean
+  isCombo: boolean
+}
+
+const Outcome: React.FC<OutcomeProps> = ({ outcome, isLive, isCombo }) => {
+  const { odds, marketName, game, selectionName, isWin, isLose } = outcome
+
+  const {
+    title,
+    status: graphGameStatus, gameId, participants, startsAt,
+    sport: {
+      slug: sportSlug,
+    },
+    league: {
+      name: leagueName,
+      slug: leagueSlug,
+      country: {
+        name: countryName,
+        slug: countrySlug,
+      },
+    },
+  } = game
+
+  const isUnique = sportSlug === 'unique'
+  const { date, time } = getGameDateTime(+startsAt * 1000)
+  const gameStatus = getGameStatus({
+    graphStatus: graphGameStatus,
+    startsAt: +startsAt,
+    isGameInLive: isLive,
+  })
+
+  const marketBoxClassName = 'text-caption-13 mb:flex mb:items-center mb:justify-between'
+  const marketClassName = cx('font-semibold', { 'text-grey-40': gameStatus === GameStatus.Canceled })
+
+  return (
+    <div className="rounded-sm overflow-hidden">
+      <div className="bg-bg-l3 flex items-center justify-between py-2 ds:px-3 mb:px-2 relative">
+        <div className="flex items-center text-caption-12">
+          <Icon className="size-4 mr-2 text-grey-70" name={`sport/${sportSlug}` as IconName} />
+          {
+            isUnique ? (
+              <Message className="text-grey-70" value={messages.unique} />
+            ) : (
+              <>
+                <span className="text-grey-70">{countryName}</span>
+                <div className="size-1 flex-none bg-grey-40 rounded-full mx-2" />
+                <span>{leagueName}</span>
+              </>
+            )
+          }
+        </div>
+        {
+          isLive && (
+            <>
+              <div className="absolute h-full w-[30%] top-0 right-0 bg-live-bet-shadow z-10" />
+              <div className="flex items-center text-accent-red z-20">
+                <Icon className="size-4 mr-1" name="interface/live" />
+                <Message className="text-caption-12 font-semibold uppercase" value={messages.live} />
+              </div>
+            </>
+          )
+        }
+      </div>
+      <div
+        className={
+          cx('mt-px flex ds:items-center ds:justify-between p-3 mb:px-2 mb:flex-col', {
+            'bg-bet-game-won': isWin,
+            'bg-bet-game-lost': isLose,
+            'bg-bg-l3': !isWin && !isLose,
+          })
+        }
+      >
+        <Href to={`${sportSlug}/${countrySlug}/${leagueSlug}/${gameId}`} className="flex items-center group/link">
+          {
+            !isUnique && participants.map(({ name, image }, index) => (
+              <OpponentLogo className={cx({ '-mt-2': !index, '-mb-2 -ml-2 z-20': !!index })} key={name} image={image} />
+            ))
+          }
+          <div className={cx({ 'ml-3': !isUnique })}>
+            <div className="text-caption-12 flex items-center">
+              <span className="text-grey-70 font-medium">{date}</span>
+              <span className="text-grey-60 ml-1">{time}</span>
+              {
+                isCombo && (
+                  <>
+                    {
+                      [ GameStatus.Canceled, GameStatus.Live, GameStatus.Resolved ].includes(gameStatus) && (
+                        <div className="size-1 flex-none bg-grey-40 rounded-full mx-2" />
+                      )
+                    }
+                    {
+                      gameStatus === GameStatus.Canceled && (
+                        <div className="flex items-center text-accent-yellow">
+                          <Icon className="size-4 mr-[2px]" name="interface/declined" />
+                          <Message className="font-semibold" value={messages.gameStatus.declined} />
+                        </div>
+                      )
+                    }
+                    {
+                      gameStatus === GameStatus.Live && (
+                        <Message className="font-semibold text-accent-red" value={messages.gameStatus.live} />
+                      )
+                    }
+                    {
+                      gameStatus === GameStatus.Resolved && (
+                        <Message
+                          className={
+                            cx('font-semibold', {
+                              'text-accent-green': isWin,
+                              'text-accent-red': isLose,
+                            })
+                          }
+                          value={isWin ? messages.gameStatus.win : messages.gameStatus.lose}
+                        />
+                      )
+                    }
+                  </>
+                )
+              }
+            </div>
+            <div className="text-caption-13 font-semibold mt-[2px] group-hover/link:underline">{title}</div>
+          </div>
+        </Href>
+        <div className="ds:grid ds:grid-cols-3 ds:gap-4 w-full ds:max-w-[50%] mb:space-y-2 mb:pt-2 mb:border-t mb:border-t-grey-20 mb:mt-2">
+          <div className={marketBoxClassName}>
+            <Message className="text-grey-60" value={messages.market} />
+            <div className={marketClassName}>
+              {marketName}
+            </div>
+          </div>
+          <div className={marketBoxClassName}>
+            <Message className="text-grey-60" value={messages.outcome} />
+            <div className={marketClassName}>
+              {selectionName}
+            </div>
+          </div>
+          <div className={marketBoxClassName}>
+            <Message className="text-grey-60" value={messages.odds} />
+            <OddsValue className={marketClassName} odds={odds} />
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 type BetProps = {
   bet: Bet
 }
@@ -30,18 +179,25 @@ type BetProps = {
 const Bet: React.FC<BetProps> = ({ bet }) => {
   const {
     createdAt, status: graphBetStatus, amount, outcomes,
-    payout, possibleWin, freebetId, txHash,
-    isWin, isLose, isCanceled, isRedeemed, isLive,
+    payout, possibleWin, freebetId, txHash, tokenId,
+    isWin, isLose, isCanceled, isRedeemed, isLive, isCashedOut,
   } = bet
 
   const intl = useIntl()
   const { betToken, appChain } = useChain()
   const { submit, isPending, isProcessing } = useRedeemBet()
+  const { totalMultiplier: totalCashoutMultiplier, isCashoutAvailable } = usePrecalculatedCashouts({
+    selections: outcomes,
+    graphBetStatus,
+    enabled: !isCashedOut,
+  })
+
+  const cashoutAmount = formatToFixed(possibleWin * +totalCashoutMultiplier, 2)
 
   const isCombo = outcomes.length > 1
   const isLoading = isPending || isProcessing
   const isFreeBet = Boolean(freebetId)
-  const withButton = !isRedeemed && (isWin || isCanceled)
+  const withButton = !isRedeemed && !isCashedOut && (isWin || isCanceled)
 
   const { resultTitle, resultAmount } = useMemo(() => {
     if (isWin) {
@@ -54,7 +210,7 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
     if (isLose) {
       return {
         resultTitle: intl.formatMessage(messages.loss),
-        resultAmount: `-${formatToFixed(amount!, 2)} ${betToken.symbol}`,
+        resultAmount: `-${formatToFixed(amount, 2)} ${betToken.symbol}`,
       }
     }
 
@@ -67,7 +223,7 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
 
     return {
       resultTitle: intl.formatMessage(messages.possibleWin),
-      resultAmount: `${formatToFixed(possibleWin!, 3)} ${betToken.symbol}`,
+      resultAmount: `${formatToFixed(possibleWin, 3)} ${betToken.symbol}`,
     }
   }, [])
 
@@ -99,149 +255,19 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
           games={outcomes.map(({ game }) => game)}
           isLiveBet={isLive}
           isWin={isWin}
-          isLose={isLose}
+          isCashedOut={isCashedOut}
         />
       </div>
       <div className="space-y-1">
         {
-          outcomes.map((outcome) => {
-
-            const { odds, marketName, game, selectionName, isWin, isLose } = outcome
-
-            const {
-              title,
-              status: graphGameStatus, gameId, participants, startsAt,
-              sport: {
-                slug: sportSlug,
-              },
-              league: {
-                name: leagueName,
-                slug: leagueSlug,
-                country: {
-                  name: countryName,
-                  slug: countrySlug,
-                },
-              },
-            } = game
-
-            const { date, time } = getGameDateTime(+startsAt * 1000)
-            const gameStatus = getGameStatus({ graphStatus: graphGameStatus, startsAt: +startsAt, isGameInLive: isLive })
-            const isUnique = sportSlug === 'unique'
-
-            const marketBoxClassName = 'text-caption-13 mb:flex mb:items-center mb:justify-between'
-            const marketClassName = cx('font-semibold', { 'text-grey-40': gameStatus === GameStatus.Canceled })
-
-            return (
-              <div key={gameId} className="rounded-sm overflow-hidden">
-                <div className="bg-bg-l3 flex items-center justify-between py-2 ds:px-3 mb:px-2 relative">
-                  <div className="flex items-center text-caption-12">
-                    <Icon className="size-4 mr-2 text-grey-70" name={`sport/${sportSlug}` as IconName} />
-                    {
-                      isUnique ? (
-                        <Message className="text-grey-70" value={messages.unique} />
-                      ) : (
-                        <>
-                          <span className="text-grey-70">{countryName}</span>
-                          <div className="size-1 flex-none bg-grey-40 rounded-full mx-2" />
-                          <span>{leagueName}</span>
-                        </>
-                      )
-                    }
-                  </div>
-                  {
-                    isLive && (
-                      <>
-                        <div className="absolute h-full w-[30%] top-0 right-0 bg-live-bet-shadow z-10" />
-                        <div className="flex items-center text-accent-red z-20">
-                          <Icon className="size-4 mr-1" name="interface/live" />
-                          <Message className="text-caption-12 font-semibold uppercase" value={messages.live} />
-                        </div>
-                      </>
-                    )
-                  }
-                </div>
-                <div
-                  className={
-                    cx('mt-px flex ds:items-center ds:justify-between p-3 mb:px-2 mb:flex-col', {
-                      'bg-bet-game-won': isWin,
-                      'bg-bet-game-lost': isLose,
-                      'bg-bg-l3': !isWin && !isLose,
-                    })
-                  }
-                >
-                  <Href to={`${sportSlug}/${countrySlug}/${leagueSlug}/${gameId}`} className="flex items-center group/link">
-                    {
-                      !isUnique && participants.map(({ name, image }, index) => (
-                        <OpponentLogo className={cx({ '-mt-2': !index, '-mb-2 -ml-2 z-20': !!index })} key={name} image={image} />
-                      ))
-                    }
-                    <div className={cx({ 'ml-3': !isUnique })}>
-                      <div className="text-caption-12 flex items-center">
-                        <span className="text-grey-70 font-medium">{date}</span>
-                        <span className="text-grey-60 ml-1">{time}</span>
-                        {
-                          isCombo && (
-                            <>
-                              {
-                                [ GameStatus.Canceled, GameStatus.Live, GameStatus.Resolved ].includes(gameStatus) && (
-                                  <div className="size-1 flex-none bg-grey-40 rounded-full mx-2" />
-                                )
-                              }
-                              {
-                                gameStatus === GameStatus.Canceled && (
-                                  <div className="flex items-center text-accent-yellow">
-                                    <Icon className="size-4 mr-[2px]" name="interface/declined" />
-                                    <Message className="font-semibold" value={messages.gameStatus.declined} />
-                                  </div>
-                                )
-                              }
-                              {
-                                gameStatus === GameStatus.Live && (
-                                  <Message className="font-semibold text-accent-red" value={messages.gameStatus.live} />
-                                )
-                              }
-                              {
-                                gameStatus === GameStatus.Resolved && (
-                                  <Message
-                                    className={
-                                      cx('font-semibold', {
-                                        'text-accent-green': isWin,
-                                        'text-accent-red': isLose,
-                                      })
-                                    }
-                                    value={isWin ? messages.gameStatus.win : messages.gameStatus.lose}
-                                  />
-                                )
-                              }
-                            </>
-                          )
-                        }
-                      </div>
-                      <div className="text-caption-13 font-semibold mt-[2px] group-hover/link:underline">{title}</div>
-                    </div>
-                  </Href>
-                  <div className="ds:grid ds:grid-cols-3 ds:gap-4 w-full ds:max-w-[50%] mb:space-y-2 mb:pt-2 mb:border-t mb:border-t-grey-20 mb:mt-2">
-                    <div className={marketBoxClassName}>
-                      <Message className="text-grey-60" value={messages.market} />
-                      <div className={marketClassName}>
-                        {marketName}
-                      </div>
-                    </div>
-                    <div className={marketBoxClassName}>
-                      <Message className="text-grey-60" value={messages.outcome} />
-                      <div className={marketClassName}>
-                        {selectionName}
-                      </div>
-                    </div>
-                    <div className={marketBoxClassName}>
-                      <Message className="text-grey-60" value={messages.odds} />
-                      <OddsValue className={marketClassName} odds={odds} />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )
-          })
+          outcomes.map((outcome) => (
+            <Outcome
+              key={outcome.game.gameId}
+              outcome={outcome}
+              isLive={isLive}
+              isCombo={isCombo}
+            />
+          ))
         }
       </div>
       <div
@@ -279,6 +305,25 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
             </span>
           </div>
           {
+            isCashoutAvailable && (
+              <Button
+                className="ds:ml-3"
+                style="tertiary"
+                title={
+                  {
+                    ...messages.cashout,
+                    values: {
+                      amount: cashoutAmount,
+                      symbol: betToken.symbol,
+                    },
+                  }
+                }
+                size={32}
+                onClick={() => openModal('CashoutModal', { tokenId, outcomes })}
+              />
+            )
+          }
+          {
             withButton && (
               <ConnectButtonWrapper>
                 <Button
@@ -310,6 +355,10 @@ const tabs = [
   {
     title: messages.tabs.accepted,
     value: BetType.Accepted,
+  },
+  {
+    title: messages.tabs.cashedOut,
+    value: BetType.CashedOut,
   },
   {
     title: messages.tabs.settled,

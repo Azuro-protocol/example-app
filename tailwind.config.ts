@@ -57,13 +57,15 @@ const config: Config = {
         'accent-red-10': '#632C2A',
 
         'accent-blue': '#7B58ED',
+
+        'accent-purple': '#CA5AFF',
       },
       borderRadius: {
-        'ssm': '0.375rem',
-        'min': '0.5rem',
-        'sm': '0.75rem',
-        'md': '1rem',
-        'lg': '1.25rem',
+        'ssm': '0.375rem', // 6
+        'min': '0.5rem', // 8
+        'sm': '0.75rem', // 12
+        'md': '1rem', // 16
+        'lg': '1.25rem', // 20
       },
       backgroundImage: ({ theme }) => ({
         'card-border-top': 'linear-gradient(180deg, rgba(239, 239, 243, 0.15) 0%, rgba(239, 239, 243, 0) 100%)',
@@ -78,6 +80,7 @@ const config: Config = {
         'result-button-lost': `linear-gradient(90deg, ${theme('colors.grey-15')} 0%, ${theme('colors.accent-red')} 1500%)`,
         'bet-game-won': `linear-gradient(180deg, ${theme('colors.bg-l3')} 0%, ${theme('colors.accent-green')} 1000%)`,
         'bet-game-lost': `linear-gradient(180deg, ${theme('colors.bg-l3')} 0%, ${theme('colors.accent-red')} 1000%)`,
+        'live-event-gradient': `linear-gradient(90deg, transparent 0%, ${theme('colors.accent-red')} 50%, transparent 100%)`,
       }),
       boxShadow: ({ theme }) => ({
         'betslip': `0px -10px 30px ${theme('colors.bg-l1')}`,

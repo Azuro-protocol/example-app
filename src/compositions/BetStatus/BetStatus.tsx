@@ -47,10 +47,10 @@ type BetStatusProps = {
   games: Pick<GameQuery['games'][0], 'status' | 'startsAt'>[]
   isLiveBet: boolean
   isWin: boolean | null
-  isLose: boolean | null
+  isCashedOut: boolean
 }
 
-const BetStatus: React.FC<BetStatusProps> = ({ graphBetStatus, games, isLiveBet, isWin, isLose }) => {
+const BetStatus: React.FC<BetStatusProps> = ({ graphBetStatus, games, isLiveBet, isWin, isCashedOut }) => {
   const betStatus = useMemo(() => {
     return getBetStatus({
       graphStatus: graphBetStatus,
@@ -61,7 +61,13 @@ const BetStatus: React.FC<BetStatusProps> = ({ graphBetStatus, games, isLiveBet,
 
   let { icon, title, color } = statusData[betStatus]
 
-  if (betStatus === TBetStatus.Resolved) {
+
+  if (isCashedOut) {
+    icon = 'interface/cash_out'
+    title = messages.cachedOut
+    color = 'text-accent-purple'
+  }
+  else if (betStatus === TBetStatus.Resolved) {
     if (isWin) {
       icon = 'interface/win'
       title = messages.win

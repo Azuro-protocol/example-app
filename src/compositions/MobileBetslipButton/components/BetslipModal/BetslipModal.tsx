@@ -13,7 +13,7 @@ const BetslipModal: ModalComponent<BetslipModalProps> = (props) => {
   const { closeModal } = props
 
   return (
-    <PlainModal contentClassName="pt-8" closeModal={closeModal}>
+    <PlainModal contentClassName="pt-12" closeModal={closeModal}>
       <TabbedBetslip />
     </PlainModal>
   )

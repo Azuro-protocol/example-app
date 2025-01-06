@@ -59,7 +59,7 @@ const Button = forwardRef<HTMLAnchorElement | HTMLButtonElement, ButtonProps>((p
       'border-white/20 bg-grey-20 text-grey-90': style === 'secondary',
       'hover:text-black hover:bg-grey-90 hover:border-grey-90': style === 'secondary',
       // tertiary
-      'border-grey-10 bg-transparent text-grey-60': style === 'tertiary',
+      'border-grey-15 bg-transparent text-grey-60': style === 'tertiary',
       'hover:text-brand-60': style === 'tertiary',
       'disabled:text-grey-20': style === 'tertiary',
     }

@@ -66,6 +66,9 @@ export default {
       en: 'You have not placed any bets yet. Place your first bet and it will appear here.',
     },
   },
+  cashout: {
+    en: 'cash-out ≈{amount} {symbol}',
+  },
   tabs: {
     all: {
       en: 'All',
@@ -75,6 +78,9 @@ export default {
     },
     [BetType.Accepted]: {
       en: 'Accepted',
+    },
+    [BetType.CashedOut]: {
+      en: 'Cached-Out',
     },
     [BetType.Settled]: {
       en: 'Settled',

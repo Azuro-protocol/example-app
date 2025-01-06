@@ -1,16 +1,18 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useSyncExternalStore } from 'react'
 import { type Sport } from 'hooks'
 import cx from 'classnames'
-import { useGameStatus, useLive } from '@azuro-org/sdk'
+import { useGameStatus, useLive, LIVE_STATISTICS_SUPPORTED_SPORTS } from '@azuro-org/sdk'
 import { GameStatus } from '@azuro-org/toolkit'
+import { openModal } from '@locmod/modal'
 import { useEntryListener } from '@locmod/intersection-observer'
 import { getGameDateTime } from 'helpers/getters'
+import { liveStatisticsGameIdStore } from 'helpers/stores'
 
 import { OpponentLogo } from 'components/dataDisplay'
 import { Href } from 'components/navigation'
-import { LiveLabel } from 'components/ui'
+import { Icon, LiveLabel } from 'components/ui'
 import Markets, { MarketsSkeleton } from 'compositions/events/Markets/Markets'
 import UniqueMarkets from 'compositions/events/UniqueMarkets/UniqueMarkets'
 
@@ -58,16 +60,27 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game, withTopRadius, 
       rootMargin: '50% 0px 30% 0px',
     },
   })
-
   const { isLive } = useLive()
   const { status } = useGameStatus({
     graphStatus: game.status,
     startsAt: +game.startsAt,
     isGameExistInLive: isLive,
   })
+  const statisticsGameId = useSyncExternalStore(
+    liveStatisticsGameIdStore.subscribe,
+    liveStatisticsGameIdStore.getSnapshot,
+    () => ''
+  )
 
   const isInLive = status === GameStatus.Live
+  const isStatisticsAvailable = LIVE_STATISTICS_SUPPORTED_SPORTS.includes(+game.sport.sportId) && isLive
+  const isSelectedForStatistics = isStatisticsAvailable && statisticsGameId === gameId
   const MarketsComp = isUnique ? UniqueMarkets : Markets
+
+  const handleStatisticsClick = () => {
+    liveStatisticsGameIdStore.setGameId(gameId)
+    openModal('StatisticsModal')
+  }
 
   const rootClassName = cx(
     'group flex mb:flex-col ds:items-center justify-between',
@@ -91,30 +104,47 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game, withTopRadius, 
           <div className={liveClassName} />
         )
       }
-      <Href to={`${leagueUrl}/${gameId}`} className="flex items-center relative z-10 group/game-link">
+      <div className="flex items-end w-full relative z-10">
+        <Href to={`${leagueUrl}/${gameId}`} className="flex items-center group/game-link">
+          {
+            !isUnique && (
+              participants.map(({ name, image }, index) => (
+                <OpponentLogo className={cx({ '-mt-2': !index, '-mb-2 -ml-2 z-20': !!index })} key={name} image={image} />
+              ))
+            )
+          }
+          <div className={cx({ 'ml-3': !isUnique })}>
+            <div className="mb-[2px]">
+              {
+                isInLive ? (
+                  <LiveLabel className="mr-1" />
+                ) : (
+                  <>
+                    <span className="text-caption-13 font-semibold text-grey-70 mr-1">{time}</span>
+                    <span className="text-caption-12 text-grey-60">{date}</span>
+                  </>
+                )
+              }
+            </div>
+            <div className="text-caption-13 font-semibold group-hover/game-link:underline">{title}</div>
+          </div>
+        </Href>
         {
-          !isUnique && (
-            participants.map(({ name, image }, index) => (
-              <OpponentLogo className={cx({ '-mt-2': !index, '-mb-2 -ml-2 z-20': !!index })} key={name} image={image} />
-            ))
+          isStatisticsAvailable && (
+            <button
+              className={
+                cx('hover:text-brand-50 ml-2', {
+                  'text-brand-50': isSelectedForStatistics,
+                  'text-grey-70': !isSelectedForStatistics,
+                })
+              }
+              onClick={handleStatisticsClick}
+            >
+              <Icon className="size-4" name="interface/statistics" />
+            </button>
           )
         }
-        <div className={cx({ 'ml-3': !isUnique })}>
-          <div className="mb-[2px]">
-            {
-              isInLive ? (
-                <LiveLabel className="mr-1" />
-              ) : (
-                <>
-                  <span className="text-caption-13 font-semibold text-grey-70 mr-1">{time}</span>
-                  <span className="text-caption-12 text-grey-60">{date}</span>
-                </>
-              )
-            }
-          </div>
-          <div className="text-caption-13 font-semibold group-hover/game-link:underline">{title}</div>
-        </div>
-      </Href>
+      </div>
       <div className="w-full ds:max-w-[26.25rem] mb:mt-2">
         {
           isMarketsVisible ? (

@@ -145,7 +145,7 @@ const User: React.FC = () => {
       placement="bottomRight"
     >
       <div className="flex items-center text-grey-60 ui-open:text-grey-90 hover:text-grey-90">
-        <div className="bg-bg-l2 p-1 rounded-full size-10">
+        <div className="bg-bg-l2 p-1 rounded-full ds:size-10 mb:size-8">
           <Icon className="w-full stroke-grey-70 fill-transparent" name="interface/user_avatar" />
         </div>
         <Icon className="size-5 ui-open:rotate-180 ml-1" name="interface/caret_down" />

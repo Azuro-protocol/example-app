@@ -12,14 +12,14 @@ import User from 'compositions/profile/User/User'
 const CashoutModal = dynamic(() => import('compositions/profile/CashoutModal/CashoutModal'))
 
 export default function ProfilePage() {
-  const { account, isReconnecting } = useWallet()
+  const { account, isConnecting, isReconnecting } = useWallet()
   const router = useRouter()
 
   useEffect(() => {
-    if (!isReconnecting && !account) {
+    if (!isConnecting && !isReconnecting && !account) {
       router.push('/')
     }
-  }, [ isReconnecting, account ])
+  }, [ isConnecting, isReconnecting, account ])
 
   if (!account) {
     return null

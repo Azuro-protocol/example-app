@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useMemo } from 'react'
+import React from 'react'
 import cx from 'classnames'
 import { useFreezeBodyScroll } from 'hooks'
 import { Message } from '@locmod/intl'
@@ -92,21 +92,20 @@ export const MarketsSkeleton: React.FC = () => {
 }
 
 type ContentProps = {
-  marketsByKey: MarketsByKey
-  sortedMarkets: string[]
+  markets: GameMarkets
 }
 
-const Content: React.FC<ContentProps> = ({ marketsByKey, sortedMarkets }) => {
+const Content: React.FC<ContentProps> = ({ markets }) => {
   const {
-    contentRef, activeMarket, activeConditionIndex, otherMarkets,
+    contentRef, activeMarketKey, marketsByKey, activeConditionIndex, otherMarkets, sortedMarketKeys,
     isOpen, isMobileView, isFetching, setOpen,
-  } = useMarket({ marketsByKey, sortedMarkets })
+  } = useMarket({ markets })
 
   if (isFetching) {
     return <MarketsSkeleton />
   }
 
-  const headMarket = marketsByKey[activeMarket]
+  const headMarket = marketsByKey[activeMarketKey!]
   const isDisabled = !Boolean(otherMarkets.length) && headMarket.outcomeRows.length === 1 && headMarket.outcomeRows[0].length <= 3
 
   const contentClassName = cx('w-full flex mb:border-transparent ds:p-2 border', {
@@ -138,7 +137,7 @@ const Content: React.FC<ContentProps> = ({ marketsByKey, sortedMarkets }) => {
             Boolean(headMarket) && (
               <HeadMarket
                 conditionIndex={activeConditionIndex}
-                market={marketsByKey[activeMarket]}
+                market={marketsByKey[activeMarketKey!]}
                 isOpen={isOpen}
               />
             )
@@ -149,7 +148,7 @@ const Content: React.FC<ContentProps> = ({ marketsByKey, sortedMarkets }) => {
                 {
                   isMobileView ? (
                     <MobileMarkets
-                      sortedMarkets={sortedMarkets}
+                      sortedMarkets={sortedMarketKeys}
                       marketsByKey={marketsByKey}
                       onClose={handleClose}
                     />
@@ -187,34 +186,18 @@ type MarketsProps = {
 }
 
 const Markets: React.FC<MarketsProps> = ({ gameId, gameStatus }) => {
-  const { markets, loading } = useActiveMarkets({ gameId, gameStatus, livePollInterval: 30_000 })
-
-  const { sortedMarkets, marketsByKey } = useMemo(() => {
-    const defaultValue = {
-      sortedMarkets: [],
-      marketsByKey: {},
-    }
-
-    if (!markets?.length) {
-      return defaultValue
-    }
-
-    return markets.reduce<{sortedMarkets: string[], marketsByKey: MarketsByKey}>((acc, market) => {
-      const { marketKey } = market
-
-      acc.sortedMarkets.push(marketKey)
-      acc.marketsByKey[marketKey] = market
-
-      return acc
-    }, defaultValue)
-  }, [ markets ])
+  const { markets, loading } = useActiveMarkets({ gameId, gameStatus })
 
   if (loading || gameStatus === GameStatus.Live && !markets?.length) {
     return <MarketsSkeleton />
   }
 
+  if (!markets?.length) {
+    return null
+  }
+
   return (
-    <Content marketsByKey={marketsByKey} sortedMarkets={sortedMarkets} />
+    <Content markets={markets} />
   )
 }
 

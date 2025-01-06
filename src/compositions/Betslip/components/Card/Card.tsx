@@ -10,9 +10,9 @@ import { constants } from 'helpers'
 import { formatToFixed } from 'helpers/formatters'
 import useOddsChange from 'src/hooks/useOddsChange'
 import { Input } from 'components/inputs'
+import { Warning } from 'components/feedback'
 import { Icon, LiveDot, type IconName } from 'components/ui'
 import OddsValue from 'compositions/OddsValue/OddsValue'
-import Warning from '../Warning/Warning'
 
 import messages from './messages'
 

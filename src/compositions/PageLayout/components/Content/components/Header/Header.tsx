@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { usePathname } from 'next/navigation'
 // import { openModal } from '@locmod/modal'
-import { useAccount } from '@azuro-org/sdk-social-aa-connector'
+import { useWallet } from 'wallet'
 import { usePrivy } from '@privy-io/react-auth'
 import { useFreezeBodyScroll } from 'hooks'
 
@@ -19,7 +19,7 @@ const Content: React.FC = () => {
   useFreezeBodyScroll()
 
   return (
-    <div className="fixed top-14 bottom-0 left-0 nr:w-[22.5rem] mb:w-full bg-bg-l0 overflow-auto no-scrollbar">
+    <div className="fixed top-[54px] bottom-0 left-0 nr:w-[22.5rem] mb:w-full bg-bg-l0 overflow-auto no-scrollbar">
       <LiveSwitcher />
       <Navigation className="mt-2" />
     </div>
@@ -27,9 +27,9 @@ const Content: React.FC = () => {
 }
 
 const Header: React.FC = () => {
-  const { address } = useAccount()
+  const { account, isReconnecting, isConnecting } = useWallet()
   const pathname = usePathname()
-  const { connectOrCreateWallet, ready } = usePrivy()
+  const { connectOrCreateWallet } = usePrivy()
   const [ isVisible, setVisibility ] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -72,14 +72,14 @@ const Header: React.FC = () => {
           <Logo className="h-4" />
         </div>
         {
-          Boolean(address) ? (
+          Boolean(account) ? (
             <Controls />
           ) : (
             <Button
               className="ml-auto"
               title={buttonMessages.connectWallet}
               size={32}
-              loading={!ready}
+              loading={isConnecting || isReconnecting}
               onClick={() => connectOrCreateWallet()}
             />
           )

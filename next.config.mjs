@@ -15,10 +15,6 @@ const nextConfig = {
 
     config.externals.push('pino-pretty', 'lokijs', 'encoding')
 
-    if (config.name === 'client') {
-      config.target = [ 'web', 'es7' ]
-    }
-
     config.plugins.push(
       new webpack.DefinePlugin({
         '__CLIENT__': !isServer,

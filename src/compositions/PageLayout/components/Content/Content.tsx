@@ -5,6 +5,8 @@ import cx from 'classnames'
 
 import { Media } from 'components/layout'
 import MobileBetslipButton from 'compositions/MobileBetslipButton/MobileBetslipButton'
+import MobileStatisticsButton from 'compositions/MobileStatisticsButton/MobileStatisticsButton'
+
 import { LeftSidebar, RightSidebar, Header } from './components'
 
 import ns from './Narrow.module.scss'
@@ -41,7 +43,10 @@ const Content: React.CFC = ({ children }) => {
         <RightSidebar />
       </Media>
       <Media narrow mobile>
-        <MobileBetslipButton />
+        <div className="fixed left-1/2 -translate-x-1/2 bottom-2 z-[40] flex items-center space-x-2">
+          <MobileStatisticsButton />
+          <MobileBetslipButton />
+        </div>
       </Media>
     </div>
   )

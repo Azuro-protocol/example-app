@@ -17,9 +17,8 @@ const MobileBetslipButton: React.FC = () => {
   const { items } = useBaseBetslip()
 
   return (
-    <>
+    <div>
       <Button
-        className="fixed left-1/2 -translate-x-1/2 bottom-2 z-[40]"
         title={messages.title}
         style="primary"
         leftIcon="interface/betslip"
@@ -34,7 +33,7 @@ const MobileBetslipButton: React.FC = () => {
       <Media narrow mobile>
         <BetslipModal />
       </Media>
-    </>
+    </div>
   )
 }
 

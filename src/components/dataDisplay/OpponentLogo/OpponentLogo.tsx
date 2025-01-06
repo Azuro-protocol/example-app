@@ -4,7 +4,7 @@ import cx from 'classnames'
 import { FallbackImage } from 'components/dataDisplay'
 
 
-const sizes = [ 28, 48 ] as const
+const sizes = [ 28, 48, 56 ] as const
 
 export type LogoSize = typeof sizes[number]
 export type OpponentLogoBgColor = 'grey-20'
@@ -23,6 +23,7 @@ const OpponentLogo: React.FC<OpponentLogoProps> = ({ className, image, size = 28
     'flex items-center justify-center flex-none rounded-full', `bg-${bgColor}`, className, {
       'size-7 p-1': size === 28,
       'size-12 p-2': size === 48,
+      'size-14 p-2': size === 56,
     }
   )
 

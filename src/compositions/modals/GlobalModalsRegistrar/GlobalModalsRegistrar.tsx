@@ -34,6 +34,7 @@ const registry = {
   SuccessModal: dynamic(() => import('compositions/modals/SuccessModal/SuccessModal'), { loading }),
   NewFreeBetModal: dynamic(() => import('compositions/modals/NewFreeBetModal/NewFreeBetModal'), { loading }),
   SwitchNetworkModal: dynamic(() => import('compositions/modals/SwitchNetworkModal/SwitchNetworkModal'), { loading }),
+  SearchModal: dynamic(() => import('compositions/modals/SearchModal/SearchModal'), { loading }),
 }
 
 registerModals(registry)

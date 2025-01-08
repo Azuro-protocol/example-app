@@ -1,11 +1,11 @@
 'use client'
 
-import React, { useEffect, useMemo, useState, useSyncExternalStore } from 'react'
+import React, { useEffect, useState, useSyncExternalStore } from 'react'
 import { useParams } from 'next/navigation'
 import { Message } from '@locmod/intl'
 import cx from 'classnames'
-import { LIVE_STATISTICS_SUPPORTED_SPORTS, useApolloClients, useLiveStatistics } from '@azuro-org/sdk'
-import { GameStatus, type MainGameInfoFragment, MainGameInfoFragmentDoc } from '@azuro-org/toolkit'
+import { useGame, useGameStatus, useLiveStatistics } from '@azuro-org/sdk'
+import { type GamesQuery } from '@azuro-org/toolkit'
 import { useIsMounted } from 'hooks'
 import { closeModal } from '@locmod/modal'
 import { liveStatisticsGameIdStore } from 'helpers/stores'
@@ -19,52 +19,40 @@ import { ScoreBoard, Statistics } from './components'
 import messages from './messages'
 
 
-type LiveStatisticsProps = {
+type ContentProps = {
+  storeGameId: string
+  game: GamesQuery['games'][0]
+  isGameInLive: boolean
+  isGamePage: boolean
   withCollapse?: boolean
   withClearButton?: boolean
 }
 
-const LiveStatistics: React.FC<LiveStatisticsProps> = ({ withCollapse = true, withClearButton = true }) => {
-  const params = useParams()
-  const isMounted = useIsMounted()
+const Content: React.FC<ContentProps> = (props) => {
+  const { storeGameId, game, isGameInLive, isGamePage, withCollapse = true, withClearButton = true } = props
+
   const [ isVisible, setVisible ] = useState(true)
   const [ isWarningVisible, setWarningVisible ] = useState(false)
-  const { liveClient } = useApolloClients()
-  const storeGameId = useSyncExternalStore(
-    liveStatisticsGameIdStore.subscribe,
-    liveStatisticsGameIdStore.getSnapshot,
-    () => ''
-  )
+  const isMounted = useIsMounted()
 
-  let gameId = storeGameId
-
-  if (params.gameId) {
-    gameId = params.gameId as string
-  }
-
-  const game = useMemo(() => {
-    return liveClient!.cache.readFragment<MainGameInfoFragment>({
-      id: liveClient!.cache.identify({ __typename: 'Game', id: gameId }),
-      fragment: MainGameInfoFragmentDoc,
-      fragmentName: 'MainGameInfo',
-    })
-  }, [ gameId ])
-
+  const { status } = useGameStatus({
+    graphStatus: game.status,
+    startsAt: +game.startsAt,
+    isGameExistInLive: isGameInLive,
+  })
   const { statistics, isFetching, isAvailable } = useLiveStatistics({
-    gameId,
+    gameId: game.gameId,
     sportId: game?.sport?.sportId!,
-    gameStatus: GameStatus.Live,
-    enabled: Boolean(game),
+    gameStatus: status,
   })
 
-  const isGamePage = Boolean(params.gameId)
 
   useEffect(() => {
     if (!isGamePage || !isAvailable) {
       return
     }
 
-    if (gameId && storeGameId !== gameId) {
+    if (storeGameId !== game.gameId) {
       setWarningVisible(true)
 
       setTimeout(() => {
@@ -73,9 +61,9 @@ const LiveStatistics: React.FC<LiveStatisticsProps> = ({ withCollapse = true, wi
         }
       }, 5000)
     }
-  }, [ storeGameId, params.gameId ])
+  }, [ storeGameId, game.gameId ])
 
-  if (!isAvailable || !gameId || !LIVE_STATISTICS_SUPPORTED_SPORTS.includes(+game?.sport?.sportId!)) {
+  if (!isAvailable) {
     return null
   }
 
@@ -148,6 +136,45 @@ const LiveStatistics: React.FC<LiveStatisticsProps> = ({ withCollapse = true, wi
         )
       }
     </div>
+  )
+}
+
+type LiveStatisticsProps = {
+  withCollapse?: boolean
+  withClearButton?: boolean
+}
+
+const LiveStatistics: React.FC<LiveStatisticsProps> = (props) => {
+  const params = useParams()
+
+  const storeGameId = useSyncExternalStore(
+    liveStatisticsGameIdStore.subscribe,
+    liveStatisticsGameIdStore.getSnapshot,
+    () => ''
+  )
+
+  let gameId = storeGameId
+
+  if (params.gameId) {
+    gameId = params.gameId as string
+  }
+
+  const { game, isGameInLive, loading: isGameFetching } = useGame({ gameId })
+
+  const isGamePage = Boolean(params.gameId)
+
+  if (isGameFetching || !game) {
+    return null
+  }
+
+  return (
+    <Content
+      {...props}
+      storeGameId={storeGameId}
+      game={game!}
+      isGamePage={isGamePage}
+      isGameInLive={isGameInLive}
+    />
   )
 }
 

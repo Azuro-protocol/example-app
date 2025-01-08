@@ -3,8 +3,8 @@
 import React, { useState, useSyncExternalStore } from 'react'
 import { type Sport } from 'hooks'
 import cx from 'classnames'
-import { useGameStatus, useLive, LIVE_STATISTICS_SUPPORTED_SPORTS } from '@azuro-org/sdk'
-import { GameStatus } from '@azuro-org/toolkit'
+import { useGameStatus, useLive, LIVE_STATISTICS_SUPPORTED_SPORTS, LIVE_STATISTICS_SUPPORTED_PROVIDERS } from '@azuro-org/sdk'
+import { GameStatus, getProviderFromId } from '@azuro-org/toolkit'
 import { openModal } from '@locmod/modal'
 import { useEntryListener } from '@locmod/intersection-observer'
 import { getGameDateTime } from 'helpers/getters'
@@ -72,8 +72,11 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game, withTopRadius, 
     () => ''
   )
 
+  const providerId = getProviderFromId(gameId)
+  const isSportAllowed = LIVE_STATISTICS_SUPPORTED_SPORTS.includes(+game.sport.sportId)
+  const isProviderAllowed = LIVE_STATISTICS_SUPPORTED_PROVIDERS.includes(providerId)
   const isInLive = status === GameStatus.Live
-  const isStatisticsAvailable = LIVE_STATISTICS_SUPPORTED_SPORTS.includes(+game.sport.sportId) && isLive
+  const isStatisticsAvailable = isProviderAllowed && isSportAllowed && isInLive
   const isSelectedForStatistics = isStatisticsAvailable && statisticsGameId === gameId
   const MarketsComp = isUnique ? UniqueMarkets : Markets
 

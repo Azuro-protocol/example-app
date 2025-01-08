@@ -4,7 +4,7 @@ import React, { useEffect, useMemo, useState, useSyncExternalStore } from 'react
 import { useParams } from 'next/navigation'
 import { Message } from '@locmod/intl'
 import cx from 'classnames'
-import { useApolloClients, useLiveStatistics } from '@azuro-org/sdk'
+import { LIVE_STATISTICS_SUPPORTED_SPORTS, useApolloClients, useLiveStatistics } from '@azuro-org/sdk'
 import { GameStatus, type MainGameInfoFragment, MainGameInfoFragmentDoc } from '@azuro-org/toolkit'
 import { useIsMounted } from 'hooks'
 import { closeModal } from '@locmod/modal'
@@ -44,7 +44,7 @@ const LiveStatistics: React.FC<LiveStatisticsProps> = ({ withCollapse = true, wi
     })
   }, [ gameId ])
 
-  const { statistics, isFetching } = useLiveStatistics({
+  const { statistics, isFetching, isAvailable } = useLiveStatistics({
     gameId,
     sportId: game?.sport?.sportId!,
     gameStatus: GameStatus.Live,
@@ -54,7 +54,7 @@ const LiveStatistics: React.FC<LiveStatisticsProps> = ({ withCollapse = true, wi
   const isGamePage = Boolean(params.gameId)
 
   useEffect(() => {
-    if (!isGamePage) {
+    if (!isGamePage || !isAvailable) {
       return
     }
 
@@ -69,7 +69,7 @@ const LiveStatistics: React.FC<LiveStatisticsProps> = ({ withCollapse = true, wi
     }
   }, [ gameId, params.gameId ])
 
-  if (!gameId) {
+  if (!isAvailable || !gameId || !LIVE_STATISTICS_SUPPORTED_SPORTS.includes(+game?.sport?.sportId!)) {
     return null
   }
 

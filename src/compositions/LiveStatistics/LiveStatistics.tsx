@@ -30,11 +30,17 @@ const LiveStatistics: React.FC<LiveStatisticsProps> = ({ withCollapse = true, wi
   const [ isVisible, setVisible ] = useState(true)
   const [ isWarningVisible, setWarningVisible ] = useState(false)
   const { liveClient } = useApolloClients()
-  const gameId = useSyncExternalStore(
+  const storeGameId = useSyncExternalStore(
     liveStatisticsGameIdStore.subscribe,
     liveStatisticsGameIdStore.getSnapshot,
     () => ''
   )
+
+  let gameId = storeGameId
+
+  if (params.gameId) {
+    gameId = params.gameId as string
+  }
 
   const game = useMemo(() => {
     return liveClient!.cache.readFragment<MainGameInfoFragment>({
@@ -58,7 +64,7 @@ const LiveStatistics: React.FC<LiveStatisticsProps> = ({ withCollapse = true, wi
       return
     }
 
-    if (gameId && gameId !== params.gameId) {
+    if (gameId && storeGameId !== gameId) {
       setWarningVisible(true)
 
       setTimeout(() => {
@@ -67,7 +73,7 @@ const LiveStatistics: React.FC<LiveStatisticsProps> = ({ withCollapse = true, wi
         }
       }, 5000)
     }
-  }, [ gameId, params.gameId ])
+  }, [ storeGameId, params.gameId ])
 
   if (!isAvailable || !gameId || !LIVE_STATISTICS_SUPPORTED_SPORTS.includes(+game?.sport?.sportId!)) {
     return null

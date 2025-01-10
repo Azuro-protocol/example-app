@@ -86,7 +86,7 @@ const Content: React.FC<ContentProps> = (props) => {
         }
         <Message className="text-caption-14 font-semibold text-brand-50" value={messages.title} />
         {
-          Boolean(isGamePage && !withClearButton) ? (
+          Boolean(isGamePage || !withClearButton) ? (
             <div className="w-5" />
           ) : (
             <button

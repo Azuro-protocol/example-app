@@ -72,7 +72,7 @@ const LiveScore: React.FC<LiveScoreProps> = ({ participants, sportId, liveScoreB
     currentState = state
   }
 
-  if (!parts.length) {
+  if (!Object.keys(parts).length) {
     return null
   }
 

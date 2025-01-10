@@ -234,7 +234,7 @@ const BetDetailsModal: ModalComponent<BetDetailsModalProps> = (props) => {
             </span>
           </div>
           <Button
-            className="mt-2"
+            className="mt-2 w-full"
             style="tertiary"
             title={
               Boolean(!isCashoutAvailable || isCashoutFetching) ? messages.cashout : (

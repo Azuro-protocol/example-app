@@ -84,7 +84,10 @@ const Content: React.FC<ContentProps> = (props) => {
             <div className="w-5" />
           )
         }
-        <Message className="text-caption-14 font-semibold text-brand-50" value={messages.title} />
+        <div className="flex items-center text-brand-50">
+          <Icon className="mr-1 size-4" name="interface/tracker" />
+          <Message className="text-caption-14 font-semibold" value={messages.title} />
+        </div>
         {
           Boolean(isGamePage || !withClearButton) ? (
             <div className="w-5" />

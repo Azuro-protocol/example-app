@@ -38,6 +38,7 @@ const registry = {
   FundingModal: dynamic(() => import('compositions/funding/FundingModal/FundingModal'), { loading }),
   FiatProviderModal: dynamic(() => import('compositions/funding/FiatProviderModal/FiatProviderModal'), { loading }),
   FundingExchangeModal: dynamic(() => import('compositions/funding/FundingExchangeModal/FundingExchangeModal'), { loading }),
+  CashoutModal: dynamic(() => import('compositions/modals/CashoutModal/CashoutModal'), { loading }),
 }
 
 registerModals(registry)

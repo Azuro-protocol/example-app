@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { openModal, standaloneModal, type ModalComponent } from '@locmod/modal'
+import { openModal, type ModalComponent } from '@locmod/modal'
 import { Message } from '@locmod/intl'
 import { useChain, useCashout, type Bet } from '@azuro-org/sdk'
 import dayjs from 'dayjs'
@@ -170,4 +170,4 @@ declare global {
   interface ModalsRegistry extends ExtendModalsRegistry<{ CashoutModal: typeof CashoutModal }> {}
 }
 
-export default standaloneModal('CashoutModal', CashoutModal)
+export default CashoutModal

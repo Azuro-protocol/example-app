@@ -51,21 +51,25 @@ type LiveScoreProps = {
 const LiveScore: React.FC<LiveScoreProps> = ({ participants, sportId, liveScoreBoard }) => {
   let scoreValue = getLiveTotalScore(sportId, liveScoreBoard)
 
-  let parts: HomeGuest<number>[] = []
+  let parts: Record<string, HomeGuest<number>> = {}
+  let currentState: string | undefined
 
   if (+sportId === 31) {
-    const { q1, q2, q3, q4 } = (liveScoreBoard as BasketballScoreBoard)
-    parts = [ q1, q2, q3, q4 ]
+    const { q1, q2, q3, q4, state } = (liveScoreBoard as BasketballScoreBoard)
+    parts = { q1, q2, q3, q4 }
+    currentState = state
   }
 
   if (+sportId === 45) {
-    const { s1, s2, s3, s4, s5 } = (liveScoreBoard as TennisScoreBoard)
-    parts = [ s1, s2, s3, s4, s5 ]
+    const { s1, s2, s3, s4, s5, state } = (liveScoreBoard as TennisScoreBoard)
+    parts = { s1, s2, s3, s4, s5 }
+    currentState = state
   }
 
   if (+sportId === 26) {
-    const { s1, s2, s3, s4, s5 } = (liveScoreBoard as VolleyballScoreBoard)
-    parts = [ s1, s2, s3, s4, s5 ]
+    const { s1, s2, s3, s4, s5, state } = (liveScoreBoard as VolleyballScoreBoard)
+    parts = { s1, s2, s3, s4, s5 }
+    currentState = state
   }
 
   if (!parts.length) {
@@ -79,19 +83,37 @@ const LiveScore: React.FC<LiveScoreProps> = ({ participants, sportId, liveScoreB
         <OpponentLogo image={participants[1].image} size={28} />
       </div>
       <div className="flex">
-        <div className="flex border border-grey-10 rounded-sm divide-x divide-grey-10 mr-2">
+        <div className="flex border border-grey-10 rounded-sm divide-x divide-grey-10 mr-2 overflow-hidden">
           {
-            parts.map(({ h, g }, index) => (
-              <div key={index} className="text-caption-13 font-semibold text-center min-w-9">
-                <div className="py-3 px-2.5">{h}</div>
-                <div className="py-3 px-2.5">{g}</div>
-              </div>
-            ))
+            Object.keys(parts).map((stateKey, index) => {
+              const { h, g } = parts[stateKey]
+              const isHomeExist = h >= 0
+              const isGuestExist = g >= 0
+              const isCurrentState = currentState && stateKey === currentState.toLowerCase()
+
+              return (
+                <div
+                  key={index}
+                  className={
+                    cx('text-caption-13 font-semibold text-center min-w-9', {
+                      'bg-grey-15': isCurrentState,
+                    })
+                  }
+                >
+                  <div className={cx('py-3 px-2.5', { 'text-grey-20': !isHomeExist })}>
+                    {isHomeExist ? h : '-'}
+                  </div>
+                  <div className={cx('py-3 px-2.5', { 'text-grey-20': !isGuestExist })}>
+                    {isGuestExist ? g : '-'}
+                  </div>
+                </div>
+              )
+            })
           }
         </div>
         <div className="bg-brand-50 border border-brand-50 rounded-sm text-caption-13 font-semibold text-center min-w-9">
-          <div className="py-3 px-2.5">{scoreValue!.h}</div>
-          <div className="py-3 px-2.5">{scoreValue!.g}</div>
+          <div className="py-3 px-2.5">{Math.max(scoreValue!.h, 0)}</div>
+          <div className="py-3 px-2.5">{Math.max(scoreValue!.g, 0)}</div>
         </div>
       </div>
       <div className="absolute left-0 h-px w-full bg-grey-10 top-1/2 -translate-y-1/2" />

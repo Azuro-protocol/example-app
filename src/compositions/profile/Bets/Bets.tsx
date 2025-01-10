@@ -98,7 +98,10 @@ const Outcome: React.FC<OutcomeProps> = ({ outcome, isLive, isCombo }) => {
           })
         }
       >
-        <Href to={`${sportSlug}/${countrySlug}/${leagueSlug}/${gameId}`} className="flex items-center group/link">
+        <Href
+          to={`${sportSlug}/${countrySlug}/${leagueSlug}/${gameId}`}
+          className="flex items-center group/link"
+        >
           {
             !isUnique && participants.map(({ name, image }, index) => (
               <OpponentLogo className={cx({ '-mt-2': !index, '-mb-2 -ml-2 z-20': !!index })} key={name} image={image} />
@@ -146,7 +149,7 @@ const Outcome: React.FC<OutcomeProps> = ({ outcome, isLive, isCombo }) => {
                 )
               }
             </div>
-            <div className="text-caption-13 font-semibold mt-[2px] group-hover/link:underline">{title}</div>
+            <div className="text-caption-13 font-semibold mt-0.5 group-hover/link:underline">{title}</div>
           </div>
         </Href>
         <div className="ds:grid ds:grid-cols-3 ds:gap-4 w-full ds:max-w-[50%] mb:space-y-2 mb:pt-2 mb:border-t mb:border-t-grey-20 mb:mt-2">

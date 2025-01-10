@@ -1,0 +1,265 @@
+'use client'
+
+import { openModal, standaloneModal, type ModalComponent } from '@locmod/modal'
+import { Message } from '@locmod/intl'
+import { useChain, type Bet, type BetOutcome, usePrecalculatedCashouts } from '@azuro-org/sdk'
+import { GameStatus, getGameStatus } from '@azuro-org/toolkit'
+import dayjs from 'dayjs'
+import cx from 'classnames'
+import { getGameDateTime } from 'helpers/getters'
+import { formatToFixed } from 'helpers/formatters'
+
+import { PlainModal } from 'components/feedback'
+import { Icon, LiveDot } from 'components/ui'
+import { Button } from 'components/inputs'
+import { Href } from 'components/navigation'
+import { OpponentLogo } from 'components/dataDisplay'
+import OddsValue from 'compositions/OddsValue/OddsValue'
+import BetStatus from 'compositions/BetStatus/BetStatus'
+
+import messages from './messages'
+
+
+type OutcomeProps = {
+  outcome: BetOutcome
+  isLive: boolean
+  isCombo: boolean
+  onLinkClick: () => void
+}
+
+const Outcome: React.FC<OutcomeProps> = ({ outcome, isLive, isCombo, onLinkClick }) => {
+  const { game, marketName, selectionName, odds, isWin, isLose } = outcome
+  const {
+    title,
+    status: graphGameStatus, gameId, participants, startsAt,
+    sport: {
+      slug: sportSlug,
+    },
+    league: {
+      slug: leagueSlug,
+      country: {
+        slug: countrySlug,
+      },
+    },
+  } = game
+
+  const { date, time } = getGameDateTime(+startsAt * 1000)
+  const isUnique = outcome.game.sport.slug === 'unique'
+
+  const gameStatus = getGameStatus({
+    graphStatus: graphGameStatus,
+    startsAt: +startsAt,
+    isGameInLive: isLive,
+  })
+
+  return (
+    <div className="rounded-md overflow-hidden">
+      <Href
+        to={`${sportSlug}/${countrySlug}/${leagueSlug}/${gameId}`}
+        className="bg-bg-l2 flex items-center p-3 group/link"
+        onClick={onLinkClick}
+      >
+        {
+          !isUnique && participants.map(({ name, image }, index) => (
+            <OpponentLogo className={cx({ '-mt-2': !index, '-mb-2 -ml-2 z-20': !!index })} key={name} image={image} />
+          ))
+        }
+        <div className="ml-2">
+          <div className="flex items-center justify-between">
+            <div className="text-caption-12 flex items-center">
+              <span className="text-grey-70 font-semibold">{date}</span>
+              <span className="text-grey-60 ml-1">{time}</span>
+              {
+                isCombo && (
+                  <>
+                    {
+                      [ GameStatus.Canceled, GameStatus.Live, GameStatus.Resolved ].includes(gameStatus) && (
+                        <div className="size-1 flex-none bg-grey-40 rounded-full mx-2" />
+                      )
+                    }
+                    {
+                      gameStatus === GameStatus.Canceled && (
+                        <div className="flex items-center text-accent-yellow">
+                          <Icon className="size-4 mr-[2px]" name="interface/declined" />
+                          <Message className="font-semibold" value={messages.gameStatus.declined} />
+                        </div>
+                      )
+                    }
+                    {
+                      gameStatus === GameStatus.Resolved && (
+                        <Message
+                          className={
+                            cx('font-semibold', {
+                              'text-accent-green': isWin,
+                              'text-accent-red': isLose,
+                            })
+                          }
+                          value={isWin ? messages.gameStatus.win : messages.gameStatus.lose}
+                        />
+                      )
+                    }
+                  </>
+                )
+              }
+            </div>
+            {
+              gameStatus === GameStatus.Live && (
+                <LiveDot />
+              )
+            }
+          </div>
+          <div className="text-caption-13 font-semibold mt-0.5 group-hover/link:underline">
+            {title}
+          </div>
+        </div>
+      </Href>
+      <div
+        className={
+          cx('p-3 mt-px space-y-1.5', {
+            'bg-bet-game-won': isWin,
+            'bg-bet-game-lost': isLose,
+            'bg-bg-l2': !isWin && !isLose,
+          })
+        }
+      >
+        <div className="flex items-center justify-between text-caption-12">
+          <Message className="text-grey-60" value={messages.market} />
+          <div className="text-caption-13 font-semibold text-grey-90">
+            {marketName}
+          </div>
+        </div>
+        <div className="flex items-center justify-between text-caption-12">
+          <Message className="text-grey-60" value={messages.outcome} />
+          <div className="text-caption-13 font-semibold text-grey-90">
+            {selectionName}
+          </div>
+        </div>
+        <div className="flex items-center justify-between text-caption-12">
+          <Message className="text-grey-60" value={messages.odds} />
+          <OddsValue className="text-caption-13 font-semibold text-grey-90" odds={odds} />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export type BetDetailsModalProps = {
+  bet: Bet
+}
+
+const BetDetailsModal: ModalComponent<BetDetailsModalProps> = (props) => {
+  const { closeModal, bet } = props
+
+  const { betToken } = useChain()
+
+  const {
+    tokenId, createdAt, status: graphBetStatus, amount, outcomes, freebetId, totalOdds, possibleWin,
+    isWin, isLive, isCashedOut,
+  } = bet
+
+  const isFreeBet = Boolean(freebetId)
+  const isCombo = outcomes.length > 1
+
+  const {
+    totalMultiplier: totalCashoutMultiplier,
+    isCashoutAvailable,
+    isFetching: isCashoutFetching,
+  } = usePrecalculatedCashouts({
+    selections: outcomes,
+    graphBetStatus,
+    enabled: !isCashedOut,
+  })
+
+  const cashoutAmount = formatToFixed(possibleWin * +totalCashoutMultiplier, 2)
+
+  return (
+    <PlainModal
+      className="!max-w-[26rem]"
+      contentClassName="!p-0"
+      closeModal={closeModal}
+    >
+      <div className="pt-5 px-2 pb-2">
+        <div className="px-3 w-full">
+          <Message className="text-caption-14 font-semibold" value={messages.title} />
+          <div className="flex items-center justify-between mt-3">
+            <div className="flex items-center">
+              <div className="text-grey-60 text-caption-12 font-medium">
+                {`#${tokenId} / ${dayjs(+createdAt * 1000).format('DD.MM.YYYY, HH:mm')}`}
+              </div>
+            </div>
+            <BetStatus
+              graphBetStatus={graphBetStatus}
+              games={outcomes.map(({ game }) => game)}
+              isLiveBet={isLive}
+              isWin={isWin}
+              isCashedOut={isCashedOut}
+            />
+          </div>
+        </div>
+        <div className="space-y-1 overflow-auto no-scrollbar max-h-[30rem] mt-3">
+          {
+            outcomes.map((outcome) => (
+              <Outcome
+                key={outcome.game.gameId}
+                outcome={outcome}
+                isLive={isLive}
+                isCombo={isCombo}
+                onLinkClick={() => closeModal()}
+              />
+            ))
+          }
+        </div>
+        <div className="p-3 space-y-1.5">
+          <div className="flex items-center text-caption-12 justify-between">
+            {
+              isFreeBet ? (
+                <div className="flex items-center text-accent-green">
+                  <Icon className="size-4" name="interface/gift" />
+                  <Message className="font-semibold uppercase ml-1" value={messages.freebet} />
+                </div>
+              ) : (
+                <Message className="text-grey-60" value={messages.betAmount} />
+              )
+            }
+            <span className="text-caption-13 font-semibold">{amount} {betToken.symbol}</span>
+          </div>
+          <div className="flex items-center text-caption-12 justify-between">
+            <Message className="text-grey-60" value={messages.totalOdds} />
+            <span className="text-caption-13 font-semibold">{totalOdds}</span>
+          </div>
+          <div className="flex items-center text-caption-12 justify-between">
+            <Message className="text-grey-60" value={messages.possibleWin} />
+            <span className="text-caption-13 font-semibold text-brand-50">
+              {formatToFixed(possibleWin, 3)} {betToken.symbol}
+            </span>
+          </div>
+          <Button
+            className="mt-2"
+            style="tertiary"
+            title={
+              Boolean(!isCashoutAvailable || isCashoutFetching) ? messages.cashout : (
+                {
+                  ...messages.cashoutReady,
+                  values: {
+                    amount: cashoutAmount,
+                    symbol: betToken.symbol,
+                  },
+                }
+              )
+            }
+            size={32}
+            loading={isCashoutFetching}
+            disabled={!isCashoutAvailable}
+            onClick={() => openModal('CashoutModal', { tokenId, outcomes })}
+          />
+        </div>
+      </div>
+    </PlainModal>
+  )
+}
+
+declare global {
+  interface ModalsRegistry extends ExtendModalsRegistry<{ BetDetailsModal: typeof BetDetailsModal }> {}
+}
+
+export default standaloneModal('BetDetailsModal', BetDetailsModal)

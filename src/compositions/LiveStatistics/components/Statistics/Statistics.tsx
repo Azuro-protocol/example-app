@@ -91,6 +91,10 @@ const Statistics: React.FC<StatisticsProps> = ({ stats }) => {
   const pages = Math.ceil(Object.keys(activeStats!).length / itemsOnPage)
   const [ activePage, setActivePage ] = useState(1)
 
+  if (!Object.keys(activeStats!).length) {
+    return null
+  }
+
   return (
     <div className="p-2 bg-bg-l3 rounded-sm">
       <div className="flex items-center justify-between">

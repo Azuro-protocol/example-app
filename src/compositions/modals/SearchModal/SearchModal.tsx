@@ -21,11 +21,12 @@ const SearchModal: ModalComponent = (props) => {
 
   return (
     <PlainModal
-      className="mb:pt-4 ds:pt-5 w-full h-full !bg-transparent ds:max-w-[956px]"
+      className="mb:pt-4 ds:pt-3 w-full h-full !bg-transparent ds:max-w-[954px]"
       closeModal={closeModal}
       containerClassName="!p-0 h-full"
-      contentClassName="h-full flex flex-col pb-0"
+      contentClassName="h-full flex flex-col pb-0 !py-0"
       withCloseButton={false}
+      withAnimation={false}
     >
       <div className="w-full flex items-center mb:px-2 space-x-2">
         <Input
@@ -35,7 +36,7 @@ const SearchModal: ModalComponent = (props) => {
           value={value}
           rightNode={
             Boolean(value) ? (
-              <button onClick={() => searchField.set('')}>
+              <button className="text-grey-60 hover:text-grey-90" onClick={() => searchField.set('')}>
                 <Icon className="size-5" name="interface/clear" />
               </button>
             ) : undefined

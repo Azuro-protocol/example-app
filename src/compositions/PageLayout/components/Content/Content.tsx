@@ -7,7 +7,7 @@ import { Media } from 'components/layout'
 import MobileBetslipButton from 'compositions/MobileBetslipButton/MobileBetslipButton'
 import MobileStatisticsButton from 'compositions/MobileStatisticsButton/MobileStatisticsButton'
 
-import { LeftSidebar, RightSidebar, Header } from './components'
+import { LeftSidebar, RightSidebar, Header, Search } from './components'
 
 import ns from './Narrow.module.scss'
 import ws from './Wide.module.scss'
@@ -34,7 +34,9 @@ const Content: React.CFC = ({ children }) => {
       </Media>
       <main className={mainClassName}>
         {/* search block */}
-        <Media className="h-16" wide />
+        <Media className="sticky top-0 z-[100]" wide>
+          <Search />
+        </Media>
         <div className="flex flex-col bg-bg-l1 border border-grey-10 wd:rounded-l-md -wd:rounded-t-md px-2 min-h-[calc(100vh_-_4.5rem)]">
           {children}
         </div>

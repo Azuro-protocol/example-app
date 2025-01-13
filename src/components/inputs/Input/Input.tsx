@@ -61,7 +61,7 @@ const Input: React.FC<InputProps> = (props) => {
         )
       }
       <input
-        className="bg-transparent w-full h-full placeholder:text-grey-60 text-caption-14 font-semibold"
+        className="bg-transparent w-full h-full placeholder:text-grey-40 text-caption-14 font-semibold"
         type={type}
         autoFocus={autoFocus}
         value={value}

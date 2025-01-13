@@ -1,5 +1,5 @@
 export default {
-  placeholder: {
+  title: {
     en: 'Search for sport events, leagues...',
   },
 }

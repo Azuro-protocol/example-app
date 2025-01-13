@@ -104,7 +104,7 @@ const Result: React.FC<ResultProps> = ({ field }) => {
     return (
       <EmptyContent
         className="!bg-transparent"
-        image="/images/icons/3d/not_found_1_60.png"
+        image="/images/illustrations/smile_sad.png"
         title={messages.empty.title}
         text={messages.empty.text}
       />

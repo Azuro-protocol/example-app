@@ -16,13 +16,14 @@ export type PlainModalProps = {
   containerClassName?: string
   overlayClosable?: boolean
   withCloseButton?: boolean
+  withAnimation?: boolean
   closeModal: (withOnClose?: boolean) => void
 }
 
 const PlainModal: React.CFC<PlainModalProps> = (props) => {
   const {
     children, className, contentClassName, containerClassName,
-    overlayClosable = true, withCloseButton = true,
+    withAnimation = true, overlayClosable = true, withCloseButton = true,
     closeModal,
   } = props
 
@@ -45,11 +46,13 @@ const PlainModal: React.CFC<PlainModalProps> = (props) => {
   }, [])
 
   const rootClassName = cx(
-    s.container,
     containerClassName,
     'flex w-full',
     'mb:absolute mb:left-0 mb:flex-col mb:justify-end mb:h-full',
-    'ds:items-center ds:justify-center ds:min-h-full m-auto'
+    'ds:items-center ds:justify-center ds:min-h-full m-auto',
+    {
+      [s.container]: withAnimation,
+    }
   )
 
   const modalClassName = cx(

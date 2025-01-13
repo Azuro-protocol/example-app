@@ -32,7 +32,7 @@ const Navbar: React.CFC = ({ children }) => {
   const icon: IconName = sportSlug === 'top' ? 'interface/top' : `sport/${sportSlug}` as IconName
   const isTimeFilterVisible = !isLive && sportSlug !== 'unique'
 
-  const className = cx('border-b border-b-grey-10 -mx-2 ds:px-6 mb:px-3 flex mb:flex-col ds:items-center justify-between ds:sticky top-0 z-20 bg-bg-l1', {
+  const className = cx('border-b border-b-grey-10 -mx-2 ds:px-6 mb:px-3 flex mb:flex-col ds:items-center justify-between ds:sticky top-14 z-20 bg-bg-l1', {
     'py-3': !isTimeFilterVisible,
   })
 

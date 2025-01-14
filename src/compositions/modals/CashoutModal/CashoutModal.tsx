@@ -42,7 +42,7 @@ const CashoutModal: ModalComponent<CashoutModalProps> = (props) => {
     onError: (err) => {
       closeModal()
       openModal('ErrorModal', {
-        title: 'Bet not available to cashout',
+        title: 'Bet is not available to cashout',
       })
     },
   })

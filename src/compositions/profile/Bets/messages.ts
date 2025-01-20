@@ -35,6 +35,9 @@ export default {
   winning: {
     en: 'Winning:',
   },
+  cashedOut: {
+    en: 'Cash-Out Amount:',
+  },
   loss: {
     en: 'Loss:',
   },

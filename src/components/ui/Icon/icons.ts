@@ -9,6 +9,8 @@ import _sport_baseball from '../../../../public/images/icons/sport/baseball.svg?
 import _sport_baseballSource from '!!raw-loader!../../../../public/images/icons/sport/baseball.svg'
 import _sport_basketball from '../../../../public/images/icons/sport/basketball.svg?url'
 import _sport_basketballSource from '!!raw-loader!../../../../public/images/icons/sport/basketball.svg'
+import _sport_beach_volleyball from '../../../../public/images/icons/sport/beach-volleyball.svg?url'
+import _sport_beach_volleyballSource from '!!raw-loader!../../../../public/images/icons/sport/beach-volleyball.svg'
 import _sport_boxing from '../../../../public/images/icons/sport/boxing.svg?url'
 import _sport_boxingSource from '!!raw-loader!../../../../public/images/icons/sport/boxing.svg'
 import _sport_cod from '../../../../public/images/icons/sport/cod.svg?url'
@@ -43,8 +45,12 @@ import _sport_rugby_league from '../../../../public/images/icons/sport/rugby-lea
 import _sport_rugby_leagueSource from '!!raw-loader!../../../../public/images/icons/sport/rugby-league.svg'
 import _sport_rugby_union from '../../../../public/images/icons/sport/rugby-union.svg?url'
 import _sport_rugby_unionSource from '!!raw-loader!../../../../public/images/icons/sport/rugby-union.svg'
+import _sport_table_tennis from '../../../../public/images/icons/sport/table-tennis.svg?url'
+import _sport_table_tennisSource from '!!raw-loader!../../../../public/images/icons/sport/table-tennis.svg'
 import _sport_tennis from '../../../../public/images/icons/sport/tennis.svg?url'
 import _sport_tennisSource from '!!raw-loader!../../../../public/images/icons/sport/tennis.svg'
+import _sport_volleyball from '../../../../public/images/icons/sport/volleyball.svg?url'
+import _sport_volleyballSource from '!!raw-loader!../../../../public/images/icons/sport/volleyball.svg'
 import _networks_arbitrum from '../../../../public/images/icons/networks/arbitrum.svg?url'
 import _networks_arbitrumSource from '!!raw-loader!../../../../public/images/icons/networks/arbitrum.svg'
 import _networks_base from '../../../../public/images/icons/networks/base.svg?url'
@@ -194,6 +200,7 @@ const icons = {
   'sport/american-football': { src: _sport_american_football.src, source: isServer && _sport_american_footballSource, width: _sport_american_football.width, height: _sport_american_football.height, aspect: _sport_american_football.width/_sport_american_football.height }, 
   'sport/baseball': { src: _sport_baseball.src, source: isServer && _sport_baseballSource, width: _sport_baseball.width, height: _sport_baseball.height, aspect: _sport_baseball.width/_sport_baseball.height }, 
   'sport/basketball': { src: _sport_basketball.src, source: isServer && _sport_basketballSource, width: _sport_basketball.width, height: _sport_basketball.height, aspect: _sport_basketball.width/_sport_basketball.height }, 
+  'sport/beach-volleyball': { src: _sport_beach_volleyball.src, source: isServer && _sport_beach_volleyballSource, width: _sport_beach_volleyball.width, height: _sport_beach_volleyball.height, aspect: _sport_beach_volleyball.width/_sport_beach_volleyball.height }, 
   'sport/boxing': { src: _sport_boxing.src, source: isServer && _sport_boxingSource, width: _sport_boxing.width, height: _sport_boxing.height, aspect: _sport_boxing.width/_sport_boxing.height }, 
   'sport/cod': { src: _sport_cod.src, source: isServer && _sport_codSource, width: _sport_cod.width, height: _sport_cod.height, aspect: _sport_cod.width/_sport_cod.height }, 
   'sport/cricket': { src: _sport_cricket.src, source: isServer && _sport_cricketSource, width: _sport_cricket.width, height: _sport_cricket.height, aspect: _sport_cricket.width/_sport_cricket.height }, 
@@ -211,7 +218,9 @@ const icons = {
   'sport/pubg': { src: _sport_pubg.src, source: isServer && _sport_pubgSource, width: _sport_pubg.width, height: _sport_pubg.height, aspect: _sport_pubg.width/_sport_pubg.height }, 
   'sport/rugby-league': { src: _sport_rugby_league.src, source: isServer && _sport_rugby_leagueSource, width: _sport_rugby_league.width, height: _sport_rugby_league.height, aspect: _sport_rugby_league.width/_sport_rugby_league.height }, 
   'sport/rugby-union': { src: _sport_rugby_union.src, source: isServer && _sport_rugby_unionSource, width: _sport_rugby_union.width, height: _sport_rugby_union.height, aspect: _sport_rugby_union.width/_sport_rugby_union.height }, 
+  'sport/table-tennis': { src: _sport_table_tennis.src, source: isServer && _sport_table_tennisSource, width: _sport_table_tennis.width, height: _sport_table_tennis.height, aspect: _sport_table_tennis.width/_sport_table_tennis.height }, 
   'sport/tennis': { src: _sport_tennis.src, source: isServer && _sport_tennisSource, width: _sport_tennis.width, height: _sport_tennis.height, aspect: _sport_tennis.width/_sport_tennis.height }, 
+  'sport/volleyball': { src: _sport_volleyball.src, source: isServer && _sport_volleyballSource, width: _sport_volleyball.width, height: _sport_volleyball.height, aspect: _sport_volleyball.width/_sport_volleyball.height }, 
   'networks/arbitrum': { src: _networks_arbitrum.src, source: isServer && _networks_arbitrumSource, width: _networks_arbitrum.width, height: _networks_arbitrum.height, aspect: _networks_arbitrum.width/_networks_arbitrum.height }, 
   'networks/base': { src: _networks_base.src, source: isServer && _networks_baseSource, width: _networks_base.width, height: _networks_base.height, aspect: _networks_base.width/_networks_base.height }, 
   'networks/binance': { src: _networks_binance.src, source: isServer && _networks_binanceSource, width: _networks_binance.width, height: _networks_binance.height, aspect: _networks_binance.width/_networks_binance.height }, 

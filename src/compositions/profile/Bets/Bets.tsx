@@ -2,7 +2,7 @@
 
 import { useChain, useRedeemBet, BetType, type Bet, type BetOutcome, usePrecalculatedCashouts } from '@azuro-org/sdk'
 import { getGameStatus, GameStatus } from '@azuro-org/toolkit'
-import { Message, useIntl } from '@locmod/intl'
+import { Message } from '@locmod/intl'
 import React, { useMemo } from 'react'
 import dayjs from 'dayjs'
 import { useSearchParams, useRouter, usePathname } from 'next/navigation'
@@ -182,11 +182,10 @@ type BetProps = {
 const Bet: React.FC<BetProps> = ({ bet }) => {
   const {
     createdAt, status: graphBetStatus, amount, outcomes,
-    payout, possibleWin, freebetId, txHash, tokenId,
+    payout, cashout, possibleWin, freebetId, txHash, tokenId,
     isWin, isLose, isCanceled, isRedeemed, isLive, isCashedOut,
   } = bet
 
-  const intl = useIntl()
   const { betToken, appChain } = useChain()
   const { submit, isPending, isProcessing } = useRedeemBet()
   const { totalMultiplier: totalCashoutMultiplier, isCashoutAvailable } = usePrecalculatedCashouts({
@@ -203,29 +202,36 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
   const withButton = !isRedeemed && !isCashedOut && (isWin || isCanceled)
 
   const { resultTitle, resultAmount } = useMemo(() => {
+    if (isCashedOut) {
+      return {
+        resultTitle: messages.cashedOut,
+        resultAmount: `${formatToFixed(cashout!, 3)} ${betToken.symbol}`,
+      }
+    }
+
     if (isWin) {
       return {
-        resultTitle: intl.formatMessage(messages.winning),
+        resultTitle: messages.winning,
         resultAmount: `${formatToFixed(payout || possibleWin, 3)} ${betToken.symbol}`,
       }
     }
 
     if (isLose) {
       return {
-        resultTitle: intl.formatMessage(messages.loss),
+        resultTitle: messages.loss,
         resultAmount: `-${formatToFixed(amount, 2)} ${betToken.symbol}`,
       }
     }
 
     if (isCanceled) {
       return {
-        resultTitle: intl.formatMessage(messages.possibleWin),
+        resultTitle: messages.possibleWin,
         resultAmount: '––',
       }
     }
 
     return {
-      resultTitle: intl.formatMessage(messages.possibleWin),
+      resultTitle: messages.possibleWin,
       resultAmount: `${formatToFixed(possibleWin, 3)} ${betToken.symbol}`,
     }
   }, [])
@@ -296,12 +302,12 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
         </div>
         <div className="flex ds:items-center mb:flex-col mb:space-y-3">
           <div className="flex items-center text-caption-13 mb:justify-between">
-            <span className="text-grey-70 mr-1">{resultTitle}</span>
+            <Message className="text-grey-70 mr-1" value={resultTitle} />
             <span
               className={
                 cx('font-semibold', {
-                  'text-grey-70': isLose || isCanceled,
-                  'text-accent-green': isWin,
+                  'text-grey-70': isLose || isCanceled || isCashedOut,
+                  'text-accent-green': isWin && !isCashedOut,
                 })
               }
             >{resultAmount}

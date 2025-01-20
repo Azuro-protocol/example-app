@@ -234,7 +234,7 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
       resultTitle: messages.possibleWin,
       resultAmount: `${formatToFixed(possibleWin, 3)} ${betToken.symbol}`,
     }
-  }, [])
+  }, [ isCashedOut ])
 
   const handleRedeem = async () => {
     try {

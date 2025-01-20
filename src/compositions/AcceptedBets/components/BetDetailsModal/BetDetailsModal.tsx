@@ -165,6 +165,7 @@ const BetDetailsModal: ModalComponent<BetDetailsModalProps> = (props) => {
     isCashoutAvailable,
     isFetching: isCashoutFetching,
   } = usePrecalculatedCashouts({
+    tokenId,
     selections: outcomes,
     graphBetStatus,
     enabled: !isCashedOut,

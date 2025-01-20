@@ -189,6 +189,7 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
   const { betToken, appChain } = useChain()
   const { submit, isPending, isProcessing } = useRedeemBet()
   const { totalMultiplier: totalCashoutMultiplier, isCashoutAvailable } = usePrecalculatedCashouts({
+    tokenId,
     selections: outcomes,
     graphBetStatus,
     enabled: !isCashedOut,

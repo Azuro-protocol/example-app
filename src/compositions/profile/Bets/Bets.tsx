@@ -443,8 +443,8 @@ const Content: React.FC<ContentProps> = ({ bets, isFetching }) => {
 
 const Bets: React.FC = () => {
   const searchParams = useSearchParams()
-  const router = useRouter()
   const pathname = usePathname()
+  const router = useRouter()
 
   const tab = searchParams.get('tab') as BetType || undefined
 

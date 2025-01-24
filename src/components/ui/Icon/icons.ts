@@ -189,6 +189,8 @@ import _currency_usdt from '../../../../public/images/icons/currency/usdt.svg?ur
 import _currency_usdtSource from '!!raw-loader!../../../../public/images/icons/currency/usdt.svg'
 import _currency_wchz from '../../../../public/images/icons/currency/wchz.svg?url'
 import _currency_wchzSource from '!!raw-loader!../../../../public/images/icons/currency/wchz.svg'
+import _currency_weth from '../../../../public/images/icons/currency/weth.svg?url'
+import _currency_wethSource from '!!raw-loader!../../../../public/images/icons/currency/weth.svg'
 import _currency_wxdai from '../../../../public/images/icons/currency/wxdai.svg?url'
 import _currency_wxdaiSource from '!!raw-loader!../../../../public/images/icons/currency/wxdai.svg'
 
@@ -290,6 +292,7 @@ const icons = {
   'currency/usdc': { src: _currency_usdc.src, source: isServer && _currency_usdcSource, width: _currency_usdc.width, height: _currency_usdc.height, aspect: _currency_usdc.width/_currency_usdc.height }, 
   'currency/usdt': { src: _currency_usdt.src, source: isServer && _currency_usdtSource, width: _currency_usdt.width, height: _currency_usdt.height, aspect: _currency_usdt.width/_currency_usdt.height }, 
   'currency/wchz': { src: _currency_wchz.src, source: isServer && _currency_wchzSource, width: _currency_wchz.width, height: _currency_wchz.height, aspect: _currency_wchz.width/_currency_wchz.height }, 
+  'currency/weth': { src: _currency_weth.src, source: isServer && _currency_wethSource, width: _currency_weth.width, height: _currency_weth.height, aspect: _currency_weth.width/_currency_weth.height }, 
   'currency/wxdai': { src: _currency_wxdai.src, source: isServer && _currency_wxdaiSource, width: _currency_wxdai.width, height: _currency_wxdai.height, aspect: _currency_wxdai.width/_currency_wxdai.height }
 } as const
 

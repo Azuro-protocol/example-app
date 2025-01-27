@@ -87,13 +87,13 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game, withTopRadius, 
 
   const rootClassName = cx(
     'group flex mb:flex-col ds:items-center justify-between',
-    'py-2 ds:px-4 mb:px-2 bg-bg-l2 last-of-type:rounded-b-md relative',
+    'py-2 ds:pl-4 ds:pr-2 mb:px-2 bg-bg-l2 last-of-type:rounded-b-md relative',
     className,
     {
       'first-of-type:rounded-t-md': withTopRadius || isUnique,
     })
   const liveClassName = cx(
-    'border-l-[2px] border-l-accent-red absolute h-full',
+    'absolute h-full before:content-[\'*\'] before:h-full before:w-0.5 before:absolute before:top-0 before:left-0 before:bg-accent-red overflow-hidden',
     'left-0 top-0 bg-live-game-shadow w-[30%] group-last-of-type:rounded-b-md',
     {
       'group-first-of-type:rounded-t-md': withTopRadius,
@@ -117,7 +117,7 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game, withTopRadius, 
             )
           }
           <div className={cx({ 'ml-3': !isUnique })}>
-            <div className="mb-[2px]">
+            <div>
               {
                 isInLive ? (
                   <LiveLabel className="mr-1" />
@@ -132,21 +132,18 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game, withTopRadius, 
             <div className="text-caption-13 font-semibold group-hover/game-link:underline">{title}</div>
           </div>
         </Href>
-        {
-          isStatisticsAvailable && (
-            <button
-              className={
-                cx('hover:text-brand-50 ml-2', {
-                  'text-brand-50': isSelectedForStatistics,
-                  'text-grey-70': !isSelectedForStatistics,
-                })
-              }
-              onClick={handleStatisticsClick}
-            >
-              <Icon className="size-4" name="interface/statistics" />
-            </button>
-          )
-        }
+        <button
+          className={
+            cx('hover:text-brand-50 ml-auto mb:mr-1 disabled:text-grey-20 disabled:cursor-not-allowed', {
+              'text-brand-50': isSelectedForStatistics,
+              'text-grey-70': !isSelectedForStatistics,
+            })
+          }
+          disabled={!isStatisticsAvailable}
+          onClick={handleStatisticsClick}
+        >
+          <Icon className="size-5" name="interface/statistics" />
+        </button>
       </div>
       <div className="w-full ds:max-w-[26.25rem] mb:mt-2">
         {

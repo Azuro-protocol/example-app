@@ -12,7 +12,7 @@ type ScoreBoardProps = {
 const ScoreBoard: React.FC<ScoreBoardProps> = ({ sportId, scoreBoard, participants }) => {
 
   return (
-    <div className="p-2 bg-bg-l3 rounded-sm flex items-center justify-between">
+    <div className="px-2 py-1 flex items-center justify-between">
       <div className="flex items-center space-x-1 text-caption-13 font-semibold text-brand-50 w-full">
         <OpponentLogo className="!bg-transparent" image={participants[0].image} />
         <div className="text-ellipsis whitespace-nowrap overflow-hidden max-w-[4.5rem]">{participants[0].name}</div>

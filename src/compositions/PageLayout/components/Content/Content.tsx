@@ -33,8 +33,7 @@ const Content: React.CFC = ({ children }) => {
         <Header />
       </Media>
       <main className={mainClassName}>
-        {/* search block */}
-        <Media className="sticky top-0 z-[100]" wide>
+        <Media wide>
           <Search />
         </Media>
         <div className="flex flex-col bg-bg-l1 border border-grey-10 wd:rounded-l-md -wd:rounded-t-md px-2 min-h-[calc(100vh_-_4.5rem)]">

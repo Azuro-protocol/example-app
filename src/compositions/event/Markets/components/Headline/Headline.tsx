@@ -3,6 +3,7 @@
 import React from 'react'
 
 import { Icon } from 'components/ui'
+import { Media } from 'components/layout'
 import ChangeOddsView from 'compositions/ChangeOddsView/ChangeOddsView'
 
 import { View, type ViewProps } from './components'
@@ -21,7 +22,9 @@ const Headline: React.FC<HeadlineProps> = (props) => {
       <div className="py-2 px-4 flex items-center justify-between bg-grey-10 rounded-lg">
         <div />
         <div className="flex items-center space-x-2">
-          <View activeView={activeView} onChangeView={onChangeView} />
+          <Media desktop>
+            <View activeView={activeView} onChangeView={onChangeView} />
+          </Media>
           <button className="p-1 text-grey-60 hover:text-grey-90" onClick={onCollapse}>
             <Icon
               className="size-5"

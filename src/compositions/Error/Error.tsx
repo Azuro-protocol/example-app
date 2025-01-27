@@ -22,6 +22,7 @@ const Error: React.FC<ErrorProps> = () => {
       <Button
         className="mt-5"
         style="secondary"
+        to="/"
         title={messages.buttonTitle}
         size={40}
       />

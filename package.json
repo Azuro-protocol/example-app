@@ -17,7 +17,7 @@
   "dependencies": {
     "@apollo/client": "^3.11.1",
     "@azuro-org/dictionaries": "^3.0.26",
-    "@azuro-org/sdk": "5.4.1",
+    "@azuro-org/sdk": "5.4.2",
     "@azuro-org/sdk-social-aa-connector": "^1.0.6",
     "@floating-ui/react-dom-interactions": "^0.13.3",
     "@glidejs/glide": "^3.6.2",

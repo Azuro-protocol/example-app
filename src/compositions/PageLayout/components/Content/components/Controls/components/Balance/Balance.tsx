@@ -37,7 +37,7 @@ const ChainCurrency: React.FC<ChainCurrencyProps> = ({ className, chainClassName
         />
       </div>
       <Icon
-        className={cx('-ml-1', `size-${size}`, { 'grayscale': withGrayscale })}
+        className={cx('-ml-1.5', `size-${size}`, { 'grayscale': withGrayscale })}
         name={constants.currencyIcons[chainId]}
       />
     </div>
@@ -177,7 +177,7 @@ const Content: React.FC = () => {
   )
 }
 
-const Balance = () => {
+const Balance: React.FC = () => {
   const { appChain } = useChain()
   const { balance, loading } = useBetTokenBalance()
 
@@ -187,7 +187,7 @@ const Balance = () => {
     openModal('FundingModal')
   }
 
-  const rootClassName = cx('wd:h-10 -wd:h-8 bg-transparent flex items-center justify-between border border-grey-15 px-3 w-fit text-grey-60 ui-open:text-grey-90 hover:text-grey-90 ui-open:bg-grey-10 hover:bg-grey-10 ui-open:border-grey-20 hover:border-grey-20 transition-all mb:w-full rounded-md')
+  const rootClassName = cx('wd:h-10 -wd:h-8 bg-grey-10 flex items-center justify-between border border-transparent pl-1.5 pr-1 w-fit text-grey-60 ui-open:text-grey-90 hover:text-grey-90 ui-open:border-grey-20 hover:border-grey-20 transition-all mb:w-full rounded-md')
 
   return (
     <Dropdown
@@ -200,9 +200,10 @@ const Balance = () => {
         <div className="flex items-center">
           <ChainCurrency
             className="mr-2"
-            chainClassName="border-bg-l0 group-hover:border-grey-10 ui-open:border-grey-10"
+            chainClassName="border-grey-10 bg-grey-10"
             chainId={appChain.id}
             size={5}
+            withGrayscale
           />
           {
             loading ? (

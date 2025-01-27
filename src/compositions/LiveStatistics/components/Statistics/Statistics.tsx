@@ -13,10 +13,10 @@ type LineProps = {
 }
 
 const Line: React.FC<LineProps> = ({ className, h, g }) => {
-  const [ width, setWidth ] = useState('5%')
+  const [ width, setWidth ] = useState('0%')
 
   useEffect(() => {
-    const newWidth = h > g ? '100%' : `${Math.max(h * 100 / (g || 1), 5)}%`
+    const newWidth = h > g ? '100%' : `${Math.max(h * 100 / (g || 1), 0)}%`
 
     const timeout = setTimeout(() => {
       setWidth(newWidth)
@@ -56,10 +56,10 @@ const StatItem: React.FC<StatItemProps> = ({ statKey, stat }) => {
         <div className="font-semibold">{stat.g}</div>
       </div>
       <div className="bg-bg-l2 h-0.5 rounded-t-ssm flex justify-center mt-1">
-        <div className="w-[45%] h-full">
+        <div className="w-full h-full">
           <Line className="bg-[#0988F0] ml-auto" h={stat.h} g={stat.g} />
         </div>
-        <div className="w-[45%] h-full">
+        <div className="w-full h-full">
           <Line className="bg-[#FF4B45]" h={stat.g} g={stat.h} />
         </div>
       </div>
@@ -96,7 +96,7 @@ const Statistics: React.FC<StatisticsProps> = ({ stats }) => {
   }
 
   return (
-    <div className="p-2 bg-bg-l3 rounded-sm">
+    <div className="p-2 bg-bg-l3 rounded-min">
       <div className="flex items-center justify-between">
         <Message className="text-heading-h5 font-bold" value={messages.title} />
         {
@@ -126,7 +126,7 @@ const Statistics: React.FC<StatisticsProps> = ({ stats }) => {
           )
         }
       </div>
-      <div className="space-y-2 mt-2">
+      <div className="space-y-2 mt-2 min-h-[10.75rem]">
         {
           Object.keys(activeStats!).slice(
             (activePage - 1) * itemsOnPage,

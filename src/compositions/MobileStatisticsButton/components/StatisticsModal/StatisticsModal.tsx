@@ -14,8 +14,8 @@ const StatisticsModal: ModalComponent<StatisticsModalProps> = (props) => {
   const { closeModal } = props
 
   return (
-    <PlainModal contentClassName="pt-12" closeModal={closeModal}>
-      <LiveStatistics withCollapse={false} />
+    <PlainModal contentClassName="pt-14" closeModal={closeModal}>
+      <LiveStatistics withCollapse={false} withClearButton={false} />
     </PlainModal>
   )
 }

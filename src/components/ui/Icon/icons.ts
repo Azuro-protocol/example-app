@@ -157,6 +157,8 @@ import _interface_plus from '../../../../public/images/icons/interface/plus.svg?
 import _interface_plusSource from '!!raw-loader!../../../../public/images/icons/interface/plus.svg'
 import _interface_qr_code from '../../../../public/images/icons/interface/qr_code.svg?url'
 import _interface_qr_codeSource from '!!raw-loader!../../../../public/images/icons/interface/qr_code.svg'
+import _interface_quick_statistics from '../../../../public/images/icons/interface/quick_statistics.svg?url'
+import _interface_quick_statisticsSource from '!!raw-loader!../../../../public/images/icons/interface/quick_statistics.svg'
 import _interface_search from '../../../../public/images/icons/interface/search.svg?url'
 import _interface_searchSource from '!!raw-loader!../../../../public/images/icons/interface/search.svg'
 import _interface_settings from '../../../../public/images/icons/interface/settings.svg?url'
@@ -179,6 +181,8 @@ import _interface_win from '../../../../public/images/icons/interface/win.svg?ur
 import _interface_winSource from '!!raw-loader!../../../../public/images/icons/interface/win.svg'
 import _interface_withdraw from '../../../../public/images/icons/interface/withdraw.svg?url'
 import _interface_withdrawSource from '!!raw-loader!../../../../public/images/icons/interface/withdraw.svg'
+import _interface_1440_Football_Country_Buttons_36_Icon from '../../../../public/images/icons/interface/1440/Football/Country/Buttons/36/Icon.svg?url'
+import _interface_1440_Football_Country_Buttons_36_IconSource from '!!raw-loader!../../../../public/images/icons/interface/1440/Football/Country/Buttons/36/Icon.svg'
 import _currency_azusd from '../../../../public/images/icons/currency/azusd.svg?url'
 import _currency_azusdSource from '!!raw-loader!../../../../public/images/icons/currency/azusd.svg'
 import _currency_dai from '../../../../public/images/icons/currency/dai.svg?url'
@@ -276,6 +280,7 @@ const icons = {
   'interface/percentage': { src: _interface_percentage.src, source: isServer && _interface_percentageSource, width: _interface_percentage.width, height: _interface_percentage.height, aspect: _interface_percentage.width/_interface_percentage.height }, 
   'interface/plus': { src: _interface_plus.src, source: isServer && _interface_plusSource, width: _interface_plus.width, height: _interface_plus.height, aspect: _interface_plus.width/_interface_plus.height }, 
   'interface/qr_code': { src: _interface_qr_code.src, source: isServer && _interface_qr_codeSource, width: _interface_qr_code.width, height: _interface_qr_code.height, aspect: _interface_qr_code.width/_interface_qr_code.height }, 
+  'interface/quick_statistics': { src: _interface_quick_statistics.src, source: isServer && _interface_quick_statisticsSource, width: _interface_quick_statistics.width, height: _interface_quick_statistics.height, aspect: _interface_quick_statistics.width/_interface_quick_statistics.height }, 
   'interface/search': { src: _interface_search.src, source: isServer && _interface_searchSource, width: _interface_search.width, height: _interface_search.height, aspect: _interface_search.width/_interface_search.height }, 
   'interface/settings': { src: _interface_settings.src, source: isServer && _interface_settingsSource, width: _interface_settings.width, height: _interface_settings.height, aspect: _interface_settings.width/_interface_settings.height }, 
   'interface/spinner': { src: _interface_spinner.src, source: isServer && _interface_spinnerSource, width: _interface_spinner.width, height: _interface_spinner.height, aspect: _interface_spinner.width/_interface_spinner.height }, 
@@ -287,6 +292,7 @@ const icons = {
   'interface/warning': { src: _interface_warning.src, source: isServer && _interface_warningSource, width: _interface_warning.width, height: _interface_warning.height, aspect: _interface_warning.width/_interface_warning.height }, 
   'interface/win': { src: _interface_win.src, source: isServer && _interface_winSource, width: _interface_win.width, height: _interface_win.height, aspect: _interface_win.width/_interface_win.height }, 
   'interface/withdraw': { src: _interface_withdraw.src, source: isServer && _interface_withdrawSource, width: _interface_withdraw.width, height: _interface_withdraw.height, aspect: _interface_withdraw.width/_interface_withdraw.height }, 
+  'interface/1440/Football/Country/Buttons/36/Icon': { src: _interface_1440_Football_Country_Buttons_36_Icon.src, source: isServer && _interface_1440_Football_Country_Buttons_36_IconSource, width: _interface_1440_Football_Country_Buttons_36_Icon.width, height: _interface_1440_Football_Country_Buttons_36_Icon.height, aspect: _interface_1440_Football_Country_Buttons_36_Icon.width/_interface_1440_Football_Country_Buttons_36_Icon.height }, 
   'currency/azusd': { src: _currency_azusd.src, source: isServer && _currency_azusdSource, width: _currency_azusd.width, height: _currency_azusd.height, aspect: _currency_azusd.width/_currency_azusd.height }, 
   'currency/dai': { src: _currency_dai.src, source: isServer && _currency_daiSource, width: _currency_dai.width, height: _currency_dai.height, aspect: _currency_dai.width/_currency_dai.height }, 
   'currency/usdc': { src: _currency_usdc.src, source: isServer && _currency_usdcSource, width: _currency_usdc.width, height: _currency_usdc.height, aspect: _currency_usdc.width/_currency_usdc.height }, 

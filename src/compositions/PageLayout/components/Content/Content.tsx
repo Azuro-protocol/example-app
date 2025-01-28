@@ -44,7 +44,7 @@ const Content: React.CFC = ({ children }) => {
         <RightSidebar />
       </Media>
       <Media narrow mobile>
-        <div className="fixed left-1/2 -translate-x-1/2 bottom-2 z-[40] flex items-center space-x-2">
+        <div className="fixed left-1/2 -translate-x-1/2 bottom-2 z-[40] flex items-center justify-center space-x-2">
           <MobileStatisticsButton />
           <MobileBetslipButton />
         </div>

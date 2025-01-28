@@ -181,8 +181,6 @@ import _interface_win from '../../../../public/images/icons/interface/win.svg?ur
 import _interface_winSource from '!!raw-loader!../../../../public/images/icons/interface/win.svg'
 import _interface_withdraw from '../../../../public/images/icons/interface/withdraw.svg?url'
 import _interface_withdrawSource from '!!raw-loader!../../../../public/images/icons/interface/withdraw.svg'
-import _interface_1440_Football_Country_Buttons_36_Icon from '../../../../public/images/icons/interface/1440/Football/Country/Buttons/36/Icon.svg?url'
-import _interface_1440_Football_Country_Buttons_36_IconSource from '!!raw-loader!../../../../public/images/icons/interface/1440/Football/Country/Buttons/36/Icon.svg'
 import _currency_azusd from '../../../../public/images/icons/currency/azusd.svg?url'
 import _currency_azusdSource from '!!raw-loader!../../../../public/images/icons/currency/azusd.svg'
 import _currency_dai from '../../../../public/images/icons/currency/dai.svg?url'
@@ -292,7 +290,6 @@ const icons = {
   'interface/warning': { src: _interface_warning.src, source: isServer && _interface_warningSource, width: _interface_warning.width, height: _interface_warning.height, aspect: _interface_warning.width/_interface_warning.height }, 
   'interface/win': { src: _interface_win.src, source: isServer && _interface_winSource, width: _interface_win.width, height: _interface_win.height, aspect: _interface_win.width/_interface_win.height }, 
   'interface/withdraw': { src: _interface_withdraw.src, source: isServer && _interface_withdrawSource, width: _interface_withdraw.width, height: _interface_withdraw.height, aspect: _interface_withdraw.width/_interface_withdraw.height }, 
-  'interface/1440/Football/Country/Buttons/36/Icon': { src: _interface_1440_Football_Country_Buttons_36_Icon.src, source: isServer && _interface_1440_Football_Country_Buttons_36_IconSource, width: _interface_1440_Football_Country_Buttons_36_Icon.width, height: _interface_1440_Football_Country_Buttons_36_Icon.height, aspect: _interface_1440_Football_Country_Buttons_36_Icon.width/_interface_1440_Football_Country_Buttons_36_Icon.height }, 
   'currency/azusd': { src: _currency_azusd.src, source: isServer && _currency_azusdSource, width: _currency_azusd.width, height: _currency_azusd.height, aspect: _currency_azusd.width/_currency_azusd.height }, 
   'currency/dai': { src: _currency_dai.src, source: isServer && _currency_daiSource, width: _currency_dai.width, height: _currency_dai.height, aspect: _currency_dai.width/_currency_dai.height }, 
   'currency/usdc': { src: _currency_usdc.src, source: isServer && _currency_usdcSource, width: _currency_usdc.width, height: _currency_usdc.height, aspect: _currency_usdc.width/_currency_usdc.height }, 

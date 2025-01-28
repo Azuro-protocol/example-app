@@ -19,7 +19,7 @@ const MobileBetslipButton: React.FC = () => {
   return (
     <div>
       <Button
-        title={messages.title}
+        title={items.length ? messages.titleActive : messages.title}
         style="primary"
         leftIcon="interface/betslip"
         rightNode={

@@ -76,17 +76,6 @@ body {
 }
 
 @include mobile {
-
-  body {
-
-    // Iphone input in modal fix
-    &.body-scroll-frozen {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-    }
-  }
-
   .desktop,
   .narrow:not(.mobile),
   .wide:not(.mobile) {

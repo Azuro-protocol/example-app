@@ -3,7 +3,7 @@
 import React from 'react'
 import { useBetTokenBalance, useBetsSummary, useChain, useNativeBalance } from '@azuro-org/sdk'
 import { type ChainId } from '@azuro-org/toolkit'
-import { Listbox } from '@headlessui/react'
+import { Listbox, ListboxButton, ListboxOptions } from '@headlessui/react'
 import { Message } from '@locmod/intl'
 import cx from 'classnames'
 import { openModal } from '@locmod/modal'
@@ -50,7 +50,7 @@ const ChainSelect: React.FC = () => {
   return (
     <div className="border border-grey-20 p-1 rounded-md">
       <Listbox value={appChain.id} onChange={setAppChainId}>
-        <Listbox.Button
+        <ListboxButton
           className="p-2 flex items-center justify-between w-full group/select"
         >
           <div className="flex items-center">
@@ -63,8 +63,8 @@ const ChainSelect: React.FC = () => {
             <div className="text-caption-13">{appChain.name}</div>
           </div>
           <Icon className="size-4 text-grey-60 group-hover/select:text-grey-90 transition-colors group-aria-[controls]/select:rotate-180" name="interface/chevron_down" />
-        </Listbox.Button>
-        <Listbox.Options className="w-full space-y-[2px]">
+        </ListboxButton>
+        <ListboxOptions className="w-full space-y-[2px]" modal={false}>
           {
             config.chains.map((chain) => {
               const isActive = appChain.id === chain.id
@@ -102,7 +102,7 @@ const ChainSelect: React.FC = () => {
               )
             })
           }
-        </Listbox.Options>
+        </ListboxOptions>
       </Listbox>
     </div>
   )

@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react'
 import cx from 'classnames'
-import { Menu } from '@headlessui/react'
+import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 
 import type { DropdownProps } from '../../Dropdown'
 
@@ -27,7 +27,7 @@ const Desktop = forwardRef<HTMLDivElement, DropdownProps>((props, ref) => {
       as="div"
       className={rootClassName}
     >
-      <Menu.Button
+      <MenuButton
         aria-label="Menu"
         className={btnClassName}
       >
@@ -46,12 +46,12 @@ const Desktop = forwardRef<HTMLDivElement, DropdownProps>((props, ref) => {
             )
           }
         }
-      </Menu.Button>
-      <Menu.Items className={menuClassName}>
+      </MenuButton>
+      <MenuItems className={menuClassName} modal={false}>
         <div className={contentClassName}>
           {content}
         </div>
-      </Menu.Items>
+      </MenuItems>
     </Menu>
   )
 })

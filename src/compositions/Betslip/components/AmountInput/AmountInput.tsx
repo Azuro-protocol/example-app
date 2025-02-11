@@ -14,16 +14,6 @@ const AmountInput: React.FC<AmountInputProps> = ({ isEnoughBalance }) => {
   const { appChain } = useChain()
   const { betAmount, changeBetAmount, disableReason } = useDetailedBetslip()
 
-  const handleChange = (value: string) => {
-    const [ int, digits ] = value.split('.')
-
-    if (digits) {
-      value = `${int}.${digits.substring(0, 2)}`
-    }
-
-    changeBetAmount(value)
-  }
-
   const isError = !isEnoughBalance || [
     BetslipDisableReason.BetAmountGreaterThanMaxBet,
     BetslipDisableReason.BetAmountLowerThanMinBet,
@@ -36,7 +26,7 @@ const AmountInput: React.FC<AmountInputProps> = ({ isEnoughBalance }) => {
       value={betAmount}
       placeholder="0.00"
       leftNode={<Icon className="size-5 mr-2" name={constants.currencyIcons[appChain.id]} />}
-      onChange={handleChange}
+      onChange={changeBetAmount}
       isError={isError}
     />
   )

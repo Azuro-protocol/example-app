@@ -17,7 +17,7 @@
   "dependencies": {
     "@apollo/client": "^3.11.1",
     "@azuro-org/dictionaries": "^3.0.26",
-    "@azuro-org/sdk": "5.4.8",
+    "@azuro-org/sdk": "5.4.9",
     "@azuro-org/sdk-social-aa-connector": "^1.1.1",
     "@floating-ui/react-dom-interactions": "^0.13.3",
     "@glidejs/glide": "^3.6.2",
@@ -42,8 +42,8 @@
     "react-xmasonry": "^3.0.6",
     "sass": "1.77.6",
     "sharp": "^0.33.5",
-    "viem": "^2.21.57",
-    "wagmi": "^2.14.4"
+    "viem": "^2.23.2",
+    "wagmi": "^2.14.11"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.26.0",

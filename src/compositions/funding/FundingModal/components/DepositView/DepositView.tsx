@@ -1,7 +1,6 @@
 'use client'
 
 import { Message } from '@locmod/intl'
-import { closeModal, openModal } from '@locmod/modal'
 import { useEffect, useMemo } from 'react'
 import { useWallet } from 'wallet'
 
@@ -12,8 +11,8 @@ import { Icon } from 'components/ui'
 import type { FundingExchangeModalProps } from 'compositions/funding/FundingExchangeModal/FundingExchangeModal'
 
 import AddressSection from './components/AddressSection/AddressSection'
-import OtherMethodCard from './components/OtherMethodCard/OtherMethodCard'
-import useBuyWithCardClick from './utils/useBuyWithCardClick'
+// import OtherMethodCard from './components/OtherMethodCard/OtherMethodCard'
+// import useBuyWithCardClick from './utils/useBuyWithCardClick'
 import messages from './messages'
 
 
@@ -29,7 +28,7 @@ const DepositView: React.FC<DepositViewProps> = (props) => {
   const { appChain, betToken } = useChain()
   const { balance, loading: isBalancesFetching, refetch: refetchBetTokenBalance } = useBetTokenBalance()
 
-  const handleBuyCryptoClick = useBuyWithCardClick()
+  // const handleBuyCryptoClick = useBuyWithCardClick()
 
   const steps = useMemo(() => {
     const iconClassName = 'inline grayscale size-4 align-text-top'
@@ -59,14 +58,14 @@ const DepositView: React.FC<DepositViewProps> = (props) => {
     ]
   }, [ isAAWallet, appChain, betToken ])
 
-  const handleExchangeClick = () => {
-    openModal('FundingExchangeModal', {
-      toAmount,
-      type,
-    })
+  // const handleExchangeClick = () => {
+  //   openModal('FundingExchangeModal', {
+  //     toAmount,
+  //     type,
+  //   })
 
-    closeModal('FundingModal')
-  }
+  //   closeModal('FundingModal')
+  // }
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -123,39 +122,6 @@ const DepositView: React.FC<DepositViewProps> = (props) => {
         }
       </ol>
       <AddressSection className="p-4" showQR={showQR} />
-      {
-        Boolean(Boolean(constants.mtPelerinToken) || !isAAWallet) && (
-          <>
-            <div className="flex items-center gap-2">
-              <hr className="flex-1 border-grey-20" />
-              <Message className="flex-none text-grey-60 text-label font-medium" value={messages.other} />
-              <hr className="flex-1 border-grey-20" />
-            </div>
-            <div className="p-4 grid gap-3">
-              {
-                Boolean(constants.mtPelerinToken) && (
-                  <OtherMethodCard
-                    title={messages.noCrypto}
-                    icons={[ 'logo/visa', 'logo/mastercard', 'logo/paypal', 'logo/apple_pay', 'logo/google_pay' ]}
-                    buttonTitle={messages.buyCard}
-                    onClick={handleBuyCryptoClick}
-                  />
-                )
-              }
-              {
-                !isAAWallet && (
-                  <OtherMethodCard
-                    title={messages.bridgeSwap}
-                    icons={[ 'currency/usdc', 'currency/dai', 'networks/ethereum', 'divider', 'networks/arbitrum', 'networks/base' ]}
-                    buttonTitle={messages.exchange}
-                    onClick={handleExchangeClick}
-                  />
-                )
-              }
-            </div>
-          </>
-        )
-      }
     </div>
   )
 }

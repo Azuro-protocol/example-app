@@ -26,18 +26,20 @@
   },
   "rules": {
     // NextJS
-
     "@next/next/no-sync-scripts": "off",
     "@next/next/no-css-tags": "off",
     "@next/next/no-img-element": "off",
     // Common
-
     "padding-line-between-statements": [
       "error",
       {
         "blankLine": "always",
         "prev": "*",
-        "next": [ "return", "if", "try" ]
+        "next": [
+          "return",
+          "if",
+          "try"
+        ]
       },
       {
         "blankLine": "always",
@@ -45,7 +47,6 @@
         "next": "export"
       }
     ],
-
     "eol-last": [
       "error",
       "always"
@@ -65,7 +66,9 @@
     "prefer-const": "off",
     "key-spacing": [
       "error",
-      { "beforeColon": false }
+      {
+        "beforeColon": false
+      }
     ],
     "arrow-spacing": "error",
     "space-infix-ops": "error",
@@ -105,7 +108,6 @@
     ],
     "keyword-spacing": "error",
     // React
-
     "react/display-name": "off",
     "react/jsx-tag-spacing": [
       "error",
@@ -141,7 +143,11 @@
     ],
     "react/jsx-curly-brace-presence": [
       "error",
-      { "props": "never", "children": "never", "propElementValues": "always" }
+      {
+        "props": "never",
+        "children": "never",
+        "propElementValues": "always"
+      }
     ],
     "jsx-quotes": [
       "error",
@@ -196,19 +202,24 @@
       }
     ],
     // React hooks plugin
-
     "react/no-unescaped-entities": "off",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "off",
     // Import plugin
-
     "import/order": [
       "error",
       {
         "groups": [
-          [ "builtin", "external" ],
+          [
+            "builtin",
+            "external"
+          ],
           "internal",
-          [ "parent", "sibling", "index" ],
+          [
+            "parent",
+            "sibling",
+            "index"
+          ],
           "object"
         ],
         "pathGroups": [

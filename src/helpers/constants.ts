@@ -6,7 +6,6 @@ import { type IconName } from 'components/ui'
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL as string
 const companyName = process.env.NEXT_PUBLIC_COMPANY_NAME as string
 const privyAppId = process.env.NEXT_PUBLIC_PRIVY_APP_ID as string
-const mtPelerinToken = process.env.NEXT_PUBLIC_MTPERELIN_TOKEN as string
 
 const rpcByChains: Record<ChainId, string> = {
   [gnosis.id]: 'https://gnosis-rpc.publicnode.com',
@@ -63,7 +62,6 @@ export default {
   baseUrl,
   companyName,
   rpcByChains,
-  mtPelerinToken,
   topPageGamePerSportLimit: 10,
   chainIcons,
   currencyIcons,

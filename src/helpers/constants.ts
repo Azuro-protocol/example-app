@@ -50,6 +50,11 @@ const links = {
 const defaultSlippageValues = [ '5', '10', '15' ]
 const defaultQuickBetsValues = [ '50', '100' ]
 
+const cashoutDecimals = {
+  [base.id]: 4,
+  [baseSepolia.id]: 4,
+}
+
 const localStorageKeys = {
   slippage: 'slippage',
   quickBet: 'quickBet',
@@ -70,6 +75,7 @@ export default {
   defaultSlippageValues,
   defaultSlippage: '10',
   defaultQuickBetsValues,
+  cashoutDecimals,
   localStorageKeys,
   privyAppId,
 }

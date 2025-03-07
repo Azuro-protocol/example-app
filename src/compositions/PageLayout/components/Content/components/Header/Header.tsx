@@ -29,7 +29,7 @@ const Content: React.FC = () => {
 const Header: React.FC = () => {
   const { account, isReconnecting, isConnecting } = useWallet()
   const pathname = usePathname()
-  const { connectOrCreateWallet } = usePrivy()
+  const { login } = usePrivy()
   const [ isVisible, setVisibility ] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -80,7 +80,7 @@ const Header: React.FC = () => {
               title={buttonMessages.connectWallet}
               size={32}
               loading={isConnecting || isReconnecting}
-              onClick={() => connectOrCreateWallet()}
+              onClick={login}
             />
           )
         }

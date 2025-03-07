@@ -6,6 +6,7 @@ import { Message } from '@locmod/intl'
 import { useChain, useCashout, type Bet } from '@azuro-org/sdk'
 import dayjs from 'dayjs'
 import cx from 'classnames'
+import { constants } from 'helpers'
 import { formatToFixed } from 'helpers/formatters'
 
 import { PlainModal } from 'components/feedback'
@@ -24,7 +25,7 @@ const CashoutModal: ModalComponent<CashoutModalProps> = (props) => {
   const { closeModal, tokenId, outcomes } = props
 
   const [ secondsLeft, setSecondsLeft ] = useState(0)
-  const { betToken } = useChain()
+  const { betToken, appChain } = useChain()
   const {
     submit,
     calculationQuery,
@@ -118,7 +119,7 @@ const CashoutModal: ModalComponent<CashoutModalProps> = (props) => {
                     })
                   }
                 >
-                  {formatToFixed(cashoutAmount!, 2)} {betToken.symbol}
+                  {formatToFixed(cashoutAmount!, constants.cashoutDecimals[appChain.id] || 2)} {betToken.symbol}
                 </div>
               )
             }

@@ -9,6 +9,7 @@ import { useSearchParams, useRouter, usePathname } from 'next/navigation'
 import cx from 'classnames'
 import { useBets } from 'hooks'
 import { openModal } from '@locmod/modal'
+import { constants } from 'helpers'
 import { getGameDateTime } from 'helpers/getters'
 import { formatToFixed } from 'helpers/formatters'
 
@@ -195,7 +196,7 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
     enabled: !isCashedOut,
   })
 
-  const cashoutAmount = formatToFixed(possibleWin * +totalCashoutMultiplier, 2)
+  const cashoutAmount = formatToFixed(possibleWin * +totalCashoutMultiplier, constants.cashoutDecimals[appChain.id] || 2)
 
   const isCombo = outcomes.length > 1
   const isLoading = isPending || isProcessing

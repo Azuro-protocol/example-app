@@ -16,15 +16,10 @@ type ConnectButtonWrapperProps = {
 const ConnectButtonWrapper: React.FC<ConnectButtonWrapperProps> = ({ children }) => {
   const { appChain } = useChain()
   const { account, chainId, isAAWallet } = useWallet()
-  const { connectOrCreateWallet, ready } = usePrivy()
+  const { ready, login } = usePrivy()
   const { onClick, title, disabled, ...props } = children.props
 
   if (!account) {
-    const handleClick = () => {
-      // openModal('ConnectModal')
-      connectOrCreateWallet()
-    }
-
     return (
       <Button
         {...props}
@@ -32,7 +27,7 @@ const ConnectButtonWrapper: React.FC<ConnectButtonWrapperProps> = ({ children })
         size={props?.size || 40}
         loading={!ready}
         className={props?.className || 'w-full'}
-        onClick={handleClick}
+        onClick={login}
       />
     )
   }

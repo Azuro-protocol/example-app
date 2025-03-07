@@ -16,20 +16,37 @@ export const privyConfig: PrivyConfig = {
   embeddedWallets: {
     createOnLogin: 'users-without-wallets',
     requireUserPasswordOnCreate: false,
-    // waitForTransactionConfirmation: false,
     showWalletUIs: false,
   },
-  loginMethods: [ 'email', 'google', 'twitter', 'wallet', 'farcaster', 'discord', 'instagram' ],
-  // loginMethodsAndOrder: {
-  //   primary: [ 'detected_ethereum_wallets', 'metamask', 'wallet_connect' ],
-  //   overflow: [ 'email', 'google', 'twitter', 'farcaster', 'discord', 'instagram' ],
-  // },
+  loginMethods: [ 'email', 'google', 'twitter', 'wallet' ],
   appearance: {
-    theme: 'dark',
-    showWalletLoginFirst: true,
+    logo: 'https://dgbet.fun/wp-content/uploads/2024/07/dgbet-logo.png',
+    accentColor: '#ffb82e',
+    theme: '#050403',
+    loginMessage: 'Login / Sign Up',
+    showWalletLoginFirst: false,
+    walletChainType: 'ethereum-only',
+    walletList: [
+      'metamask',
+      'wallet_connect',
+      'coinbase_wallet',
+      'detected_wallets',
+    ],
   },
+  externalWallets: {
+    coinbaseWallet: {
+      connectionOptions: 'eoaOnly',
+    },
+  },
+  defaultChain: polygon,
+  supportedChains: [ polygon, polygonAmoy ],
+  mfa: {
+    noPromptOnMfaRequired: false,
+  },
+
   walletConnectCloudProjectId: projectId,
 }
+
 
 const wagmiConfig = createConfig({
   chains: appChains,

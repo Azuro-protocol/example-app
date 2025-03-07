@@ -6,6 +6,7 @@ import { useChain, type Bet, type BetOutcome, usePrecalculatedCashouts } from '@
 import { GameStatus, getGameStatus } from '@azuro-org/toolkit'
 import dayjs from 'dayjs'
 import cx from 'classnames'
+import { constants } from 'helpers'
 import { getGameDateTime } from 'helpers/getters'
 import { formatToFixed } from 'helpers/formatters'
 
@@ -150,7 +151,7 @@ export type BetDetailsModalProps = {
 const BetDetailsModal: ModalComponent<BetDetailsModalProps> = (props) => {
   const { closeModal, bet } = props
 
-  const { betToken } = useChain()
+  const { appChain, betToken } = useChain()
 
   const {
     tokenId, createdAt, status: graphBetStatus, amount, outcomes, freebetId, totalOdds, possibleWin,
@@ -171,7 +172,7 @@ const BetDetailsModal: ModalComponent<BetDetailsModalProps> = (props) => {
     enabled: !isCashedOut,
   })
 
-  const cashoutAmount = formatToFixed(possibleWin * +totalCashoutMultiplier, 2)
+  const cashoutAmount = formatToFixed(possibleWin * +totalCashoutMultiplier, constants.cashoutDecimals[appChain.id] || 2)
 
   return (
     <PlainModal

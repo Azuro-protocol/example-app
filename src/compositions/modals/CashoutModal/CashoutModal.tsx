@@ -119,7 +119,9 @@ const CashoutModal: ModalComponent<CashoutModalProps> = (props) => {
                     })
                   }
                 >
-                  {formatToFixed(cashoutAmount!, constants.cashoutDecimals[appChain.id] || 2)} {betToken.symbol}
+                  {
+                    formatToFixed(cashoutAmount!, constants.resultAmountDecimalsByChain[appChain.id] || 2)
+                  } {betToken.symbol}
                 </div>
               )
             }

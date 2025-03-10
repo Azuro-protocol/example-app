@@ -196,7 +196,8 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
     enabled: !isCashedOut,
   })
 
-  const cashoutAmount = formatToFixed(possibleWin * +totalCashoutMultiplier, constants.cashoutDecimals[appChain.id] || 2)
+  const resultDecimals = constants.resultAmountDecimalsByChain[appChain.id] || 2
+  const cashoutAmount = formatToFixed(possibleWin * +totalCashoutMultiplier, resultDecimals)
 
   const isCombo = outcomes.length > 1
   const isLoading = isPending || isProcessing
@@ -207,21 +208,21 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
     if (isCashedOut) {
       return {
         resultTitle: messages.cashedOut,
-        resultAmount: `${formatToFixed(cashout!, 3)} ${betToken.symbol}`,
+        resultAmount: `${formatToFixed(cashout!, resultDecimals)} ${betToken.symbol}`,
       }
     }
 
     if (isWin) {
       return {
         resultTitle: messages.winning,
-        resultAmount: `${formatToFixed(payout || possibleWin, 3)} ${betToken.symbol}`,
+        resultAmount: `${formatToFixed(payout || possibleWin, resultDecimals)} ${betToken.symbol}`,
       }
     }
 
     if (isLose) {
       return {
         resultTitle: messages.loss,
-        resultAmount: `-${formatToFixed(amount, 2)} ${betToken.symbol}`,
+        resultAmount: `-${formatToFixed(amount, resultDecimals)} ${betToken.symbol}`,
       }
     }
 
@@ -234,7 +235,7 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
 
     return {
       resultTitle: messages.possibleWin,
-      resultAmount: `${formatToFixed(possibleWin, 3)} ${betToken.symbol}`,
+      resultAmount: `${formatToFixed(possibleWin, resultDecimals)} ${betToken.symbol}`,
     }
   }, [ isCashedOut ])
 

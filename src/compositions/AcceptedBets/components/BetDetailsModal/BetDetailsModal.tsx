@@ -172,7 +172,8 @@ const BetDetailsModal: ModalComponent<BetDetailsModalProps> = (props) => {
     enabled: !isCashedOut,
   })
 
-  const cashoutAmount = formatToFixed(possibleWin * +totalCashoutMultiplier, constants.cashoutDecimals[appChain.id] || 2)
+  const resultDecimals = constants.resultAmountDecimalsByChain[appChain.id] || 2
+  const cashoutAmount = formatToFixed(possibleWin * +totalCashoutMultiplier, resultDecimals)
 
   return (
     <PlainModal
@@ -232,7 +233,7 @@ const BetDetailsModal: ModalComponent<BetDetailsModalProps> = (props) => {
           <div className="flex items-center text-caption-12 justify-between">
             <Message className="text-grey-60" value={messages.possibleWin} />
             <span className="text-caption-13 font-semibold text-brand-50">
-              {formatToFixed(possibleWin, 3)} {betToken.symbol}
+              {formatToFixed(possibleWin, resultDecimals)} {betToken.symbol}
             </span>
           </div>
           <Button

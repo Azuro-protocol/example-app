@@ -5,7 +5,7 @@ import { type GameMarkets, ConditionStatus } from '@azuro-org/toolkit'
 import cx from 'classnames'
 import { useChain } from '@azuro-org/sdk'
 import { Message } from '@locmod/intl'
-import { formatToFixed } from 'helpers/formatters'
+import { toLocaleString } from 'helpers'
 
 import messages from './messages'
 
@@ -19,7 +19,7 @@ type OutcomeButtonProps = {
 const OutcomeButton: React.FC<OutcomeButtonProps> = ({ outcome, summary, size = 28 }) => {
   const { selectionName, status, isWon } = outcome
 
-  const { betToken } = useChain()
+  const { betToken, appChain } = useChain()
 
   const isCanceled = status === ConditionStatus.Canceled
 
@@ -52,7 +52,9 @@ const OutcomeButton: React.FC<OutcomeButtonProps> = ({ outcome, summary, size = 
       }
       {
         Boolean(!isCanceled && summary) && (
-          <div className={betsSummaryClassName}>{`${formatToFixed(summary!, 3)} ${betToken.symbol}`}</div>
+          <div className={betsSummaryClassName}>
+            {`${toLocaleString(summary!, { digits: 1 })} ${betToken.symbol}`}
+          </div>
         )
       }
     </div>

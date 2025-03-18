@@ -14,11 +14,11 @@ import UniqueEvents from 'compositions/events/UniqueEvents/UniqueEvents'
 
 export default function SportPage() {
   const params = useParams()
-  const { sports, loading } = useSports()
+  const { sports, isFetching } = useSports()
 
   const isUnique = params.sportSlug === 'unique'
 
-  if (loading) {
+  if (isFetching) {
     return (
       <>
         <NavbarSkeleton />

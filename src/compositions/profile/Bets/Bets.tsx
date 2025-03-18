@@ -1,7 +1,7 @@
 'use client'
 
 import { useChain, useRedeemBet, BetType, type Bet, type BetOutcome, usePrecalculatedCashouts } from '@azuro-org/sdk'
-import { getGameStatus, GameStatus } from '@azuro-org/toolkit'
+import { GameState } from '@azuro-org/toolkit'
 import { Message } from '@locmod/intl'
 import React, { useMemo } from 'react'
 import dayjs from 'dayjs'
@@ -36,30 +36,30 @@ const Outcome: React.FC<OutcomeProps> = ({ outcome, isLive, isCombo }) => {
 
   const {
     title,
-    status: graphGameStatus, gameId, participants, startsAt,
+    state: gameState, gameId, participants, startsAt,
     sport: {
       slug: sportSlug,
     },
     league: {
       name: leagueName,
       slug: leagueSlug,
-      country: {
-        name: countryName,
-        slug: countrySlug,
-      },
+    },
+    country: {
+      name: countryName,
+      slug: countrySlug,
     },
   } = game
 
   const isUnique = sportSlug === 'unique'
   const { date, time } = getGameDateTime(+startsAt * 1000)
-  const gameStatus = getGameStatus({
-    graphStatus: graphGameStatus,
-    startsAt: +startsAt,
-    isGameInLive: isLive,
-  })
+  // const gameStatus = getGameStatus({
+  //   graphStatus: graphGameStatus,
+  //   startsAt: +startsAt,
+  //   isGameInLive: isLive,
+  // })
 
   const marketBoxClassName = 'text-caption-13 mb:flex mb:items-center mb:justify-between'
-  const marketClassName = cx('font-semibold', { 'text-grey-40': gameStatus === GameStatus.Canceled })
+  const marketClassName = cx('font-semibold', { 'text-grey-40': gameState === GameState.Canceled })
 
   return (
     <div className="rounded-sm overflow-hidden">
@@ -116,25 +116,25 @@ const Outcome: React.FC<OutcomeProps> = ({ outcome, isLive, isCombo }) => {
                 isCombo && (
                   <>
                     {
-                      [ GameStatus.Canceled, GameStatus.Live, GameStatus.Resolved ].includes(gameStatus) && (
+                      [ GameState.Canceled, GameState.Live, GameState.Resolved ].includes(gameState) && (
                         <div className="size-1 flex-none bg-grey-40 rounded-full mx-2" />
                       )
                     }
                     {
-                      gameStatus === GameStatus.Canceled && (
+                      gameState === GameState.Canceled && (
                         <div className="flex items-center text-accent-yellow">
                           <Icon className="size-4 mr-[2px]" name="interface/declined" />
-                          <Message className="font-semibold" value={messages.gameStatus.declined} />
+                          <Message className="font-semibold" value={messages.gameState.declined} />
                         </div>
                       )
                     }
                     {
-                      gameStatus === GameStatus.Live && (
-                        <Message className="font-semibold text-accent-red" value={messages.gameStatus.live} />
+                      gameState === GameState.Live && (
+                        <Message className="font-semibold text-accent-red" value={messages.gameState.live} />
                       )
                     }
                     {
-                      gameStatus === GameStatus.Resolved && (
+                      gameState === GameState.Resolved && (
                         <Message
                           className={
                             cx('font-semibold', {
@@ -142,7 +142,7 @@ const Outcome: React.FC<OutcomeProps> = ({ outcome, isLive, isCombo }) => {
                               'text-accent-red': isLose,
                             })
                           }
-                          value={isWin ? messages.gameStatus.win : messages.gameStatus.lose}
+                          value={isWin ? messages.gameState.win : messages.gameState.lose}
                         />
                       )
                     }

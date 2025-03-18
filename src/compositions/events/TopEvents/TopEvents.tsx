@@ -6,7 +6,7 @@ import React, { useEffect, useRef } from 'react'
 import { Message } from '@locmod/intl'
 import { useParams } from 'next/navigation'
 import { useActiveMarkets, useGames } from '@azuro-org/sdk'
-import { Game_OrderBy, type GamesQuery, GameStatus } from '@azuro-org/toolkit'
+import { Game_OrderBy, type GamesQuery, GameState } from '@azuro-org/toolkit'
 import cx from 'classnames'
 import { getGameDateTime } from 'helpers/getters'
 
@@ -36,10 +36,10 @@ const Card: React.FC<CardProps> = ({ game }) => {
     league: {
       name: leagueName,
       slug: leagueSlug,
-      country: {
-        name: countryName,
-        slug: countrySlug,
-      },
+    },
+    country: {
+      name: countryName,
+      slug: countrySlug,
     },
     gameId,
     participants,
@@ -49,9 +49,8 @@ const Card: React.FC<CardProps> = ({ game }) => {
 
   const { date, time } = getGameDateTime(+startsAt * 1000)
 
-  const { markets, loading } = useActiveMarkets({
+  const { data: markets, isFetching } = useActiveMarkets({
     gameId: game.gameId,
-    gameStatus: GameStatus.Created,
   })
 
   const marketsRow = markets?.[0]?.outcomeRows?.[0]
@@ -76,7 +75,7 @@ const Card: React.FC<CardProps> = ({ game }) => {
         <div className="mt-5 text-caption-13 font-semibold text-center text-ellipsis whitespace-nowrap overflow-hidden">{title}</div>
         <div className="mt-3 flex items-center space-x-2">
           {
-            loading ? (
+            isFetching ? (
               <>
                 <div className="bone w-full h-7 rounded-sm" />
                 <div className="bone w-full h-7 rounded-sm" />
@@ -109,7 +108,7 @@ const sliderConfiguration = {
 }
 
 const Events: React.FC = () => {
-  const { games, loading } = useGames({
+  const { data: games, isFetching } = useGames({
     filter: {
       limit: 9,
     },
@@ -132,7 +131,7 @@ const Events: React.FC = () => {
     }
   }, [ games ])
 
-  if (loading) {
+  if (isFetching) {
     return (
       <div className="flex items-center justify-between mt-6 space-x-2">
         <CardSkeleton />

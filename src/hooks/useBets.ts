@@ -19,7 +19,7 @@ const useBets = (type: BetType | undefined) => {
   const { loading: isLiveLoading, bets: liveBets } = useLiveBets(props)
 
   const bets = useMemo(() => {
-    return [ ...liveBets, ...prematchBets ].sort((betA, betB) => betB.createdAt - betA.createdAt)
+    return [ ...liveBets, ...prematchBets ]
   }, [ prematchBets, liveBets ])
 
   return {

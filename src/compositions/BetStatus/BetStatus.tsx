@@ -44,7 +44,7 @@ const statusData: Data = {
 
 type BetStatusProps = {
   graphBetStatus: GraphBetStatus
-  games: Pick<GameQuery['games'][0], 'status' | 'startsAt'>[]
+  games: NonNullable<GameQuery['game']>[]
   isLiveBet: boolean
   isWin: boolean | null
   isCashedOut: boolean
@@ -54,7 +54,7 @@ const BetStatus: React.FC<BetStatusProps> = ({ graphBetStatus, games, isLiveBet,
   const betStatus = useMemo(() => {
     return getBetStatus({
       graphStatus: graphBetStatus,
-      games,
+      games: games!,
       isLiveBet,
     })
   }, [])

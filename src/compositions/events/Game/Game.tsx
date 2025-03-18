@@ -3,8 +3,8 @@
 import React, { useState, useSyncExternalStore } from 'react'
 import { type Sport } from 'hooks'
 import cx from 'classnames'
-import { useGameStatus, useLive, LIVE_STATISTICS_SUPPORTED_SPORTS, LIVE_STATISTICS_SUPPORTED_PROVIDERS } from '@azuro-org/sdk'
-import { GameStatus, getProviderFromId } from '@azuro-org/toolkit'
+import { useLive, LIVE_STATISTICS_SUPPORTED_SPORTS, LIVE_STATISTICS_SUPPORTED_PROVIDERS } from '@azuro-org/sdk'
+import { GameState, getProviderFromId } from '@azuro-org/toolkit'
 import { openModal } from '@locmod/modal'
 import { useEntryListener } from '@locmod/intersection-observer'
 import { getGameDateTime } from 'helpers/getters'
@@ -49,7 +49,7 @@ type GameProps = {
 }
 
 const Game: React.FC<GameProps> = ({ className, leagueUrl, game, withTopRadius, isUnique }) => {
-  const { gameId, title, participants, startsAt } = game
+  const { gameId, title, participants, startsAt, state } = game
   const { date, time } = getGameDateTime(+startsAt * 1000)
 
   const [ isMarketsVisible, setMarketsVisible ] = useState(false)
@@ -61,11 +61,11 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game, withTopRadius, 
     },
   })
   const { isLive } = useLive()
-  const { status } = useGameStatus({
-    graphStatus: game.status,
-    startsAt: +game.startsAt,
-    isGameExistInLive: isLive,
-  })
+  // const { status } = useGameStatus({
+  //   graphStatus: game.status,
+  //   startsAt: +game.startsAt,
+  //   isGameExistInLive: isLive,
+  // })
   const statisticsGameId = useSyncExternalStore(
     liveStatisticsGameIdStore.subscribe,
     liveStatisticsGameIdStore.getSnapshot,
@@ -75,7 +75,7 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game, withTopRadius, 
   const providerId = getProviderFromId(gameId)
   const isSportAllowed = LIVE_STATISTICS_SUPPORTED_SPORTS.includes(+game.sport.sportId)
   const isProviderAllowed = LIVE_STATISTICS_SUPPORTED_PROVIDERS.includes(providerId)
-  const isInLive = status === GameStatus.Live
+  const isInLive = state === GameState.Live
   const isStatisticsAvailable = isProviderAllowed && isSportAllowed && isInLive
   const isSelectedForStatistics = isStatisticsAvailable && statisticsGameId === gameId
   const MarketsComp = isUnique ? UniqueMarkets : Markets
@@ -148,7 +148,7 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game, withTopRadius, 
       <div className="w-full ds:max-w-[26.25rem] mb:mt-2">
         {
           isMarketsVisible ? (
-            <MarketsComp gameId={gameId} gameStatus={status} />
+            <MarketsComp gameId={gameId} gameState={state} />
           ) : (
             <MarketsSkeleton />
           )

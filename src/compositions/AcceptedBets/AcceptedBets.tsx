@@ -50,7 +50,8 @@ const AcceptedBets: React.FC = () => {
       </div>
       <div className="space-y-2 max-h-[28rem] overflow-auto no-scrollbar">
         {
-          bets.map(bet => (
+          // TODO
+          bets.map((bet: any) => (
             <BetCard key={bet.tokenId} bet={bet} />
           ))
         }

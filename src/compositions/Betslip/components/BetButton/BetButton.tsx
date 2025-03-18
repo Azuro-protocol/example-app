@@ -26,7 +26,7 @@ const BetButton: React.FC<BetButtonProps> = ({ isEnoughBalance, isBalanceFetchin
   const { items, clear } = useBaseBetslip()
   const {
     betAmount, odds, totalOdds, selectedFreeBet, batchBetAmounts,
-    isBetAllowed, isOddsFetching, isStatusesFetching, isBatch,
+    isBetAllowed, isOddsFetching, isStatesFetching, isBatch,
   } = useDetailedBetslip()
 
   const totalOddsRef = useRef(totalOdds)
@@ -73,7 +73,7 @@ const BetButton: React.FC<BetButtonProps> = ({ isEnoughBalance, isBalanceFetchin
   const isLoading = (
     isOddsFetching
     || isBalanceFetching
-    || isStatusesFetching
+    || isStatesFetching
     || isAllowanceLoading
     || isPending
     || isProcessing

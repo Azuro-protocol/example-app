@@ -72,12 +72,10 @@ const Content: React.FC<ContentProps> = ({ openSettings }) => {
   const { betToken } = useChain()
   const { items, clear } = useBaseBetslip()
   const {
-    odds, statuses, minBet, maxBet, disableReason, selectedFreeBet, betAmount, batchBetAmounts,
-    isOddsFetching, isStatusesFetching, isBatch, changeBatch, changeBatchBetAmount,
+    odds, states, minBet, maxBet, disableReason, selectedFreeBet, betAmount, batchBetAmounts,
+    isOddsFetching, isStatesFetching, isBatch, changeBatch, changeBatchBetAmount,
   } = useDetailedBetslip()
   const { balance, loading: isBalanceFetching } = useBetTokenBalance()
-
-  console.log(statuses, 'statuses')
 
   const itemsLength = items.length
   const isSingle = itemsLength === 1
@@ -133,16 +131,16 @@ const Content: React.FC<ContentProps> = ({ openSettings }) => {
       >
         {
           items.map((item) => {
-            const { conditionId, outcomeId, coreAddress } = item
+            const { conditionId, outcomeId } = item
 
             return (
               <Card
-                key={`${conditionId}-${outcomeId}-${coreAddress}`}
+                key={`${conditionId}-${outcomeId}`}
                 item={item}
                 batchBetAmount={batchBetAmounts[`${conditionId}-${outcomeId}`]}
-                status={statuses[conditionId]}
+                state={states[conditionId]}
                 odds={odds?.[`${conditionId}-${outcomeId}`]}
-                isStatusesFetching={isStatusesFetching}
+                isStatesFetching={isStatesFetching}
                 isOddsFetching={isOddsFetching}
                 isBatch={isBatch}
                 onBatchAmountChange={(value) => changeBatchBetAmount(item, value)}

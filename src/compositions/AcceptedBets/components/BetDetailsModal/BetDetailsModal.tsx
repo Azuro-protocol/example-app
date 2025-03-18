@@ -3,7 +3,7 @@
 import { openModal, standaloneModal, type ModalComponent } from '@locmod/modal'
 import { Message } from '@locmod/intl'
 import { useChain, type Bet, type BetOutcome, usePrecalculatedCashouts } from '@azuro-org/sdk'
-import { GameStatus, getGameStatus } from '@azuro-org/toolkit'
+import { GameState } from '@azuro-org/toolkit'
 import dayjs from 'dayjs'
 import cx from 'classnames'
 import { constants } from 'helpers'
@@ -23,35 +23,34 @@ import messages from './messages'
 
 type OutcomeProps = {
   outcome: BetOutcome
-  isLive: boolean
   isCombo: boolean
   onLinkClick: () => void
 }
 
-const Outcome: React.FC<OutcomeProps> = ({ outcome, isLive, isCombo, onLinkClick }) => {
+const Outcome: React.FC<OutcomeProps> = ({ outcome, isCombo, onLinkClick }) => {
   const { game, marketName, selectionName, odds, isWin, isLose } = outcome
   const {
     title,
-    status: graphGameStatus, gameId, participants, startsAt,
+    state: gameState, gameId, participants, startsAt,
     sport: {
       slug: sportSlug,
     },
     league: {
       slug: leagueSlug,
-      country: {
-        slug: countrySlug,
-      },
     },
-  } = game
+    country: {
+      slug: countrySlug,
+    },
+  } = game!
 
   const { date, time } = getGameDateTime(+startsAt * 1000)
-  const isUnique = outcome.game.sport.slug === 'unique'
+  const isUnique = sportSlug === 'unique'
 
-  const gameStatus = getGameStatus({
-    graphStatus: graphGameStatus,
-    startsAt: +startsAt,
-    isGameInLive: isLive,
-  })
+  // const gameStatus = getGameStatus({
+  //   graphStatus: graphGameStatus,
+  //   startsAt: +startsAt,
+  //   isGameInLive: isLive,
+  // })
 
   return (
     <div className="rounded-md overflow-hidden">
@@ -74,20 +73,20 @@ const Outcome: React.FC<OutcomeProps> = ({ outcome, isLive, isCombo, onLinkClick
                 isCombo && (
                   <>
                     {
-                      [ GameStatus.Canceled, GameStatus.Live, GameStatus.Resolved ].includes(gameStatus) && (
+                      [ GameState.Canceled, GameState.Live, GameState.Resolved ].includes(gameState) && (
                         <div className="size-1 flex-none bg-grey-40 rounded-full mx-2" />
                       )
                     }
                     {
-                      gameStatus === GameStatus.Canceled && (
+                      gameState === GameState.Canceled && (
                         <div className="flex items-center text-accent-yellow">
                           <Icon className="size-4 mr-[2px]" name="interface/declined" />
-                          <Message className="font-semibold" value={messages.gameStatus.declined} />
+                          <Message className="font-semibold" value={messages.gameState.declined} />
                         </div>
                       )
                     }
                     {
-                      gameStatus === GameStatus.Resolved && (
+                      gameState === GameState.Resolved && (
                         <Message
                           className={
                             cx('font-semibold', {
@@ -95,7 +94,7 @@ const Outcome: React.FC<OutcomeProps> = ({ outcome, isLive, isCombo, onLinkClick
                               'text-accent-red': isLose,
                             })
                           }
-                          value={isWin ? messages.gameStatus.win : messages.gameStatus.lose}
+                          value={isWin ? messages.gameState.win : messages.gameState.lose}
                         />
                       )
                     }
@@ -104,7 +103,7 @@ const Outcome: React.FC<OutcomeProps> = ({ outcome, isLive, isCombo, onLinkClick
               }
             </div>
             {
-              gameStatus === GameStatus.Live && (
+              gameState === GameState.Live && (
                 <LiveDot />
               )
             }
@@ -192,7 +191,7 @@ const BetDetailsModal: ModalComponent<BetDetailsModalProps> = (props) => {
             </div>
             <BetStatus
               graphBetStatus={graphBetStatus}
-              games={outcomes.map(({ game }) => game)}
+              games={outcomes.map(({ game }) => game!)}
               isLiveBet={isLive}
               isWin={isWin}
               isCashedOut={isCashedOut}
@@ -203,9 +202,8 @@ const BetDetailsModal: ModalComponent<BetDetailsModalProps> = (props) => {
           {
             outcomes.map((outcome) => (
               <Outcome
-                key={outcome.game.gameId}
+                key={outcome.game!.gameId}
                 outcome={outcome}
-                isLive={isLive}
                 isCombo={isCombo}
                 onLinkClick={() => closeModal()}
               />

@@ -14,15 +14,15 @@ const useButton = ({ outcome, nodeRef }: UseButtonProps) => {
   const { odds, isLocked, isOddsFetching } = useSelection({
     selection: outcome,
     initialOdds: outcome.odds,
-    initialStatus: outcome.status,
+    initialState: outcome.state,
   })
   useOddsChange({ odds, nodeRef })
 
   const { items, addItem, removeItem } = useBaseBetslip()
 
   const isActive = Boolean(items?.find((item) => {
-    const propsKey = `${outcome.coreAddress}-${outcome.lpAddress}-${outcome.gameId}-${outcome.conditionId}-${outcome.outcomeId}`
-    const itemKey = `${item.coreAddress}-${item.lpAddress}-${item.game.gameId}-${item.conditionId}-${item.outcomeId}`
+    const propsKey = `${outcome.gameId}-${outcome.conditionId}-${outcome.outcomeId}`
+    const itemKey = `${item.game.gameId}-${item.conditionId}-${item.outcomeId}`
 
     return propsKey === itemKey
   }))

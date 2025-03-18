@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { GameStatus } from '@azuro-org/toolkit'
+import { GameState } from '@azuro-org/toolkit'
 import { useActiveMarkets } from '@azuro-org/sdk'
 
 import { MarketsSkeleton } from 'compositions/events/Markets/Markets'
@@ -10,15 +10,20 @@ import Market from 'compositions/events/Markets/components/Market/Market'
 
 type UniqueMarketsProps = {
   gameId: string
-  gameStatus: GameStatus
+  gameState: GameState
 }
 
 
-const UniqueMarkets: React.FC<UniqueMarketsProps> = ({ gameId, gameStatus }) => {
-  const { markets, loading } = useActiveMarkets({ gameId, gameStatus, livePollInterval: 30_000 })
+const UniqueMarkets: React.FC<UniqueMarketsProps> = ({ gameId, gameState }) => {
+  const { data: markets, isFetching } = useActiveMarkets({
+    gameId,
+    query: {
+      refetchInterval: 30_000,
+    },
+  })
 
 
-  if (loading || gameStatus === GameStatus.Live && !markets?.length) {
+  if (isFetching || gameState === GameState.Live && !markets?.length) {
     return <MarketsSkeleton />
   }
 

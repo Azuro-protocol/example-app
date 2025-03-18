@@ -12,9 +12,9 @@ import UniqueEvents from 'compositions/events/UniqueEvents/UniqueEvents'
 
 
 const Sports: React.FC = () => {
-  const { sports, loading } = useSports()
+  const { sports, isFetching } = useSports()
 
-  if (loading) {
+  if (isFetching) {
     return (
       <>
         <NavbarSkeleton />
@@ -55,7 +55,7 @@ export default function TopPage() {
 
   return (
     <>
-      <TopEvents />
+      {/* <TopEvents /> */}
       <Sports />
     </>
   )

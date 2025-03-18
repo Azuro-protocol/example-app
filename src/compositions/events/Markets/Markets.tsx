@@ -4,7 +4,7 @@ import React from 'react'
 import cx from 'classnames'
 import { useFreezeBodyScroll } from 'hooks'
 import { Message } from '@locmod/intl'
-import { GameStatus, type GameMarkets } from '@azuro-org/toolkit'
+import { GameState, type GameMarkets } from '@azuro-org/toolkit'
 import { useActiveMarkets } from '@azuro-org/sdk'
 
 import { Icon } from 'components/ui'
@@ -182,13 +182,13 @@ const Content: React.FC<ContentProps> = ({ markets }) => {
 
 type MarketsProps = {
   gameId: string
-  gameStatus: GameStatus
+  gameState: GameState
 }
 
-const Markets: React.FC<MarketsProps> = ({ gameId, gameStatus }) => {
-  const { markets, loading } = useActiveMarkets({ gameId, gameStatus })
+const Markets: React.FC<MarketsProps> = ({ gameId, gameState }) => {
+  const { data: markets, isFetching, isPlaceholderData } = useActiveMarkets({ gameId })
 
-  if (loading || gameStatus === GameStatus.Live && !markets?.length) {
+  if (isFetching || isPlaceholderData || gameState === GameState.Live && !markets?.length) {
     return <MarketsSkeleton />
   }
 

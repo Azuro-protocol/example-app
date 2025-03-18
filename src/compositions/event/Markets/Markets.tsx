@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { XMasonry, XBlock } from 'react-xmasonry'
-import { GameStatus, type GameMarkets } from '@azuro-org/toolkit'
+import { GameState, getIsPendingResolution, type GameMarkets } from '@azuro-org/toolkit'
 import { useActiveMarkets, useBetsSummaryBySelection, useResolvedMarkets } from '@azuro-org/sdk'
 import { useAccount } from '@azuro-org/sdk-social-aa-connector'
 import dayjs from 'dayjs'
@@ -161,20 +161,21 @@ const Content: React.FC<ContentProps> = (props) => {
 
 type MarketsProps = {
   gameId: string
-  gameStatus: GameStatus
+  gameState: GameState
   startsAt: string
 }
 
-const ResolvedMarkets: React.FC<MarketsProps> = ({ gameId, gameStatus }) => {
+const ResolvedMarkets: React.FC<MarketsProps> = ({ gameId, gameState }) => {
   const { address } = useAccount()
-  const { groupedMarkets, loading } = useResolvedMarkets({ gameId })
-  const { betsSummary } = useBetsSummaryBySelection({
+  const { data, isFetching } = useResolvedMarkets({ gameId })
+  const { groupedMarkets } = data || {}
+  const { data: betsSummary } = useBetsSummaryBySelection({
     account: address!,
     gameId,
-    gameStatus,
+    gameState,
   })
 
-  if (loading) {
+  if (isFetching) {
     return <MarketsSkeleton />
   }
 
@@ -190,13 +191,14 @@ const ResolvedMarkets: React.FC<MarketsProps> = ({ gameId, gameStatus }) => {
 
 const WAIT_TIME = 600000
 
-const ActiveMarkets: React.FC<MarketsProps> = ({ gameId, gameStatus, startsAt }) => {
-  const { loading, markets } = useActiveMarkets({
+const ActiveMarkets: React.FC<MarketsProps> = ({ gameId, gameState, startsAt }) => {
+  const { data: markets, isFetching, isPlaceholderData } = useActiveMarkets({
     gameId,
-    gameStatus,
-    livePollInterval: 10000,
+    query: {
+      refetchInterval: 10_000,
+    },
   })
-  const isLive = gameStatus === GameStatus.Live
+  const isLive = gameState === GameState.Live
 
   const startDate = +startsAt * 1000
   const shouldWait = () => isLive && dayjs().diff(startDate) < WAIT_TIME
@@ -219,9 +221,9 @@ const ActiveMarkets: React.FC<MarketsProps> = ({ gameId, gameStatus, startsAt })
         clearInterval(interval)
       }
     }
-  }, [ gameStatus, markets ])
+  }, [ gameState, markets ])
 
-  if (loading) {
+  if (isFetching || isPlaceholderData) {
     return <MarketsSkeleton />
   }
 
@@ -265,13 +267,15 @@ const ActiveMarkets: React.FC<MarketsProps> = ({ gameId, gameStatus, startsAt })
 }
 
 const Markets: React.FC<MarketsProps> = (props) => {
-  const { gameStatus } = props
+  const { gameState, startsAt } = props
 
-  if (gameStatus === GameStatus.Resolved) {
+  if (gameState === GameState.Resolved) {
     return <ResolvedMarkets {...props} />
   }
 
-  if (gameStatus === GameStatus.Canceled || gameStatus === GameStatus.PendingResolution) {
+  const isPendingResolution = getIsPendingResolution({ state: gameState, startsAt })
+
+  if (gameState === GameState.Canceled || isPendingResolution) {
     return (
       <EmptyContent
         className="py-20"

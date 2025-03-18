@@ -2,7 +2,7 @@
 
 import React, { useRef } from 'react'
 import { useBaseBetslip, useChain, type BetslipItem } from '@azuro-org/sdk'
-import { ConditionStatus, liveHostAddress } from '@azuro-org/toolkit'
+import { ConditionState, liveHostAddress } from '@azuro-org/toolkit'
 import cx from 'classnames'
 import { Message } from '@locmod/intl'
 import { constants } from 'helpers'
@@ -20,17 +20,17 @@ import messages from './messages'
 type ItemProps = {
   item: BetslipItem
   batchBetAmount: string
-  status: ConditionStatus
+  state: ConditionState
   odds: number
-  isStatusesFetching: boolean
+  isStatesFetching: boolean
   isOddsFetching: boolean
   isBatch: boolean
   onBatchAmountChange: (value: string) => void
 }
 
 const Card: React.FC<ItemProps> = (props) => {
-  const { item, batchBetAmount, odds, status, isOddsFetching, isStatusesFetching, isBatch, onBatchAmountChange } = props
-  const { marketName, selectionName, coreAddress, game: { sportSlug, countryName, leagueName, title } } = item
+  const { item, batchBetAmount, odds, state, isOddsFetching, isStatesFetching, isBatch, onBatchAmountChange } = props
+  const { marketName, selectionName, game: { sportSlug, countryName, leagueName, title } } = item
 
   const { appChain, betToken } = useChain()
   const { removeItem } = useBaseBetslip()
@@ -42,8 +42,9 @@ const Card: React.FC<ItemProps> = (props) => {
     oddsRef.current = odds
   }
 
-  const isDisabled = !isStatusesFetching && status !== ConditionStatus.Created
-  const isLive = coreAddress === liveHostAddress
+  const isDisabled = !isStatesFetching && state !== ConditionState.Active
+  // const isLive = coreAddress === liveHostAddress
+  const isLive = false // TODO
   const isUnique = sportSlug === 'unique'
 
   const bottomBoxClassName = cx(

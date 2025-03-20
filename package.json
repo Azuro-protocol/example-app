@@ -35,7 +35,6 @@
     "dayjs": "^1.11.13",
     "formular": "3.1.6",
     "graphql": "^16.9.0",
-    "graphql-request": "^7.1.2",
     "next": "14.2.21",
     "postcss": "^8.4.40",
     "react": "^18",

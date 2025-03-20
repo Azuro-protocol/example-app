@@ -3,7 +3,7 @@
 import React, { useState, useSyncExternalStore } from 'react'
 import { type Sport } from 'hooks'
 import cx from 'classnames'
-import { useLive, LIVE_STATISTICS_SUPPORTED_SPORTS, LIVE_STATISTICS_SUPPORTED_PROVIDERS } from '@azuro-org/sdk'
+import { useLive, LIVE_STATISTICS_SUPPORTED_SPORTS, LIVE_STATISTICS_SUPPORTED_PROVIDERS, useGameState } from '@azuro-org/sdk'
 import { GameState, getProviderFromId } from '@azuro-org/toolkit'
 import { openModal } from '@locmod/modal'
 import { useEntryListener } from '@locmod/intersection-observer'
@@ -49,7 +49,7 @@ type GameProps = {
 }
 
 const Game: React.FC<GameProps> = ({ className, leagueUrl, game, withTopRadius, isUnique }) => {
-  const { gameId, title, participants, startsAt, state } = game
+  const { gameId, title, participants, startsAt } = game
   const { date, time } = getGameDateTime(+startsAt * 1000)
 
   const [ isMarketsVisible, setMarketsVisible ] = useState(false)
@@ -60,12 +60,10 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game, withTopRadius, 
       rootMargin: '50% 0px 30% 0px',
     },
   })
-  const { isLive } = useLive()
-  // const { status } = useGameStatus({
-  //   graphStatus: game.status,
-  //   startsAt: +game.startsAt,
-  //   isGameExistInLive: isLive,
-  // })
+  const { data: state } = useGameState({
+    gameId,
+    initialState: game.state,
+  })
   const statisticsGameId = useSyncExternalStore(
     liveStatisticsGameIdStore.subscribe,
     liveStatisticsGameIdStore.getSnapshot,

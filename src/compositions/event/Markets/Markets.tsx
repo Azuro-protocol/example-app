@@ -167,24 +167,23 @@ type MarketsProps = {
 
 const ResolvedMarkets: React.FC<MarketsProps> = ({ gameId, gameState }) => {
   const { address } = useAccount()
-  const { data, isFetching } = useResolvedMarkets({ gameId })
-  const { groupedMarkets } = data || {}
+  const { data: markets, isLoading } = useResolvedMarkets({ gameId })
   const { data: betsSummary } = useBetsSummaryBySelection({
     account: address!,
     gameId,
     gameState,
   })
 
-  if (isFetching) {
+  if (isLoading) {
     return <MarketsSkeleton />
   }
 
-  if (!groupedMarkets?.length) {
+  if (!markets?.length) {
     return <div>Empty</div>
   }
 
   return (
-    <Content markets={groupedMarkets} betsSummary={betsSummary} isResult />
+    <Content markets={markets} betsSummary={betsSummary} isResult />
   )
 }
 
@@ -192,7 +191,7 @@ const ResolvedMarkets: React.FC<MarketsProps> = ({ gameId, gameState }) => {
 const WAIT_TIME = 600000
 
 const ActiveMarkets: React.FC<MarketsProps> = ({ gameId, gameState, startsAt }) => {
-  const { data: markets, isFetching, isPlaceholderData } = useActiveMarkets({
+  const { data: markets, isLoading, isPlaceholderData } = useActiveMarkets({
     gameId,
     query: {
       refetchInterval: 10_000,
@@ -223,7 +222,7 @@ const ActiveMarkets: React.FC<MarketsProps> = ({ gameId, gameState, startsAt }) 
     }
   }, [ gameState, markets ])
 
-  if (isFetching || isPlaceholderData) {
+  if (isLoading || isPlaceholderData) {
     return <MarketsSkeleton />
   }
 

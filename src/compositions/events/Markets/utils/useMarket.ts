@@ -17,13 +17,17 @@ const useMarket = ({ markets }: Props) => {
   isOpenRef.current = isOpen
 
   const {
+    data,
+    isFetching,
+  } = useActiveMarket({ markets })
+
+  const {
     activeMarketKey,
     activeConditionIndex,
     marketsByKey,
     otherMarkets,
     sortedMarketKeys,
-    isFetching,
-  } = useActiveMarket({ markets })
+  } = data
 
   useMemo(() => {
     if (!isMobileView && !isOpen && contentRef.current) {

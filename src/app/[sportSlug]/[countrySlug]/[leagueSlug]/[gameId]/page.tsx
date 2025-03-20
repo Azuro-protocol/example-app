@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
-import { useGame } from '@azuro-org/sdk'
+import { useGame, useGameState } from '@azuro-org/sdk'
 import { GameState, type GameQuery } from '@azuro-org/toolkit'
 import { useParams } from 'next/navigation'
 import { liveStatisticsGameIdStore } from 'helpers/stores'
@@ -11,15 +11,14 @@ import Markets, { MarketsSkeleton } from 'compositions/event/Markets/Markets'
 
 
 type ContentProps = {
-  game: GameQuery['game']
+  game: NonNullable<GameQuery['game']>
 }
 
 const Content: React.FC<ContentProps> = ({ game }) => {
-  // const { status } = useGameStatus({
-  //   graphStatus: game.status,
-  //   startsAt: +game.startsAt,
-  //   isGameExistInLive: isGameInLive,
-  // })
+  const { data: state } = useGameState({
+    gameId: game.gameId,
+    initialState: game.state,
+  })
 
   useEffect(() => {
     if (game?.state === GameState.Live) {
@@ -29,8 +28,8 @@ const Content: React.FC<ContentProps> = ({ game }) => {
 
   return (
     <>
-      <EventInfo game={game} status={game!.state} />
-      <Markets gameId={game!.gameId} gameState={game!.state} startsAt={game!.startsAt} />
+      <EventInfo game={game!} state={state} />
+      <Markets gameId={game!.gameId} gameState={state} startsAt={game!.startsAt} />
     </>
   )
 }

@@ -35,12 +35,7 @@ const Content: React.FC<ContentProps> = (props) => {
   const [ isWarningVisible, setWarningVisible ] = useState(false)
   const isMounted = useIsMounted()
 
-  // const { status } = useGameStatus({
-  //   graphStatus: game.status,
-  //   startsAt: +game.startsAt,
-  //   isGameExistInLive: isGameInLive,
-  // })
-  const { statistics, isFetching, isAvailable } = useLiveStatistics({
+  const { data: statistics, isFetching, isAvailable } = useLiveStatistics({
     gameId: game.gameId,
     sportId: game?.sport?.sportId!,
     gameState: game?.state,

@@ -11,11 +11,13 @@ type UseButtonProps = {
 }
 
 const useButton = ({ outcome, nodeRef }: UseButtonProps) => {
-  const { odds, isLocked, isOddsFetching } = useSelection({
+  const { data, isLocked, isOddsFetching } = useSelection({
     selection: outcome,
     initialOdds: outcome.odds,
     initialState: outcome.state,
   })
+
+  const { odds } = data
   useOddsChange({ odds, nodeRef })
 
   const { items, addItem, removeItem } = useBaseBetslip()

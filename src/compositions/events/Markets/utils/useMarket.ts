@@ -22,7 +22,7 @@ const useMarket = ({ markets }: Props) => {
     marketsByKey,
     otherMarkets,
     sortedMarketKeys,
-    loading,
+    isFetching,
   } = useActiveMarket({ markets })
 
   useMemo(() => {
@@ -62,7 +62,7 @@ const useMarket = ({ markets }: Props) => {
     sortedMarketKeys,
     isOpen,
     isMobileView,
-    isFetching: loading,
+    isFetching,
     setOpen,
   }
 }

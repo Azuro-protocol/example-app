@@ -34,7 +34,9 @@ const Chip: React.FC<ChipProps> = ({ title, isActive, isDisabled, onClick }) => 
 const Chips: React.FC = () => {
   const { address } = useAccount()
   const { betAmount, changeBetAmount } = useDetailedBetslip()
-  const { balance, loading } = useBetTokenBalance()
+  const { data, isLoading: isBalanceFetching } = useBetTokenBalance()
+
+  const { balance } = data || {}
 
   if (!address) {
     return null
@@ -61,7 +63,7 @@ const Chips: React.FC = () => {
       <Chip
         title={messages.max}
         isActive={Boolean(+betAmount) && +formatToFixed((balance || 0), 2) === +betAmount}
-        isDisabled={loading}
+        isDisabled={isBalanceFetching}
         onClick={() => changeBetAmount(balance!)}
       />
     </div>

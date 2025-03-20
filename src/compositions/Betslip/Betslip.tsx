@@ -75,8 +75,9 @@ const Content: React.FC<ContentProps> = ({ openSettings }) => {
     odds, states, minBet, maxBet, disableReason, selectedFreeBet, betAmount, batchBetAmounts,
     isOddsFetching, isStatesFetching, isBatch, changeBatch, changeBatchBetAmount,
   } = useDetailedBetslip()
-  const { balance, loading: isBalanceFetching } = useBetTokenBalance()
+  const { data, isLoading: isBalanceFetching } = useBetTokenBalance()
 
+  const { balance } = data || {}
   const itemsLength = items.length
   const isSingle = itemsLength === 1
 

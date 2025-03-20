@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { type GameMarkets, ConditionStatus } from '@azuro-org/toolkit'
+import { type GameMarkets, ConditionState } from '@azuro-org/toolkit'
 import cx from 'classnames'
 import { useChain } from '@azuro-org/sdk'
 import { Message } from '@locmod/intl'
@@ -17,11 +17,11 @@ type OutcomeButtonProps = {
 }
 
 const OutcomeButton: React.FC<OutcomeButtonProps> = ({ outcome, summary, size = 28 }) => {
-  const { selectionName, status, isWon } = outcome
+  const { selectionName, state, isWon } = outcome
 
   const { betToken, appChain } = useChain()
 
-  const isCanceled = status === ConditionStatus.Canceled
+  const isCanceled = status === ConditionState.Canceled
 
   const buttonClassName = cx(
     'w-full relative flex items-center justify-between px-3 overflow-hidden',

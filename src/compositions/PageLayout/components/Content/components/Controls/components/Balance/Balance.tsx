@@ -111,11 +111,15 @@ const ChainSelect: React.FC = () => {
 const BalanceInfo: React.FC = () => {
   const { address } = useAccount()
   const { appChain, betToken } = useChain()
-  const { balance, loading: isBalanceFetching } = useBetTokenBalance()
-  const { balance: nativeBalance, loading: isNativeBalanceFetching } = useNativeBalance()
-  const { inBets, toPayout, loading: isBetsSummaryFetching } = useBetsSummary({
+  const { data: balanceData, isLoading: isBalanceFetching } = useBetTokenBalance()
+  const { data: nativeBalanceData, isLoading: isNativeBalanceFetching } = useNativeBalance()
+  const { data: betsSummaryData, isLoading: isBetsSummaryFetching } = useBetsSummary({
     account: address!,
   })
+
+  const { inBets, toPayout } = betsSummaryData || {}
+  const { balance } = balanceData || {}
+  const { balance: nativeBalance } = nativeBalanceData || {}
 
   return (
     <div className="rounded-md bg-bg-l1 overflow-hidden">
@@ -179,7 +183,9 @@ const Content: React.FC = () => {
 
 const Balance: React.FC = () => {
   const { appChain } = useChain()
-  const { balance, loading } = useBetTokenBalance()
+  const { data: balanceData, isLoading } = useBetTokenBalance()
+
+  const { balance } = balanceData || {}
 
   const handleGetTokensClick = (event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation()
@@ -206,7 +212,7 @@ const Balance: React.FC = () => {
             withGrayscale
           />
           {
-            loading ? (
+            isLoading ? (
               <div className="bone h-4 w-10 rounded-full" />
             ) : (
               <div className="text-caption-13">{formatToFixed(balance || 0, 2)}</div>

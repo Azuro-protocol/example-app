@@ -13,7 +13,9 @@ import messages from './messages'
 const WithdrawalForm: React.FC<{ className?: string }> = ({ className }) => {
   const { betToken, appChain } = useChain()
   const { form, isReady, maxValue, submit, isSubmitting } = useWithdraw()
-  const { balance } = useBetTokenBalance()
+  const { data } = useBetTokenBalance()
+
+  const { balance } = data || {}
 
   return (
     <FormComponent

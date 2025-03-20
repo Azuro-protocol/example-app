@@ -55,7 +55,7 @@ export default function TopPage() {
 
   return (
     <>
-      {/* <TopEvents /> */}
+      <TopEvents />
       <Sports />
     </>
   )

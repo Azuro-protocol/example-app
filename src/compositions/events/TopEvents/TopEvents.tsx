@@ -53,7 +53,8 @@ const Card: React.FC<CardProps> = ({ game }) => {
     gameId: game.gameId,
   })
 
-  const marketsRow = markets?.[0]?.outcomeRows?.[0]
+  const { name, outcomeRows } = markets?.[0] || {}
+  const marketsRow = outcomeRows?.[0]
 
   return (
     <div className="bg-card-border-bottom p-px rounded-md overflow-hidden">
@@ -83,7 +84,12 @@ const Card: React.FC<CardProps> = ({ game }) => {
               </>
             ) : (
               marketsRow?.map(outcome => (
-                <OutcomeButton key={outcome.outcomeId} outcome={outcome} />
+                <OutcomeButton
+                  key={outcome.outcomeId}
+                  marketName={name}
+                  outcome={outcome}
+                  game={game}
+                />
               ))
             )
           }

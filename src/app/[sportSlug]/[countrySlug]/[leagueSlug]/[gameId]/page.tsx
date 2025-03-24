@@ -29,7 +29,7 @@ const Content: React.FC<ContentProps> = ({ game }) => {
   return (
     <>
       <EventInfo game={game!} state={state} />
-      <Markets gameId={game!.gameId} gameState={state} startsAt={game!.startsAt} />
+      <Markets gameState={state} game={game} />
     </>
   )
 }

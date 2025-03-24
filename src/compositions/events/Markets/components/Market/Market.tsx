@@ -2,16 +2,18 @@
 
 import React from 'react'
 import cx from 'classnames'
-import { type GameMarkets } from '@azuro-org/toolkit'
+import { type GameQuery, type Market as TMarket } from '@azuro-org/toolkit'
 
 import OutcomeButton from 'compositions/OutcomeButton/OutcomeButton'
 
 
 type ButtonsProps = {
-  rows: GameMarkets[0]['outcomeRows']
+  marketName: string
+  rows: TMarket['outcomeRows']
+  game: NonNullable<GameQuery['game']>
 }
 
-const Buttons: React.FC<ButtonsProps> = ({ rows }) => {
+const Buttons: React.FC<ButtonsProps> = ({ marketName, rows, game }) => {
   return (
     <div className="w-full">
       {
@@ -21,7 +23,9 @@ const Buttons: React.FC<ButtonsProps> = ({ rows }) => {
               outcomes.map(outcome => (
                 <OutcomeButton
                   key={`${outcome.conditionId}-${outcome.outcomeId}`}
+                  marketName={marketName}
                   outcome={outcome}
+                  game={game}
                 />
               ))
             }
@@ -45,10 +49,11 @@ export const MarketSkeleton: React.FC = () => {
 }
 
 export type MarketProps = {
-  market: GameMarkets[0]
+  market: TMarket
+  game: NonNullable<GameQuery['game']>
 }
 
-const Market: React.FC<MarketProps> = ({ market }) => {
+const Market: React.FC<MarketProps> = ({ market, game }) => {
   const { name, outcomeRows } = market
 
   return (
@@ -56,7 +61,7 @@ const Market: React.FC<MarketProps> = ({ market }) => {
       <div className="mb-[0.375rem] mt-auto text-caption-12 font-medium text-grey-60 ds:text-center">
         {name}
       </div>
-      <Buttons rows={outcomeRows} />
+      <Buttons marketName={name} rows={outcomeRows} game={game} />
     </div>
   )
 }

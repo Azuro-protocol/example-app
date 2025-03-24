@@ -4,7 +4,7 @@ import React from 'react'
 import cx from 'classnames'
 import { useFreezeBodyScroll } from 'hooks'
 import { Message } from '@locmod/intl'
-import { GameState, type GameMarkets } from '@azuro-org/toolkit'
+import { type GameQuery, GameState, type GameMarkets, type Market as TMarket } from '@azuro-org/toolkit'
 import { useActiveMarkets } from '@azuro-org/sdk'
 
 import { Icon } from 'components/ui'
@@ -16,14 +16,14 @@ import Market, { type MarketProps, MarketSkeleton } from './components/Market/Ma
 import messages from './messages'
 
 
-export type MarketsByKey = Record<string, GameMarkets[0]>
+export type MarketsByKey = Record<string, TMarket>
 
 type HeadMarketProps = {
   conditionIndex: number
   isOpen: boolean
 } & MarketProps
 
-const HeadMarket: React.FC<HeadMarketProps> = ({ market, conditionIndex, isOpen }) => {
+const HeadMarket: React.FC<HeadMarketProps> = ({ market, game, conditionIndex, isOpen }) => {
   const { outcomeRows } = market
 
   const headMarket = {
@@ -38,17 +38,20 @@ const HeadMarket: React.FC<HeadMarketProps> = ({ market, conditionIndex, isOpen 
   }
 
   return (
-    <Market market={headMarket} />
+    <Market market={headMarket} game={game} />
   )
 }
 
 type MobileMarketsProps = {
   sortedMarkets: string[]
   marketsByKey: MarketsByKey
+  game: NonNullable<GameQuery['game']>
   onClose: () => void
 }
 
-const MobileMarkets: React.FC<MobileMarketsProps> = ({ sortedMarkets, marketsByKey, onClose }) => {
+const MobileMarkets: React.FC<MobileMarketsProps> = (props) => {
+  const { sortedMarkets, marketsByKey, game, onClose } = props
+
   useFreezeBodyScroll()
 
   const handleContentClick = (event: React.MouseEvent) => {
@@ -72,6 +75,7 @@ const MobileMarkets: React.FC<MobileMarketsProps> = ({ sortedMarkets, marketsByK
             <Market
               key={marketId}
               market={marketsByKey[marketId]}
+              game={game}
             />
           ))
         }
@@ -93,9 +97,10 @@ export const MarketsSkeleton: React.FC = () => {
 
 type ContentProps = {
   markets: GameMarkets
+  game: NonNullable<GameQuery['game']>
 }
 
-const Content: React.FC<ContentProps> = ({ markets }) => {
+const Content: React.FC<ContentProps> = ({ markets, game }) => {
   const {
     contentRef, activeMarketKey, marketsByKey, activeConditionIndex, otherMarkets, sortedMarketKeys,
     isOpen, isMobileView, isFetching, setOpen,
@@ -138,6 +143,7 @@ const Content: React.FC<ContentProps> = ({ markets }) => {
               <HeadMarket
                 conditionIndex={activeConditionIndex}
                 market={marketsByKey[activeMarketKey!]}
+                game={game}
                 isOpen={isOpen}
               />
             )
@@ -150,6 +156,7 @@ const Content: React.FC<ContentProps> = ({ markets }) => {
                     <MobileMarkets
                       sortedMarkets={sortedMarketKeys}
                       marketsByKey={marketsByKey}
+                      game={game}
                       onClose={handleClose}
                     />
                   ) : (
@@ -157,6 +164,7 @@ const Content: React.FC<ContentProps> = ({ markets }) => {
                       <Market
                         key={marketId}
                         market={marketsByKey[marketId]}
+                        game={game}
                       />
                     ))
                   )
@@ -181,12 +189,12 @@ const Content: React.FC<ContentProps> = ({ markets }) => {
 }
 
 type MarketsProps = {
-  gameId: string
   gameState: GameState
+  game: NonNullable<GameQuery['game']>
 }
 
-const Markets: React.FC<MarketsProps> = ({ gameId, gameState }) => {
-  const { data: markets, isFetching, isPlaceholderData } = useActiveMarkets({ gameId })
+const Markets: React.FC<MarketsProps> = ({ game, gameState }) => {
+  const { data: markets, isFetching, isPlaceholderData } = useActiveMarkets({ gameId: game.gameId })
 
   if (isFetching || isPlaceholderData || gameState === GameState.Live && !markets?.length) {
     return <MarketsSkeleton />
@@ -197,7 +205,7 @@ const Markets: React.FC<MarketsProps> = ({ gameId, gameState }) => {
   }
 
   return (
-    <Content markets={markets} />
+    <Content markets={markets} game={game} />
   )
 }
 

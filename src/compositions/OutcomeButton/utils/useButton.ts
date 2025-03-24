@@ -1,16 +1,20 @@
 import { useBaseBetslip, useSelection } from '@azuro-org/sdk'
-import { type GameMarkets } from '@azuro-org/toolkit'
+import { type GameQuery, type MarketOutcome } from '@azuro-org/toolkit'
 import { type MutableRefObject } from 'react'
 
 import useOddsChange from 'src/hooks/useOddsChange'
 
 
 type UseButtonProps = {
-  outcome: GameMarkets[0]['outcomeRows'][0][0]
+  marketName: string
+  outcome: MarketOutcome
+  game: NonNullable<GameQuery['game']>
   nodeRef: MutableRefObject<HTMLDivElement | null>
 }
 
-const useButton = ({ outcome, nodeRef }: UseButtonProps) => {
+const useButton = (props: UseButtonProps) => {
+  const { marketName, outcome, game, nodeRef } = props
+
   const { data, isLocked, isOddsFetching } = useSelection({
     selection: outcome,
     initialOdds: outcome.odds,
@@ -24,7 +28,7 @@ const useButton = ({ outcome, nodeRef }: UseButtonProps) => {
 
   const isActive = Boolean(items?.find((item) => {
     const propsKey = `${outcome.gameId}-${outcome.conditionId}-${outcome.outcomeId}`
-    const itemKey = `${item.game.gameId}-${item.conditionId}-${item.outcomeId}`
+    const itemKey = `${item.gameId}-${item.conditionId}-${item.outcomeId}`
 
     return propsKey === itemKey
   }))
@@ -38,7 +42,11 @@ const useButton = ({ outcome, nodeRef }: UseButtonProps) => {
       removeItem(outcome)
     }
     else {
-      addItem(outcome)
+      addItem({
+        marketName,
+        game,
+        ...outcome,
+      })
     }
   }
 

@@ -2,7 +2,8 @@
 
 import React, { useEffect, useState } from 'react'
 import { XMasonry, XBlock } from 'react-xmasonry'
-import { GameState, getIsPendingResolution, type GameMarkets } from '@azuro-org/toolkit'
+import { GameState, getIsPendingResolution } from '@azuro-org/toolkit'
+import { type GameQuery, type GameMarkets } from '@azuro-org/toolkit'
 import { useActiveMarkets, useBetsSummaryBySelection, useResolvedMarkets } from '@azuro-org/sdk'
 import { useAccount } from '@azuro-org/sdk-social-aa-connector'
 import dayjs from 'dayjs'
@@ -49,12 +50,13 @@ export const MarketsSkeleton: React.FC = () => {
 
 type ContentProps = {
   markets: GameMarkets
+  game: NonNullable<GameQuery['game']>
   betsSummary?: Record<string, string>
   isResult?: boolean
 }
 
 const Content: React.FC<ContentProps> = (props) => {
-  const { markets, betsSummary, isResult } = props
+  const { markets, game, betsSummary, isResult } = props
 
   const { areAllCollapsed, collapsedMarketIds, collapse, collapseAll } = useCollapse(markets)
   const { activeView, changeView } = useView()
@@ -135,7 +137,9 @@ const Content: React.FC<ContentProps> = (props) => {
                                       return (
                                         <OutcomeButton
                                           key={key}
+                                          marketName={name}
                                           outcome={outcome}
+                                          game={game}
                                           size={40}
                                         />
                                       )
@@ -160,17 +164,16 @@ const Content: React.FC<ContentProps> = (props) => {
 }
 
 type MarketsProps = {
-  gameId: string
+  game: NonNullable<GameQuery['game']>
   gameState: GameState
-  startsAt: string
 }
 
-const ResolvedMarkets: React.FC<MarketsProps> = ({ gameId, gameState }) => {
+const ResolvedMarkets: React.FC<MarketsProps> = ({ game, gameState }) => {
   const { address } = useAccount()
-  const { data: markets, isLoading } = useResolvedMarkets({ gameId })
+  const { data: markets, isLoading } = useResolvedMarkets({ gameId: game.gameId })
   const { data: betsSummary } = useBetsSummaryBySelection({
     account: address!,
-    gameId,
+    gameId: game.gameId,
     gameState,
   })
 
@@ -183,23 +186,28 @@ const ResolvedMarkets: React.FC<MarketsProps> = ({ gameId, gameState }) => {
   }
 
   return (
-    <Content markets={markets} betsSummary={betsSummary} isResult />
+    <Content
+      markets={markets}
+      game={game}
+      betsSummary={betsSummary}
+      isResult
+    />
   )
 }
 
 
 const WAIT_TIME = 600000
 
-const ActiveMarkets: React.FC<MarketsProps> = ({ gameId, gameState, startsAt }) => {
+const ActiveMarkets: React.FC<MarketsProps> = ({ game, gameState }) => {
   const { data: markets, isLoading, isPlaceholderData } = useActiveMarkets({
-    gameId,
+    gameId: game.id,
     query: {
       refetchInterval: 10_000,
     },
   })
   const isLive = gameState === GameState.Live
 
-  const startDate = +startsAt * 1000
+  const startDate = +game.startsAt * 1000
   const shouldWait = () => isLive && dayjs().diff(startDate) < WAIT_TIME
   const [ waitingTime, setWaitingTime ] = useState(
     shouldWait() ? WAIT_TIME - dayjs().diff(startDate) : 0
@@ -261,18 +269,18 @@ const ActiveMarkets: React.FC<MarketsProps> = ({ gameId, gameState, startsAt }) 
   }
 
   return (
-    <Content markets={markets} />
+    <Content markets={markets} game={game} />
   )
 }
 
 const Markets: React.FC<MarketsProps> = (props) => {
-  const { gameState, startsAt } = props
+  const { gameState, game } = props
 
   if (gameState === GameState.Resolved) {
     return <ResolvedMarkets {...props} />
   }
 
-  const isPendingResolution = getIsPendingResolution({ state: gameState, startsAt })
+  const isPendingResolution = getIsPendingResolution({ state: gameState, startsAt: game.startsAt })
 
   if (gameState === GameState.Canceled || isPendingResolution) {
     return (

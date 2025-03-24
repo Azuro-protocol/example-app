@@ -1,8 +1,8 @@
 'use client'
 
 import React, { useRef } from 'react'
-import { useBaseBetslip, useChain, type BetslipItem } from '@azuro-org/sdk'
-import { ConditionState, liveHostAddress } from '@azuro-org/toolkit'
+import { useBaseBetslip, useChain, useGameState } from '@azuro-org/sdk'
+import { ConditionState, GameState } from '@azuro-org/toolkit'
 import cx from 'classnames'
 import { Message } from '@locmod/intl'
 import { constants } from 'helpers'
@@ -18,7 +18,7 @@ import messages from './messages'
 
 
 type ItemProps = {
-  item: BetslipItem
+  item: AzuroSDK.BetslipItem
   batchBetAmount: string
   state: ConditionState
   odds: number
@@ -30,10 +30,27 @@ type ItemProps = {
 
 const Card: React.FC<ItemProps> = (props) => {
   const { item, batchBetAmount, odds, state, isOddsFetching, isStatesFetching, isBatch, onBatchAmountChange } = props
-  const { marketName, selectionName, game: { sportSlug, countryName, leagueName, title } } = item
+  const { marketName, selectionName, game } = item
+  const {
+    gameId,
+    title,
+    sport: {
+      slug: sportSlug,
+    },
+    country: {
+      name: countryName,
+    },
+    league: {
+      name: leagueName,
+    },
+  } = game
 
   const { appChain, betToken } = useChain()
   const { removeItem } = useBaseBetslip()
+  const { data: gameState } = useGameState({
+    gameId,
+    initialState: game.state,
+  })
   const nodeRef = useRef<HTMLDivElement>(null)
   useOddsChange({ odds, nodeRef })
   const oddsRef = useRef(odds)
@@ -43,8 +60,7 @@ const Card: React.FC<ItemProps> = (props) => {
   }
 
   const isDisabled = !isStatesFetching && state !== ConditionState.Active
-  // const isLive = coreAddress === liveHostAddress
-  const isLive = false // TODO
+  const isLive = gameState === GameState.Live
   const isUnique = sportSlug === 'unique'
 
   const bottomBoxClassName = cx(

@@ -1,10 +1,9 @@
 'use client'
 
 import React, { useState, useSyncExternalStore } from 'react'
-import { type Sport } from 'hooks'
 import cx from 'classnames'
-import { useLive, LIVE_STATISTICS_SUPPORTED_SPORTS, LIVE_STATISTICS_SUPPORTED_PROVIDERS, useGameState } from '@azuro-org/sdk'
-import { GameState, getProviderFromId } from '@azuro-org/toolkit'
+import { LIVE_STATISTICS_SUPPORTED_SPORTS, LIVE_STATISTICS_SUPPORTED_PROVIDERS, useGameState } from '@azuro-org/sdk'
+import { type GameQuery, GameState, getProviderFromId } from '@azuro-org/toolkit'
 import { openModal } from '@locmod/modal'
 import { useEntryListener } from '@locmod/intersection-observer'
 import { getGameDateTime } from 'helpers/getters'
@@ -43,7 +42,7 @@ export const GameSkeleton: React.FC<{ className?: string }> = ({ className }) =>
 type GameProps = {
   className?: string
   leagueUrl: string
-  game: Sport['leagues'][0]['games'][0]
+  game: NonNullable<GameQuery['game']>
   withTopRadius?: boolean
   isUnique?: boolean
 }
@@ -146,7 +145,7 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game, withTopRadius, 
       <div className="w-full ds:max-w-[26.25rem] mb:mt-2">
         {
           isMarketsVisible ? (
-            <MarketsComp gameId={gameId} gameState={state} />
+            <MarketsComp gameState={state} game={game} />
           ) : (
             <MarketsSkeleton />
           )

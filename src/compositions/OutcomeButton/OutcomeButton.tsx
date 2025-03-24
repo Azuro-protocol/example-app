@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useRef } from 'react'
-import { type GameMarkets } from '@azuro-org/toolkit'
+import { type GameQuery, type MarketOutcome } from '@azuro-org/toolkit'
 import cx from 'classnames'
 
 import { Icon } from 'components/ui'
@@ -11,15 +11,18 @@ import useButton from './utils/useButton'
 
 
 type OutcomeButtonProps = {
-  outcome: GameMarkets[0]['outcomeRows'][0][0]
+  marketName: string
+  outcome: MarketOutcome
+  game: NonNullable<GameQuery['game']>
   size?: 28 | 40
 }
 
-const OutcomeButton: React.FC<OutcomeButtonProps> = ({ outcome, size = 28 }) => {
+const OutcomeButton: React.FC<OutcomeButtonProps> = (props) => {
+  const { marketName, outcome, game, size = 28 } = props
   const { selectionName } = outcome
 
   const nodeRef = useRef<HTMLDivElement>(null)
-  const { odds, isActive, isLocked, onClick } = useButton({ outcome, nodeRef })
+  const { odds, isActive, isLocked, onClick } = useButton({ marketName, outcome, game, nodeRef })
 
   const buttonClassName = cx(
     'group/button w-full relative flex items-center justify-between ds:px-3 mb:px-2 overflow-hidden',

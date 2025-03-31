@@ -5,8 +5,8 @@ import Glide from '@glidejs/glide'
 import React, { useEffect, useRef } from 'react'
 import { Message } from '@locmod/intl'
 import { useParams } from 'next/navigation'
-import { useActiveMarkets, useGames } from '@azuro-org/sdk'
-import { Game_OrderBy, type GamesQuery, GameState } from '@azuro-org/toolkit'
+import { useActiveMarket, useActiveMarkets, useGames } from '@azuro-org/sdk'
+import { ConditionState, Game_OrderBy, type GameMarkets, type GamesQuery } from '@azuro-org/toolkit'
 import cx from 'classnames'
 import { getGameDateTime } from 'helpers/getters'
 
@@ -21,6 +21,36 @@ import messages from './messages'
 const CardSkeleton: React.FC<{ className?: string }> = ({ className }) => {
   return (
     <div className={cx('bone h-[12.125rem] w-full rounded-md', className)} />
+  )
+}
+
+type ConditionProps = {
+  markets: GameMarkets
+  game: GamesQuery['games'][0]
+}
+
+const Condition: React.FC<ConditionProps> = ({ markets, game }) => {
+  const { data } = useActiveMarket({ markets })
+
+  const { marketsByKey, activeMarketKey, states } = data
+
+  const { name, conditions } = marketsByKey[activeMarketKey!]
+  const { conditionId, outcomes } = conditions[0]
+
+  return (
+    <>
+      {
+        outcomes.map(outcome => (
+          <OutcomeButton
+            key={outcome.outcomeId}
+            marketName={name}
+            outcome={outcome}
+            game={game}
+            isLocked={states[conditionId] !== ConditionState.Active}
+          />
+        ))
+      }
+    </>
   )
 }
 
@@ -53,8 +83,8 @@ const Card: React.FC<CardProps> = ({ game }) => {
     gameId: game.gameId,
   })
 
-  const { name, outcomeRows } = markets?.[0] || {}
-  const marketsRow = outcomeRows?.[0]
+  const { name, conditions } = markets?.[0] || {}
+  const outcomes = conditions?.[0]?.outcomes
 
   return (
     <div className="bg-card-border-bottom p-px rounded-md overflow-hidden">
@@ -83,14 +113,7 @@ const Card: React.FC<CardProps> = ({ game }) => {
                 <div className="bone w-full h-7 rounded-sm" />
               </>
             ) : (
-              marketsRow?.map(outcome => (
-                <OutcomeButton
-                  key={outcome.outcomeId}
-                  marketName={name}
-                  outcome={outcome}
-                  game={game}
-                />
-              ))
+              <Condition markets={markets} game={game} />
             )
           }
         </div>

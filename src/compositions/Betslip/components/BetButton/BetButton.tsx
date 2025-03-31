@@ -25,8 +25,8 @@ const BetButton: React.FC<BetButtonProps> = ({ isEnoughBalance, isBalanceFetchin
   const { betToken } = useChain()
   const { items, clear } = useBaseBetslip()
   const {
-    betAmount, odds, totalOdds, selectedFreeBet, batchBetAmounts,
-    isBetAllowed, isOddsFetching, isStatesFetching, isBatch,
+    betAmount, odds, totalOdds, selectedFreeBet,
+    isBetAllowed, isOddsFetching, isStatesFetching, isMaxBetFetching,
   } = useDetailedBetslip()
 
   const totalOddsRef = useRef(totalOdds)
@@ -45,7 +45,8 @@ const BetButton: React.FC<BetButtonProps> = ({ isEnoughBalance, isBalanceFetchin
     isAllowanceLoading,
     isApproveRequired,
   } = usePrepareBet({
-    betAmount: isBatch ? batchBetAmounts : betAmount,
+    // betAmount: isBatch ? batchBetAmounts : betAmount,
+    betAmount,
     slippage,
     affiliate: process.env.NEXT_PUBLIC_AFFILIATE_ADDRESS as Address,
     selections: items,
@@ -72,6 +73,7 @@ const BetButton: React.FC<BetButtonProps> = ({ isEnoughBalance, isBalanceFetchin
 
   const isLoading = (
     isOddsFetching
+    || isMaxBetFetching
     || isBalanceFetching
     || isStatesFetching
     || isAllowanceLoading

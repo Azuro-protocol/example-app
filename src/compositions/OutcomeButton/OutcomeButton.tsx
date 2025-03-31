@@ -14,15 +14,16 @@ type OutcomeButtonProps = {
   marketName: string
   outcome: MarketOutcome
   game: NonNullable<GameQuery['game']>
+  isLocked: boolean
   size?: 28 | 40
 }
 
 const OutcomeButton: React.FC<OutcomeButtonProps> = (props) => {
-  const { marketName, outcome, game, size = 28 } = props
+  const { marketName, outcome, game, isLocked, size = 28 } = props
   const { selectionName } = outcome
 
   const nodeRef = useRef<HTMLDivElement>(null)
-  const { odds, isActive, isLocked, onClick } = useButton({ marketName, outcome, game, nodeRef })
+  const { odds, isActive, onClick } = useButton({ marketName, outcome, game, nodeRef })
 
   const buttonClassName = cx(
     'group/button w-full relative flex items-center justify-between ds:px-3 mb:px-2 overflow-hidden',

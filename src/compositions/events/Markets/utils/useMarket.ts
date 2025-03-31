@@ -22,6 +22,7 @@ const useMarket = ({ markets }: Props) => {
   } = useActiveMarket({ markets })
 
   const {
+    states,
     activeMarketKey,
     activeConditionIndex,
     marketsByKey,
@@ -59,6 +60,7 @@ const useMarket = ({ markets }: Props) => {
 
   return {
     contentRef,
+    states,
     activeMarketKey,
     activeConditionIndex,
     marketsByKey,

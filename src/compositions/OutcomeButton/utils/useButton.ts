@@ -1,4 +1,4 @@
-import { useBaseBetslip, useSelection } from '@azuro-org/sdk'
+import { useBaseBetslip, useSelectionOdds } from '@azuro-org/sdk'
 import { type GameQuery, type MarketOutcome } from '@azuro-org/toolkit'
 import { type MutableRefObject } from 'react'
 
@@ -15,13 +15,11 @@ type UseButtonProps = {
 const useButton = (props: UseButtonProps) => {
   const { marketName, outcome, game, nodeRef } = props
 
-  const { data, isLocked, isOddsFetching } = useSelection({
+  const { data: odds, isFetching: isOddsFetching } = useSelectionOdds({
     selection: outcome,
     initialOdds: outcome.odds,
-    initialState: outcome.state,
   })
 
-  const { odds } = data
   useOddsChange({ odds, nodeRef })
 
   const { items, addItem, removeItem } = useBaseBetslip()
@@ -34,10 +32,6 @@ const useButton = (props: UseButtonProps) => {
   }))
 
   const onClick = () => {
-    if (isLocked) {
-      return
-    }
-
     if (isActive) {
       removeItem(outcome)
     }
@@ -53,7 +47,6 @@ const useButton = (props: UseButtonProps) => {
   return {
     odds,
     isActive,
-    isLocked,
     isOddsFetching,
     onClick,
   }

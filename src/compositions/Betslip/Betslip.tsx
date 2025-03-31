@@ -72,8 +72,8 @@ const Content: React.FC<ContentProps> = ({ openSettings }) => {
   const { betToken } = useChain()
   const { items, clear } = useBaseBetslip()
   const {
-    odds, states, minBet, maxBet, disableReason, selectedFreeBet, betAmount, batchBetAmounts,
-    isOddsFetching, isStatesFetching, isBatch, changeBatch, changeBatchBetAmount,
+    odds, states, minBet, maxBet, disableReason, betAmount,
+    isOddsFetching, isStatesFetching,
   } = useDetailedBetslip()
   const { data, isLoading: isBalanceFetching } = useBetTokenBalance()
 
@@ -99,18 +99,24 @@ const Content: React.FC<ContentProps> = ({ openSettings }) => {
               <Message className="text-caption-14 font-semibold" value={messages.single} />
             </button>
           ) : (
-            <div className="flex items-center space-x-4">
-              <Tab
-                title={{ ...messages.batch, values: { count: itemsLength } }}
-                isActive={isBatch}
-                onClick={() => changeBatch(true)}
+            <button className="cursor-default">
+              <Message
+                className="text-caption-14 font-semibold"
+                value={{ ...messages.combo, values: { count: itemsLength } }}
               />
-              <Tab
-                title={{ ...messages.combo, values: { count: itemsLength } }}
-                isActive={!isBatch}
-                onClick={() => changeBatch(false)}
-              />
-            </div>
+            </button>
+            // <div className="flex items-center space-x-4">
+            //   <Tab
+            //     title={{ ...messages.batch, values: { count: itemsLength } }}
+            //     isActive={isBatch}
+            //     onClick={() => changeBatch(true)}
+            //   />
+            //   <Tab
+            //     title={{ ...messages.combo, values: { count: itemsLength } }}
+            //     isActive={!isBatch}
+            //     onClick={() => changeBatch(false)}
+            //   />
+            // </div>
           )
         }
         <div className={cx('flex items-center space-x-3 h-fit', { 'pt-0.5': !isSingle })}>
@@ -138,13 +144,13 @@ const Content: React.FC<ContentProps> = ({ openSettings }) => {
               <Card
                 key={`${conditionId}-${outcomeId}`}
                 item={item}
-                batchBetAmount={batchBetAmounts[`${conditionId}-${outcomeId}`]}
+                // batchBetAmount={batchBetAmounts[`${conditionId}-${outcomeId}`]}
                 state={states[conditionId]}
                 odds={odds?.[`${conditionId}-${outcomeId}`]}
                 isStatesFetching={isStatesFetching}
                 isOddsFetching={isOddsFetching}
-                isBatch={isBatch}
-                onBatchAmountChange={(value) => changeBatchBetAmount(item, value)}
+                // isBatch={isBatch}
+                // onBatchAmountChange={(value) => changeBatchBetAmount(item, value)}
               />
             )
           })
@@ -159,14 +165,14 @@ const Content: React.FC<ContentProps> = ({ openSettings }) => {
           })
         }
       >
-        {
-          Boolean(!selectedFreeBet && !isBatch) && (
-            <>
-              <AmountInput isEnoughBalance={isEnoughBalance} />
-              <Chips />
-            </>
-          )
-        }
+        {/* {
+          Boolean(!selectedFreeBet && !isBatch) && ( */}
+        <>
+          <AmountInput isEnoughBalance={isEnoughBalance} />
+          <Chips />
+        </>
+        {/* )
+        } */}
         {
           Boolean(disableReason) && (
             <Warning
@@ -179,14 +185,14 @@ const Content: React.FC<ContentProps> = ({ openSettings }) => {
             />
           )
         }
-        {
+        {/* {
           isBatch && (
             <div className="flex items-center justify-between mb-3">
               <Message className="text-caption-12 text-grey-60" value={messages.totalBet} />
               <div className="text-caption-13">{betAmount} {betToken.symbol}</div>
             </div>
           )
-        }
+        } */}
         <div className="mt-3">
           <ConnectButtonWrapper>
             <BetButton isEnoughBalance={isEnoughBalance} isBalanceFetching={isBalanceFetching} />

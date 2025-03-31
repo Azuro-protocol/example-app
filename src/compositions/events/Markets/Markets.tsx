@@ -4,7 +4,7 @@ import React from 'react'
 import cx from 'classnames'
 import { useFreezeBodyScroll } from 'hooks'
 import { Message } from '@locmod/intl'
-import { type GameQuery, GameState, type GameMarkets, type Market as TMarket } from '@azuro-org/toolkit'
+import { type GameQuery, GameState, type GameMarkets, type Market as TMarket, type ConditionState } from '@azuro-org/toolkit'
 import { useActiveMarkets } from '@azuro-org/sdk'
 
 import { Icon } from 'components/ui'
@@ -23,22 +23,23 @@ type HeadMarketProps = {
   isOpen: boolean
 } & MarketProps
 
-const HeadMarket: React.FC<HeadMarketProps> = ({ market, game, conditionIndex, isOpen }) => {
-  const { outcomeRows } = market
+const HeadMarket: React.FC<HeadMarketProps> = ({ market, game, conditionIndex, conditionStates, isOpen }) => {
+  const { conditions } = market
 
-  const headMarket = {
+  const headMarket: TMarket = {
     ...market,
-    outcomeRows: isOpen ? outcomeRows : [
-      outcomeRows[conditionIndex].length > 3 ? (
-        outcomeRows[conditionIndex].slice(0, 2)
-      ) : (
-        outcomeRows[conditionIndex]
+    conditions: isOpen ? conditions : [
+      conditions[conditionIndex].outcomes.length > 3 ? ({
+        ...conditions[conditionIndex],
+        outcomes: conditions[conditionIndex].outcomes.slice(0, 2),
+      }) : (
+        conditions[conditionIndex]
       ),
     ],
   }
 
   return (
-    <Market market={headMarket} game={game} />
+    <Market market={headMarket} game={game} conditionStates={conditionStates} />
   )
 }
 
@@ -46,11 +47,12 @@ type MobileMarketsProps = {
   sortedMarkets: string[]
   marketsByKey: MarketsByKey
   game: NonNullable<GameQuery['game']>
+  conditionStates: Record<string, ConditionState>
   onClose: () => void
 }
 
 const MobileMarkets: React.FC<MobileMarketsProps> = (props) => {
-  const { sortedMarkets, marketsByKey, game, onClose } = props
+  const { sortedMarkets, marketsByKey, game, conditionStates, onClose } = props
 
   useFreezeBodyScroll()
 
@@ -76,6 +78,7 @@ const MobileMarkets: React.FC<MobileMarketsProps> = (props) => {
               key={marketId}
               market={marketsByKey[marketId]}
               game={game}
+              conditionStates={conditionStates}
             />
           ))
         }
@@ -102,7 +105,7 @@ type ContentProps = {
 
 const Content: React.FC<ContentProps> = ({ markets, game }) => {
   const {
-    contentRef, activeMarketKey, marketsByKey, activeConditionIndex, otherMarkets, sortedMarketKeys,
+    contentRef, states, activeMarketKey, marketsByKey, activeConditionIndex, otherMarkets, sortedMarketKeys,
     isOpen, isMobileView, isFetching, setOpen,
   } = useMarket({ markets })
 
@@ -111,7 +114,7 @@ const Content: React.FC<ContentProps> = ({ markets, game }) => {
   }
 
   const headMarket = marketsByKey[activeMarketKey!]
-  const isDisabled = !Boolean(otherMarkets.length) && headMarket.outcomeRows.length === 1 && headMarket.outcomeRows[0].length <= 3
+  const isDisabled = !Boolean(otherMarkets.length) && headMarket.conditions.length === 1 && headMarket.conditions[0].outcomes.length <= 3
 
   const contentClassName = cx('w-full flex mb:border-transparent ds:p-2 border', {
     'absolute bg-grey-10 overflow-y-auto no-scrollbar max-h-[20rem] border-grey-15 pb-2 z-30 rounded-md': isOpen && !isMobileView,
@@ -145,6 +148,7 @@ const Content: React.FC<ContentProps> = ({ markets, game }) => {
                 market={marketsByKey[activeMarketKey!]}
                 game={game}
                 isOpen={isOpen}
+                conditionStates={states}
               />
             )
           }
@@ -157,6 +161,7 @@ const Content: React.FC<ContentProps> = ({ markets, game }) => {
                       sortedMarkets={sortedMarketKeys}
                       marketsByKey={marketsByKey}
                       game={game}
+                      conditionStates={states}
                       onClose={handleClose}
                     />
                   ) : (
@@ -165,6 +170,7 @@ const Content: React.FC<ContentProps> = ({ markets, game }) => {
                         key={marketId}
                         market={marketsByKey[marketId]}
                         game={game}
+                        conditionStates={states}
                       />
                     ))
                   )

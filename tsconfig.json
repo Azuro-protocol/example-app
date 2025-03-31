@@ -17,7 +17,6 @@
     "skipLibCheck": true,
     "strict": true,
 
-    /* TODO remove strict modifiers, use strict: true only */
     "strictPropertyInitialization": false,
     "noImplicitAny": false,
     "useUnknownInCatchVariables": false,

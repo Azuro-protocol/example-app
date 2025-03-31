@@ -4,12 +4,8 @@ import React, { useRef } from 'react'
 import { useBaseBetslip, useChain, useGameState } from '@azuro-org/sdk'
 import { ConditionState, GameState } from '@azuro-org/toolkit'
 import cx from 'classnames'
-import { Message } from '@locmod/intl'
-import { constants } from 'helpers'
 
-import { formatToFixed } from 'helpers/formatters'
 import useOddsChange from 'src/hooks/useOddsChange'
-import { Input } from 'components/inputs'
 import { Warning } from 'components/feedback'
 import { Icon, LiveDot, type IconName } from 'components/ui'
 import OddsValue from 'compositions/OddsValue/OddsValue'
@@ -19,17 +15,17 @@ import messages from './messages'
 
 type ItemProps = {
   item: AzuroSDK.BetslipItem
-  batchBetAmount: string
+  // batchBetAmount: string
   state: ConditionState
   odds: number
   isStatesFetching: boolean
   isOddsFetching: boolean
-  isBatch: boolean
-  onBatchAmountChange: (value: string) => void
+  // isBatch: boolean
+  // onBatchAmountChange: (value: string) => void
 }
 
 const Card: React.FC<ItemProps> = (props) => {
-  const { item, batchBetAmount, odds, state, isOddsFetching, isStatesFetching, isBatch, onBatchAmountChange } = props
+  const { item, odds, state, isOddsFetching, isStatesFetching } = props
   const { marketName, selectionName, game } = item
   const {
     gameId,
@@ -144,7 +140,7 @@ const Card: React.FC<ItemProps> = (props) => {
                   )
                 }
               </div>
-              {
+              {/* {
                 isBatch && (
                   <div className="flex items-center mt-2">
                     <Input
@@ -163,7 +159,7 @@ const Card: React.FC<ItemProps> = (props) => {
                     </div>
                   </div>
                 )
-              }
+              } */}
             </>
           )
         }

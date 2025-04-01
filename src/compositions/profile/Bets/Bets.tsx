@@ -428,7 +428,7 @@ type BetsPagesProps = {
   hasNextPage: boolean
   isPlaceholderData: boolean
   withEmptyContent?: boolean
-  fetchNextPage: () => void
+  fetchNextPage: () => any
 }
 
 const BetsPages: React.FC<BetsPagesProps> = (props) => {

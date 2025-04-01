@@ -189,7 +189,8 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
     tokenId,
     selections: outcomes,
     graphBetStatus,
-    enabled: !isCashedOut,
+    // enabled: !isCashedOut,
+    enabled: false, // TODO
   })
 
   const resultDecimals = constants.resultAmountDecimalsByChain[appChain.id] || 2

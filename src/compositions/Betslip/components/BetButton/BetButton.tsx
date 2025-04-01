@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import cx from 'classnames'
-import { useBaseBetslip, useChain, useDetailedBetslip, usePrepareBet } from '@azuro-org/sdk'
+import { useBaseBetslip, useChain, useDetailedBetslip, useBet } from '@azuro-org/sdk'
 import { type Address } from 'viem'
 import { Message } from '@locmod/intl'
 import { useAccount } from '@azuro-org/sdk-social-aa-connector'
@@ -25,7 +25,7 @@ const BetButton: React.FC<BetButtonProps> = ({ isEnoughBalance, isBalanceFetchin
   const { betToken } = useChain()
   const { items, clear } = useBaseBetslip()
   const {
-    betAmount, odds, totalOdds, selectedFreeBet,
+    betAmount, odds, totalOdds,
     isBetAllowed, isOddsFetching, isStatesFetching, isMaxBetFetching,
   } = useDetailedBetslip()
 
@@ -44,7 +44,7 @@ const BetButton: React.FC<BetButtonProps> = ({ isEnoughBalance, isBalanceFetchin
     isRelayerFeeLoading,
     isAllowanceLoading,
     isApproveRequired,
-  } = usePrepareBet({
+  } = useBet({
     // betAmount: isBatch ? batchBetAmounts : betAmount,
     betAmount,
     slippage,
@@ -52,7 +52,7 @@ const BetButton: React.FC<BetButtonProps> = ({ isEnoughBalance, isBalanceFetchin
     selections: items,
     odds,
     totalOdds,
-    freeBet: selectedFreeBet,
+    // freeBet: selectedFreeBet,
     onSuccess: () => {
       openModal('SuccessModal', {
         title: messages.success.title,

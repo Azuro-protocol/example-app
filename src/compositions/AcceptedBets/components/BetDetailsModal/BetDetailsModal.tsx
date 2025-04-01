@@ -73,20 +73,20 @@ const Outcome: React.FC<OutcomeProps> = ({ outcome, isCombo, onLinkClick }) => {
                 isCombo && (
                   <>
                     {
-                      [ GameState.Canceled, GameState.Live, GameState.Resolved ].includes(gameState) && (
+                      [ GameState.Live, GameState.Finished ].includes(gameState) && (
                         <div className="size-1 flex-none bg-grey-40 rounded-full mx-2" />
                       )
                     }
-                    {
-                      gameState === GameState.Canceled && (
+                    {/* {
+                      gameState === GameState.Stopped && (
                         <div className="flex items-center text-accent-yellow">
                           <Icon className="size-4 mr-[2px]" name="interface/declined" />
                           <Message className="font-semibold" value={messages.gameState.declined} />
                         </div>
                       )
-                    }
+                    } */}
                     {
-                      gameState === GameState.Resolved && (
+                      gameState === GameState.Finished && (
                         <Message
                           className={
                             cx('font-semibold', {
@@ -154,7 +154,7 @@ const BetDetailsModal: ModalComponent<BetDetailsModalProps> = (props) => {
 
   const {
     tokenId, createdAt, status: graphBetStatus, amount, outcomes, freebetId, totalOdds, possibleWin,
-    isWin, isLive, isCashedOut,
+    isWin, isCashedOut,
   } = bet
 
   const isFreeBet = Boolean(freebetId)
@@ -168,7 +168,8 @@ const BetDetailsModal: ModalComponent<BetDetailsModalProps> = (props) => {
     tokenId,
     selections: outcomes,
     graphBetStatus,
-    enabled: !isCashedOut,
+    // enabled: !isCashedOut, // TODO
+    enabled: false,
   })
 
   const resultDecimals = constants.resultAmountDecimalsByChain[appChain.id] || 2
@@ -192,7 +193,6 @@ const BetDetailsModal: ModalComponent<BetDetailsModalProps> = (props) => {
             <BetStatus
               graphBetStatus={graphBetStatus}
               games={outcomes.map(({ game }) => game!)}
-              isLiveBet={isLive}
               isWin={isWin}
               isCashedOut={isCashedOut}
             />

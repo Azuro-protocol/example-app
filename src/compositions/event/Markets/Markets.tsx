@@ -14,7 +14,7 @@ import { Icon } from 'components/ui'
 import OutcomeButton from 'compositions/OutcomeButton/OutcomeButton'
 import EmptyContent from 'compositions/EmptyContent/EmptyContent'
 
-import ResultButton from './components/ResultButton/ResultButton'
+import OutcomeResult from './components/OutcomeResult/OutcomeResult'
 import Headline from './components/Headline/Headline'
 
 import useView from './utils/useView'
@@ -60,7 +60,7 @@ const Condition: React.FC<ConditionProps> = (props) => {
   const { condition, marketName, game, betsSummary, isResult } = props
   const { conditionId, outcomes, state: initialState } = condition
 
-  const { isLocked } = useConditionState({
+  const { data: state, isLocked } = useConditionState({
     conditionId,
     initialState,
   })
@@ -74,9 +74,10 @@ const Condition: React.FC<ConditionProps> = (props) => {
 
             if (isResult) {
               return (
-                <ResultButton
+                <OutcomeResult
                   key={key}
                   outcome={outcome}
+                  conditionState={state}
                   summary={betsSummary?.[key]}
                   size={40}
                 />

@@ -29,7 +29,8 @@ const UniqueMarkets: React.FC<UniqueMarketsProps> = ({ game, gameState }) => {
 
   return (
     <div className="w-full">
-      {
+      {/* TODO */}
+      {/* {
         markets.map(market => (
           <Market
             key={market.marketKey}
@@ -37,7 +38,7 @@ const UniqueMarkets: React.FC<UniqueMarketsProps> = ({ game, gameState }) => {
             game={game}
           />
         ))
-      }
+      } */}
     </div>
   )
 }

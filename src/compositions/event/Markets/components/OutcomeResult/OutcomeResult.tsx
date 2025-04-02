@@ -10,18 +10,19 @@ import { toLocaleString } from 'helpers'
 import messages from './messages'
 
 
-type OutcomeButtonProps = {
+type OutcomeResultProps = {
   outcome: MarketOutcome
+  conditionState: ConditionState
   summary?: string
   size?: 28 | 40
 }
 
-const OutcomeButton: React.FC<OutcomeButtonProps> = ({ outcome, summary, size = 28 }) => {
-  const { selectionName, state, isWon } = outcome
+const OutcomeResult: React.FC<OutcomeResultProps> = ({ outcome, conditionState, summary, size = 28 }) => {
+  const { selectionName, isWon } = outcome
 
   const { betToken } = useChain()
 
-  const isCanceled = state === ConditionState.Canceled
+  const isCanceled = conditionState === ConditionState.Canceled
 
   const buttonClassName = cx(
     'w-full relative flex items-center justify-between px-3 overflow-hidden',
@@ -61,4 +62,4 @@ const OutcomeButton: React.FC<OutcomeButtonProps> = ({ outcome, summary, size = 
   )
 }
 
-export default OutcomeButton
+export default OutcomeResult

@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from 'react'
 import { standaloneModal, type ModalComponent } from '@locmod/modal'
-import { useChain, useDetailedBetslip, type FreeBet } from '@azuro-org/sdk'
+import { useChain, useDetailedBetslip } from '@azuro-org/sdk'
 import { Message } from '@locmod/intl'
 import cx from 'classnames'
 import dayjs from 'dayjs'
@@ -19,18 +19,18 @@ const SelectFreeBetModal: ModalComponent<SelectFreeBetModalProps> = (props) => {
   const { closeModal } = props
 
   const { betToken } = useChain()
-  const { freeBets, selectFreeBet } = useDetailedBetslip()
-  const [ selectedBonus, setBonus ] = useState<FreeBet>()
+  // const { freeBets, selectFreeBet } = useDetailedBetslip()
+  // const [ selectedBonus, setBonus ] = useState<FreeBet>()
 
-  const handleClick = () => {
-    selectFreeBet(selectedBonus)
-    closeModal()
-  }
+  // const handleClick = () => {
+  //   selectFreeBet(selectedBonus)
+  //   closeModal()
+  // }
 
   return (
     <PlainModal closeModal={closeModal}>
       <>
-        <Message className="text-caption-14 font-semibold" value={messages.title} tag="p" />
+        {/* <Message className="text-caption-14 font-semibold" value={messages.title} tag="p" />
         <Message className="text-caption-13 text-grey-60 mt-1" value={messages.text} tag="p" />
         <div className="space-y-2 mt-4">
           {
@@ -79,7 +79,7 @@ const SelectFreeBetModal: ModalComponent<SelectFreeBetModalProps> = (props) => {
           size={32}
           disabled={!selectedBonus}
           onClick={handleClick}
-        />
+        /> */}
       </>
     </PlainModal>
   )

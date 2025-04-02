@@ -16,25 +16,25 @@ const SelectFreeBetModal = dynamic(() => import('./components/SelectFreeBetModal
 const FreeBet: React.FC = () => {
   const { betToken } = useChain()
   const { items } = useBaseBetslip()
-  const { freeBets, selectedFreeBet, selectFreeBet } = useDetailedBetslip()
+  // const { freeBets, selectedFreeBet, selectFreeBet } = useDetailedBetslip()
 
-  const clearFreeBet = () => {
-    selectFreeBet(undefined)
-  }
+  // const clearFreeBet = () => {
+  //   selectFreeBet(undefined)
+  // }
 
-  useEffect(() => {
-    if (selectedFreeBet && items.length > 1) {
-      clearFreeBet()
-    }
-  }, [ selectedFreeBet ])
+  // useEffect(() => {
+  //   if (selectedFreeBet && items.length > 1) {
+  //     clearFreeBet()
+  //   }
+  // }, [ selectedFreeBet ])
 
-  if (!freeBets?.length || items.length > 1) {
-    return null
-  }
+  // if (!freeBets?.length || items.length > 1) {
+  //   return null
+  // }
 
   return (
     <>
-      <div className="-mx-2 border-t border-t-grey-10 group">
+      {/* <div className="-mx-2 border-t border-t-grey-10 group">
         {
           Boolean(selectedFreeBet) ? (
             <div className="py-2 px-5 flex items-center justify-between text-caption-13 font-semibold">
@@ -61,7 +61,7 @@ const FreeBet: React.FC = () => {
           )
         }
       </div>
-      <SelectFreeBetModal />
+      <SelectFreeBetModal /> */}
     </>
   )
 }

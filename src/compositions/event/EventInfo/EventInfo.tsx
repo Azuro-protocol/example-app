@@ -139,7 +139,7 @@ const Title: React.FC<TitleProps> = ({ state, startsAt, sportId, liveScoreBoard,
     </div>
   )
 
-  if (state === GameState.Resolved) {
+  if (state === GameState.Finished) {
     content = (
       <div className="text-caption-13 font-medium text-gray-50 text-center">
         <Message className="text-grey-70" value={messages.ended} />
@@ -189,7 +189,7 @@ const EventInfo: React.FC<EventInfoProps> = ({ game, state }) => {
     },
   } = game
 
-  const { statistics, isFetching } = useLiveStatistics({
+  const { data: statistics, isFetching } = useLiveStatistics({
     gameId,
     sportId,
     gameState: state,

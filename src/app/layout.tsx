@@ -28,17 +28,17 @@ export const metadata: Metadata = {
   description: '',
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
 
-  const headersList = headers()
-  const cookieStore = cookies()
+  const headersList = await headers()
+  const cookieStore = await cookies()
 
   // const initialState = cookieToInitialState(config, headers().get('cookie'))
-  const userAgentValue = userAgent({ headers: headersList })
+  const userAgent = headersList.get('user-agent')
   const _initialChainId = cookieStore.get('appChainId')?.value
   const initialLiveState = JSON.parse(cookieStore.get('live')?.value || 'false')
 
@@ -50,7 +50,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Providers
           // initialState={initialState}
-          userAgent={userAgentValue.ua}
+          userAgent={userAgent || ''}
           initialLiveState={initialLiveState}
           initialChainId={initialChainId}
         >

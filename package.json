@@ -15,9 +15,8 @@
     "build-icons": "node bin/icons"
   },
   "dependencies": {
-    "@apollo/client": "^3.11.1",
     "@azuro-org/dictionaries": "^3.0.26",
-    "@azuro-org/sdk": "5.5.0-beta.3",
+    "@azuro-org/sdk": "6.0.0-beta.2",
     "@azuro-org/sdk-social-aa-connector": "^1.1.5",
     "@floating-ui/react-dom-interactions": "^0.13.3",
     "@glidejs/glide": "^3.6.2",

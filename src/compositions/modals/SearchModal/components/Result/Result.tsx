@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react'
-// import type { QueryOptions } from '@apollo/client'
 import { type Field, useFieldState } from 'formular'
-// import { useApolloClients } from '@azuro-org/sdk'
-import { type GamesQuery, type GamesQueryVariables, GamesDocument, Game_OrderBy, OrderDirection } from '@azuro-org/toolkit'
-import { type Sport as TSport, useDebounce, useIsMounted } from 'hooks'
+import { useQuery } from '@tanstack/react-query'
+import { type GamesQuery, type GamesQueryVariables, GamesDocument, Game_OrderBy, OrderDirection, GameState } from '@azuro-org/toolkit'
+import { useDebounce } from 'hooks'
+import { useChain } from '@azuro-org/sdk'
+import { gqlRequest } from 'helpers'
 
 import EmptyContent from 'compositions/EmptyContent/EmptyContent'
 import Sport, { SportSkeleton } from 'compositions/events/Sport/Sport'
@@ -17,81 +17,43 @@ type ResultProps = {
   field: Field<string>
 }
 
-type SearchState = {
-  isFetching: boolean
-  sports: TSport[]
-}
-
-// const getQueryOptions = (value: string, hoursBeforeStart: number = 0): QueryOptions<GamesQueryVariables, GamesQuery> => ({
-//   query: GamesDocument,
-//   fetchPolicy: 'network-only',
-//   variables: {
-//     where: {
-//       startsAt_gt: Math.floor(Date.now() / 1000 - 60 * 60 * hoursBeforeStart),
-//       hasActiveConditions: true,
-//       title_contains_nocase: value.toLowerCase(),
-//     },
-//     orderBy: Game_OrderBy.StartsAt,
-//     orderDirection: OrderDirection.Asc,
-//   },
-// })
-
 const Result: React.FC<ResultProps> = ({ field }) => {
   const { value } = useFieldState(field)
-  const isMounted = useIsMounted()
-  const [ { isFetching, sports }, setState ] = useState<SearchState>({
-    isFetching: false,
-    sports: [],
-  })
+  const { graphql } = useChain()
 
   const debouncedValue = useDebounce(value?.trim(), 300)
-  // TODO
-  // const apolloClients = useApolloClients()
 
-  // const fetch = async () => {
-  //   setState({
-  //     isFetching: true,
-  //     sports: [],
-  //   })
+  const { data: sports, isFetching } = useQuery({
+    queryKey: [ 'search', debouncedValue ],
+    queryFn: async () => {
+      const variables: GamesQueryVariables = {
+        first: 1000,
+        orderBy: Game_OrderBy.StartsAt,
+        orderDirection: OrderDirection.Desc,
+        where: {
+          activeConditionsCount_not: 0,
+          state_in: [ GameState.Live, GameState.Prematch ],
+          title_contains_nocase: debouncedValue.toLowerCase(),
+        },
+      }
 
-  //   try {
-  //     const [ liveResult, prematchResult ] = await Promise.all([
-  //       apolloClients.liveClient.query<GamesQuery, GamesQueryVariables>(getQueryOptions(debouncedValue, 6)),
-  //       apolloClients.prematchClient.query<GamesQuery, GamesQueryVariables>(getQueryOptions(debouncedValue, 0)),
-  //     ])
+      const { games } = await gqlRequest<GamesQuery, GamesQueryVariables>({
+        url: graphql.feed,
+        document: GamesDocument,
+        variables,
+      })
 
-  //     const sports = formatGamesIntoSports([
-  //       ...liveResult.data?.games,
-  //       ...prematchResult.data?.games,
-  //     ])
+      const sports = formatGamesIntoSports(games)
 
-  //     // check if value didn't change while waiting for fetch
-  //     if (isMounted() && field.state.value === value) {
-  //       setState({
-  //         isFetching: false,
-  //         sports,
-  //       })
-  //     }
-  //   }
-  //   catch (err) {
-  //     if (isMounted()) {
-  //       setState({
-  //         isFetching: false,
-  //         sports: [],
-  //       })
-  //     }
-  //   }
-  // }
+      return sports
+    },
+    refetchOnWindowFocus: false,
+    enabled: debouncedValue.length > 1,
+  })
 
-  // useEffect(() => {
-  //   if (debouncedValue?.length > 1) {
-  //     fetch()
-  //   }
-  // }, [ debouncedValue ])
-
-  // if (!debouncedValue || debouncedValue?.length < 2) {
-  //   return null
-  // }
+  if (!debouncedValue || debouncedValue?.length < 2) {
+    return null
+  }
 
   if (isFetching) {
     return (

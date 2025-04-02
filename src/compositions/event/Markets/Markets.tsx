@@ -2,8 +2,9 @@
 
 import React, { useEffect, useState } from 'react'
 import { XMasonry, XBlock } from 'react-xmasonry'
-import { GameStatus, type GameMarkets } from '@azuro-org/toolkit'
-import { useActiveMarkets, useBetsSummaryBySelection, useResolvedMarkets } from '@azuro-org/sdk'
+import { GameState, getIsPendingResolution } from '@azuro-org/toolkit'
+import { type GameQuery, type GameMarkets, type Market } from '@azuro-org/toolkit'
+import { useActiveMarkets, useBetsSummaryBySelection, useConditionState, useResolvedMarkets } from '@azuro-org/sdk'
 import { useAccount } from '@azuro-org/sdk-social-aa-connector'
 import dayjs from 'dayjs'
 import cx from 'classnames'
@@ -13,7 +14,7 @@ import { Icon } from 'components/ui'
 import OutcomeButton from 'compositions/OutcomeButton/OutcomeButton'
 import EmptyContent from 'compositions/EmptyContent/EmptyContent'
 
-import ResultButton from './components/ResultButton/ResultButton'
+import OutcomeResult from './components/OutcomeResult/OutcomeResult'
 import Headline from './components/Headline/Headline'
 
 import useView from './utils/useView'
@@ -47,14 +48,68 @@ export const MarketsSkeleton: React.FC = () => {
   )
 }
 
+type ConditionProps = {
+  condition: Market['conditions'][0]
+  marketName: string
+  game: NonNullable<GameQuery['game']>
+  betsSummary?: Record<string, string>
+  isResult?: boolean
+}
+
+const Condition: React.FC<ConditionProps> = (props) => {
+  const { condition, marketName, game, betsSummary, isResult } = props
+  const { conditionId, outcomes, state: initialState } = condition
+
+  const { data: state, isLocked } = useConditionState({
+    conditionId,
+    initialState,
+  })
+
+  return (
+    <div className="flex justify-between">
+      <div className="flex gap-2 w-full">
+        {
+          outcomes.map((outcome) => {
+            const key = outcome.outcomeId
+
+            if (isResult) {
+              return (
+                <OutcomeResult
+                  key={key}
+                  outcome={outcome}
+                  conditionState={state}
+                  summary={betsSummary?.[key]}
+                  size={40}
+                />
+              )
+            }
+
+            return (
+              <OutcomeButton
+                key={key}
+                marketName={marketName}
+                outcome={outcome}
+                game={game}
+                isLocked={isLocked}
+                size={40}
+              />
+            )
+          })
+        }
+      </div>
+    </div>
+  )
+}
+
 type ContentProps = {
   markets: GameMarkets
+  game: NonNullable<GameQuery['game']>
   betsSummary?: Record<string, string>
   isResult?: boolean
 }
 
 const Content: React.FC<ContentProps> = (props) => {
-  const { markets, betsSummary, isResult } = props
+  const { markets, game, betsSummary, isResult } = props
 
   const { areAllCollapsed, collapsedMarketIds, collapse, collapseAll } = useCollapse(markets)
   const { activeView, changeView } = useView()
@@ -73,7 +128,7 @@ const Content: React.FC<ContentProps> = (props) => {
           targetBlockWidth={478}
         >
           {
-            markets.map(({ name, description, outcomeRows, marketKey }) => {
+            markets.map(({ name, description, conditions, marketKey }) => {
               const isCollapsed = collapsedMarketIds.includes(marketKey)
 
               return (
@@ -114,35 +169,15 @@ const Content: React.FC<ContentProps> = (props) => {
                       !isCollapsed && (
                         <div className="space-y-2 bg-bg-l2 rounded-sm p-2">
                           {
-                            outcomeRows.map((outcomes, index) => (
-                              <div key={`${index}-${outcomes.length}`} className="flex justify-between">
-                                <div className="flex gap-2 w-full">
-                                  {
-                                    outcomes.map((outcome) => {
-                                      const key = outcome.outcomeId
-
-                                      if (isResult) {
-                                        return (
-                                          <ResultButton
-                                            key={key}
-                                            outcome={outcome}
-                                            summary={betsSummary?.[key]}
-                                            size={40}
-                                          />
-                                        )
-                                      }
-
-                                      return (
-                                        <OutcomeButton
-                                          key={key}
-                                          outcome={outcome}
-                                          size={40}
-                                        />
-                                      )
-                                    })
-                                  }
-                                </div>
-                              </div>
+                            conditions.map((condition, index) => (
+                              <Condition
+                                key={`${index}-${condition.outcomes.length}`}
+                                condition={condition}
+                                marketName={name}
+                                game={game}
+                                betsSummary={betsSummary}
+                                isResult={isResult}
+                              />
                             ))
                           }
                         </div>
@@ -160,45 +195,50 @@ const Content: React.FC<ContentProps> = (props) => {
 }
 
 type MarketsProps = {
-  gameId: string
-  gameStatus: GameStatus
-  startsAt: string
+  game: NonNullable<GameQuery['game']>
+  gameState: GameState
 }
 
-const ResolvedMarkets: React.FC<MarketsProps> = ({ gameId, gameStatus }) => {
+const ResolvedMarkets: React.FC<MarketsProps> = ({ game, gameState }) => {
   const { address } = useAccount()
-  const { groupedMarkets, loading } = useResolvedMarkets({ gameId })
-  const { betsSummary } = useBetsSummaryBySelection({
+  const { data: markets, isLoading } = useResolvedMarkets({ gameId: game.gameId })
+  const { data: betsSummary } = useBetsSummaryBySelection({
     account: address!,
-    gameId,
-    gameStatus,
+    gameId: game.gameId,
+    gameState,
   })
 
-  if (loading) {
+  if (isLoading) {
     return <MarketsSkeleton />
   }
 
-  if (!groupedMarkets?.length) {
+  if (!markets?.length) {
     return <div>Empty</div>
   }
 
   return (
-    <Content markets={groupedMarkets} betsSummary={betsSummary} isResult />
+    <Content
+      markets={markets}
+      game={game}
+      betsSummary={betsSummary}
+      isResult
+    />
   )
 }
 
 
 const WAIT_TIME = 600000
 
-const ActiveMarkets: React.FC<MarketsProps> = ({ gameId, gameStatus, startsAt }) => {
-  const { loading, markets } = useActiveMarkets({
-    gameId,
-    gameStatus,
-    livePollInterval: 10000,
+const ActiveMarkets: React.FC<MarketsProps> = ({ game, gameState }) => {
+  const { data: markets, isLoading, isPlaceholderData } = useActiveMarkets({
+    gameId: game.id,
+    query: {
+      refetchInterval: 10_000,
+    },
   })
-  const isLive = gameStatus === GameStatus.Live
+  const isLive = gameState === GameState.Live
 
-  const startDate = +startsAt * 1000
+  const startDate = +game.startsAt * 1000
   const shouldWait = () => isLive && dayjs().diff(startDate) < WAIT_TIME
   const [ waitingTime, setWaitingTime ] = useState(
     shouldWait() ? WAIT_TIME - dayjs().diff(startDate) : 0
@@ -219,9 +259,9 @@ const ActiveMarkets: React.FC<MarketsProps> = ({ gameId, gameStatus, startsAt })
         clearInterval(interval)
       }
     }
-  }, [ gameStatus, markets ])
+  }, [ gameState, markets ])
 
-  if (loading) {
+  if (isLoading || isPlaceholderData) {
     return <MarketsSkeleton />
   }
 
@@ -260,18 +300,20 @@ const ActiveMarkets: React.FC<MarketsProps> = ({ gameId, gameStatus, startsAt })
   }
 
   return (
-    <Content markets={markets} />
+    <Content markets={markets} game={game} />
   )
 }
 
 const Markets: React.FC<MarketsProps> = (props) => {
-  const { gameStatus } = props
+  const { gameState, game } = props
 
-  if (gameStatus === GameStatus.Resolved) {
+  if (gameState === GameState.Finished) {
     return <ResolvedMarkets {...props} />
   }
 
-  if (gameStatus === GameStatus.Canceled || gameStatus === GameStatus.PendingResolution) {
+  const isPendingResolution = getIsPendingResolution({ state: gameState, startsAt: game.startsAt })
+
+  if (isPendingResolution) {
     return (
       <EmptyContent
         className="py-20"

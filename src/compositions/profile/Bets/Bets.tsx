@@ -1,14 +1,15 @@
 'use client'
 
-import { useChain, useRedeemBet, BetType, type Bet, type BetOutcome, usePrecalculatedCashouts } from '@azuro-org/sdk'
-import { getGameStatus, GameStatus } from '@azuro-org/toolkit'
+import { useChain, useRedeemBet, BetType, type Bet, type BetOutcome, usePrecalculatedCashouts, useBets, useLegacyBets } from '@azuro-org/sdk'
+import { GameState, OrderDirection } from '@azuro-org/toolkit'
 import { Message } from '@locmod/intl'
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import dayjs from 'dayjs'
 import { useSearchParams, useRouter, usePathname } from 'next/navigation'
 import cx from 'classnames'
-import { useBets } from 'hooks'
 import { openModal } from '@locmod/modal'
+import { useAccount } from '@azuro-org/sdk-social-aa-connector'
+import { useEntry } from '@locmod/intersection-observer'
 import { constants } from 'helpers'
 import { getGameDateTime } from 'helpers/getters'
 import { formatToFixed } from 'helpers/formatters'
@@ -27,39 +28,34 @@ import messages from './messages'
 
 type OutcomeProps = {
   outcome: BetOutcome
-  isLive: boolean
   isCombo: boolean
 }
 
-const Outcome: React.FC<OutcomeProps> = ({ outcome, isLive, isCombo }) => {
+const Outcome: React.FC<OutcomeProps> = ({ outcome, isCombo }) => {
   const { odds, marketName, game, selectionName, isWin, isLose } = outcome
 
   const {
     title,
-    status: graphGameStatus, gameId, participants, startsAt,
+    state: gameState, gameId, participants, startsAt,
     sport: {
       slug: sportSlug,
     },
     league: {
       name: leagueName,
       slug: leagueSlug,
-      country: {
-        name: countryName,
-        slug: countrySlug,
-      },
+    },
+    country: {
+      name: countryName,
+      slug: countrySlug,
     },
   } = game
 
   const isUnique = sportSlug === 'unique'
   const { date, time } = getGameDateTime(+startsAt * 1000)
-  const gameStatus = getGameStatus({
-    graphStatus: graphGameStatus,
-    startsAt: +startsAt,
-    isGameInLive: isLive,
-  })
+  const isLive = game.state === GameState.Live
 
   const marketBoxClassName = 'text-caption-13 mb:flex mb:items-center mb:justify-between'
-  const marketClassName = cx('font-semibold', { 'text-grey-40': gameStatus === GameStatus.Canceled })
+  const marketClassName = cx('font-semibold', { 'text-grey-40': gameState === GameState.Stopped })
 
   return (
     <div className="rounded-sm overflow-hidden">
@@ -116,25 +112,25 @@ const Outcome: React.FC<OutcomeProps> = ({ outcome, isLive, isCombo }) => {
                 isCombo && (
                   <>
                     {
-                      [ GameStatus.Canceled, GameStatus.Live, GameStatus.Resolved ].includes(gameStatus) && (
+                      [ GameState.Stopped, GameState.Live, GameState.Finished ].includes(gameState) && (
                         <div className="size-1 flex-none bg-grey-40 rounded-full mx-2" />
                       )
                     }
                     {
-                      gameStatus === GameStatus.Canceled && (
+                      gameState === GameState.Stopped && (
                         <div className="flex items-center text-accent-yellow">
                           <Icon className="size-4 mr-[2px]" name="interface/declined" />
-                          <Message className="font-semibold" value={messages.gameStatus.declined} />
+                          <Message className="font-semibold" value={messages.gameState.declined} />
                         </div>
                       )
                     }
                     {
-                      gameStatus === GameStatus.Live && (
-                        <Message className="font-semibold text-accent-red" value={messages.gameStatus.live} />
+                      gameState === GameState.Live && (
+                        <Message className="font-semibold text-accent-red" value={messages.gameState.live} />
                       )
                     }
                     {
-                      gameStatus === GameStatus.Resolved && (
+                      gameState === GameState.Finished && (
                         <Message
                           className={
                             cx('font-semibold', {
@@ -142,7 +138,7 @@ const Outcome: React.FC<OutcomeProps> = ({ outcome, isLive, isCombo }) => {
                               'text-accent-red': isLose,
                             })
                           }
-                          value={isWin ? messages.gameStatus.win : messages.gameStatus.lose}
+                          value={isWin ? messages.gameState.win : messages.gameState.lose}
                         />
                       )
                     }
@@ -184,7 +180,7 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
   const {
     createdAt, status: graphBetStatus, amount, outcomes,
     payout, cashout, possibleWin, freebetId, txHash, tokenId,
-    isWin, isLose, isCanceled, isRedeemed, isLive, isCashedOut,
+    isWin, isLose, isCanceled, isRedeemed, isCashedOut,
   } = bet
 
   const { betToken, appChain } = useChain()
@@ -193,7 +189,8 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
     tokenId,
     selections: outcomes,
     graphBetStatus,
-    enabled: !isCashedOut,
+    // enabled: !isCashedOut,
+    enabled: false, // TODO
   })
 
   const resultDecimals = constants.resultAmountDecimalsByChain[appChain.id] || 2
@@ -265,7 +262,6 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
         <BetStatus
           graphBetStatus={graphBetStatus}
           games={outcomes.map(({ game }) => game)}
-          isLiveBet={isLive}
           isWin={isWin}
           isCashedOut={isCashedOut}
         />
@@ -276,7 +272,6 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
             <Outcome
               key={outcome.game.gameId}
               outcome={outcome}
-              isLive={isLive}
               isCombo={isCombo}
             />
           ))
@@ -406,22 +401,41 @@ const Navbar: React.FC<NavbarProps> = ({ activeType, onClick }) => {
   )
 }
 
-type ContentProps = {
-  bets: Bet[]
-  isFetching: boolean
+type FetchMoreProps = {
+  fetch: () => void
+  skip: boolean
 }
 
-const Content: React.FC<ContentProps> = ({ bets, isFetching }) => {
+const FetchMore: React.FC<FetchMoreProps> = ({ fetch, skip }) => {
+  const [ ref, entry ] = useEntry()
 
-  if (isFetching) {
-    return (
-      <div className="py-20">
-        <Icon className="size-12 mx-auto" name="interface/spinner" />
-      </div>
-    )
-  }
+  const isIntersecting = Boolean(entry?.isIntersecting)
 
-  if (!bets?.length) {
+  useEffect(() => {
+    if (!skip && isIntersecting) {
+      fetch()
+    }
+  }, [ isIntersecting, skip, fetch ])
+
+  return <div ref={ref} className="" />
+}
+
+type BetsPagesProps = {
+  pages: {
+    bets: Bet[]
+    nextPage: number | undefined
+  }[] | undefined
+  isFetching: boolean
+  hasNextPage: boolean
+  isPlaceholderData: boolean
+  withEmptyContent?: boolean
+  fetchNextPage: () => any
+}
+
+const BetsPages: React.FC<BetsPagesProps> = (props) => {
+  const { pages, isFetching, withEmptyContent = false, hasNextPage, isPlaceholderData, fetchNextPage } = props
+
+  if (withEmptyContent && !isFetching && (!pages?.length || !pages[0].bets.length)) {
     return (
       <EmptyContent
         className="py-20"
@@ -433,13 +447,87 @@ const Content: React.FC<ContentProps> = ({ bets, isFetching }) => {
   }
 
   return (
-    <div className="space-y-2">
+    <>
+      <div className="space-y-2">
+        {
+          !isPlaceholderData && (
+            <>
+              {
+                pages?.map(({ bets, nextPage }) => {
+                  return (
+                    <React.Fragment key={`${nextPage}`}>
+                      {
+                        bets.map(bet => (
+                          <Bet key={`${bet.createdAt}-${bet.tokenId}`} bet={bet} />
+                        ))
+                      }
+                    </React.Fragment>
+                  )
+                })
+              }
+            </>
+          )
+        }
+        {
+          isFetching && (
+            <div className="py-20">
+              <Icon className="size-12 mx-auto" name="interface/spinner" />
+            </div>
+          )
+        }
+      </div>
+      {Boolean(pages && !isPlaceholderData) && <FetchMore fetch={fetchNextPage} skip={!hasNextPage} />}
+    </>
+  )
+}
+
+type ContentProps = {
+  tab: BetType
+}
+
+const Content: React.FC<ContentProps> = ({ tab }) => {
+  const { address } = useAccount()
+  const props = {
+    filter: {
+      bettor: address!,
+      type: tab,
+    },
+    orderDir: OrderDirection.Desc,
+  }
+
+  const betsQuery = useBets(props)
+  const legacyBetsQuery = useLegacyBets({
+    ...props,
+    query: {
+      enabled: !betsQuery.isFetching && !betsQuery.hasNextPage,
+    },
+  })
+
+  console.log('betsQuery', betsQuery)
+  console.log('legacyBetsQuery', legacyBetsQuery)
+
+  return (
+    <>
+      <BetsPages
+        pages={betsQuery?.data?.pages}
+        isFetching={!legacyBetsQuery.isPlaceholderData && (betsQuery.isFetching || betsQuery.isFetchingNextPage)}
+        hasNextPage={betsQuery.hasNextPage}
+        isPlaceholderData={betsQuery.isPlaceholderData}
+        fetchNextPage={betsQuery.fetchNextPage}
+      />
       {
-        bets.map(bet => (
-          <Bet key={`${bet.createdAt}-${bet.tokenId}`} bet={bet} />
-        ))
+        !betsQuery.hasNextPage && (
+          <BetsPages
+            pages={legacyBetsQuery?.data?.pages}
+            isFetching={legacyBetsQuery.isFetching || legacyBetsQuery.isFetchingNextPage}
+            hasNextPage={legacyBetsQuery.hasNextPage}
+            isPlaceholderData={legacyBetsQuery.isPlaceholderData}
+            fetchNextPage={legacyBetsQuery.fetchNextPage}
+            withEmptyContent
+          />
+        )
       }
-    </div>
+    </>
   )
 }
 
@@ -449,8 +537,6 @@ const Bets: React.FC = () => {
   const router = useRouter()
 
   const tab = searchParams.get('tab') as BetType || undefined
-
-  const { bets, loading } = useBets(tab)
 
   const handleTabChange = (type: BetType | undefined) => {
     const params = new URLSearchParams(searchParams.toString())
@@ -468,7 +554,7 @@ const Bets: React.FC = () => {
   return (
     <div className="space-y-3">
       <Navbar activeType={tab} onClick={(type) => handleTabChange(type)} />
-      <Content bets={bets} isFetching={loading} />
+      <Content tab={tab} />
     </div>
   )
 }

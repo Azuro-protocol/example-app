@@ -4,7 +4,7 @@ import React, { useEffect, useState, useSyncExternalStore } from 'react'
 import { useParams } from 'next/navigation'
 import { Message } from '@locmod/intl'
 import cx from 'classnames'
-import { useGame, useGameStatus, useLiveStatistics } from '@azuro-org/sdk'
+import { useGame, useLiveStatistics } from '@azuro-org/sdk'
 import { type GamesQuery } from '@azuro-org/toolkit'
 import { useIsMounted } from 'hooks'
 import { closeModal } from '@locmod/modal'
@@ -22,7 +22,6 @@ import messages from './messages'
 type ContentProps = {
   storeGameId: string
   game: GamesQuery['games'][0]
-  isGameInLive: boolean
   isGamePage: boolean
   withCollapse?: boolean
   withClearButton?: boolean
@@ -30,21 +29,16 @@ type ContentProps = {
 }
 
 const Content: React.FC<ContentProps> = (props) => {
-  const { storeGameId, game, isGameInLive, isGamePage, withCollapse = true, withClearButton = true, withBottomLine = false } = props
+  const { storeGameId, game, isGamePage, withCollapse = true, withClearButton = true, withBottomLine = false } = props
 
   const [ isVisible, setVisible ] = useState(true)
   const [ isWarningVisible, setWarningVisible ] = useState(false)
   const isMounted = useIsMounted()
 
-  const { status } = useGameStatus({
-    graphStatus: game.status,
-    startsAt: +game.startsAt,
-    isGameExistInLive: isGameInLive,
-  })
-  const { statistics, isFetching, isAvailable } = useLiveStatistics({
+  const { data: statistics, isFetching, isAvailable } = useLiveStatistics({
     gameId: game.gameId,
     sportId: game?.sport?.sportId!,
-    gameStatus: status,
+    gameState: game?.state,
   })
 
 
@@ -171,11 +165,11 @@ const LiveStatistics: React.FC<LiveStatisticsProps> = (props) => {
     gameId = params.gameId as string
   }
 
-  const { game, isGameInLive, loading: isGameFetching } = useGame({ gameId })
+  const { data: game, isFetching } = useGame({ gameId })
 
   const isGamePage = Boolean(params.gameId)
 
-  if (isGameFetching || !game) {
+  if (isFetching || !game) {
     return null
   }
 
@@ -185,7 +179,6 @@ const LiveStatistics: React.FC<LiveStatisticsProps> = (props) => {
       storeGameId={storeGameId}
       game={game!}
       isGamePage={isGamePage}
-      isGameInLive={isGameInLive}
     />
   )
 }

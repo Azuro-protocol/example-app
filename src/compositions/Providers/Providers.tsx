@@ -29,7 +29,7 @@ const Providers: React.CFC<Props> = (props) => {
       <SvgProvider>
         <IntlProvider locale="en">
           <WagmiProvider initialState={initialState}>
-            <AzuroSDKProvider initialChainId={initialChainId} affiliate={process.env.NEXT_PUBLIC_AFFILIATE_ADDRESS as Address} isBatchBetWithSameGameEnabled>
+            <AzuroSDKProvider initialChainId={initialChainId} affiliate={process.env.NEXT_PUBLIC_AFFILIATE_ADDRESS as Address}>
               <LiveProvider initialLiveState={initialLiveState}>
                 <OddsViewProvider>
                   {children}

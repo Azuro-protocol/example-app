@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import cx from 'classnames'
-import { useBaseBetslip, useChain, useDetailedBetslip, usePrepareBet } from '@azuro-org/sdk'
+import { useBaseBetslip, useChain, useDetailedBetslip, useBet } from '@azuro-org/sdk'
 import { type Address } from 'viem'
 import { Message } from '@locmod/intl'
 import { useAccount } from '@azuro-org/sdk-social-aa-connector'
@@ -25,8 +25,8 @@ const BetButton: React.FC<BetButtonProps> = ({ isEnoughBalance, isBalanceFetchin
   const { betToken } = useChain()
   const { items, clear } = useBaseBetslip()
   const {
-    betAmount, odds, totalOdds, selectedFreeBet, batchBetAmounts,
-    isBetAllowed, isOddsFetching, isStatusesFetching, isBatch,
+    betAmount, odds, totalOdds,
+    isBetAllowed, isOddsFetching, isStatesFetching, isMaxBetFetching,
   } = useDetailedBetslip()
 
   const totalOddsRef = useRef(totalOdds)
@@ -44,14 +44,15 @@ const BetButton: React.FC<BetButtonProps> = ({ isEnoughBalance, isBalanceFetchin
     isRelayerFeeLoading,
     isAllowanceLoading,
     isApproveRequired,
-  } = usePrepareBet({
-    betAmount: isBatch ? batchBetAmounts : betAmount,
+  } = useBet({
+    // betAmount: isBatch ? batchBetAmounts : betAmount,
+    betAmount,
     slippage,
     affiliate: process.env.NEXT_PUBLIC_AFFILIATE_ADDRESS as Address,
     selections: items,
     odds,
     totalOdds,
-    freeBet: selectedFreeBet,
+    // freeBet: selectedFreeBet,
     onSuccess: () => {
       openModal('SuccessModal', {
         title: messages.success.title,
@@ -72,8 +73,9 @@ const BetButton: React.FC<BetButtonProps> = ({ isEnoughBalance, isBalanceFetchin
 
   const isLoading = (
     isOddsFetching
+    || isMaxBetFetching
     || isBalanceFetching
-    || isStatusesFetching
+    || isStatesFetching
     || isAllowanceLoading
     || isPending
     || isProcessing

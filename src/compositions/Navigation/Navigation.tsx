@@ -26,8 +26,9 @@ type LeagueProps = NavigationQuery['sports'][0]['countries'][0]['leagues'][0] & 
 }
 
 const League: React.FC<LeagueProps> = (props) => {
-  const { url, name, country, games, slug } = props
+  const { url, name, country, slug, activeLiveGamesCount, activePrematchGamesCount } = props
 
+  const { isLive } = useLive()
   const { countrySlug, leagueSlug } = useParams()
 
   const isActive = Boolean(leagueSlug) && countrySlug === country.slug && slug === leagueSlug
@@ -37,13 +38,15 @@ const League: React.FC<LeagueProps> = (props) => {
     'text-grey-90': isActive,
   })
 
+  const gamesCount = isLive ? activeLiveGamesCount : activePrematchGamesCount
+
   return (
     <Href to={url} className={rootClassName}>
       <div className="flex items-center overflow-hidden">
         <Flag className="mr-2 flex-none" country={country.slug} />
         <div className="text-caption-13 text-ellipsis whitespace-nowrap overflow-hidden">{name}</div>
       </div>
-      <div className="bg-grey-10 px-1 py-px ml-2 text-caption-12">{games?.length || 0}</div>
+      <div className="bg-grey-10 px-1 py-px ml-2 text-caption-12">{gamesCount}</div>
     </Href>
   )
 }
@@ -132,35 +135,23 @@ type NavigationProps = {
 
 const Navigation: React.FC<NavigationProps> = ({ className }) => {
   const { isLive } = useLive()
-  const { navigation, loading } = useNavigation({
-    withGameCount: true,
+  const { data: navigation, isPending } = useNavigation({
     isLive,
   })
 
-  const { allTopGames, gamesPerSport } = useMemo(() => {
+  const allTopGames = useMemo(() => {
     if (!navigation) {
-      return {}
+      return 0
     }
 
-    let result = 0
-    const gamesPerSport: Record<string, number> = {}
+    return navigation.reduce((acc, { activeLiveGamesCount, activePrematchGamesCount }) => {
+      const gamesCount = isLive ? activeLiveGamesCount : activePrematchGamesCount
 
-    Object.values(navigation).forEach(({ sportId, countries }) => {
-      let gamesCount = 0
+      acc += Math.min(gamesCount, constants.topPageGamePerSportLimit)
 
-      countries.forEach(({ leagues }) => {
-        gamesCount += leagues.reduce((acc, { games }) => acc + games!.length, 0)
-      })
-
-      gamesPerSport[sportId] = gamesCount
-      result += Math.min(gamesCount, constants.topPageGamePerSportLimit)
-    })
-
-    return {
-      allTopGames: result,
-      gamesPerSport,
-    }
-  }, [ navigation ])
+      return acc
+    }, 0)
+  }, [ navigation, isLive ])
 
   const sortedSports = useMemo(() => {
     if (!navigation) {
@@ -195,7 +186,7 @@ const Navigation: React.FC<NavigationProps> = ({ className }) => {
     })
   }, [ navigation ])
 
-  if (loading) {
+  if (isPending) {
     return <Skeleton className={className} />
   }
 
@@ -204,9 +195,14 @@ const Navigation: React.FC<NavigationProps> = ({ className }) => {
       <Message className="text-caption-13 font-semibold py-2 px-4 mb-2" value={messages.title} tag="p" />
       <Sport slug="/" name={messages.top} gamesCount={allTopGames} />
       {
-        sortedSports?.map(sport => (
-          <Sport key={sport.slug} gamesCount={gamesPerSport?.[sport.sportId] || 0} {...sport} />
-        ))
+        sortedSports?.map(sport => {
+          const { activeLiveGamesCount, activePrematchGamesCount } = sport
+          const gamesCount = isLive ? activeLiveGamesCount : activePrematchGamesCount
+
+          return (
+            <Sport key={sport.slug} gamesCount={gamesCount} {...sport} />
+          )
+        })
       }
     </div>
   )

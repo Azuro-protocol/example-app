@@ -17,13 +17,18 @@ const useMarket = ({ markets }: Props) => {
   isOpenRef.current = isOpen
 
   const {
+    data,
+    isFetching,
+  } = useActiveMarket({ markets })
+
+  const {
+    states,
     activeMarketKey,
     activeConditionIndex,
     marketsByKey,
     otherMarkets,
     sortedMarketKeys,
-    loading,
-  } = useActiveMarket({ markets })
+  } = data
 
   useMemo(() => {
     if (!isMobileView && !isOpen && contentRef.current) {
@@ -55,6 +60,7 @@ const useMarket = ({ markets }: Props) => {
 
   return {
     contentRef,
+    states,
     activeMarketKey,
     activeConditionIndex,
     marketsByKey,
@@ -62,7 +68,7 @@ const useMarket = ({ markets }: Props) => {
     sortedMarketKeys,
     isOpen,
     isMobileView,
-    isFetching: loading,
+    isFetching,
     setOpen,
   }
 }

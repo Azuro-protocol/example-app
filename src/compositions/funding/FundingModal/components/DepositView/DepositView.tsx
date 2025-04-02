@@ -26,9 +26,10 @@ const DepositView: React.FC<DepositViewProps> = (props) => {
 
   const { account, isAAWallet } = useWallet()
   const { appChain, betToken } = useChain()
-  const { balance, loading: isBalancesFetching, refetch: refetchBetTokenBalance } = useBetTokenBalance()
+  const { data, isLoading: isBalancesFetching, refetch: refetchBetTokenBalance } = useBetTokenBalance()
 
   // const handleBuyCryptoClick = useBuyWithCardClick()
+  const { balance } = data || {}
 
   const steps = useMemo(() => {
     const iconClassName = 'inline grayscale size-4 align-text-top'

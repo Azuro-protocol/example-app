@@ -1,15 +1,11 @@
 'use client'
 
 import React, { useRef } from 'react'
-import { useBaseBetslip, useChain, type BetslipItem } from '@azuro-org/sdk'
-import { ConditionStatus, liveHostAddress } from '@azuro-org/toolkit'
+import { useBaseBetslip, useChain, useGameState } from '@azuro-org/sdk'
+import { ConditionState, GameState } from '@azuro-org/toolkit'
 import cx from 'classnames'
-import { Message } from '@locmod/intl'
-import { constants } from 'helpers'
 
-import { formatToFixed } from 'helpers/formatters'
 import useOddsChange from 'src/hooks/useOddsChange'
-import { Input } from 'components/inputs'
 import { Warning } from 'components/feedback'
 import { Icon, LiveDot, type IconName } from 'components/ui'
 import OddsValue from 'compositions/OddsValue/OddsValue'
@@ -18,22 +14,39 @@ import messages from './messages'
 
 
 type ItemProps = {
-  item: BetslipItem
-  batchBetAmount: string
-  status: ConditionStatus
+  item: AzuroSDK.BetslipItem
+  // batchBetAmount: string
+  state: ConditionState
   odds: number
-  isStatusesFetching: boolean
+  isStatesFetching: boolean
   isOddsFetching: boolean
-  isBatch: boolean
-  onBatchAmountChange: (value: string) => void
+  // isBatch: boolean
+  // onBatchAmountChange: (value: string) => void
 }
 
 const Card: React.FC<ItemProps> = (props) => {
-  const { item, batchBetAmount, odds, status, isOddsFetching, isStatusesFetching, isBatch, onBatchAmountChange } = props
-  const { marketName, selectionName, coreAddress, game: { sportSlug, countryName, leagueName, title } } = item
+  const { item, odds, state, isOddsFetching, isStatesFetching } = props
+  const { marketName, selectionName, game } = item
+  const {
+    gameId,
+    title,
+    sport: {
+      slug: sportSlug,
+    },
+    country: {
+      name: countryName,
+    },
+    league: {
+      name: leagueName,
+    },
+  } = game
 
   const { appChain, betToken } = useChain()
   const { removeItem } = useBaseBetslip()
+  const { data: gameState } = useGameState({
+    gameId,
+    initialState: game.state,
+  })
   const nodeRef = useRef<HTMLDivElement>(null)
   useOddsChange({ odds, nodeRef })
   const oddsRef = useRef(odds)
@@ -42,8 +55,8 @@ const Card: React.FC<ItemProps> = (props) => {
     oddsRef.current = odds
   }
 
-  const isDisabled = !isStatusesFetching && status !== ConditionStatus.Created
-  const isLive = coreAddress === liveHostAddress
+  const isDisabled = !isStatesFetching && state !== ConditionState.Active
+  const isLive = gameState === GameState.Live
   const isUnique = sportSlug === 'unique'
 
   const bottomBoxClassName = cx(
@@ -127,7 +140,7 @@ const Card: React.FC<ItemProps> = (props) => {
                   )
                 }
               </div>
-              {
+              {/* {
                 isBatch && (
                   <div className="flex items-center mt-2">
                     <Input
@@ -146,7 +159,7 @@ const Card: React.FC<ItemProps> = (props) => {
                     </div>
                   </div>
                 )
-              }
+              } */}
             </>
           )
         }

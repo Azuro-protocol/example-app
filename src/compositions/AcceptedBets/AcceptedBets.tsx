@@ -1,10 +1,11 @@
 'use client'
 
-import { BetType } from '@azuro-org/sdk'
+import { BetType, useBets } from '@azuro-org/sdk'
+import { OrderDirection } from '@azuro-org/toolkit'
+import { useAccount } from '@azuro-org/sdk-social-aa-connector'
 import { Message } from '@locmod/intl'
 import React from 'react'
 import dynamic from 'next/dynamic'
-import useBets from 'src/hooks/useBets'
 
 import { Button } from 'components/inputs'
 import EmptyContentComp from 'compositions/EmptyContent/EmptyContent'
@@ -29,15 +30,27 @@ const EmptyContent: React.FC = () => {
 }
 
 const AcceptedBets: React.FC = () => {
-  const { bets, loading } = useBets(BetType.Accepted)
+  const { address } = useAccount()
 
-  if (loading) {
+  const props = {
+    filter: {
+      bettor: address!,
+      type: BetType.Accepted,
+    },
+    itemsPerPage: 500,
+    orderDir: OrderDirection.Desc,
+  }
+  const { data, isLoading } = useBets(props)
+
+  if (isLoading) {
     return (
       <div className="bone rounded-sm h-[7.75rem] w-full" />
     )
   }
 
-  if (!bets?.length) {
+  const { pages } = data || {}
+
+  if (!pages?.length || !pages[0].bets.length) {
     return (
       <EmptyContent />
     )
@@ -46,13 +59,24 @@ const AcceptedBets: React.FC = () => {
   return (
     <>
       <div className="p-3">
-        <Message className="text-caption-14 font-semibold" value={{ ...messages.title, values: { count: bets.length } }} />
+        <Message
+          className="text-caption-14 font-semibold"
+          value={{ ...messages.title, values: { count: pages[0].bets.length } }}
+        />
       </div>
       <div className="space-y-2 max-h-[28rem] overflow-auto no-scrollbar">
         {
-          bets.map(bet => (
-            <BetCard key={bet.tokenId} bet={bet} />
-          ))
+          pages?.map(({ bets, nextPage }) => {
+            return (
+              <React.Fragment key={`${nextPage}`}>
+                {
+                  bets.map((bet: any) => (
+                    <BetCard key={bet.tokenId} bet={bet} />
+                  ))
+                }
+              </React.Fragment>
+            )
+          })
         }
       </div>
       <Button

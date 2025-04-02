@@ -1,8 +1,8 @@
 'use client'
 
 import { useEffect } from 'react'
-import { useGame, useGameStatus } from '@azuro-org/sdk'
-import { type GameQuery } from '@azuro-org/toolkit'
+import { useGame, useGameState } from '@azuro-org/sdk'
+import { GameState, type GameQuery } from '@azuro-org/toolkit'
 import { useParams } from 'next/navigation'
 import { liveStatisticsGameIdStore } from 'helpers/stores'
 
@@ -11,27 +11,25 @@ import Markets, { MarketsSkeleton } from 'compositions/event/Markets/Markets'
 
 
 type ContentProps = {
-  game: GameQuery['games'][0]
-  isGameInLive: boolean
+  game: NonNullable<GameQuery['game']>
 }
 
-const Content: React.FC<ContentProps> = ({ game, isGameInLive }) => {
-  const { status } = useGameStatus({
-    graphStatus: game.status,
-    startsAt: +game.startsAt,
-    isGameExistInLive: isGameInLive,
+const Content: React.FC<ContentProps> = ({ game }) => {
+  const { data: state } = useGameState({
+    gameId: game.gameId,
+    initialState: game.state,
   })
 
   useEffect(() => {
-    if (isGameInLive) {
+    if (game?.state === GameState.Live) {
       liveStatisticsGameIdStore.setGameId(game.gameId)
     }
-  }, [ isGameInLive ])
+  }, [ game ])
 
   return (
     <>
-      <EventInfo game={game} status={status} />
-      <Markets gameId={game.gameId} gameStatus={status} startsAt={game.startsAt} />
+      <EventInfo game={game!} state={state} />
+      <Markets gameState={state} game={game} />
     </>
   )
 }
@@ -39,11 +37,11 @@ const Content: React.FC<ContentProps> = ({ game, isGameInLive }) => {
 export default function EventPage() {
   const params = useParams()
 
-  const { loading, game, isGameInLive } = useGame({
+  const { data: game, isFetching } = useGame({
     gameId: params.gameId as string,
   })
 
-  if (loading) {
+  if (isFetching) {
     return (
       <>
         <EventInfoSkeleton />
@@ -59,6 +57,6 @@ export default function EventPage() {
   }
 
   return (
-    <Content game={game} isGameInLive={isGameInLive} />
+    <Content game={game} />
   )
 }

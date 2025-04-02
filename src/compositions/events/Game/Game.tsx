@@ -1,10 +1,9 @@
 'use client'
 
 import React, { useState, useSyncExternalStore } from 'react'
-import { type Sport } from 'hooks'
 import cx from 'classnames'
-import { useGameStatus, useLive, LIVE_STATISTICS_SUPPORTED_SPORTS, LIVE_STATISTICS_SUPPORTED_PROVIDERS } from '@azuro-org/sdk'
-import { GameStatus, getProviderFromId } from '@azuro-org/toolkit'
+import { LIVE_STATISTICS_SUPPORTED_SPORTS, LIVE_STATISTICS_SUPPORTED_PROVIDERS, useGameState } from '@azuro-org/sdk'
+import { type GameQuery, GameState, getProviderFromId } from '@azuro-org/toolkit'
 import { openModal } from '@locmod/modal'
 import { useEntryListener } from '@locmod/intersection-observer'
 import { getGameDateTime } from 'helpers/getters'
@@ -43,7 +42,7 @@ export const GameSkeleton: React.FC<{ className?: string }> = ({ className }) =>
 type GameProps = {
   className?: string
   leagueUrl: string
-  game: Sport['leagues'][0]['games'][0]
+  game: NonNullable<GameQuery['game']>
   withTopRadius?: boolean
   isUnique?: boolean
 }
@@ -60,11 +59,9 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game, withTopRadius, 
       rootMargin: '50% 0px 30% 0px',
     },
   })
-  const { isLive } = useLive()
-  const { status } = useGameStatus({
-    graphStatus: game.status,
-    startsAt: +game.startsAt,
-    isGameExistInLive: isLive,
+  const { data: state } = useGameState({
+    gameId,
+    initialState: game.state,
   })
   const statisticsGameId = useSyncExternalStore(
     liveStatisticsGameIdStore.subscribe,
@@ -75,7 +72,7 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game, withTopRadius, 
   const providerId = getProviderFromId(gameId)
   const isSportAllowed = LIVE_STATISTICS_SUPPORTED_SPORTS.includes(+game.sport.sportId)
   const isProviderAllowed = LIVE_STATISTICS_SUPPORTED_PROVIDERS.includes(providerId)
-  const isInLive = status === GameStatus.Live
+  const isInLive = state === GameState.Live
   const isStatisticsAvailable = isProviderAllowed && isSportAllowed && isInLive
   const isSelectedForStatistics = isStatisticsAvailable && statisticsGameId === gameId
   const MarketsComp = isUnique ? UniqueMarkets : Markets
@@ -148,7 +145,7 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game, withTopRadius, 
       <div className="w-full ds:max-w-[26.25rem] mb:mt-2">
         {
           isMarketsVisible ? (
-            <MarketsComp gameId={gameId} gameStatus={status} />
+            <MarketsComp gameState={state} game={game} />
           ) : (
             <MarketsSkeleton />
           )

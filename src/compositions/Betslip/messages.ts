@@ -38,30 +38,30 @@ export default {
     [BetslipDisableReason.BetAmountLowerThanMinBet]: {
       en: 'The minimum allowable bet amount is capped at {minBet} {symbol}.',
     },
-    [BetslipDisableReason.ComboWithLive]: {
-      en: 'Live outcome can\'t be used in combo',
-    },
-    [BetslipDisableReason.ConditionStatus]: {
-      en: 'One or more outcomes have been removed or suspended. Review your betslip and remove them.',
-    },
+    // [BetslipDisableReason.ComboWithLive]: {
+    //   en: 'Live outcome can\'t be used in combo',
+    // },
+    // [BetslipDisableReason.ConditionStatus]: {
+    //   en: 'One or more outcomes have been removed or suspended. Review your betslip and remove them.',
+    // },
     [BetslipDisableReason.PrematchConditionInStartedGame]: {
       en: 'Game has started',
     },
     [BetslipDisableReason.ComboWithSameGame]: {
       en: 'Combo with outcomes from same game prohibited, please use Batch bet',
     },
-    [BetslipDisableReason.BatchWithLive]: {
-      en: 'Live outcome can\'t be used in batch',
-    },
+    // [BetslipDisableReason.BatchWithLive]: {
+    //   en: 'Live outcome can\'t be used in batch',
+    // },
     [BetslipDisableReason.FreeBetWithLive]: {
       en: 'FreeBet can\'t be used for live',
     },
     [BetslipDisableReason.FreeBetWithCombo]: {
       en: 'FreeBet can\'t be used for combo',
     },
-    [BetslipDisableReason.FreeBetWithBatch]: {
-      en: 'FreeBet can\'t be used for batch',
-    },
+    // [BetslipDisableReason.FreeBetWithBatch]: {
+    //   en: 'FreeBet can\'t be used for batch',
+    // },
     [BetslipDisableReason.FreeBetExpired]: {
       en: 'FreeBet is expired',
     },

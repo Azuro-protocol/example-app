@@ -1,11 +1,10 @@
 'use client'
 
-import React, { useState, useSyncExternalStore } from 'react'
+import React, { useSyncExternalStore } from 'react'
 import cx from 'classnames'
 import { LIVE_STATISTICS_SUPPORTED_SPORTS, LIVE_STATISTICS_SUPPORTED_PROVIDERS, useGameState } from '@azuro-org/sdk'
 import { type GameQuery, GameState, getProviderFromId } from '@azuro-org/toolkit'
 import { openModal } from '@locmod/modal'
-import { useEntryListener } from '@locmod/intersection-observer'
 import { getGameDateTime } from 'helpers/getters'
 import { liveStatisticsGameIdStore } from 'helpers/stores'
 
@@ -13,7 +12,6 @@ import { OpponentLogo } from 'components/dataDisplay'
 import { Href } from 'components/navigation'
 import { Icon, LiveLabel } from 'components/ui'
 import Markets, { MarketsSkeleton } from 'compositions/events/Markets/Markets'
-import UniqueMarkets from 'compositions/events/UniqueMarkets/UniqueMarkets'
 
 
 export const GameSkeleton: React.FC<{ className?: string }> = ({ className }) => {
@@ -51,14 +49,6 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game, withTopRadius, 
   const { gameId, title, participants, startsAt } = game
   const { date, time } = getGameDateTime(+startsAt * 1000)
 
-  const [ isMarketsVisible, setMarketsVisible ] = useState(false)
-  const [ ref ] = useEntryListener((entry) => {
-    setMarketsVisible(entry.isIntersecting)
-  }, {
-    observerProps: {
-      rootMargin: '50% 0px 30% 0px',
-    },
-  })
   const { data: state } = useGameState({
     gameId,
     initialState: game.state,
@@ -75,7 +65,6 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game, withTopRadius, 
   const isInLive = state === GameState.Live
   const isStatisticsAvailable = isProviderAllowed && isSportAllowed && isInLive
   const isSelectedForStatistics = isStatisticsAvailable && statisticsGameId === gameId
-  const MarketsComp = isUnique ? UniqueMarkets : Markets
 
   const handleStatisticsClick = () => {
     liveStatisticsGameIdStore.setGameId(gameId)
@@ -98,7 +87,7 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game, withTopRadius, 
   )
 
   return (
-    <div className={rootClassName} ref={ref}>
+    <div className={rootClassName}>
       {
         isInLive && (
           <div className={liveClassName} />
@@ -143,13 +132,7 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game, withTopRadius, 
         </button>
       </div>
       <div className="w-full ds:max-w-[26.25rem] mb:mt-2">
-        {
-          isMarketsVisible ? (
-            <MarketsComp gameState={state} game={game} />
-          ) : (
-            <MarketsSkeleton />
-          )
-        }
+        <Markets gameState={state} game={game} />
       </div>
     </div>
   )

@@ -31,7 +31,6 @@ const Result: React.FC<ResultProps> = ({ field }) => {
         orderBy: Game_OrderBy.StartsAt,
         orderDirection: OrderDirection.Desc,
         where: {
-          activeConditionsCount_not: 0,
           state_in: [ GameState.Live, GameState.Prematch ],
           title_contains_nocase: debouncedValue.toLowerCase(),
         },

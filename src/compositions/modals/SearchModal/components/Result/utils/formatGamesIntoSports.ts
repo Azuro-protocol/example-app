@@ -39,6 +39,7 @@ const formatSportsData = (gamesData: Games): Sport[] => {
         sportId,
         slug: sportSlug,
         name: sportName,
+        turnover: '0',
         countries: {},
       }
     }

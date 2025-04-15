@@ -10,6 +10,7 @@ import cx from 'classnames'
 import { openModal } from '@locmod/modal'
 import { useAccount } from '@azuro-org/sdk-social-aa-connector'
 import { useEntry } from '@locmod/intersection-observer'
+import { type InfiniteData, type UseInfiniteQueryResult } from '@tanstack/react-query'
 import { constants } from 'helpers'
 import { getGameDateTime } from 'helpers/getters'
 import { formatToFixed } from 'helpers/formatters'
@@ -420,19 +421,19 @@ const FetchMore: React.FC<FetchMoreProps> = ({ fetch, skip }) => {
 }
 
 type BetsPagesProps = {
-  pages: {
-    bets: Bet[]
-    nextPage: number | undefined
-  }[] | undefined
-  isFetching: boolean
-  hasNextPage: boolean
-  isPlaceholderData: boolean
+  query: UseInfiniteQueryResult<InfiniteData<{
+    bets: Bet[];
+    nextPage: number | undefined;
+  }>>
   withEmptyContent?: boolean
-  fetchNextPage: () => any
 }
 
 const BetsPages: React.FC<BetsPagesProps> = (props) => {
-  const { pages, isFetching, withEmptyContent = false, hasNextPage, isPlaceholderData, fetchNextPage } = props
+  const { query, withEmptyContent = false } = props
+  const { data, isPlaceholderData, fetchNextPage, hasNextPage } = query
+  const { pages } = data || {}
+
+  const isFetching = query.isFetching && !query.isRefetching || query.isFetching && query.isPlaceholderData || query.isFetchingNextPage
 
   if (withEmptyContent && !isFetching && (!pages?.length || !pages[0].bets.length)) {
     return (
@@ -468,7 +469,7 @@ const BetsPages: React.FC<BetsPagesProps> = (props) => {
           )
         }
         {
-          Boolean(!isPlaceholderData && isFetching) && (
+          isFetching && (
             <div className="py-20">
               <Icon className="size-12 mx-auto" name="interface/spinner" />
             </div>
@@ -505,20 +506,12 @@ const Content: React.FC<ContentProps> = ({ tab }) => {
   return (
     <>
       <BetsPages
-        pages={betsQuery?.data?.pages}
-        isFetching={!legacyBetsQuery.isPlaceholderData && (betsQuery.isFetching || betsQuery.isFetchingNextPage)}
-        hasNextPage={betsQuery.hasNextPage}
-        isPlaceholderData={betsQuery.isPlaceholderData}
-        fetchNextPage={betsQuery.fetchNextPage}
+        query={betsQuery}
       />
       {
         Boolean(!betsQuery.hasNextPage && !betsQuery.isLoading) && (
           <BetsPages
-            pages={legacyBetsQuery?.data?.pages}
-            isFetching={legacyBetsQuery.isFetching || legacyBetsQuery.isFetchingNextPage}
-            hasNextPage={legacyBetsQuery.hasNextPage}
-            isPlaceholderData={legacyBetsQuery.isPlaceholderData}
-            fetchNextPage={legacyBetsQuery.fetchNextPage}
+            query={legacyBetsQuery}
             withEmptyContent
           />
         )

@@ -468,7 +468,7 @@ const BetsPages: React.FC<BetsPagesProps> = (props) => {
           )
         }
         {
-          isFetching && (
+          Boolean(!isPlaceholderData && isFetching) && (
             <div className="py-20">
               <Icon className="size-12 mx-auto" name="interface/spinner" />
             </div>
@@ -502,9 +502,6 @@ const Content: React.FC<ContentProps> = ({ tab }) => {
     },
   })
 
-  console.log('betsQuery', betsQuery)
-  console.log('legacyBetsQuery', legacyBetsQuery)
-
   return (
     <>
       <BetsPages
@@ -515,7 +512,7 @@ const Content: React.FC<ContentProps> = ({ tab }) => {
         fetchNextPage={betsQuery.fetchNextPage}
       />
       {
-        !betsQuery.hasNextPage && (
+        Boolean(!betsQuery.hasNextPage && !betsQuery.isLoading) && (
           <BetsPages
             pages={legacyBetsQuery?.data?.pages}
             isFetching={legacyBetsQuery.isFetching || legacyBetsQuery.isFetchingNextPage}

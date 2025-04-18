@@ -63,8 +63,8 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game, withTopRadius, 
   const isSportAllowed = LIVE_STATISTICS_SUPPORTED_SPORTS.includes(+game.sport.sportId)
   const isProviderAllowed = LIVE_STATISTICS_SUPPORTED_PROVIDERS.includes(providerId)
   const isInLive = state === GameState.Live
-  const isStatisticsAvailable = isProviderAllowed && isSportAllowed && isInLive
-  const isSelectedForStatistics = isStatisticsAvailable && statisticsGameId === gameId
+  const isStatisticsAvailable = isProviderAllowed && isSportAllowed
+  const isSelectedForStatistics = statisticsGameId === gameId
 
   const handleStatisticsClick = () => {
     liveStatisticsGameIdStore.setGameId(gameId)
@@ -118,18 +118,22 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game, withTopRadius, 
             <div className="text-caption-13 font-semibold group-hover/game-link:underline">{title}</div>
           </div>
         </Href>
-        <button
-          className={
-            cx('hover:text-brand-50 ml-auto mb:mr-1 disabled:text-grey-20 disabled:cursor-not-allowed', {
-              'text-brand-50': isSelectedForStatistics,
-              'text-grey-70': !isSelectedForStatistics,
-            })
-          }
-          disabled={!isStatisticsAvailable}
-          onClick={handleStatisticsClick}
-        >
-          <Icon className="size-5" name="interface/statistics" />
-        </button>
+        {
+          isInLive && (
+            <button
+              className={
+                cx('hover:text-brand-50 ml-auto mb:mr-1 disabled:text-grey-20 disabled:cursor-not-allowed', {
+                  'text-brand-50': isSelectedForStatistics,
+                  'text-grey-70': !isSelectedForStatistics,
+                })
+              }
+              disabled={!isStatisticsAvailable}
+              onClick={handleStatisticsClick}
+            >
+              <Icon className="size-5" name="interface/statistics" />
+            </button>
+          )
+        }
       </div>
       <div className="w-full ds:max-w-[26.25rem] mb:mt-2">
         <Markets gameState={state} game={game} />

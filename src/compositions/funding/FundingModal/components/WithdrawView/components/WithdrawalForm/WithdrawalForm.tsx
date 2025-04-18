@@ -1,5 +1,6 @@
 import { Message } from '@locmod/intl'
 import { useBetTokenBalance, useChain } from '@azuro-org/sdk'
+import { useFieldState } from 'formular'
 import { constants } from 'helpers'
 
 import { Button, Form as FormComponent, Input } from 'components/inputs'
@@ -15,6 +16,9 @@ const WithdrawalForm: React.FC<{ className?: string }> = ({ className }) => {
   const { form, isReady, maxValue, submit, isSubmitting } = useWithdraw()
   const { balance } = useBetTokenBalance()
 
+  const { value: addressValue, error: addressError } = useFieldState(form.fields.address)
+  const { value: amountValue, error: amountError } = useFieldState(form.fields.amount)
+
   return (
     <FormComponent
       className={className}
@@ -22,7 +26,7 @@ const WithdrawalForm: React.FC<{ className?: string }> = ({ className }) => {
       onSubmit={submit}
     >
       <Message
-        className="text-caption-13"
+        className="text-caption-13 mb-1"
         value={
           { ...messages.address.label,
             values: {
@@ -34,18 +38,24 @@ const WithdrawalForm: React.FC<{ className?: string }> = ({ className }) => {
         tag="p"
       />
       <Input
-        value={form.fields.address.state.value}
+        value={addressValue}
         leftNode={<Icon className="size-4 mr-2" name={constants.chainIcons[appChain.id]} />}
         placeholder={messages.address.hint}
+        regExp=""
         onChange={(value) => form.fields.address.set(value)}
       />
+      {
+        Boolean(addressError) && (
+          <div className="text-caption-13 text-accent-red mt-1">{addressError}</div>
+        )
+      }
       <Message
-        className="text-caption-13 mt-4"
+        className="text-caption-13 mt-4 mb-1"
         value={messages.amount.label}
         tag="p"
       />
       <Input
-        value={form.fields.amount.state.value}
+        value={amountValue}
         leftNode={<Icon className="size-4 mr-2" name={constants.currencyIcons[appChain.id]} />}
         placeholder="0.00"
         type="number"
@@ -53,6 +63,11 @@ const WithdrawalForm: React.FC<{ className?: string }> = ({ className }) => {
         noMaxOverload
         onChange={(value) => form.fields.amount.set(value)}
       />
+      {
+        Boolean(amountError) && (
+          <div className="text-caption-13 text-accent-red mt-1">{amountError}</div>
+        )
+      }
       <Message
         className="mt-1.5 text-caption-13 text-grey-60"
         tag="p"

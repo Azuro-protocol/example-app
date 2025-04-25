@@ -83,9 +83,6 @@ const Card: React.FC<CardProps> = ({ game }) => {
     gameId: game.gameId,
   })
 
-  const { name, conditions } = markets?.[0] || {}
-  const outcomes = conditions?.[0]?.outcomes
-
   return (
     <div className="bg-card-border-bottom p-px rounded-md overflow-hidden">
       <div className="p-4 bg-grey-10 rounded-md">
@@ -147,7 +144,7 @@ const Events: React.FC = () => {
 
 
   useEffect(() => {
-    if (!games?.length) {
+    if (!games?.length || isFetching) {
       return
     }
 
@@ -158,7 +155,7 @@ const Events: React.FC = () => {
     return () => {
       slider?.destroy()
     }
-  }, [ games ])
+  }, [ games, isFetching ])
 
   if (isFetching) {
     return (

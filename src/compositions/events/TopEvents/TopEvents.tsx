@@ -137,7 +137,7 @@ const sliderConfiguration = {
 }
 
 const Events: React.FC = () => {
-  const { data: games, isPending } = useGames({
+  const { data: games, isFetching } = useGames({
     filter: {
       limit: 9,
     },
@@ -160,7 +160,7 @@ const Events: React.FC = () => {
     }
   }, [ games ])
 
-  if (isPending) {
+  if (isFetching) {
     return (
       <div className="flex items-center justify-between mt-6 space-x-2">
         <CardSkeleton />

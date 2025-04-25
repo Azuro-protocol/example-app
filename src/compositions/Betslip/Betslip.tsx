@@ -87,10 +87,7 @@ const Content: React.FC<ContentProps> = ({ openSettings }) => {
     <div>
       <div
         className={
-          cx('px-4 flex justify-between', {
-            'py-3': isSingle,
-            'pt-3': !isSingle,
-          })
+          cx('px-4 flex justify-between py-3')
         }
       >
         {

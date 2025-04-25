@@ -135,7 +135,7 @@ type NavigationProps = {
 
 const Navigation: React.FC<NavigationProps> = ({ className }) => {
   const { isLive } = useLive()
-  const { data: navigation, isPending } = useNavigation({
+  const { data: navigation, isFetching } = useNavigation({
     isLive,
   })
 
@@ -186,7 +186,7 @@ const Navigation: React.FC<NavigationProps> = ({ className }) => {
     })
   }, [ navigation ])
 
-  if (isPending) {
+  if (isFetching) {
     return <Skeleton className={className} />
   }
 

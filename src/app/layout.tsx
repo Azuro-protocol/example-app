@@ -4,10 +4,7 @@ import duration from 'dayjs/plugin/duration'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { cookies, headers } from 'next/headers'
-import { userAgent } from 'next/server'
-// import { cookieToInitialState } from 'wagmi'
 import { type ChainId } from '@azuro-org/toolkit'
-import { polygonAmoy } from 'viem/chains'
 import { constants } from 'helpers'
 import { appChains } from 'wallet/chains'
 
@@ -37,13 +34,12 @@ export default async function RootLayout({
   const headersList = await headers()
   const cookieStore = await cookies()
 
-  // const initialState = cookieToInitialState(config, headers().get('cookie'))
   const userAgent = headersList.get('user-agent')
   const _initialChainId = cookieStore.get('appChainId')?.value
   const initialLiveState = JSON.parse(cookieStore.get('live')?.value || 'false')
 
   const initialChainId = _initialChainId &&
-                  (appChains.find(chain => chain.id === +_initialChainId)?.id as ChainId) || polygonAmoy.id
+                  (appChains.find(chain => chain.id === +_initialChainId)?.id as ChainId) || constants.defaultChain.id
 
   return (
     <html lang="en">

@@ -47,7 +47,7 @@ export default {
   refund: {
     en: 'Refund',
   },
-  gameStatus: {
+  gameState: {
     declined: {
       en: 'Declined',
     },

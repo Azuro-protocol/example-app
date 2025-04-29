@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { type GameQuery, GameStatus } from '@azuro-org/toolkit'
+import { type GameQuery, GameState } from '@azuro-org/toolkit'
 import {
   type LiveStatistics,
   type HomeGuest,
@@ -43,7 +43,7 @@ export const EventInfoSkeleton: React.FC = () => {
 }
 
 type LiveScoreProps = {
-  participants: GameQuery['games'][0]['participants']
+  participants: NonNullable<GameQuery['game']>['participants']
   sportId: string
   liveScoreBoard: LiveStatistics['scoreBoard']
 }
@@ -122,14 +122,14 @@ const LiveScore: React.FC<LiveScoreProps> = ({ participants, sportId, liveScoreB
 }
 
 type TitleProps = {
-  status: GameStatus
+  state: GameState
   startsAt: string
   sportId: string
   liveScoreBoard: LiveStatistics['scoreBoard'] | undefined
   isFetching: boolean
 }
 
-const Title: React.FC<TitleProps> = ({ status, startsAt, sportId, liveScoreBoard, isFetching }) => {
+const Title: React.FC<TitleProps> = ({ state, startsAt, sportId, liveScoreBoard, isFetching }) => {
   const { date, time } = getGameDateTime(+startsAt * 1000)
 
   let content = (
@@ -139,7 +139,7 @@ const Title: React.FC<TitleProps> = ({ status, startsAt, sportId, liveScoreBoard
     </div>
   )
 
-  if (status === GameStatus.Resolved) {
+  if (state === GameState.Finished) {
     content = (
       <div className="text-caption-13 font-medium text-gray-50 text-center">
         <Message className="text-grey-70" value={messages.ended} />
@@ -148,7 +148,7 @@ const Title: React.FC<TitleProps> = ({ status, startsAt, sportId, liveScoreBoard
     )
   }
 
-  if (status === GameStatus.Live) {
+  if (state === GameState.Live) {
     content = isFetching ? <div /> : (
       <LiveTotalScore
         className="!text-heading-h2 !font-extrabold"
@@ -166,11 +166,11 @@ const Title: React.FC<TitleProps> = ({ status, startsAt, sportId, liveScoreBoard
 }
 
 type EventInfoProps = {
-  game: GameQuery['games'][0]
-  status: GameStatus
+  game: NonNullable<GameQuery['game']>
+  state: GameState
 }
 
-const EventInfo: React.FC<EventInfoProps> = ({ game, status }) => {
+const EventInfo: React.FC<EventInfoProps> = ({ game, state }) => {
   const {
     gameId,
     sport: {
@@ -182,21 +182,21 @@ const EventInfo: React.FC<EventInfoProps> = ({ game, status }) => {
     title,
     league: {
       name: leagueName,
-      country: {
-        slug: countrySlug,
-        name: countryName,
-      },
+    },
+    country: {
+      slug: countrySlug,
+      name: countryName,
     },
   } = game
 
-  const { statistics, isFetching } = useLiveStatistics({
+  const { data: statistics, isFetching } = useLiveStatistics({
     gameId,
     sportId,
-    gameStatus: status,
+    gameState: state,
     enabled: Boolean(game),
   })
 
-  const isLive = status === GameStatus.Live
+  const isLive = status === GameState.Live
 
   return (
     <div className="-mx-2">
@@ -227,7 +227,7 @@ const EventInfo: React.FC<EventInfoProps> = ({ game, status }) => {
         <div className="relative flex items-center ds:justify-around mb:justify-center ds:max-w-[50%] mx-auto">
           <OpponentLogo className="mb:absolute mb:left-0 mb:top-0" image={participants[0].image} size={56} />
           <Title
-            status={status}
+            state={state}
             startsAt={startsAt}
             sportId={sportId}
             liveScoreBoard={statistics?.scoreBoard}

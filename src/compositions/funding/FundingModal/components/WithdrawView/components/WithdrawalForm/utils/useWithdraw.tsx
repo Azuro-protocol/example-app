@@ -18,12 +18,14 @@ const validateGreaterThanZero = (value: string) => parseFloat(value) > 0 ? undef
 
 const useWithdraw = () => {
   const { appChain, betToken } = useChain()
-  const { balance, refetch: refetchBetTokenBalance } = useBetTokenBalance()
+  const { data: balanceData, refetch: refetchBetTokenBalance } = useBetTokenBalance()
   const { aaWalletClient, isReady } = useWallet()
   const isMounted = useIsMounted()
   const publicClient = usePublicClient()
 
   const [ isSubmitting, setSubmitting ] = useState(false)
+
+  const { balance } = balanceData || {}
 
   const form = useForm<{ address: string, amount: string }>({
     fields: {

@@ -1,12 +1,10 @@
 'use client'
 
-import React, { useState, useSyncExternalStore } from 'react'
-import { type Sport } from 'hooks'
+import React, { useSyncExternalStore } from 'react'
 import cx from 'classnames'
-import { useGameStatus, useLive, LIVE_STATISTICS_SUPPORTED_SPORTS, LIVE_STATISTICS_SUPPORTED_PROVIDERS } from '@azuro-org/sdk'
-import { GameStatus, getProviderFromId } from '@azuro-org/toolkit'
+import { LIVE_STATISTICS_SUPPORTED_SPORTS, LIVE_STATISTICS_SUPPORTED_PROVIDERS, useGameState } from '@azuro-org/sdk'
+import { type GameQuery, GameState, getProviderFromId } from '@azuro-org/toolkit'
 import { openModal } from '@locmod/modal'
-import { useEntryListener } from '@locmod/intersection-observer'
 import { getGameDateTime } from 'helpers/getters'
 import { liveStatisticsGameIdStore } from 'helpers/stores'
 
@@ -14,7 +12,6 @@ import { OpponentLogo } from 'components/dataDisplay'
 import { Href } from 'components/navigation'
 import { Icon, LiveLabel } from 'components/ui'
 import Markets, { MarketsSkeleton } from 'compositions/events/Markets/Markets'
-import UniqueMarkets from 'compositions/events/UniqueMarkets/UniqueMarkets'
 
 
 export const GameSkeleton: React.FC<{ className?: string }> = ({ className }) => {
@@ -43,7 +40,7 @@ export const GameSkeleton: React.FC<{ className?: string }> = ({ className }) =>
 type GameProps = {
   className?: string
   leagueUrl: string
-  game: Sport['leagues'][0]['games'][0]
+  game: NonNullable<GameQuery['game']>
   withTopRadius?: boolean
   isUnique?: boolean
 }
@@ -52,19 +49,9 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game, withTopRadius, 
   const { gameId, title, participants, startsAt } = game
   const { date, time } = getGameDateTime(+startsAt * 1000)
 
-  const [ isMarketsVisible, setMarketsVisible ] = useState(false)
-  const [ ref ] = useEntryListener((entry) => {
-    setMarketsVisible(entry.isIntersecting)
-  }, {
-    observerProps: {
-      rootMargin: '50% 0px 30% 0px',
-    },
-  })
-  const { isLive } = useLive()
-  const { status } = useGameStatus({
-    graphStatus: game.status,
-    startsAt: +game.startsAt,
-    isGameExistInLive: isLive,
+  const { data: state } = useGameState({
+    gameId,
+    initialState: game.state,
   })
   const statisticsGameId = useSyncExternalStore(
     liveStatisticsGameIdStore.subscribe,
@@ -75,10 +62,9 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game, withTopRadius, 
   const providerId = getProviderFromId(gameId)
   const isSportAllowed = LIVE_STATISTICS_SUPPORTED_SPORTS.includes(+game.sport.sportId)
   const isProviderAllowed = LIVE_STATISTICS_SUPPORTED_PROVIDERS.includes(providerId)
-  const isInLive = status === GameStatus.Live
-  const isStatisticsAvailable = isProviderAllowed && isSportAllowed && isInLive
-  const isSelectedForStatistics = isStatisticsAvailable && statisticsGameId === gameId
-  const MarketsComp = isUnique ? UniqueMarkets : Markets
+  const isInLive = state === GameState.Live
+  const isStatisticsAvailable = isProviderAllowed && isSportAllowed
+  const isSelectedForStatistics = statisticsGameId === gameId
 
   const handleStatisticsClick = () => {
     liveStatisticsGameIdStore.setGameId(gameId)
@@ -101,7 +87,7 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game, withTopRadius, 
   )
 
   return (
-    <div className={rootClassName} ref={ref}>
+    <div className={rootClassName}>
       {
         isInLive && (
           <div className={liveClassName} />
@@ -132,27 +118,25 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game, withTopRadius, 
             <div className="text-caption-13 font-semibold group-hover/game-link:underline">{title}</div>
           </div>
         </Href>
-        <button
-          className={
-            cx('hover:text-brand-50 ml-auto mb:mr-1 disabled:text-grey-20 disabled:cursor-not-allowed', {
-              'text-brand-50': isSelectedForStatistics,
-              'text-grey-70': !isSelectedForStatistics,
-            })
-          }
-          disabled={!isStatisticsAvailable}
-          onClick={handleStatisticsClick}
-        >
-          <Icon className="size-5" name="interface/statistics" />
-        </button>
-      </div>
-      <div className="w-full ds:max-w-[26.25rem] mb:mt-2">
         {
-          isMarketsVisible ? (
-            <MarketsComp gameId={gameId} gameStatus={status} />
-          ) : (
-            <MarketsSkeleton />
+          isInLive && (
+            <button
+              className={
+                cx('hover:text-brand-50 ml-auto mb:mr-1 disabled:text-grey-20 disabled:cursor-not-allowed', {
+                  'text-brand-50': isSelectedForStatistics,
+                  'text-grey-70': !isSelectedForStatistics,
+                })
+              }
+              disabled={!isStatisticsAvailable}
+              onClick={handleStatisticsClick}
+            >
+              <Icon className="size-5" name="interface/statistics" />
+            </button>
           )
         }
+      </div>
+      <div className="w-full ds:max-w-[26.25rem] mb:mt-2">
+        <Markets gameState={state} game={game} />
       </div>
     </div>
   )

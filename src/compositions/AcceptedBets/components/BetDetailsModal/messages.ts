@@ -29,7 +29,7 @@ export default {
   cashout: {
     en: 'cash-out',
   },
-  gameStatus: {
+  gameState: {
     declined: {
       en: 'Declined',
     },

@@ -37,7 +37,7 @@ const useSports = () => {
     isLive,
   }
 
-  const { loading, sports } = _useSports(props)
+  const { data: sports, isFetching } = _useSports(props)
 
   const formattedSports = useMemo(() => {
     if (!sports?.length) {
@@ -98,7 +98,7 @@ const useSports = () => {
 
   return {
     sports: formattedSports,
-    loading,
+    isFetching,
   }
 }
 

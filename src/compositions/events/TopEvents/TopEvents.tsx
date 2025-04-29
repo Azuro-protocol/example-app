@@ -5,8 +5,8 @@ import Glide from '@glidejs/glide'
 import React, { useEffect, useRef } from 'react'
 import { Message } from '@locmod/intl'
 import { useParams } from 'next/navigation'
-import { useActiveMarkets, useGames } from '@azuro-org/sdk'
-import { Game_OrderBy, type GamesQuery, GameStatus } from '@azuro-org/toolkit'
+import { useActiveMarket, useActiveMarkets, useGames } from '@azuro-org/sdk'
+import { ConditionState, Game_OrderBy, type GameMarkets, type GamesQuery } from '@azuro-org/toolkit'
 import cx from 'classnames'
 import { getGameDateTime } from 'helpers/getters'
 
@@ -24,6 +24,36 @@ const CardSkeleton: React.FC<{ className?: string }> = ({ className }) => {
   )
 }
 
+type ConditionProps = {
+  markets: GameMarkets
+  game: GamesQuery['games'][0]
+}
+
+const Condition: React.FC<ConditionProps> = ({ markets, game }) => {
+  const { data } = useActiveMarket({ markets })
+
+  const { marketsByKey, activeMarketKey, states } = data
+
+  const { name, conditions } = marketsByKey[activeMarketKey!]
+  const { conditionId, outcomes } = conditions[0]
+
+  return (
+    <>
+      {
+        outcomes.map(outcome => (
+          <OutcomeButton
+            key={outcome.outcomeId}
+            marketName={name}
+            outcome={outcome}
+            game={game}
+            isLocked={states[conditionId] !== ConditionState.Active}
+          />
+        ))
+      }
+    </>
+  )
+}
+
 type CardProps = {
   game: GamesQuery['games'][0]
 }
@@ -36,10 +66,10 @@ const Card: React.FC<CardProps> = ({ game }) => {
     league: {
       name: leagueName,
       slug: leagueSlug,
-      country: {
-        name: countryName,
-        slug: countrySlug,
-      },
+    },
+    country: {
+      name: countryName,
+      slug: countrySlug,
     },
     gameId,
     participants,
@@ -49,12 +79,9 @@ const Card: React.FC<CardProps> = ({ game }) => {
 
   const { date, time } = getGameDateTime(+startsAt * 1000)
 
-  const { markets, loading } = useActiveMarkets({
+  const { data: markets, isFetching } = useActiveMarkets({
     gameId: game.gameId,
-    gameStatus: GameStatus.Created,
   })
-
-  const marketsRow = markets?.[0]?.outcomeRows?.[0]
 
   return (
     <div className="bg-card-border-bottom p-px rounded-md overflow-hidden">
@@ -76,16 +103,14 @@ const Card: React.FC<CardProps> = ({ game }) => {
         <div className="mt-5 text-caption-13 font-semibold text-center text-ellipsis whitespace-nowrap overflow-hidden">{title}</div>
         <div className="mt-3 flex items-center space-x-2">
           {
-            loading ? (
+            isFetching ? (
               <>
                 <div className="bone w-full h-7 rounded-sm" />
                 <div className="bone w-full h-7 rounded-sm" />
                 <div className="bone w-full h-7 rounded-sm" />
               </>
             ) : (
-              marketsRow?.map(outcome => (
-                <OutcomeButton key={outcome.outcomeId} outcome={outcome} />
-              ))
+              <Condition markets={markets} game={game} />
             )
           }
         </div>
@@ -109,7 +134,7 @@ const sliderConfiguration = {
 }
 
 const Events: React.FC = () => {
-  const { games, loading } = useGames({
+  const { data: games, isFetching } = useGames({
     filter: {
       limit: 9,
     },
@@ -119,7 +144,7 @@ const Events: React.FC = () => {
 
 
   useEffect(() => {
-    if (!games?.length) {
+    if (!games?.length || isFetching) {
       return
     }
 
@@ -130,9 +155,9 @@ const Events: React.FC = () => {
     return () => {
       slider?.destroy()
     }
-  }, [ games ])
+  }, [ games, isFetching ])
 
-  if (loading) {
+  if (isFetching) {
     return (
       <div className="flex items-center justify-between mt-6 space-x-2">
         <CardSkeleton />

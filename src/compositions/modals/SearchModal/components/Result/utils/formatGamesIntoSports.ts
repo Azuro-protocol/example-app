@@ -25,12 +25,11 @@ const formatSportsData = (gamesData: Games): Sport[] => {
       league: {
         name: leagueName,
         slug: leagueSlug,
-        country: {
-          name: countryName,
-          slug: countrySlug,
-        },
       },
-      title: gameTitle,
+      country: {
+        name: countryName,
+        slug: countrySlug,
+      },
     } = gameData
 
 
@@ -40,6 +39,7 @@ const formatSportsData = (gamesData: Games): Sport[] => {
         sportId,
         slug: sportSlug,
         name: sportName,
+        turnover: '0',
         countries: {},
       }
     }

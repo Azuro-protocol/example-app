@@ -72,13 +72,12 @@ const Content: React.FC<ContentProps> = ({ openSettings }) => {
   const { betToken } = useChain()
   const { items, clear } = useBaseBetslip()
   const {
-    odds, statuses, minBet, maxBet, disableReason, selectedFreeBet, betAmount, batchBetAmounts,
-    isOddsFetching, isStatusesFetching, isBatch, changeBatch, changeBatchBetAmount,
+    odds, states, minBet, maxBet, disableReason, betAmount,
+    isOddsFetching, isStatesFetching,
   } = useDetailedBetslip()
-  const { balance, loading: isBalanceFetching } = useBetTokenBalance()
+  const { data, isLoading: isBalanceFetching } = useBetTokenBalance()
 
-  console.log(statuses, 'statuses')
-
+  const { balance } = data || {}
   const itemsLength = items.length
   const isSingle = itemsLength === 1
 
@@ -88,10 +87,7 @@ const Content: React.FC<ContentProps> = ({ openSettings }) => {
     <div>
       <div
         className={
-          cx('px-4 flex justify-between', {
-            'py-3': isSingle,
-            'pt-3': !isSingle,
-          })
+          cx('px-4 flex justify-between py-3')
         }
       >
         {
@@ -100,18 +96,24 @@ const Content: React.FC<ContentProps> = ({ openSettings }) => {
               <Message className="text-caption-14 font-semibold" value={messages.single} />
             </button>
           ) : (
-            <div className="flex items-center space-x-4">
-              <Tab
-                title={{ ...messages.batch, values: { count: itemsLength } }}
-                isActive={isBatch}
-                onClick={() => changeBatch(true)}
+            <button className="cursor-default">
+              <Message
+                className="text-caption-14 font-semibold"
+                value={{ ...messages.combo, values: { count: itemsLength } }}
               />
-              <Tab
-                title={{ ...messages.combo, values: { count: itemsLength } }}
-                isActive={!isBatch}
-                onClick={() => changeBatch(false)}
-              />
-            </div>
+            </button>
+            // <div className="flex items-center space-x-4">
+            //   <Tab
+            //     title={{ ...messages.batch, values: { count: itemsLength } }}
+            //     isActive={isBatch}
+            //     onClick={() => changeBatch(true)}
+            //   />
+            //   <Tab
+            //     title={{ ...messages.combo, values: { count: itemsLength } }}
+            //     isActive={!isBatch}
+            //     onClick={() => changeBatch(false)}
+            //   />
+            // </div>
           )
         }
         <div className={cx('flex items-center space-x-3 h-fit', { 'pt-0.5': !isSingle })}>
@@ -133,19 +135,19 @@ const Content: React.FC<ContentProps> = ({ openSettings }) => {
       >
         {
           items.map((item) => {
-            const { conditionId, outcomeId, coreAddress } = item
+            const { conditionId, outcomeId } = item
 
             return (
               <Card
-                key={`${conditionId}-${outcomeId}-${coreAddress}`}
+                key={`${conditionId}-${outcomeId}`}
                 item={item}
-                batchBetAmount={batchBetAmounts[`${conditionId}-${outcomeId}`]}
-                status={statuses[conditionId]}
+                // batchBetAmount={batchBetAmounts[`${conditionId}-${outcomeId}`]}
+                state={states[conditionId]}
                 odds={odds?.[`${conditionId}-${outcomeId}`]}
-                isStatusesFetching={isStatusesFetching}
+                isStatesFetching={isStatesFetching}
                 isOddsFetching={isOddsFetching}
-                isBatch={isBatch}
-                onBatchAmountChange={(value) => changeBatchBetAmount(item, value)}
+                // isBatch={isBatch}
+                // onBatchAmountChange={(value) => changeBatchBetAmount(item, value)}
               />
             )
           })
@@ -160,14 +162,14 @@ const Content: React.FC<ContentProps> = ({ openSettings }) => {
           })
         }
       >
-        {
-          Boolean(!selectedFreeBet && !isBatch) && (
-            <>
-              <AmountInput isEnoughBalance={isEnoughBalance} />
-              <Chips />
-            </>
-          )
-        }
+        {/* {
+          Boolean(!selectedFreeBet && !isBatch) && ( */}
+        <>
+          <AmountInput isEnoughBalance={isEnoughBalance} />
+          <Chips />
+        </>
+        {/* )
+        } */}
         {
           Boolean(disableReason) && (
             <Warning
@@ -180,14 +182,14 @@ const Content: React.FC<ContentProps> = ({ openSettings }) => {
             />
           )
         }
-        {
+        {/* {
           isBatch && (
             <div className="flex items-center justify-between mb-3">
               <Message className="text-caption-12 text-grey-60" value={messages.totalBet} />
               <div className="text-caption-13">{betAmount} {betToken.symbol}</div>
             </div>
           )
-        }
+        } */}
         <div className="mt-3">
           <ConnectButtonWrapper>
             <BetButton isEnoughBalance={isEnoughBalance} isBalanceFetching={isBalanceFetching} />

@@ -160,20 +160,16 @@ const BetDetailsModal: ModalComponent<BetDetailsModalProps> = (props) => {
   const isFreeBet = Boolean(freebetId)
   const isCombo = outcomes.length > 1
 
-  const {
-    totalMultiplier: totalCashoutMultiplier,
-    isCashoutAvailable,
-    isFetching: isCashoutFetching,
-  } = usePrecalculatedCashouts({
-    tokenId,
-    selections: outcomes,
-    graphBetStatus,
-    // enabled: !isCashedOut, // TODO
-    enabled: false,
+  const { data, isFetching: isCashoutFetching } = usePrecalculatedCashouts({
+    bet,
+    query: {
+      enabled: !isCashedOut,
+    },
   })
 
+  const { cashoutAmount, isAvailable: isCashoutAvailable } = data
+
   const resultDecimals = constants.resultAmountDecimalsByChain[appChain.id] || 2
-  const cashoutAmount = formatToFixed(possibleWin * +totalCashoutMultiplier, resultDecimals)
 
   return (
     <PlainModal
@@ -251,7 +247,7 @@ const BetDetailsModal: ModalComponent<BetDetailsModalProps> = (props) => {
             size={32}
             loading={isCashoutFetching}
             disabled={!isCashoutAvailable}
-            onClick={() => openModal('CashoutModal', { tokenId, outcomes })}
+            onClick={() => openModal('CashoutModal', { bet })}
           />
         </div>
       </div>

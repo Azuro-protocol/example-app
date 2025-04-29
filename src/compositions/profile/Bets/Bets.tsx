@@ -52,6 +52,7 @@ const Outcome: React.FC<OutcomeProps> = ({ outcome, isCombo }) => {
   } = game
 
   const isUnique = sportSlug === 'unique'
+  const withResult = isWin !== null || isLose !== null
   const { date, time } = getGameDateTime(+startsAt * 1000)
 
   const marketBoxClassName = 'text-caption-13 mb:flex mb:items-center mb:justify-between'
@@ -112,7 +113,7 @@ const Outcome: React.FC<OutcomeProps> = ({ outcome, isCombo }) => {
                 isCombo && (
                   <>
                     {
-                      [ GameState.Stopped, GameState.Live, GameState.Finished ].includes(gameState) && (
+                      [ GameState.Stopped, GameState.Live ].includes(gameState) && (
                         <div className="size-1 flex-none bg-grey-40 rounded-full mx-2" />
                       )
                     }
@@ -130,16 +131,19 @@ const Outcome: React.FC<OutcomeProps> = ({ outcome, isCombo }) => {
                       )
                     }
                     {
-                      gameState === GameState.Finished && (
-                        <Message
-                          className={
-                            cx('font-semibold', {
-                              'text-accent-green': isWin,
-                              'text-accent-red': isLose,
-                            })
-                          }
-                          value={isWin ? messages.gameState.win : messages.gameState.lose}
-                        />
+                      Boolean(gameState === GameState.Finished && withResult) && (
+                        <>
+                          <div className="size-1 flex-none bg-grey-40 rounded-full mx-2" />
+                          <Message
+                            className={
+                              cx('font-semibold', {
+                                'text-accent-green': isWin,
+                                'text-accent-red': isLose,
+                              })
+                            }
+                            value={isWin ? messages.gameState.win : messages.gameState.lose}
+                          />
+                        </>
                       )
                     }
                   </>
@@ -185,16 +189,14 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
 
   const { betToken, appChain } = useChain()
   const { submit, isPending, isProcessing } = useRedeemBet()
-  const { totalMultiplier: totalCashoutMultiplier, isCashoutAvailable } = usePrecalculatedCashouts({
-    tokenId,
-    selections: outcomes,
-    graphBetStatus,
-    // enabled: !isCashedOut,
-    enabled: false, // TODO
+  const { data: { cashoutAmount, isAvailable: isCashoutAvailable } } = usePrecalculatedCashouts({
+    bet,
+    query: {
+      enabled: !isCashedOut,
+    },
   })
 
   const resultDecimals = constants.resultAmountDecimalsByChain[appChain.id] || 2
-  const cashoutAmount = formatToFixed(possibleWin * +totalCashoutMultiplier, resultDecimals)
 
   const isCombo = outcomes.length > 1
   const isLoading = isPending || isProcessing
@@ -326,7 +328,7 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
                   }
                 }
                 size={32}
-                onClick={() => openModal('CashoutModal', { tokenId, outcomes })}
+                onClick={() => openModal('CashoutModal', { bet })}
               />
             )
           }

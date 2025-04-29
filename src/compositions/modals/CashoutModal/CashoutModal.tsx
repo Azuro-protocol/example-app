@@ -17,12 +17,11 @@ import messages from './messages'
 
 
 export type CashoutModalProps = {
-  tokenId: string
-  outcomes: Bet['outcomes']
+  bet: Bet
 }
 
 const CashoutModal: ModalComponent<CashoutModalProps> = (props) => {
-  const { closeModal, tokenId, outcomes } = props
+  const { closeModal, bet } = props
 
   const [ secondsLeft, setSecondsLeft ] = useState(0)
   const { betToken, appChain } = useChain()
@@ -35,8 +34,7 @@ const CashoutModal: ModalComponent<CashoutModalProps> = (props) => {
     isApproveRequired,
     isCashoutAvailable,
   } = useCashout({
-    tokenId,
-    selections: outcomes,
+    bet,
     onSuccess: () => {
       closeModal()
     },

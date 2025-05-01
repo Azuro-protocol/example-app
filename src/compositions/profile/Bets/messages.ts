@@ -48,8 +48,8 @@ export default {
     en: 'Refund',
   },
   gameState: {
-    declined: {
-      en: 'Declined',
+    stopped: {
+      en: 'Stopped',
     },
     win: {
       en: 'Won',

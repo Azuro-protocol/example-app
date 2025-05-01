@@ -119,9 +119,9 @@ const Outcome: React.FC<OutcomeProps> = ({ outcome, isCombo }) => {
                     }
                     {
                       gameState === GameState.Stopped && (
-                        <div className="flex items-center text-accent-yellow">
+                        <div className="flex items-center text-grey-60">
                           <Icon className="size-4 mr-[2px]" name="interface/declined" />
-                          <Message className="font-semibold" value={messages.gameState.declined} />
+                          <Message className="font-semibold" value={messages.gameState.stopped} />
                         </div>
                       )
                     }

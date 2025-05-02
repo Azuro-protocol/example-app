@@ -7,7 +7,7 @@ type Options = {
 }
 
 const toLocaleString = (value: number | string, opts?: Options) => {
-  const { digits = 2, replaceSymbol = ' ', floorRounding = true, cutFractionalZero = false, significantFractionInSmallValue = true } = opts || {}
+  const { digits = 2, replaceSymbol = ' ', floorRounding = true, cutFractionalZero = true, significantFractionInSmallValue = true } = opts || {}
 
   value = typeof value === 'string' ? parseFloat(value) : value
 

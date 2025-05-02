@@ -9,8 +9,7 @@ import cx from 'classnames'
 import { openModal } from '@locmod/modal'
 import { useAccount } from '@azuro-org/sdk-social-aa-connector'
 import { config } from 'wallet'
-import { constants } from 'helpers'
-import { formatToFixed } from 'helpers/formatters'
+import { constants, toLocaleString } from 'helpers'
 
 import { Icon } from 'components/ui'
 import { Dropdown } from 'components/inputs'
@@ -132,10 +131,10 @@ const BalanceInfo: React.FC = () => {
             ) : (
               <>
                 <span className="text-caption-13 font-semibold">
-                  {formatToFixed(balance || 0, 2)} {betToken.symbol}
+                  {toLocaleString(balance || 0, { digits: 2 } )} {betToken.symbol}
                 </span>
                 <span className="text-caption-12 text-grey-60">
-              + {formatToFixed(nativeBalance || 0, 2)} {appChain.nativeCurrency.symbol}
+                  + {toLocaleString(nativeBalance || 0, { digits: 2 })} {appChain.nativeCurrency.symbol}
                 </span>
               </>
             )
@@ -150,7 +149,7 @@ const BalanceInfo: React.FC = () => {
               <div className="bone h-4 w-10 rounded-full" />
             ) : (
               <div className="text-caption-13 font-semibold">
-                {formatToFixed(inBets || 0, 2)} {betToken.symbol}
+                {toLocaleString(inBets || 0, { digits: 2 })} {betToken.symbol}
               </div>
             )
           }
@@ -162,7 +161,7 @@ const BalanceInfo: React.FC = () => {
               <div className="bone h-4 w-10 rounded-full" />
             ) : (
               <div className="text-caption-13 font-semibold">
-                {formatToFixed(toPayout || 0, 2)} {betToken.symbol}
+                {toLocaleString(toPayout || 0, { digits: 2 })} {betToken.symbol}
               </div>
             )
           }
@@ -215,7 +214,7 @@ const Balance: React.FC = () => {
             isLoading ? (
               <div className="bone h-4 w-10 rounded-full" />
             ) : (
-              <div className="text-caption-13">{formatToFixed(balance || 0, 2)}</div>
+              <div className="text-caption-13">{toLocaleString(balance || 0, { digits: 2 })}</div>
             )
           }
           <Icon className="size-4 ui-open:rotate-180" name="interface/caret_down" />

@@ -10,7 +10,7 @@ const Footer: React.FC = () => {
   return (
     <footer className="p-4 pb-3">
       <div className="flex mb:flex-col ds:items-center justify-between pb-4 border-b border-b-grey-10">
-        <Logo className="h-4 mb:mb-4" />
+      <Logo className="w-[355px] mb:mb-4" /> 
         <Navbar />
       </div>
       <div className="mt-3">

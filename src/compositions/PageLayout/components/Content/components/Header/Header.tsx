@@ -69,7 +69,7 @@ const Header: React.FC = () => {
               name={isVisible ? 'interface/close' : 'interface/burger_menu'}
             />
           </div>
-          <Logo className="h-4" />
+          <Logo className="max-w-[355px]" /> 
         </div>
         {
           Boolean(account) ? (

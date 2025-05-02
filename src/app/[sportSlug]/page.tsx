@@ -6,13 +6,13 @@ import { useParams } from 'next/navigation'
 import Sport, { SportSkeleton } from 'compositions/events/Sport/Sport'
 import { LeagueSkeleton } from 'compositions/events/League/League'
 import EmptyContent from 'compositions/events/EmptyContent/EmptyContent'
-import Navbar, { NavbarSkeleton } from 'compositions/events/Navbar/Navbar'
+import Navbar from 'compositions/events/Navbar/Navbar'
 import FilteredLeagues from 'compositions/events/FilteredLeagues/FilteredLeagues'
 import { GameSkeleton } from 'compositions/events/Game/Game'
 import UniqueEvents from 'compositions/events/UniqueEvents/UniqueEvents'
 
 
-export default function SportPage() {
+const SportWrapper: React.FC = () => {
   const params = useParams()
   const { sports, isFetching } = useSports()
 
@@ -21,7 +21,6 @@ export default function SportPage() {
   if (isFetching) {
     return (
       <>
-        <NavbarSkeleton />
         <SportSkeleton>
           {
             isUnique ? (
@@ -43,19 +42,25 @@ export default function SportPage() {
   const { slug, leagues } = sport
 
   return (
+    <Sport sport={sport!} isPage>
+      {
+        isUnique ? (
+          <UniqueEvents leagues={leagues} />
+        ) : (
+          <FilteredLeagues
+            sportSlug={slug}
+            leagues={leagues}
+          />
+        )
+      }
+    </Sport>
+  )
+}
+
+export default function SportPage() {
+  return (
     <Navbar>
-      <Sport sport={sport!} isPage>
-        {
-          isUnique ? (
-            <UniqueEvents leagues={leagues} />
-          ) : (
-            <FilteredLeagues
-              sportSlug={slug}
-              leagues={leagues}
-            />
-          )
-        }
-      </Sport>
+      <SportWrapper />
     </Navbar>
   )
 }

@@ -508,7 +508,7 @@ const Content: React.FC<ContentProps> = ({ tab }) => {
         query={betsQuery}
       />
       {
-        Boolean(!betsQuery.hasNextPage && !betsQuery.isLoading) && (
+        Boolean(!betsQuery.hasNextPage && !betsQuery.isFetching) && (
           <BetsPages
             query={legacyBetsQuery}
             withEmptyContent

@@ -27,7 +27,7 @@ const Header: React.FC = () => {
   const { account, isReconnecting, isConnecting } = useWallet();
   const pathname = usePathname();
   const { login } = usePrivy();
-  const [isVisible, setVisibility] = useState(false);
+  const [ isVisible, setVisibility] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const handleClick = () => {
@@ -52,11 +52,11 @@ const Header: React.FC = () => {
         });
       };
     }
-  }, [isVisible]);
+  }, [ isVisible]);
 
   useEffect(() => {
     setVisibility(false);
-  }, [pathname]);
+  }, [ pathname]);
 
   return (
     <div ref={containerRef} className="py-2 px-5 bg-bg-l0">

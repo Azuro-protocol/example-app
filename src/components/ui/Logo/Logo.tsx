@@ -12,7 +12,7 @@ const Logo: React.FC<LogoProps> = (props) => {
 
   return (
     <Href to="/" className={cx('flex items-center', className)}>
- <Image
+      <Image
         className="h-full"
         src="/images/logo.png"
         alt="Smart contracts bets"

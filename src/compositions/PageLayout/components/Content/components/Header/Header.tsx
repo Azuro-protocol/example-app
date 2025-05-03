@@ -6,12 +6,10 @@ import { usePathname } from 'next/navigation'
 import { useWallet } from 'wallet'
 import { usePrivy } from '@privy-io/react-auth'
 import { useFreezeBodyScroll } from 'hooks'
-
 import { Icon, Logo } from 'components/ui'
 import { Button, buttonMessages } from 'components/inputs'
 import Navigation from 'compositions/Navigation/Navigation'
 import LiveSwitcher from 'compositions/LiveSwitcher/LiveSwitcher'
-
 import Controls from '../Controls/Controls'
 
 
@@ -30,7 +28,7 @@ const Header: React.FC = () => {
   const { account, isReconnecting, isConnecting } = useWallet()
   const pathname = usePathname()
   const { login } = usePrivy()
-  const [ isVisible, setVisibility ] = useState(false)
+  const [isVisible, setVisibility] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
 
   const handleClick = () => {
@@ -53,11 +51,11 @@ const Header: React.FC = () => {
         document.removeEventListener('click', handleOutsideClick, { capture: true })
       }
     }
-  }, [ isVisible ])
+  }, [isVisible])
 
   useEffect(() => {
     setVisibility(false)
-  }, [ pathname ])
+  }, [pathname])
 
   return (
     <div ref={containerRef} className="py-2 px-5 bg-bg-l0">
@@ -69,7 +67,7 @@ const Header: React.FC = () => {
               name={isVisible ? 'interface/close' : 'interface/burger_menu'}
             />
           </div>
-          <Logo className="max-w-[355px]" /> 
+          <Logo className="max-w-[355px]" />
         </div>
         {
           Boolean(account) ? (

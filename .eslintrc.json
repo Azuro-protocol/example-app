@@ -7,7 +7,6 @@
     "plugin:import/recommended"
   ],
   "plugins": [
-    "import"
 
   ],
   "ignorePatterns": [

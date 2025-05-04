@@ -16,7 +16,7 @@ const Content: React.FC = () => {
   useFreezeBodyScroll();
 
   return (
-    <div className="fixed top-[ 54px ] bottom-0 left-0 nr:w-[ 22.5rem ] mb:w-full bg-bg-l0 overflow-auto no-scrollbar">
+    <div className="fixed top-[54px] bottom-0 left-0 nr:w-[22.5rem] mb:w-full bg-bg-l0 overflow-auto no-scrollbar">
       <LiveSwitcher />
       <Navigation className="mt-2" />
     </div>
@@ -27,7 +27,7 @@ const Header: React.FC = () => {
   const { account, isReconnecting, isConnecting } = useWallet();
   const pathname = usePathname();
   const { login } = usePrivy();
-  const [ isVisible, setVisibility ] = useState(false);
+  const [isVisible, setVisibility] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const handleClick = () => {
@@ -52,11 +52,11 @@ const Header: React.FC = () => {
         });
       };
     }
-  }, [ isVisible ]);
+  }, [isVisible]);
 
   useEffect(() => {
     setVisibility(false);
-  }, [ pathname ]);
+  }, [pathname]);
 
   return (
     <div ref={containerRef} className="py-2 px-5 bg-bg-l0">

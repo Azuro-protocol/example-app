@@ -85,7 +85,7 @@
       "error",
       "always"
     ],
-    "array-bracket-spacing": "off",
+
     "no-multiple-empty-lines": [
       "error",
       {

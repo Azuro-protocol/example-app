@@ -7,8 +7,8 @@
     "plugin:import/recommended"
   ],
   "plugins": [
-    "import",
-    "@typescript-eslint"
+    "import"
+
   ],
   "ignorePatterns": [
     "*.js",

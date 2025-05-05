@@ -21,7 +21,7 @@ const inter = Inter({ subsets: [ 'latin' ] })
 
 export const metadata: Metadata = {
   metadataBase: new URL(constants.baseUrl),
-  title: 'Betting Example',
+  title: 'SmartContractBets',
   description: '',
 }
 

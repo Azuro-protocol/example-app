@@ -1,5 +1,5 @@
-import { svgRuntime } from './SvgProvider'
 import { memo } from 'react'
+import { svgRuntime } from './SvgProvider'
 
 
 const containerId = 'svg-sprite'

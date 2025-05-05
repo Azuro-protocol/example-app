@@ -45,10 +45,10 @@ const Header: React.FC = () => {
         }
       }
 
-      document.addEventListener("click", handleOutsideClick, { capture: true })
+      document.addEventListener('click', handleOutsideClick, { capture: true })
 
       return () => {
-        document.removeEventListener("click", handleOutsideClick, {
+        document.removeEventListener('click', handleOutsideClick, {
           capture: true,
         })
       }
@@ -66,22 +66,24 @@ const Header: React.FC = () => {
           <div onClick={handleClick}>
             <Icon
               className="text-grey-60 h-6 w-6 mr-3"
-              name={isVisible ? "interface/close" : "interface/burger_menu"}
+              name={isVisible ? 'interface/close' : 'interface/burger_menu'}
             />
           </div>
           <Logo className="max-w-[355px]" />
         </div>
-        {Boolean(account) ? (
-          <Controls />
-        ) : (
-          <Button
-            className="ml-auto"
-            title={buttonMessages.connectWallet}
-            size={32}
-            loading={isConnecting || isReconnecting}
-            onClick={login}
-          />
-        )}
+        {
+          Boolean(account)
+            ? <Controls />
+            : (
+              <Button
+                className="ml-auto"
+                title={buttonMessages.connectWallet}
+                size={32}
+                loading={isConnecting || isReconnecting}
+                onClick={login}
+              />
+            )
+        }
       </div>
       {isVisible && <Content />}
     </div>

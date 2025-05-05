@@ -4,7 +4,6 @@
   ],
   "defaultSeverity": "warning",
   "rules": {
-    "indentation": 2,
     "at-rule-empty-line-before": [
       "always", {
         "except": [
@@ -47,7 +46,6 @@
     "number-max-precision": 3,
     "number-no-trailing-zeros": true,
     "string-no-newline": true,
-    "string-quotes": "single",
     "length-zero-no-unit": true,
     "unit-case": "lower",
     "unit-no-unknown": true,

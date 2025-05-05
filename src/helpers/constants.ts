@@ -40,11 +40,12 @@ const currencyIcons: Record<ChainId, IconName> = {
 
 const sportsOrder = [ 'politics', 'football', 'basketball', 'tennis', 'cricket', 'mma', 'boxing', 'ice-hockey', 'american-football', 'baseball', 'rugby-union', 'rugby-league' ]
 
+
 const links = {
-  docs: '',
-  terms: '',
-  policy: '',
-  faq: '',
+  docs: 'https://smartcontractbets.xyz/about/',
+  terms: 'https://smartcontractbets.xyz/terms-and-conditions/',
+  policy: 'https://smartcontractbets.xyz/privacy-policy/',
+  faq: 'https://smartcontractbets.xyz/faq/',
   waves: 'https://azuro.org/app/waves',
 }
 

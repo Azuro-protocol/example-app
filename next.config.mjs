@@ -93,14 +93,10 @@ const nextConfig = {
     ]
   },
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'avatars.azuro.org',
-        pathname: '/images/**',
-      },
+    domains: [
+        'avatars.azuro.org',
     ],
-  }
+}
   
 }
 

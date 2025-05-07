@@ -91,7 +91,17 @@ const nextConfig = {
       'helpers/getters',
       'hooks'
     ]
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'avatars.azuro.org',
+        pathname: '/images/**',
+      },
+    ],
   }
+  
 }
 
 export default nextConfig

@@ -1,9 +1,10 @@
-import React from "react";
+import React from 'react'
 
-import { Logo } from "components/ui";
+import { Logo } from 'components/ui'
 
-import Navbar from "./components/Navbar/Navbar";
-import Copy from "./components/Copy/Copy";
+import Navbar from './components/Navbar/Navbar'
+import Copy from './components/Copy/Copy'
+
 
 const Footer: React.FC = () => {
   return (
@@ -16,7 +17,7 @@ const Footer: React.FC = () => {
         <Copy />
       </div>
     </footer>
-  );
-};
+  )
+}
 
-export default Footer;
+export default Footer

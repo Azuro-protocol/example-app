@@ -55,10 +55,7 @@
       "error"
     ],
     "indent": "off",
-    "quotes": [
-      "error",
-      "single"
-    ],
+    "quotes":"off",
     "brace-style": [
       "error",
       "stroustrup"
@@ -85,10 +82,7 @@
       "error",
       "always"
     ],
-    "array-bracket-spacing": [
-      "error",
-      "always"
-    ],
+
     "no-multiple-empty-lines": [
       "error",
       {
@@ -332,13 +326,7 @@
     "@typescript-eslint/await-thenable": "warn",
     "@typescript-eslint/no-misused-promises": "warn",
     "@typescript-eslint/consistent-type-imports": "error",
-    "@typescript-eslint/type-annotation-spacing": "error",
-    "@typescript-eslint/indent": [
-      "error",
-      2,
-      {
-        "SwitchCase": 1
-      }
-    ]
+    "@typescript-eslint/type-annotation-spacing": "error"
+
   }
 }

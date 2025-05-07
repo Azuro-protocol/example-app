@@ -1,6 +1,6 @@
 export default {
   top: {
-    en: 'The On-Chain Crypto Bookmaker',
+    en: 'Wager the Smart Way',
   },
   // Sports
   politics: {

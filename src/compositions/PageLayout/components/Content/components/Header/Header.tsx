@@ -28,7 +28,7 @@ const Header: React.FC = () => {
   const { account, isReconnecting, isConnecting } = useWallet()
   const pathname = usePathname()
   const { login } = usePrivy()
-  const [isVisible, setVisibility] = useState(false)
+  const [ isVisible, setVisibility ] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
 
   const handleClick = () => {

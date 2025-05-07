@@ -4,17 +4,18 @@ import { useSports } from 'hooks'
 
 import { LeagueSkeleton } from 'compositions/events/League/League'
 import EmptyContent from 'compositions/events/EmptyContent/EmptyContent'
-import Navbar from 'compositions/events/Navbar/Navbar'
+import Navbar, { NavbarSkeleton } from 'compositions/events/Navbar/Navbar'
 import FilteredLeagues from 'compositions/events/FilteredLeagues/FilteredLeagues'
 import UniqueEvents from 'compositions/events/UniqueEvents/UniqueEvents'
 
 
-const League: React.FC = () => {
+export default function LeaguePage() {
   const { sports, isFetching } = useSports()
 
   if (isFetching) {
     return (
       <>
+        <NavbarSkeleton />
         <LeagueSkeleton isPage />
       </>
     )
@@ -28,7 +29,7 @@ const League: React.FC = () => {
   const { slug, leagues } = sport
 
   return (
-    <>
+    <Navbar>
       {
         sport.slug === 'unique' ? (
           <UniqueEvents leagues={leagues} />
@@ -36,15 +37,6 @@ const League: React.FC = () => {
           <FilteredLeagues sportSlug={slug} leagues={leagues} isPage />
         )
       }
-    </>
-  )
-}
-
-export default function LeaguePage() {
-
-  return (
-    <Navbar>
-      <League />
     </Navbar>
   )
 }

@@ -6,7 +6,8 @@ import { Message } from '@locmod/intl'
 import { useAccount } from '@azuro-org/sdk-social-aa-connector'
 import { openModal } from '@locmod/modal'
 import localStorage from '@locmod/local-storage'
-import { constants, isUserRejectedRequestError, toLocaleString } from 'helpers'
+import { constants, isUserRejectedRequestError } from 'helpers'
+import { formatToFixed } from 'helpers/formatters'
 
 import { Icon } from 'components/ui'
 import { buttonMessages } from 'components/inputs'
@@ -114,7 +115,7 @@ const BetButton: React.FC<BetButtonProps> = ({ isEnoughBalance, isBalanceFetchin
       </div>
       <div className={possibleWinClassName}>
         <Message className="mr-1" value={messages.possibleWin} />
-        <div className="font-semibold">{toLocaleString(totalOddsRef.current * +betAmount, { digits: 2 })} {betToken.symbol}</div>
+        <div className="font-semibold">{formatToFixed(totalOddsRef.current * +betAmount, 2)} {betToken.symbol}</div>
       </div>
     </button>
   )

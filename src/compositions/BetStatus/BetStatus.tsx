@@ -62,7 +62,7 @@ const BetStatus: React.FC<BetStatusProps> = ({ graphBetStatus, games, isWin, isC
 
   if (isCashedOut) {
     icon = 'interface/cash_out'
-    title = messages.cashedOut
+    title = messages.cachedOut
     color = 'text-accent-purple'
   }
   else if (betStatus === TBetStatus.Resolved) {

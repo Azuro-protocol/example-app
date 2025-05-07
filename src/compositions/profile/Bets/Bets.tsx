@@ -11,8 +11,9 @@ import { openModal } from '@locmod/modal'
 import { useAccount } from '@azuro-org/sdk-social-aa-connector'
 import { useEntry } from '@locmod/intersection-observer'
 import { type InfiniteData, type UseInfiniteQueryResult } from '@tanstack/react-query'
-import { toLocaleString } from 'helpers'
+import { constants } from 'helpers'
 import { getGameDateTime } from 'helpers/getters'
+import { formatToFixed } from 'helpers/formatters'
 
 import { Icon, type IconName } from 'components/ui'
 import { OpponentLogo } from 'components/dataDisplay'
@@ -195,6 +196,8 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
     },
   })
 
+  const resultDecimals = constants.resultAmountDecimalsByChain[appChain.id] || 2
+
   const isCombo = outcomes.length > 1
   const isLoading = isPending || isProcessing
   const isFreeBet = Boolean(freebetId)
@@ -204,21 +207,21 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
     if (isCashedOut) {
       return {
         resultTitle: messages.cashedOut,
-        resultAmount: `${toLocaleString(cashout!, { digits: 2 })} ${betToken.symbol}`,
+        resultAmount: `${formatToFixed(cashout!, resultDecimals)} ${betToken.symbol}`,
       }
     }
 
     if (isWin) {
       return {
         resultTitle: messages.winning,
-        resultAmount: `${toLocaleString(payout || possibleWin, { digits: 2 })} ${betToken.symbol}`,
+        resultAmount: `${formatToFixed(payout || possibleWin, resultDecimals)} ${betToken.symbol}`,
       }
     }
 
     if (isLose) {
       return {
         resultTitle: messages.loss,
-        resultAmount: `-${toLocaleString(amount, { digits: 2 })} ${betToken.symbol}`,
+        resultAmount: `-${formatToFixed(amount, resultDecimals)} ${betToken.symbol}`,
       }
     }
 
@@ -231,7 +234,7 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
 
     return {
       resultTitle: messages.possibleWin,
-      resultAmount: `${toLocaleString(possibleWin, { digits: 2 })} ${betToken.symbol}`,
+      resultAmount: `${formatToFixed(possibleWin, resultDecimals)} ${betToken.symbol}`,
     }
   }, [ isCashedOut ])
 
@@ -319,7 +322,7 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
                   {
                     ...messages.cashout,
                     values: {
-                      amount: toLocaleString(cashoutAmount!, { digits: 2 }),
+                      amount: cashoutAmount,
                       symbol: betToken.symbol,
                     },
                   }
@@ -508,7 +511,7 @@ const Content: React.FC<ContentProps> = ({ tab }) => {
         query={betsQuery}
       />
       {
-        Boolean(!betsQuery.hasNextPage && !betsQuery.isFetching) && (
+        Boolean(!betsQuery.hasNextPage && !betsQuery.isLoading) && (
           <BetsPages
             query={legacyBetsQuery}
             withEmptyContent

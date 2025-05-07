@@ -6,7 +6,7 @@ import Sport, { SportSkeleton } from 'compositions/events/Sport/Sport'
 import { LeagueSkeleton } from 'compositions/events/League/League'
 import TopEvents from 'compositions/events/TopEvents/TopEvents'
 import EmptyContent from 'compositions/events/EmptyContent/EmptyContent'
-import Navbar from 'compositions/events/Navbar/Navbar'
+import Navbar, { NavbarSkeleton } from 'compositions/events/Navbar/Navbar'
 import FilteredLeagues from 'compositions/events/FilteredLeagues/FilteredLeagues'
 import UniqueEvents from 'compositions/events/UniqueEvents/UniqueEvents'
 
@@ -17,6 +17,7 @@ const Sports: React.FC = () => {
   if (isFetching) {
     return (
       <>
+        <NavbarSkeleton />
         <SportSkeleton>
           <LeagueSkeleton />
         </SportSkeleton>
@@ -29,7 +30,7 @@ const Sports: React.FC = () => {
   }
 
   return (
-    <>
+    <Navbar>
       {
         sports.map(sport => (
           <Sport key={sport.slug} sport={sport}>
@@ -46,17 +47,16 @@ const Sports: React.FC = () => {
           </Sport>
         ))
       }
-    </>
+    </Navbar>
   )
 }
 
 export default function TopPage() {
+
   return (
     <>
       <TopEvents />
-      <Navbar>
-        <Sports />
-      </Navbar>
+      <Sports />
     </>
   )
 }

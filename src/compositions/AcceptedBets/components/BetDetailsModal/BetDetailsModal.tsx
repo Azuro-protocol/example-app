@@ -6,8 +6,9 @@ import { useChain, type Bet, type BetOutcome, usePrecalculatedCashouts } from '@
 import { GameState } from '@azuro-org/toolkit'
 import dayjs from 'dayjs'
 import cx from 'classnames'
-import { toLocaleString } from 'helpers'
+import { constants } from 'helpers'
 import { getGameDateTime } from 'helpers/getters'
+import { formatToFixed } from 'helpers/formatters'
 
 import { PlainModal } from 'components/feedback'
 import { Icon, LiveDot } from 'components/ui'
@@ -168,6 +169,8 @@ const BetDetailsModal: ModalComponent<BetDetailsModalProps> = (props) => {
 
   const { cashoutAmount, isAvailable: isCashoutAvailable } = data
 
+  const resultDecimals = constants.resultAmountDecimalsByChain[appChain.id] || 2
+
   return (
     <PlainModal
       className="!max-w-[26rem]"
@@ -224,7 +227,7 @@ const BetDetailsModal: ModalComponent<BetDetailsModalProps> = (props) => {
           <div className="flex items-center text-caption-12 justify-between">
             <Message className="text-grey-60" value={messages.possibleWin} />
             <span className="text-caption-13 font-semibold text-brand-50">
-              {toLocaleString(possibleWin, { digits: 2 })} {betToken.symbol}
+              {formatToFixed(possibleWin, resultDecimals)} {betToken.symbol}
             </span>
           </div>
           <Button

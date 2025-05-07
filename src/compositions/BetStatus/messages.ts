@@ -23,7 +23,7 @@ export default {
   lose: {
     en: 'Lost',
   },
-  cashedOut: {
+  cachedOut: {
     en: 'Cashed-Out',
   },
 }

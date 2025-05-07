@@ -47,7 +47,7 @@ const useWithdraw = () => {
 
       await aaWalletClient!.switchChain({ id: appChain.id })
       const txHash = await aaWalletClient!.sendTransaction({
-        account: aaWalletClient!.account as any,
+        account: aaWalletClient!.account,
         to: betToken.address!,
         data,
       })

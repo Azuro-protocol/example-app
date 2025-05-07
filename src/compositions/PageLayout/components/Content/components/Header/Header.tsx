@@ -53,11 +53,11 @@ const Header: React.FC = () => {
         })
       }
     }
-  }, [isVisible])
+  }, [ isVisible ])
 
   useEffect(() => {
     setVisibility(false)
-  }, [pathname])
+  }, [ pathname ])
 
   return (
     <div ref={containerRef} className="py-2 px-5 bg-bg-l0">

@@ -1,4 +1,5 @@
 'use client'
+
 import { AxiosError } from 'axios'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { type State } from 'wagmi'

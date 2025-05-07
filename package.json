@@ -40,6 +40,7 @@
     "react-dom": "^18",
     "react-xmasonry": "^3.0.6",
     "sass": "1.77.6",
+    "sdk-example": "file:",
     "sharp": "^0.33.5",
     "viem": "^2.23.2",
     "wagmi": "^2.14.11"

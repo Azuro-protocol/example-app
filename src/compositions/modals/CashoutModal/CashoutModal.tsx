@@ -6,8 +6,7 @@ import { Message } from '@locmod/intl'
 import { useChain, useCashout, type Bet } from '@azuro-org/sdk'
 import dayjs from 'dayjs'
 import cx from 'classnames'
-import { constants } from 'helpers'
-import { formatToFixed } from 'helpers/formatters'
+import { toLocaleString } from 'helpers'
 
 import { PlainModal } from 'components/feedback'
 import { Icon } from 'components/ui'
@@ -118,7 +117,7 @@ const CashoutModal: ModalComponent<CashoutModalProps> = (props) => {
                   }
                 >
                   {
-                    formatToFixed(cashoutAmount!, constants.resultAmountDecimalsByChain[appChain.id] || 2)
+                    toLocaleString(cashoutAmount!, { digits: 2 })
                   } {betToken.symbol}
                 </div>
               )

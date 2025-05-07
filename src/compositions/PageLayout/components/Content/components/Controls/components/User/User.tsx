@@ -9,8 +9,7 @@ import copy from 'copy-to-clipboard'
 import { useIsMounted } from 'hooks'
 import { Message } from '@locmod/intl'
 import cx from 'classnames'
-import { constants, shortenAddress } from 'helpers'
-import { formatToFixed } from 'helpers/formatters'
+import { constants, shortenAddress, toLocaleString } from 'helpers'
 
 import { Icon } from 'components/ui'
 import { Href } from 'components/navigation'
@@ -66,7 +65,7 @@ const AzuroWaves: React.FC = () => {
           isFetching ? (
             <div className="bone h-[0.875rem] w-5 rounded-full" />
           ) : (
-            <div className="text-caption-12 font-semibold">{formatToFixed(points || 0, 2)}</div>
+            <div className="text-caption-12 font-semibold">{toLocaleString(points || 0, { digits: 2 })}</div>
           )
         }
       </div>

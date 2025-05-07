@@ -1,6 +1,6 @@
 {
   "name": "sdk-example",
-  "version": "1.1.0",
+  "version": "3.0.0",
   "engines": {
     "node": "=22.11.0"
   },
@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@azuro-org/dictionaries": "^3.0.26",
-    "@azuro-org/sdk": "6.0.0-beta.18",
+    "@azuro-org/sdk": "6.0.1",
     "@azuro-org/sdk-social-aa-connector": "^1.1.5",
     "@floating-ui/react-dom-interactions": "^0.13.3",
     "@glidejs/glide": "^3.6.2",

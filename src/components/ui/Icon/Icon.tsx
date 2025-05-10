@@ -4,6 +4,7 @@ import { forwardRef, type ForwardedRef } from 'react'
 import { Svg } from 'svg-provider'
 import icons, { type IconName } from './icons'
 
+
 export { type IconName } from './icons'
 
 export type IconProps = {

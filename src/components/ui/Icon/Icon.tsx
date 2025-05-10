@@ -25,7 +25,7 @@ const Icon = forwardRef<SVGSVGElement | HTMLImageElement, IconProps>((props, ref
     'aria-label': ariaLabel,
   } = props
 
-  if (!icons[name]) {
+  if (!icons[ name ]) {
     console.warn(`There is no icon with name "${name}"`)
     return null
   }

@@ -16,54 +16,54 @@ export type IconProps = {
   'aria-label'?: string
 }
 
-// const Icon = forwardRef<SVGSVGElement | HTMLImageElement, IconProps>((props, ref) => {
-//   const { className, fillClassName = 'fill-current', name, isInline, 'aria-describedby': ariaDescribedby, 'aria-label': ariaLabel } = props
-
-//   if (!icons[name]) {
-//     console.warn(`There is no icon with name "${name}"`)
-
-//     return null
-//   }
-
-//   const { src, source, aspect, width, height } = icons[name]
-
-//   const rootClassName = clsx(className, fillClassName, name === 'interface/spinner' ? 'animate-spin' : null)
-
-//   return (
-//     <Svg
-//       ref={ref as ForwardedRef<SVGSVGElement>}
-//       className={rootClassName}
-//       src={src}
-//       source={source}
-//       width={width}
-//       height={height}
-//       aspect={aspect}
-//       symbolId={name}
-//       isInline={isInline}
-//       aria-describedby={ariaDescribedby}
-//       aria-label={ariaLabel}
-//     />
-//   )
-// })
-
 const Icon = forwardRef<SVGSVGElement | HTMLImageElement, IconProps>((props, ref) => {
-  const { className, name, 'aria-label': ariaLabel } = props;
+  const { className, fillClassName = 'fill-current', name, isInline, 'aria-describedby': ariaDescribedby, 'aria-label': ariaLabel } = props
 
   if (!icons[name]) {
-    console.warn(`No icon with name "${name}"`);
-    return null;
+    console.warn(`There is no icon with name "${name}"`)
+
+    return null
   }
 
-  const { src } = icons[name];
+  const { src, source, aspect, width, height } = icons[name]
+
+  const rootClassName = clsx(className, fillClassName, name === 'interface/spinner' ? 'animate-spin' : null)
+
   return (
-    <img
-      ref={ref as ForwardedRef<HTMLImageElement>}
-      className={clsx('inline-block', className)}
+    <Svg
+      ref={ref as ForwardedRef<SVGSVGElement>}
+      className={rootClassName}
       src={src}
-      alt={ariaLabel || name}
+      source={source}
+      width={width}
+      height={height}
+      aspect={aspect}
+      symbolId={name}
+      isInline={isInline}
+      aria-describedby={ariaDescribedby}
+      aria-label={ariaLabel}
     />
-  );
-});
+  )
+})
+
+// const Icon = forwardRef<SVGSVGElement | HTMLImageElement, IconProps>((props, ref) => {
+//   const { className, name, 'aria-label': ariaLabel } = props;
+
+//   if (!icons[name]) {
+//     console.warn(`No icon with name "${name}"`);
+//     return null;
+//   }
+
+//   const { src } = icons[name];
+//   return (
+//     <img
+//       ref={ref as ForwardedRef<HTMLImageElement>}
+//       className={clsx('inline-block', className)}
+//       src={src}
+//       alt={ariaLabel || name}
+//     />
+//   );
+// });
 
 
 

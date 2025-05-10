@@ -36,17 +36,30 @@ class BrowserRuntime implements SvgProvider.Runtime {
     }
   }
 
+  // loadSvgDataFromSource(filename: string, source: string, symbolId?: string): SvgProvider.SvgData | undefined {
+  //   // because this function can be used only from existing sprite, we don't add the file to sprite
+  //   const svgData = getSvgData(source)
+
+  //   if (svgData) {
+  //     svgData.symbolId = symbolId
+  //     this.cache.set(filename, svgData)
+  //   }
+
+  //   return svgData
+  // }
+
   loadSvgDataFromSource(filename: string, source: string, symbolId?: string): SvgProvider.SvgData | undefined {
-    // because this function can be used only from existing sprite, we don't add the file to sprite
-    const svgData = getSvgData(source)
-
+    const svgData = getSvgData(source);
+    console.log('[loadSvgDataFromSource]', { filename, source, svgData }); // ✅ Add this
+  
     if (svgData) {
-      svgData.symbolId = symbolId
-      this.cache.set(filename, svgData)
+      svgData.symbolId = symbolId;
+      this.cache.set(filename, svgData);
     }
-
-    return svgData
+  
+    return svgData;
   }
+  
 
   getSvgData(filename: string): SvgProvider.SvgData | undefined {
     return this.cache.get(filename)

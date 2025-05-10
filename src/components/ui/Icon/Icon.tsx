@@ -28,6 +28,7 @@ const Icon = forwardRef<SVGSVGElement | HTMLImageElement, IconProps>((props, ref
 
   if (!icons[ name ]) {
     console.warn(`There is no icon with name "${name}"`)
+    
     return null
   }
 

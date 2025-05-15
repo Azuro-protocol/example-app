@@ -15,7 +15,7 @@
     "build-icons": "node bin/icons"
   },
   "dependencies": {
-    "@azuro-org/dictionaries": "^3.0.26",
+    "@azuro-org/dictionaries": "^3.0.27-beta.0",
     "@azuro-org/sdk": "6.0.2",
     "@azuro-org/sdk-social-aa-connector": "^1.1.7",
     "@floating-ui/react-dom-interactions": "^0.13.3",

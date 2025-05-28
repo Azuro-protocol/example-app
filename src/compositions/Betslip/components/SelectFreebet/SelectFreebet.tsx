@@ -13,7 +13,7 @@ import messages from './messages'
 
 const SelectFreebetModal = dynamic(() => import('./components/SelectFreebetModal/SelectFreeBetModal'))
 
-const Freebet: React.FC = () => {
+const SelectFreebet: React.FC = () => {
   const { betToken } = useChain()
   const { items } = useBaseBetslip()
   const { freebets, selectedFreebet, selectFreebet, isFreebetsFetching } = useDetailedBetslip()
@@ -69,4 +69,4 @@ const Freebet: React.FC = () => {
   )
 }
 
-export default Freebet
+export default SelectFreebet

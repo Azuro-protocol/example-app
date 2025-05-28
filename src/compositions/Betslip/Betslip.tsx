@@ -9,7 +9,7 @@ import { Icon } from 'components/ui'
 import { Warning } from 'components/feedback'
 import ConnectButtonWrapper from 'compositions/ConnectButtonWrapper/ConnectButtonWrapper'
 
-import { AmountInput, BetButton, Card, Chips, Freebet, Slippage, QuickBet } from './components'
+import { AmountInput, BetButton, Card, Chips, SelectFreebet, Slippage, QuickBet } from './components'
 
 import messages from './messages'
 
@@ -161,7 +161,7 @@ const Content: React.FC<ContentProps> = ({ openSettings }) => {
           })
         }
       >
-        <Freebet />
+        <SelectFreebet />
         <div
           className="bg-bg-l2 p-3 rounded-lg z-10 relative"
         >

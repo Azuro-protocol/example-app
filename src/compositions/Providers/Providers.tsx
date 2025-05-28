@@ -10,10 +10,13 @@ import { SvgProvider, SvgSprite } from 'svg-provider'
 import { AzuroSDKProvider, LiveProvider } from '@azuro-org/sdk'
 import { DeviceProvider, OddsViewProvider } from 'contexts'
 
-import NewFreeBetsChecker from 'compositions/NewFreeBetsChecker/NewFreeBetsChecker'
+// import NewFreeBetsChecker from 'compositions/NewFreeBetsChecker/NewFreeBetsChecker'
 
 
 const WagmiProvider = dynamic(() => import('wallet/WagmiProvider'), {
+  ssr: false,
+})
+const NewFreeBetsChecker = dynamic(() => import('compositions/NewFreeBetsChecker/NewFreeBetsChecker'), {
   ssr: false,
 })
 

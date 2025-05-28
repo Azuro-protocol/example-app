@@ -11,59 +11,62 @@ import { Icon } from 'components/ui'
 import messages from './messages'
 
 
-const SelectFreeBetModal = dynamic(() => import('./components/SelectFreeBetModal/SelectFreeBetModal'))
+const SelectFreebetModal = dynamic(() => import('./components/SelectFreebetModal/SelectFreeBetModal'))
 
-const FreeBet: React.FC = () => {
+const Freebet: React.FC = () => {
   const { betToken } = useChain()
   const { items } = useBaseBetslip()
-  // const { freeBets, selectedFreeBet, selectFreeBet } = useDetailedBetslip()
+  const { freebets, selectedFreebet, selectFreebet, isFreebetsFetching } = useDetailedBetslip()
 
-  // const clearFreeBet = () => {
-  //   selectFreeBet(undefined)
-  // }
+  const clearFreebet = () => {
+    selectFreebet(undefined)
+  }
 
-  // useEffect(() => {
-  //   if (selectedFreeBet && items.length > 1) {
-  //     clearFreeBet()
-  //   }
-  // }, [ selectedFreeBet ])
+  useEffect(() => {
+    if (selectedFreebet) {
+      clearFreebet()
+    }
+  }, [ items ])
 
-  // if (!freeBets?.length || items.length > 1) {
-  //   return null
-  // }
+  if (!freebets?.length && !isFreebetsFetching) {
+    return null
+  }
 
   return (
     <>
-      {/* <div className="-mx-2 border-t border-t-grey-10 group">
+      <div className="-mx-2 border-t border-t-grey-10 group bg-bg-l1 relative z-10">
         {
-          Boolean(selectedFreeBet) ? (
+          Boolean(selectedFreebet) ? (
             <div className="py-2 px-5 flex items-center justify-between text-caption-13 font-semibold">
               <div className="flex items-center text-accent-green">
                 <Icon className="size-4" name="interface/gift" />
                 <Message className="uppercase mx-1" value={messages.freebet} />
-                <div>#{selectedFreeBet!.id}</div>
               </div>
               <div className="flex items-center">
-                <div className="mr-1">{selectedFreeBet!.amount} {betToken.symbol}</div>
-                <button onClick={clearFreeBet}>
+                <div className="mr-1">{selectedFreebet!.amount} {betToken.symbol}</div>
+                <button onClick={clearFreebet}>
                   <Icon className="size-5 text-grey-40 hover:text-grey-90" name="interface/clear" />
                 </button>
               </div>
             </div>
           ) : (
-            <div
-              className="py-2 px-5 flex items-center justify-between text-grey-60 group-hover:text-grey-90 cursor-pointer"
-              onClick={() => openModal('SelectFreeBetModal')}
+            <button
+              className="py-2 px-5 flex items-center justify-between text-grey-60 group-hover:text-grey-90 w-full"
+              onClick={() => openModal('SelectFreebetModal')}
+              disabled={isFreebetsFetching}
             >
               <Message className="text-caption-12" value={messages.apply} />
-              <Icon className="size-5" name="interface/chevron_right" />
-            </div>
+              <Icon
+                className="size-5"
+                name={isFreebetsFetching ? 'interface/spinner' : 'interface/chevron_right'}
+              />
+            </button>
           )
         }
       </div>
-      <SelectFreeBetModal /> */}
+      <SelectFreebetModal />
     </>
   )
 }
 
-export default FreeBet
+export default Freebet

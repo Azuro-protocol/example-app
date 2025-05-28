@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useRef } from 'react'
 import cx from 'classnames'
 import { useBaseBetslip, useChain, useDetailedBetslip, useBet } from '@azuro-org/sdk'
@@ -24,10 +26,9 @@ const BetButton: React.FC<BetButtonProps> = ({ isEnoughBalance, isBalanceFetchin
   const { betToken } = useChain()
   const { items, clear } = useBaseBetslip()
   const {
-    betAmount, odds, totalOdds,
+    betAmount, odds, totalOdds, selectedFreebet,
     isBetAllowed, isOddsFetching, isStatesFetching, isMaxBetFetching,
   } = useDetailedBetslip()
-
   const totalOddsRef = useRef(totalOdds)
 
   if (!isOddsFetching) {
@@ -35,6 +36,8 @@ const BetButton: React.FC<BetButtonProps> = ({ isEnoughBalance, isBalanceFetchin
   }
 
   const slippage = +(localStorage.getItem(constants.localStorageKeys.slippage) as string || constants.defaultSlippage)
+  const diff = selectedFreebet && selectedFreebet.params.isSponsoredBetReturnable ? +selectedFreebet.amount : 0
+  const possibleWin = toLocaleString(totalOddsRef.current * +betAmount - diff, { digits: 2 })
 
   const {
     submit,
@@ -51,7 +54,7 @@ const BetButton: React.FC<BetButtonProps> = ({ isEnoughBalance, isBalanceFetchin
     selections: items,
     odds,
     totalOdds,
-    // freeBet: selectedFreeBet,
+    freebet: selectedFreebet,
     onSuccess: () => {
       openModal('SuccessModal', {
         title: messages.success.title,
@@ -86,7 +89,7 @@ const BetButton: React.FC<BetButtonProps> = ({ isEnoughBalance, isBalanceFetchin
     || !address
     || !isBetAllowed
     || (!isEnoughBalance && !isApproveRequired)
-    || !+betAmount
+    || (!+betAmount && !selectedFreebet)
   )
 
   const rootClassName = cx('flex items-center justify-between py-1 pr-1 border rounded-md w-full', {
@@ -114,7 +117,7 @@ const BetButton: React.FC<BetButtonProps> = ({ isEnoughBalance, isBalanceFetchin
       </div>
       <div className={possibleWinClassName}>
         <Message className="mr-1" value={messages.possibleWin} />
-        <div className="font-semibold">{toLocaleString(totalOddsRef.current * +betAmount, { digits: 2 })} {betToken.symbol}</div>
+        <div className="font-semibold">{possibleWin} {betToken.symbol}</div>
       </div>
     </button>
   )

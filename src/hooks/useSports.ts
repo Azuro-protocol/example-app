@@ -1,5 +1,5 @@
 import { useParams } from 'next/navigation'
-import { useSports as _useSports, type UseSportsProps, useLive } from '@azuro-org/sdk'
+import { useSports as _useSports, useLive } from '@azuro-org/sdk'
 import { Game_OrderBy, OrderDirection, type SportsQuery } from '@azuro-org/toolkit'
 import { useMemo } from 'react'
 import { constants } from 'helpers'
@@ -20,7 +20,7 @@ const useSports = () => {
   const isTopPage = !params.sportSlug || params.sportSlug === '/'
   const { isLive } = useLive()
 
-  const props: UseSportsProps = isTopPage ? {
+  const props = isTopPage ? {
     gameOrderBy: Game_OrderBy.Turnover,
     filter: {
       limit: constants.topPageGamePerSportLimit,
@@ -37,7 +37,7 @@ const useSports = () => {
     isLive,
   }
 
-  const { data: sports, isFetching } = _useSports(props)
+  const { data: sports, isFetching } = _useSports(props as any) // TODO
 
   const formattedSports = useMemo(() => {
     if (!sports?.length) {

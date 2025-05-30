@@ -13,14 +13,6 @@ import { DeviceProvider, OddsViewProvider } from 'contexts'
 import NewFreeBetsChecker from 'compositions/NewFreeBetsChecker/NewFreeBetsChecker'
 
 
-// const WagmiProvider = dynamic(() => import('wallet/WagmiProvider'), {
-//   ssr: false,
-// })
-// const NewFreeBetsChecker = dynamic(() => import('compositions/NewFreeBetsChecker/NewFreeBetsChecker'), {
-//   ssr: false,
-// })
-
-
 type Props = {
   userAgent: string
   initialChainId: ChainId

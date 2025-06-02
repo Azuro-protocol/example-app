@@ -191,12 +191,14 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
 
   const isFreeBet = Boolean(freebetId)
 
-  const { data: { cashoutAmount, isAvailable: isCashoutAvailable } } = usePrecalculatedCashouts({
+  const { data: cashoutData } = usePrecalculatedCashouts({
     bet,
     query: {
       enabled: !isCashedOut || !isFreeBet,
     },
   })
+
+  const { cashoutAmount, isAvailable: isCashoutAvailable } = cashoutData || {}
 
   const isCombo = outcomes.length > 1
   const isLoading = isPending || isProcessing

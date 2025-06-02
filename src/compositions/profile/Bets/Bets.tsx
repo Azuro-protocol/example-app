@@ -202,7 +202,7 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
 
   const isCombo = outcomes.length > 1
   const isLoading = isPending || isProcessing
-  const withButton = !isRedeemed && !isCashedOut && (isWin || isCanceled)
+  const withButton = !isRedeemed && !isCashedOut && (isWin || (isCanceled && !isFreeBet))
 
   const { resultTitle, resultAmount } = useMemo(() => {
     if (isCashedOut) {

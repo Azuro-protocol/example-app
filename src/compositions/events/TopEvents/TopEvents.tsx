@@ -110,7 +110,7 @@ const Card: React.FC<CardProps> = ({ game }) => {
                 <div className="bone w-full h-7 rounded-sm" />
               </>
             ) : (
-              <Condition markets={markets} game={game} />
+              <Condition markets={markets!} game={game} />
             )
           }
         </div>

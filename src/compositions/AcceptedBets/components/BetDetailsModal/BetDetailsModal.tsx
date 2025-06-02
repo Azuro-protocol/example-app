@@ -166,7 +166,7 @@ const BetDetailsModal: ModalComponent<BetDetailsModalProps> = (props) => {
     },
   })
 
-  const { cashoutAmount, isAvailable: isCashoutAvailable } = data
+  const { cashoutAmount, isAvailable: isCashoutAvailable } = data || {}
 
   return (
     <PlainModal

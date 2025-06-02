@@ -53,20 +53,8 @@ export default {
     // [BetslipDisableReason.BatchWithLive]: {
     //   en: 'Live outcome can\'t be used in batch',
     // },
-    [BetslipDisableReason.FreeBetWithLive]: {
-      en: 'FreeBet can\'t be used for live',
-    },
-    [BetslipDisableReason.FreeBetWithCombo]: {
-      en: 'FreeBet can\'t be used for combo',
-    },
-    // [BetslipDisableReason.FreeBetWithBatch]: {
-    //   en: 'FreeBet can\'t be used for batch',
-    // },
     [BetslipDisableReason.FreeBetExpired]: {
       en: 'FreeBet is expired',
-    },
-    [BetslipDisableReason.FreeBetMinOdds]: {
-      en: 'Odds\'s too low for FreeBet',
     },
   },
 }

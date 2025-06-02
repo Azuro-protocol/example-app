@@ -101,7 +101,7 @@ const Tooltip: React.FC<TooltipProps> = (props) => {
     },
   })
 
-  const referenceProps = getReferenceProps({ ref: reference, ...children.props })
+  const referenceProps = getReferenceProps({ ref: reference, ...children.props as object })
 
   const { arrow: { x: arrowX } = {} } = middlewareData
 

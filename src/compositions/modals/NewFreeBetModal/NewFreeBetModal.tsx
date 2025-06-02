@@ -3,6 +3,7 @@
 import type { ModalComponent } from '@locmod/modal'
 import { Message } from '@locmod/intl'
 import { useChain } from '@azuro-org/sdk'
+import { type Freebet } from '@azuro-org/toolkit'
 import dayjs from 'dayjs'
 import Image from 'next/image'
 
@@ -15,13 +16,13 @@ import messages from './messages'
 
 
 export type NewFreeBetModalProps = {
-  // freeBet: FreeBet
+  freebet: Freebet
   onClose?: () => void
 }
 
 const NewFreeBetModal: ModalComponent<NewFreeBetModalProps> = (props) => {
-  const { closeModal, onClose } = props
-  // const { amount, expiresAt } = freeBet
+  const { freebet, closeModal, onClose } = props
+  const { amount, expiresAt } = freebet
 
   const { betToken } = useChain()
 
@@ -37,7 +38,7 @@ const NewFreeBetModal: ModalComponent<NewFreeBetModalProps> = (props) => {
       closeModal={handleClose}
     >
       <div className="">
-        {/* <div className="pt-20 px-8 pb-8 relative">
+        <div className="pt-20 px-8 pb-8 relative">
           <Image className="absolute left-1/2 -translate-x-1/2 top-0 h-full z-10 rounded-t-md" src={bgImg} alt="new freebet" />
           <div className="relative z-20">
             <div className="text-[2.375rem] leading-[2.625rem] font-bold">
@@ -57,7 +58,7 @@ const NewFreeBetModal: ModalComponent<NewFreeBetModalProps> = (props) => {
             size={32}
             onClick={handleClose}
           />
-        </div> */}
+        </div>
       </div>
     </PlainModal>
   )

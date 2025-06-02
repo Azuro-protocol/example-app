@@ -182,22 +182,24 @@ type BetProps = {
 const Bet: React.FC<BetProps> = ({ bet }) => {
   const {
     createdAt, status: graphBetStatus, amount, outcomes,
-    payout, cashout, possibleWin, freebetId, txHash, tokenId,
+    payout, cashout, possibleWin, freebetId, txHash,
     isWin, isLose, isCanceled, isRedeemed, isCashedOut,
   } = bet
 
   const { betToken, appChain } = useChain()
   const { submit, isPending, isProcessing } = useRedeemBet()
+
+  const isFreeBet = Boolean(freebetId)
+
   const { data: { cashoutAmount, isAvailable: isCashoutAvailable } } = usePrecalculatedCashouts({
     bet,
     query: {
-      enabled: !isCashedOut,
+      enabled: !isCashedOut || !isFreeBet,
     },
   })
 
   const isCombo = outcomes.length > 1
   const isLoading = isPending || isProcessing
-  const isFreeBet = Boolean(freebetId)
   const withButton = !isRedeemed && !isCashedOut && (isWin || isCanceled)
 
   const { resultTitle, resultAmount } = useMemo(() => {

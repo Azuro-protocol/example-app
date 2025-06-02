@@ -7,7 +7,7 @@ type Props = {
 }
 
 const useOddsChange = ({ odds, nodeRef }: Props) => {
-  const prevOdds = useRef<number>()
+  const prevOdds = useRef<number>(null)
   const timerRef = useRef<NodeJS.Timeout | null>(null)
 
   useMemo(() => {

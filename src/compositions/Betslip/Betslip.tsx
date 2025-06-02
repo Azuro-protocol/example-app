@@ -9,7 +9,7 @@ import { Icon } from 'components/ui'
 import { Warning } from 'components/feedback'
 import ConnectButtonWrapper from 'compositions/ConnectButtonWrapper/ConnectButtonWrapper'
 
-import { AmountInput, BetButton, Card, Chips, FreeBet, Slippage, QuickBet } from './components'
+import { AmountInput, BetButton, Card, Chips, SelectFreebet, Slippage, QuickBet } from './components'
 
 import messages from './messages'
 
@@ -72,7 +72,7 @@ const Content: React.FC<ContentProps> = ({ openSettings }) => {
   const { betToken } = useChain()
   const { items, clear } = useBaseBetslip()
   const {
-    odds, states, minBet, maxBet, disableReason, betAmount,
+    odds, states, minBet, maxBet, disableReason, betAmount, selectedFreebet,
     isOddsFetching, isStatesFetching,
   } = useDetailedBetslip()
   const { data, isLoading: isBalanceFetching } = useBetTokenBalance()
@@ -153,36 +153,39 @@ const Content: React.FC<ContentProps> = ({ openSettings }) => {
           })
         }
       </div>
-      <FreeBet />
       <div
         className={
-          cx('bg-bg-l2 p-3 rounded-lg z-10 relative', {
+          cx({
             '-mt-4': !isSingle,
-            'shadow-betslip': items.length > 2,
+            'shadow-betslip rounded-lg': items.length > 2,
           })
         }
       >
-        {/* {
-          Boolean(!selectedFreeBet && !isBatch) && ( */}
-        <>
-          <AmountInput isEnoughBalance={isEnoughBalance} />
-          <Chips />
-        </>
-        {/* )
-        } */}
-        {
-          Boolean(disableReason) && (
-            <Warning
-              className="mt-3"
-              text={
-                { ...messages.warnings[disableReason!],
-                  values: { minBet, maxBet, symbol: betToken.symbol },
+        <SelectFreebet />
+        <div
+          className="bg-bg-l2 p-3 rounded-lg z-10 relative"
+        >
+          {
+            Boolean(!selectedFreebet) && (
+              <>
+                <AmountInput isEnoughBalance={isEnoughBalance} />
+                <Chips />
+              </>
+            )
+          }
+          {
+            Boolean(disableReason) && (
+              <Warning
+                className="mt-3"
+                text={
+                  { ...messages.warnings[disableReason!],
+                    values: { minBet, maxBet, symbol: betToken.symbol },
+                  }
                 }
-              }
-            />
-          )
-        }
-        {/* {
+              />
+            )
+          }
+          {/* {
           isBatch && (
             <div className="flex items-center justify-between mb-3">
               <Message className="text-caption-12 text-grey-60" value={messages.totalBet} />
@@ -190,10 +193,11 @@ const Content: React.FC<ContentProps> = ({ openSettings }) => {
             </div>
           )
         } */}
-        <div className="mt-3">
-          <ConnectButtonWrapper>
-            <BetButton isEnoughBalance={isEnoughBalance} isBalanceFetching={isBalanceFetching} />
-          </ConnectButtonWrapper>
+          <div className="mt-3">
+            <ConnectButtonWrapper>
+              <BetButton isEnoughBalance={isEnoughBalance} isBalanceFetching={isBalanceFetching} />
+            </ConnectButtonWrapper>
+          </div>
         </div>
       </div>
     </div>

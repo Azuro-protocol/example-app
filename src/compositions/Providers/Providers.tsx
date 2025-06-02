@@ -1,21 +1,16 @@
 'use client'
 
 import React from 'react'
-import dynamic from 'next/dynamic'
 import { type State } from 'wagmi'
 import { type ChainId } from '@azuro-org/toolkit'
 import { type Address } from 'viem'
 import { IntlProvider } from '@locmod/intl'
 import { SvgProvider, SvgSprite } from 'svg-provider'
 import { AzuroSDKProvider, LiveProvider } from '@azuro-org/sdk'
+import { WagmiProvider } from 'wallet'
 import { DeviceProvider, OddsViewProvider } from 'contexts'
 
 import NewFreeBetsChecker from 'compositions/NewFreeBetsChecker/NewFreeBetsChecker'
-
-
-const WagmiProvider = dynamic(() => import('wallet/WagmiProvider'), {
-  ssr: false,
-})
 
 
 type Props = {

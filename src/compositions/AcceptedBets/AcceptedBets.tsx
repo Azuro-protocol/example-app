@@ -1,8 +1,9 @@
 'use client'
 
-import { BetType, useBets } from '@azuro-org/sdk'
+import { BetType, useBets, type UseBetsProps } from '@azuro-org/sdk'
 import { OrderDirection } from '@azuro-org/toolkit'
 import { useAccount } from '@azuro-org/sdk-social-aa-connector'
+import { type Address } from 'viem'
 import { Message } from '@locmod/intl'
 import React from 'react'
 import dynamic from 'next/dynamic'
@@ -32,10 +33,11 @@ const EmptyContent: React.FC = () => {
 const AcceptedBets: React.FC = () => {
   const { address } = useAccount()
 
-  const props = {
+  const props: UseBetsProps = {
     filter: {
       bettor: address!,
       type: BetType.Accepted,
+      affiliate: process.env.NEXT_PUBLIC_AFFILIATE_ADDRESS as Address,
     },
     itemsPerPage: 500,
     orderDir: OrderDirection.Desc,

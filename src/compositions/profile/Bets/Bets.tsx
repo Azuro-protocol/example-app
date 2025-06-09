@@ -1,6 +1,6 @@
 'use client'
 
-import { useChain, useRedeemBet, BetType, type Bet, type BetOutcome, usePrecalculatedCashouts, useBets, useLegacyBets } from '@azuro-org/sdk'
+import { useChain, useRedeemBet, BetType, type Bet, type BetOutcome, usePrecalculatedCashouts, useBets, useLegacyBets, type UseBetsProps, type UseLegacyBetsProps } from '@azuro-org/sdk'
 import { GameState, OrderDirection } from '@azuro-org/toolkit'
 import { Message } from '@locmod/intl'
 import React, { useEffect, useMemo } from 'react'
@@ -11,6 +11,7 @@ import { openModal } from '@locmod/modal'
 import { useAccount } from '@azuro-org/sdk-social-aa-connector'
 import { useEntry } from '@locmod/intersection-observer'
 import { type InfiniteData, type UseInfiniteQueryResult } from '@tanstack/react-query'
+import { type Address } from 'viem'
 import { toLocaleString } from 'helpers'
 import { getGameDateTime } from 'helpers/getters'
 
@@ -490,17 +491,18 @@ type ContentProps = {
 
 const Content: React.FC<ContentProps> = ({ tab }) => {
   const { address } = useAccount()
-  const props = {
+  const props: UseBetsProps = {
     filter: {
       bettor: address!,
       type: tab,
+      affiliate: process.env.NEXT_PUBLIC_AFFILIATE_ADDRESS as Address,
     },
     orderDir: OrderDirection.Desc,
   }
 
   const betsQuery = useBets(props)
   const legacyBetsQuery = useLegacyBets({
-    ...props,
+    ...props as UseLegacyBetsProps,
     query: {
       enabled: !betsQuery.isFetching && !betsQuery.hasNextPage,
     },

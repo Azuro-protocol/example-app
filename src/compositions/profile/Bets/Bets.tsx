@@ -97,7 +97,7 @@ const Outcome: React.FC<OutcomeProps> = ({ outcome, isCombo }) => {
         }
       >
         <Href
-          to={`${sportSlug}/${countrySlug}/${leagueSlug}/${gameId}`}
+          to={`/${sportSlug}/${countrySlug}/${leagueSlug}/${gameId}`}
           className="flex items-center group/link"
         >
           {

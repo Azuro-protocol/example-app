@@ -54,7 +54,7 @@ const Outcome: React.FC<OutcomeProps> = ({ outcome, isCombo, onLinkClick }) => {
   return (
     <div className="rounded-md overflow-hidden">
       <Href
-        to={`${sportSlug}/${countrySlug}/${leagueSlug}/${gameId}`}
+        to={`/${sportSlug}/${countrySlug}/${leagueSlug}/${gameId}`}
         className="bg-bg-l2 flex items-center p-3 group/link"
         onClick={onLinkClick}
       >

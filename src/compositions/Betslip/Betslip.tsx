@@ -174,7 +174,7 @@ const Content: React.FC<ContentProps> = ({ openSettings }) => {
             )
           }
           {
-            Boolean(disableReason) && (
+            (Boolean(disableReason) && Boolean(messages.warnings[disableReason!])) && (
               <Warning
                 className="mt-3"
                 text={

@@ -41,11 +41,11 @@ export default {
     // [BetslipDisableReason.ComboWithLive]: {
     //   en: 'Live outcome can\'t be used in combo',
     // },
+    [BetslipDisableReason.SelectedOutcomesTemporarySuspended]: {
+      en: 'Betting on this odd is temporary suspended',
+    },
     [BetslipDisableReason.ConditionState]: {
       en: 'One or more outcomes have been removed or suspended. Review your betslip and remove them.',
-    },
-    [BetslipDisableReason.PrematchConditionInStartedGame]: {
-      en: 'Game has started',
     },
     [BetslipDisableReason.ComboWithSameGame]: {
       en: 'Combo with outcomes from same game prohibited, please use Batch bet',

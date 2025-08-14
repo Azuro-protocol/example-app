@@ -3,7 +3,7 @@
 import { type Bet, useChain } from '@azuro-org/sdk'
 import dayjs from 'dayjs'
 import { Message } from '@locmod/intl'
-import React from 'react'
+import React, { useMemo } from 'react'
 
 import { openModal } from '@locmod/modal'
 import { Icon, type IconName } from 'components/ui'
@@ -27,7 +27,11 @@ const BetCard: React.FC<BetCardProps> = ({ bet }) => {
 
   const isCombo = outcomes.length > 1
   const isFreeBet = Boolean(freebetId)
-  const isUnique = outcomes[0].game.sport.slug === 'unique'
+  const isUnique = outcomes[0].game?.sport?.slug === 'unique'
+
+  const games = useMemo(() => {
+    return outcomes.map(({ game }) => game).filter(Boolean)
+  }, [ outcomes ])
 
   return (
     <div className="rounded-sm overflow-hidden">
@@ -37,12 +41,16 @@ const BetCard: React.FC<BetCardProps> = ({ bet }) => {
             {`#${tokenId} / ${dayjs(+createdAt * 1000).format('DD.MM.YYYY, HH:mm')}`}
           </div>
         </div>
-        <BetStatus
-          graphBetStatus={graphBetStatus}
-          games={outcomes.map(({ game }) => game)}
-          isWin={isWin}
-          isCashedOut={isCashedOut}
-        />
+        {
+          Boolean(games.length) && (
+            <BetStatus
+              graphBetStatus={graphBetStatus}
+              games={games}
+              isWin={isWin}
+              isCashedOut={isCashedOut}
+            />
+          )
+        }
       </div>
       <div className="bg-bg-l2 py-2 px-3">
         <div className="flex items-center text-caption-12 font-medium text-grey-60">
@@ -50,10 +58,20 @@ const BetCard: React.FC<BetCardProps> = ({ bet }) => {
           {
             isCombo ? (
               <>
-                <span className="text-ellipsis whitespace-nowrap overflow-hidden mr-1">{outcomes[0].game.title}</span>
-                <Message
-                  value={messages.others}
-                />
+                {
+                  Boolean(outcomes[0].game) ? (
+                    <>
+                      <span className="text-ellipsis whitespace-nowrap overflow-hidden mr-1">
+                        {outcomes[0].game.title}
+                      </span>
+                      <Message
+                        value={messages.others}
+                      />
+                    </>
+                  ) : (
+                    <div className="h-4 w-10 bone rounded-sm" />
+                  )
+                }
               </>
             ) : (
               <>
@@ -62,9 +80,19 @@ const BetCard: React.FC<BetCardProps> = ({ bet }) => {
                     <div className="text-ellipsis whitespace-nowrap overflow-hidden">{outcomes[0].marketName}</div>
                   ) : (
                     <>
-                      <span>{outcomes[0].game.sport.name}</span>
-                      <div className="size-1 bg-grey-20 rounded-full mx-1" />
-                      <span className="text-ellipsis whitespace-nowrap overflow-hidden">{outcomes[0].game.league.name}</span>
+                      {
+                        Boolean(outcomes[0].game) ? (
+                          <>
+                            <span>{outcomes[0].game.sport.name}</span>
+                            <div className="size-1 bg-grey-20 rounded-full mx-1" />
+                            <span className="text-ellipsis whitespace-nowrap overflow-hidden">
+                              {outcomes[0].game.league.name}
+                            </span>
+                          </>
+                        ) : (
+                          <div className="h-4 w-10 bone rounded-sm" />
+                        )
+                      }
                     </>
                   )
                 }
@@ -74,9 +102,17 @@ const BetCard: React.FC<BetCardProps> = ({ bet }) => {
         </div>
         {
           !isCombo && (
-            <div className="mt-2 text-caption-13 font-semibold">
-              {outcomes[0].game.title}
-            </div>
+            <>
+              {
+                Boolean(outcomes[0].game) ? (
+                  <div className="mt-2 text-caption-13 font-semibold">
+                    {outcomes[0].game.title}
+                  </div>
+                ) : (
+                  <div className="h-4 w-10 bone rounded-sm" />
+                )
+              }
+            </>
           )
         }
       </div>

@@ -6,6 +6,7 @@ import { useChain, type Bet, type BetOutcome, usePrecalculatedCashouts } from '@
 import { GameState } from '@azuro-org/toolkit'
 import dayjs from 'dayjs'
 import cx from 'classnames'
+import { useMemo } from 'react'
 import { toLocaleString } from 'helpers'
 import { getGameDateTime } from 'helpers/getters'
 
@@ -31,52 +32,46 @@ const Outcome: React.FC<OutcomeProps> = ({ outcome, isCombo, onLinkClick }) => {
   const {
     title,
     state: gameState, gameId, participants, startsAt,
-    sport: {
-      slug: sportSlug,
-    },
-    league: {
-      slug: leagueSlug,
-    },
-    country: {
-      slug: countrySlug,
-    },
+    sport,
+    league,
+    country,
   } = game!
+
+  const sportSlug = sport?.slug
+  const leagueSlug = league?.slug
+  const countrySlug = country?.slug
 
   const { date, time } = getGameDateTime(+startsAt * 1000)
   const isUnique = sportSlug === 'unique'
 
-  // const gameStatus = getGameStatus({
-  //   graphStatus: graphGameStatus,
-  //   startsAt: +startsAt,
-  //   isGameInLive: isLive,
-  // })
-
   return (
     <div className="rounded-md overflow-hidden">
-      <Href
-        to={`/${sportSlug}/${countrySlug}/${leagueSlug}/${gameId}`}
-        className="bg-bg-l2 flex items-center p-3 group/link"
-        onClick={onLinkClick}
-      >
-        {
-          !isUnique && participants.map(({ name, image }, index) => (
-            <OpponentLogo className={cx({ '-mt-2': !index, '-mb-2 -ml-2 z-20': !!index })} key={name} image={image} />
-          ))
-        }
-        <div className="ml-2">
-          <div className="flex items-center justify-between">
-            <div className="text-caption-12 flex items-center">
-              <span className="text-grey-70 font-semibold">{date}</span>
-              <span className="text-grey-60 ml-1">{time}</span>
-              {
-                isCombo && (
-                  <>
-                    {
-                      [ GameState.Live, GameState.Finished ].includes(gameState) && (
-                        <div className="size-1 flex-none bg-grey-40 rounded-full mx-2" />
-                      )
-                    }
-                    {/* {
+      {
+        Boolean(game) ? (
+          <Href
+            to={`/${sportSlug}/${countrySlug}/${leagueSlug}/${gameId}`}
+            className="bg-bg-l2 flex items-center p-3 group/link"
+            onClick={onLinkClick}
+          >
+            {
+              !isUnique && participants.map(({ name, image }, index) => (
+                <OpponentLogo className={cx({ '-mt-2': !index, '-mb-2 -ml-2 z-20': !!index })} key={name} image={image} />
+              ))
+            }
+            <div className="ml-2">
+              <div className="flex items-center justify-between">
+                <div className="text-caption-12 flex items-center">
+                  <span className="text-grey-70 font-semibold">{date}</span>
+                  <span className="text-grey-60 ml-1">{time}</span>
+                  {
+                    isCombo && (
+                      <>
+                        {
+                          [ GameState.Live, GameState.Finished ].includes(gameState) && (
+                            <div className="size-1 flex-none bg-grey-40 rounded-full mx-2" />
+                          )
+                        }
+                        {/* {
                       gameState === GameState.Stopped && (
                         <div className="flex items-center text-accent-yellow">
                           <Icon className="size-4 mr-[2px]" name="interface/declined" />
@@ -84,34 +79,39 @@ const Outcome: React.FC<OutcomeProps> = ({ outcome, isCombo, onLinkClick }) => {
                         </div>
                       )
                     } */}
-                    {
-                      gameState === GameState.Finished && (
-                        <Message
-                          className={
-                            cx('font-semibold', {
-                              'text-accent-green': isWin,
-                              'text-accent-red': isLose,
-                            })
-                          }
-                          value={isWin ? messages.gameState.win : messages.gameState.lose}
-                        />
-                      )
-                    }
-                  </>
-                )
-              }
+                        {
+                          gameState === GameState.Finished && (
+                            <Message
+                              className={
+                                cx('font-semibold', {
+                                  'text-accent-green': isWin,
+                                  'text-accent-red': isLose,
+                                })
+                              }
+                              value={isWin ? messages.gameState.win : messages.gameState.lose}
+                            />
+                          )
+                        }
+                      </>
+                    )
+                  }
+                </div>
+                {
+                  gameState === GameState.Live && (
+                    <LiveDot />
+                  )
+                }
+              </div>
+              <div className="text-caption-13 font-semibold mt-0.5 group-hover/link:underline">
+                {title}
+              </div>
             </div>
-            {
-              gameState === GameState.Live && (
-                <LiveDot />
-              )
-            }
-          </div>
-          <div className="text-caption-13 font-semibold mt-0.5 group-hover/link:underline">
-            {title}
-          </div>
-        </div>
-      </Href>
+          </Href>
+        ) : (
+
+          <div className="h-4 w-40 bone rounded-sm" />
+        )
+      }
       <div
         className={
           cx('p-3 mt-px space-y-1.5', {
@@ -168,6 +168,10 @@ const BetDetailsModal: ModalComponent<BetDetailsModalProps> = (props) => {
 
   const { cashoutAmount, isAvailable: isCashoutAvailable } = data || {}
 
+  const games = useMemo(() => {
+    return outcomes.map(({ game }) => game).filter(Boolean)
+  }, [ outcomes ])
+
   return (
     <PlainModal
       className="!max-w-[26rem]"
@@ -183,19 +187,23 @@ const BetDetailsModal: ModalComponent<BetDetailsModalProps> = (props) => {
                 {`#${tokenId} / ${dayjs(+createdAt * 1000).format('DD.MM.YYYY, HH:mm')}`}
               </div>
             </div>
-            <BetStatus
-              graphBetStatus={graphBetStatus}
-              games={outcomes.map(({ game }) => game!)}
-              isWin={isWin}
-              isCashedOut={isCashedOut}
-            />
+            {
+              Boolean(games.length) && (
+                <BetStatus
+                  graphBetStatus={graphBetStatus}
+                  games={games}
+                  isWin={isWin}
+                  isCashedOut={isCashedOut}
+                />
+              )
+            }
           </div>
         </div>
         <div className="space-y-1 overflow-auto no-scrollbar max-h-[30rem] mt-3">
           {
             outcomes.map((outcome) => (
               <Outcome
-                key={outcome.game!.gameId}
+                key={`${outcome.outcomeId}-${outcome.conditionId}`}
                 outcome={outcome}
                 isCombo={isCombo}
                 onLinkClick={() => closeModal()}

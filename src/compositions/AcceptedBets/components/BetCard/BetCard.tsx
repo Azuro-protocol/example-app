@@ -54,7 +54,11 @@ const BetCard: React.FC<BetCardProps> = ({ bet }) => {
       </div>
       <div className="bg-bg-l2 py-2 px-3">
         <div className="flex items-center text-caption-12 font-medium text-grey-60">
-          <Icon className="size-4 mr-2" name={`sport/${outcomes[0].game.sport.slug}` as IconName} />
+          {
+            Boolean(outcomes[0].game) && (
+              <Icon className="size-4 mr-2" name={`sport/${outcomes[0].game.sport.slug}` as IconName} />
+            )
+          }
           {
             isCombo ? (
               <>

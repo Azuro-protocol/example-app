@@ -37,23 +37,26 @@ const Outcome: React.FC<OutcomeProps> = ({ outcome, isCombo }) => {
 
   const {
     title,
-    state: gameState, gameId, participants, startsAt,
-    sport: {
-      slug: sportSlug,
-    },
-    league: {
-      name: leagueName,
-      slug: leagueSlug,
-    },
-    country: {
-      name: countryName,
-      slug: countrySlug,
-    },
-  } = game
+    state: gameState,
+    gameId,
+    participants,
+    startsAt,
+    sport,
+    league,
+    country,
+  } = game || {}
+
+  const sportSlug = sport?.slug
+
+  const leagueName = league?.name
+  const leagueSlug = league?.slug
+
+  const countryName = country?.name
+  const countrySlug = country?.slug
 
   const isUnique = sportSlug === 'unique'
   const withResult = isWin !== null || isLose !== null
-  const { date, time } = getGameDateTime(+startsAt * 1000)
+  const { date, time } = getGameDateTime(+(startsAt || 0) * 1000)
 
   const marketBoxClassName = 'text-caption-13 mb:flex mb:items-center mb:justify-between'
   const marketClassName = cx('font-semibold', { 'text-grey-40': gameState === GameState.Stopped })
@@ -61,20 +64,26 @@ const Outcome: React.FC<OutcomeProps> = ({ outcome, isCombo }) => {
   return (
     <div className="rounded-sm overflow-hidden">
       <div className="bg-bg-l3 flex items-center justify-between py-2 ds:px-3 mb:px-2 relative">
-        <div className="flex items-center text-caption-12">
-          <Icon className="size-4 mr-2 text-grey-70" name={`sport/${sportSlug}` as IconName} />
-          {
-            isUnique ? (
-              <Message className="text-grey-70" value={messages.unique} />
-            ) : (
-              <>
-                <span className="text-grey-70">{countryName}</span>
-                <div className="size-1 flex-none bg-grey-40 rounded-full mx-2" />
-                <span>{leagueName}</span>
-              </>
-            )
-          }
-        </div>
+        {
+          Boolean(game) ? (
+            <div className="flex items-center text-caption-12">
+              <Icon className="size-4 mr-2 text-grey-70" name={`sport/${sportSlug}` as IconName} />
+              {
+                isUnique ? (
+                  <Message className="text-grey-70" value={messages.unique} />
+                ) : (
+                  <>
+                    <span className="text-grey-70">{countryName}</span>
+                    <div className="size-1 flex-none bg-grey-40 rounded-full mx-2" />
+                    <span>{leagueName}</span>
+                  </>
+                )
+              }
+            </div>
+          ) : (
+            <div className="h-4 w-40 bone rounded-sm" />
+          )
+        }
         {
           isLive && (
             <>
@@ -96,63 +105,69 @@ const Outcome: React.FC<OutcomeProps> = ({ outcome, isCombo }) => {
           })
         }
       >
-        <Href
-          to={`/${sportSlug}/${countrySlug}/${leagueSlug}/${gameId}`}
-          className="flex items-center group/link"
-        >
-          {
-            !isUnique && participants.map(({ name, image }, index) => (
-              <OpponentLogo className={cx({ '-mt-2': !index, '-mb-2 -ml-2 z-20': !!index })} key={name} image={image} />
-            ))
-          }
-          <div className={cx({ 'ml-3': !isUnique })}>
-            <div className="text-caption-12 flex items-center">
-              <span className="text-grey-70 font-medium">{date}</span>
-              <span className="text-grey-60 ml-1">{time}</span>
+        {
+          Boolean(game) ? (
+            <Href
+              to={`/${sportSlug}/${countrySlug}/${leagueSlug}/${gameId}`}
+              className="flex items-center group/link"
+            >
               {
-                isCombo && (
-                  <>
-                    {
-                      [ GameState.Stopped, GameState.Live ].includes(gameState) && (
-                        <div className="size-1 flex-none bg-grey-40 rounded-full mx-2" />
-                      )
-                    }
-                    {
-                      gameState === GameState.Stopped && (
-                        <div className="flex items-center text-grey-60">
-                          <Icon className="size-4 mr-[2px]" name="interface/declined" />
-                          <Message className="font-semibold" value={messages.gameState.stopped} />
-                        </div>
-                      )
-                    }
-                    {
-                      gameState === GameState.Live && (
-                        <Message className="font-semibold text-accent-red" value={messages.gameState.live} />
-                      )
-                    }
-                    {
-                      Boolean(gameState === GameState.Finished && withResult) && (
-                        <>
-                          <div className="size-1 flex-none bg-grey-40 rounded-full mx-2" />
-                          <Message
-                            className={
-                              cx('font-semibold', {
-                                'text-accent-green': isWin,
-                                'text-accent-red': isLose,
-                              })
-                            }
-                            value={isWin ? messages.gameState.win : messages.gameState.lose}
-                          />
-                        </>
-                      )
-                    }
-                  </>
-                )
+                !isUnique && participants.map(({ name, image }, index) => (
+                  <OpponentLogo className={cx({ '-mt-2': !index, '-mb-2 -ml-2 z-20': !!index })} key={name} image={image} />
+                ))
               }
-            </div>
-            <div className="text-caption-13 font-semibold mt-0.5 group-hover/link:underline">{title}</div>
-          </div>
-        </Href>
+              <div className={cx({ 'ml-3': !isUnique })}>
+                <div className="text-caption-12 flex items-center">
+                  <span className="text-grey-70 font-medium">{date}</span>
+                  <span className="text-grey-60 ml-1">{time}</span>
+                  {
+                    isCombo && (
+                      <>
+                        {
+                          [ GameState.Stopped, GameState.Live ].includes(gameState) && (
+                            <div className="size-1 flex-none bg-grey-40 rounded-full mx-2" />
+                          )
+                        }
+                        {
+                          gameState === GameState.Stopped && (
+                            <div className="flex items-center text-grey-60">
+                              <Icon className="size-4 mr-[2px]" name="interface/declined" />
+                              <Message className="font-semibold" value={messages.gameState.stopped} />
+                            </div>
+                          )
+                        }
+                        {
+                          gameState === GameState.Live && (
+                            <Message className="font-semibold text-accent-red" value={messages.gameState.live} />
+                          )
+                        }
+                        {
+                          Boolean(gameState === GameState.Finished && withResult) && (
+                            <>
+                              <div className="size-1 flex-none bg-grey-40 rounded-full mx-2" />
+                              <Message
+                                className={
+                                  cx('font-semibold', {
+                                    'text-accent-green': isWin,
+                                    'text-accent-red': isLose,
+                                  })
+                                }
+                                value={isWin ? messages.gameState.win : messages.gameState.lose}
+                              />
+                            </>
+                          )
+                        }
+                      </>
+                    )
+                  }
+                </div>
+                <div className="text-caption-13 font-semibold mt-0.5 group-hover/link:underline">{title}</div>
+              </div>
+            </Href>
+          ) : (
+            <div className="h-8 w-52 bone rounded-sm" />
+          )
+        }
         <div className="ds:grid ds:grid-cols-3 ds:gap-4 w-full ds:max-w-[50%] mb:space-y-2 mb:pt-2 mb:border-t mb:border-t-grey-20 mb:mt-2">
           <div className={marketBoxClassName}>
             <Message className="text-grey-60" value={messages.market} />
@@ -204,6 +219,10 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
   const isCombo = outcomes.length > 1
   const isLoading = isPending || isProcessing
   const withButton = !isRedeemed && !isCashedOut && (isWin || (isCanceled && !isFreeBet))
+
+  const games = useMemo(() => {
+    return outcomes.map(({ game }) => game).filter(Boolean)
+  }, [ outcomes ])
 
   const { resultTitle, resultAmount } = useMemo(() => {
     if (isCashedOut) {
@@ -263,18 +282,22 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
             <Icon className="size-4 ml-1" name="interface/external_link" />
           </a>
         </div>
-        <BetStatus
-          graphBetStatus={graphBetStatus}
-          games={outcomes.map(({ game }) => game)}
-          isWin={isWin}
-          isCashedOut={isCashedOut}
-        />
+        {
+          Boolean(games.length) && (
+            <BetStatus
+              graphBetStatus={graphBetStatus}
+              games={games}
+              isWin={isWin}
+              isCashedOut={isCashedOut}
+            />
+          )
+        }
       </div>
       <div className="space-y-1">
         {
           outcomes.map((outcome) => (
             <Outcome
-              key={outcome.game.gameId}
+              key={`${outcome.outcomeId}-${outcome.conditionId}`}
               outcome={outcome}
               isCombo={isCombo}
             />

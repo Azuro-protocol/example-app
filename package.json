@@ -16,9 +16,9 @@
   },
   "dependencies": {
     "@azuro-org/dictionaries": "^3.0.28",
-    "@azuro-org/sdk": "6.1.7",
+    "@azuro-org/sdk": "6.1.8",
     "@azuro-org/sdk-social-aa-connector": "^1.1.7",
-    "@azuro-org/toolkit": "5.1.2",
+    "@azuro-org/toolkit": "5.1.3",
     "@floating-ui/react-dom-interactions": "^0.13.3",
     "@glidejs/glide": "^3.6.2",
     "@headlessui/react": "2.2.0",
@@ -42,8 +42,8 @@
     "react-xmasonry": "^3.0.6",
     "sass": "1.77.6",
     "sharp": "^0.33.5",
-    "viem": "^2.23.2",
-    "wagmi": "^2.14.11"
+    "viem": "^2.37.4",
+    "wagmi": "^2.16.9"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.26.0",

@@ -1,9 +1,9 @@
-import { type MutableRefObject, useMemo, useRef } from 'react'
+import { type RefObject, useMemo, useRef } from 'react'
 
 
 type Props = {
   odds: number
-  nodeRef: MutableRefObject<HTMLDivElement | null>
+  nodeRef: RefObject<HTMLDivElement | null>
 }
 
 const useOddsChange = ({ odds, nodeRef }: Props) => {

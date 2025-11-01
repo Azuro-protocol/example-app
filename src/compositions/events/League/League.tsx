@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import { useEntry } from '@locmod/intersection-observer'
 import { type Sport } from 'hooks'
 
 import { Flag } from 'components/dataDisplay'
@@ -49,10 +50,19 @@ type LeagueProps = {
 const League: React.FC<LeagueProps> = ({ sportSlug, league, isPage = false }) => {
   const { slug, name, countryName, countrySlug, games } = league
 
+  const [ref, entry] = useEntry({
+    once: isPage,
+    observerProps: {
+      rootMargin: '100% 0px',
+    },
+  })
+
+  const isIntersecting = isPage || entry?.isIntersecting || false
+
   const leagueUrl = `/${sportSlug}/${countrySlug}/${slug}`
 
   return (
-    <div className="mt-1 first-of-type:mt-0">
+    <div ref={ref} className="mt-1 first-of-type:mt-0">
       {
         isPage ? (
           <div className="py-3 px-4">
@@ -71,14 +81,23 @@ const League: React.FC<LeagueProps> = ({ sportSlug, league, isPage = false }) =>
       }
       <div className="space-y-[2px]">
         {
-          games.map(game => (
+          /**
+           * when there a lot of events (e.g., 500 football games), the DOM tree is too big,
+           * so this is a workaround (virtualization-like) to prevent UI lags
+           * */
+          isIntersecting ? games.map(game => (
             <Game
               key={game.gameId}
               leagueUrl={leagueUrl}
               game={game}
               withTopRadius={isPage}
             />
-          ))
+          )) : (
+            <div
+              className="mb:h-[var(--mb-h)] ds:h-[var(--ds-h)] box-content w-full bg-bg-l2 last-of-type:rounded-b-md"
+              style={{ '--mb-h': `${7.125 * games.length}rem`, '--ds-h': `${5 * games.length}rem`, paddingTop: `${(games.length - 1) * 2}px` }}
+            />
+          )
         }
       </div>
     </div>

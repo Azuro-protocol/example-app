@@ -74,6 +74,7 @@ const Game: React.FC<GameProps> = ({ className, leagueUrl, game, withTopRadius, 
   const rootClassName = cx(
     'group flex mb:flex-col ds:items-center justify-between',
     'py-2 ds:pl-4 ds:pr-2 mb:px-2 bg-bg-l2 last-of-type:rounded-b-md relative',
+    'mb:h-[7.125rem] ds:h-20',
     className,
     {
       'first-of-type:rounded-t-md': withTopRadius || isUnique,

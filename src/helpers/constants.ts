@@ -1,4 +1,4 @@
-import { chiliz, gnosis, polygon, polygonAmoy, spicy, base, baseSepolia } from 'viem/chains'
+import { chiliz, gnosis, polygon, polygonAmoy, spicy, base, baseSepolia, bscTestnet } from 'viem/chains'
 import { type ChainId } from '@azuro-org/toolkit'
 import { type IconName } from 'components/ui'
 
@@ -16,6 +16,7 @@ const rpcByChains: Record<ChainId, string> = {
   [spicy.id]: 'https://chiliz-spicy-rpc.publicnode.com',
   [base.id]: 'https://base-rpc.publicnode.com',
   [baseSepolia.id]: 'https://base-sepolia-rpc.publicnode.com',
+  [bscTestnet.id]: 'https://bsc-testnet-rpc.publicnode.com',
 } as const
 
 const chainIcons: Record<ChainId, IconName> = {
@@ -26,6 +27,7 @@ const chainIcons: Record<ChainId, IconName> = {
   [spicy.id]: 'networks/chiliz',
   [base.id]: 'networks/base',
   [baseSepolia.id]: 'networks/base',
+  [bscTestnet.id]: 'networks/binance',
 }
 
 const currencyIcons: Record<ChainId, IconName> = {
@@ -36,6 +38,7 @@ const currencyIcons: Record<ChainId, IconName> = {
   [spicy.id]: 'currency/wchz',
   [base.id]: 'currency/weth',
   [baseSepolia.id]: 'currency/weth',
+  [bscTestnet.id]: 'currency/usdt',
 }
 
 const sportsOrder = [ 'politics', 'football', 'basketball', 'tennis', 'cricket', 'mma', 'boxing', 'ice-hockey', 'american-football', 'baseball', 'rugby-union', 'rugby-league' ]

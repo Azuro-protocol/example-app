@@ -1,5 +1,5 @@
 import { getCookies, setCookie, getCookie } from 'cookies-next'
-import type { OptionsType, DefaultOptions } from 'cookies-next/lib/types'
+import type { OptionsType } from 'cookies-next'
 import { constants } from 'helpers'
 
 
@@ -9,24 +9,22 @@ const validateServerOptions = (options?: OptionsType): void => {
   }
 }
 
-const setItem = (key: string, data: any, options: DefaultOptions = {}): void => {
-  const defaultOptions: DefaultOptions = {
+const setItem = (key: string, data: any, options: OptionsType = {}): void => {
+  const defaultOptions: OptionsType = {
     maxAge: 365 * 24 * 60 * 60, // 1 year
     httpOnly: false,
     sameSite: 'lax',
     path: '/',
     domain: constants.baseUrl.replace('https://', ''),
+    ...options,
   }
 
   validateServerOptions(options)
 
-  setCookie(key, data, {
-    ...defaultOptions,
-    ...options,
-  })
+  setCookie(key, data, defaultOptions)
 }
 
-const setSessionItem = (key: string, data: any, options: DefaultOptions = {}): void => {
+const setSessionItem = (key: string, data: any, options: OptionsType = {}): void => {
   setItem(key, data, { ...options, maxAge: 0 })
 }
 
@@ -42,7 +40,7 @@ const getAllItems = (options?: OptionsType) => {
   return getCookies(options)
 }
 
-const removeItem = (key: string, options?: DefaultOptions): void => {
+const removeItem = (key: string, options?: OptionsType): void => {
   return setItem(key, '', { ...options, maxAge: -1 })
 }
 

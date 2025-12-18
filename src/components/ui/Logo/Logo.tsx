@@ -18,7 +18,7 @@ const Logo: React.FC<LogoProps> = (props) => {
     height="16"
     colorInterpolationFilters="sRGB"
     version="1"
-    viewBox="64.323 105.022 211.354 39.956"
+    viewBox="0 0 71 16"
   >
     <g fill="#FFF" className="iconlinesvg-g iconlinesvg">
       <g className="tp-name">

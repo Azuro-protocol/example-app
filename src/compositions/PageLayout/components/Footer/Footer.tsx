@@ -1,23 +1,25 @@
-import React from 'react'
+import React from "react";
+import Logo from "../ui/Logo/Logo"; // adjust path if needed
+import styles from "./Footer.module.css";
 
-import { Logo } from 'components/ui'
-
-import Navbar from './components/Navbar/Navbar'
-import Copy from './components/Copy/Copy'
-
-
-const Footer: React.FC = () => {
+export default function Footer() {
   return (
-    <footer className="p-4 pb-3">
-      <div className="flex mb:flex-col ds:items-center justify-between pb-4 border-b border-b-grey-10">
-        <Logo className="h-4 mb:mb-4" />
-        <Navbar />
+    <footer className={styles.footer}>
+      <div className={styles.left}>
+        {/* Example left content — change as needed */}
+        <span className={styles.brand}>My Site</span>
       </div>
-      <div className="mt-3">
-        <Copy />
+
+      <div className={styles.right}>
+        {/* Button with the logo on the left */}
+        <button className={styles.ctaButton} type="button" aria-label="Open app">
+          <span className={styles.logoWrap} aria-hidden="true">
+            {/* Pass width/height to the Logo to control sizing */}
+            <Logo width={24} height={24} />
+          </span>
+          <span className={styles.buttonText}>Open App</span>
+        </button>
       </div>
     </footer>
-  )
+  );
 }
-
-export default Footer

@@ -9,8 +9,8 @@ const Logo: React.FC<LogoProps> = ({ className }) => (
   <Href to="/" className={cx('flex items-center', className)}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="100"
-      height="33"
+      width="2400"
+      height="453.7187350796586"
       viewBox="64.323 105.022 211.354 39.956"
       colorInterpolationFilters="sRGB"
     >

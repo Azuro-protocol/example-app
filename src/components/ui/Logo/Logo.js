@@ -4,7 +4,7 @@ const Logo = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     version="1.0"
-    width="300"
+    width="100"
     height="auto"
     viewBox="64 105 211 40"
     preserveAspectRatio="xMidYMid meet"

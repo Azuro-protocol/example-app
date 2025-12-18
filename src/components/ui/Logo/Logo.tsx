@@ -1,4 +1,4 @@
-import cx from 'classnames'
+import cx from 'className'
 import { Href } from 'components/navigation'
 
 type LogoProps = {

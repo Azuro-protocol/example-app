@@ -3,8 +3,8 @@ hi can you help me perfect this code (logo), to make it work in a next.js app. Â
 const SvgIcon = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="2400"
-    height="453.719"
+    width="100"
+    height="auto"
     colorInterpolationFilters="sRGB"
     version="1"
     viewBox="64.323 105.022 211.354 39.956"
@@ -37,8 +37,8 @@ const SvgIcon = (props) => (
               viewBox="469374 390357 9061134 9219404"
             >
               <path d="M9272317 5308152c-405594-2531713-58701-3902865 258191-4917795-1006071 342287-2368601 723786-4909763 382208C288191 189923 111615 5101812 3589280 5694494c-1003236 758037-2098245 955991-2839983 777762l-279923 287128 2923015 2850377 279923-287129c-197127-737249-26575-1836628 705596-2858880 680203 3461247 5586186 3161009 4894291-1155482z"></path>
-            </svg>
-          </svg>
+            </g>
+          </g>
           <defs>
             <filter id="colors9633963660">
               <feColorMatrix

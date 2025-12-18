@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '1rem', padding: '1rem' }}>
       <Logo />
-      <button style={{ padding: '0.5rem 1rem', fontSize: '1rem' }}>Click me</button>
+      <button className="btn btn-primary">Click me</button>
     </div>
   );
 }

@@ -10,30 +10,22 @@ type LogoProps = {
 const SvgIcon = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="2400"
-    height="453.719"
+    width="71"
+    height="16"
     colorInterpolationFilters="sRGB"
     version="1"
-    viewBox="64.323 105.022 211.354 39.956"
-  >
-    <g fill="#FFF" className="iconlinesvg-g iconlinesvg">
+    viewBox="64.323 105.022 211.354 39.956"><g fill="#FFF" className="iconlinesvg-g iconlinesvg">
       <g className="tp-name">
         <path d="M70.74 107.094h.296q2.723 0 4.12 3.03.225.764.225 1.468v6.691q19.727-10.26 21.532-11.036.52-.153 1-.153h.5q2.866 0 4.12 3.295.072.408.072.652v.98q0 2.346-3.193 3.865-17.482 9.089-17.605 9.089v.05q18.279 9.364 19.227 9.986 1.571 1.581 1.571 2.979v.969q0 2.274-2.774 3.672-.725.275-1.296.275h-.775q-1.102 0-5.916-2.672l-16.463-8.517v6.69q0 3.173-3.345 4.346-.551.153-1 .153h-.143q-3.325 0-4.427-3.519-.071-.275-.071-.55v-27.673q0-2.122 2.417-3.57.98-.5 1.928-.5"></path>
         <g className="imagesvg" transform="translate(106.395 107.512)">
           <path
             fill="none"
             d="M0 0h34.378v34.978H0z"
-            className="image-rect"
-          ></path>
-          <svg
-            width="34.378"
+            className="image-rect"></path><width="34.378"
             height="34.978"
             className="image-svg-svg primary"
             filter="url(#colors8200565747)"
-            overflow="visible"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
+            overflow="visible"><xmlns="http://www.w3.org/2000/svg"
               xmlnsXlink="http://www.w3.org/1999/xlink"
               xmlSpace="preserve"
               fillRule="evenodd"
@@ -41,11 +33,7 @@ const SvgIcon = (props) => (
               imageRendering="optimizeQuality"
               shapeRendering="geometricPrecision"
               textRendering="geometricPrecision"
-              viewBox="469374 390357 9061134 9219404"
-            >
-              <path d="M9272317 5308152c-405594-2531713-58701-3902865 258191-4917795-1006071 342287-2368601 723786-4909763 382208C288191 189923 111615 5101812 3589280 5694494c-1003236 758037-2098245 955991-2839983 777762l-279923 287128 2923015 2850377 279923-287129c-197127-737249-26575-1836628 705596-2858880 680203 3461247 5586186 3161009 4894291-1155482z"></path>
-            </svg>
-          </svg>
+              viewBox="469374 390357 9061134 9219404"><path d="M9272317 5308152c-405594-2531713-58701-3902865 258191-4917795-1006071 342287-2368601 723786-4909763 382208C288191 189923 111615 5101812 3589280 5694494c-1003236 758037-2098245 955991-2839983 777762l-279923 287128 2923015 2850377 279923-287129c-197127-737249-26575-1836628 705596-2858880 680203 3461247 5586186 3161009 4894291-1155482z"></path>
           <defs>
             <filter id="colors8200565747">
               <feColorMatrix

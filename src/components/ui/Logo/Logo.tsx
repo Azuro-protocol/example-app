@@ -8,7 +8,9 @@ type LogoProps = {
 }
 
 const SvgIcon = (props) => (
-  <svg
+  <svg>
+  return (
+ <Href to="/" className={cx('flex items-center', className)}>
     xmlns="http://www.w3.org/2000/svg"
     width="71"
     height="16"

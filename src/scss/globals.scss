@@ -150,4 +150,128 @@ body {
   .min-h-dvh {
     min-height: 100dvh;
   }
+}/* === ADDED: Light theme, accent color, hide footer logo ===
+   If you want to revert, restore app/globals.css.bak */
+:root {
+  --bg: #ffffff;     /* page background */
+  --text: #000000;   /* main text */
+  --muted: #6b6b6b;  /* muted text */
+  --accent: #14f195; /* new accent replacing orange */
+}
+
+/* Global page background and text color */
+html, body, #__next {
+  height: 100%;
+}
+body {
+  margin: 0;
+  background: var(--bg) !important;
+  color: var(--text) !important;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Muted text helper */
+.text-muted, .muted {
+  color: var(--muted) !important;
+}
+
+/* Links use accent */
+a {
+  color: var(--accent) !important;
+}
+
+/* Buttons: make accent use the new color (only if not overridden elsewhere) */
+button, .btn, .button, .cta {
+  background: var(--accent) !important;
+  color: #fff !important;
+  border-color: transparent !important;
+}
+
+/* SAFELY HIDE FOOTER LOGO (no code change needed)
+   Hides likely footer logo placements. If this hides more than you want,
+   paste your footer JSX here and I will make the selector precise.
+*/
+footer svg,
+footer .logo,
+footer .logoWrap,
+footer .iconlinesvg-g,
+.footer svg,
+.site-footer svg,
+button.footer-logo svg,
+button .logo svg {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Hide <img> variants if the footer uses an image */
+footer img.logo,
+footer img.footer-logo,
+.footer img.logo {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* OVERRIDE INLINE SVG COLORS:
+   Change common orange hex stops/fills to the new accent color.
+   Add more hexes here later if you find them.
+*/
+svg [stop-color="#f9d423"],
+svg [stop-color="#F9D423"],
+svg [stop-color="#f83600"],
+svg [stop-color="#F83600"],
+svg [stop-color="#ffcc00"],
+svg [stop-color="#FFCC00"],
+svg [stop-color="#d51007"],
+svg [stop-color="#D51007"],
+svg [stop-color="#ff8177"],
+svg [stop-color="#FF8177"],
+svg [stop-color="#f09b00"],
+svg [stop-color="#F09B00"],
+svg [stop-color="#ffa500"],
+svg [stop-color="#FFA500"],
+svg [stop-color="#ff7a00"],
+svg [stop-color="#FF7A00"] {
+  stop-color: var(--accent) !important;
+}
+
+svg [fill="#f9d423"],
+svg [fill="#F9D423"],
+svg [fill="#f83600"],
+svg [fill="#F83600"],
+svg [fill="#ffcc00"],
+svg [fill="#FFCC00"],
+svg [fill="#d51007"],
+svg [fill="#D51007"],
+svg [fill="#ff8177"],
+svg [fill="#FF8177"],
+svg [fill="#f09b00"],
+svg [fill="#F09B00"],
+svg [fill="#ffa500"],
+svg [fill="#FFA500"],
+svg [fill="#ff7a00"],
+svg [fill="#FF7A00"] {
+  fill: var(--accent) !important;
+}
+
+/* Inline style overrides (conservative) */
+*[style*="#f9d423"] { color: inherit !important; background: transparent !important; }
+*[style*="#f83600"] { color: inherit !important; background: transparent !important; }
+*[style*="#ffcc00"] { color: inherit !important; background: transparent !important; }
+
+/* Footer visual cleanup */
+footer {
+  background: transparent;
+  color: var(--text);
+}
+
+/* Accessibility focus ring using accent */
+:focus {
+  outline: 3px solid rgba(20, 241, 149, 0.18);
+  outline-offset: 2px;
 }

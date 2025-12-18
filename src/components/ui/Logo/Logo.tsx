@@ -30,8 +30,8 @@ const Logo: React.FC<LogoProps> = (props) => {
             className="image-rect"
           ></path>
           <svg
-            width="34.378"
-            height="34.978"
+            width="71"
+            height="16"
             className="image-svg-svg primary"
             filter="url(#colors8200565747)"
             overflow="visible"

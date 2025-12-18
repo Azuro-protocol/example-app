@@ -12,13 +12,13 @@ const Logo: React.FC<LogoProps> = (props) => {
 
   return (
     <Href to="/" className={cx('flex items-center', className)}>
-     <svg
+    <svg
     xmlns="http://www.w3.org/2000/svg"
     width="71"
     height="16"
     colorInterpolationFilters="sRGB"
     version="1"
-    viewBox="0 0 71 16"
+    viewBox="64.323 105.022 211.354 39.956"
   >
     <g fill="#FFF" className="iconlinesvg-g iconlinesvg">
       <g className="tp-name">
@@ -30,10 +30,10 @@ const Logo: React.FC<LogoProps> = (props) => {
             className="image-rect"
           ></path>
           <svg
-            width="71"
-            height="16"
+            width="34.378"
+            height="34.978"
             className="image-svg-svg primary"
-            filter="url(#colors8200565747)"
+            filter="url(#a)"
             overflow="visible"
           >
             <svg
@@ -51,7 +51,7 @@ const Logo: React.FC<LogoProps> = (props) => {
             </svg>
           </svg>
           <defs>
-            <filter id="colors8200565747">
+            <filter id="a">
               <feColorMatrix
                 className="icon-feColorMatrix"
                 values="0 0 0 0 0.078125 0 0 0 0 0.94140625 0 0 0 0 0.58203125 0 0 0 1 0"

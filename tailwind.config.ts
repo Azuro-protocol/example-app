@@ -37,10 +37,10 @@ const config: Config = {
         'grey-15': '#2E2E2E',
         'grey-10': '#1F1F1F',
 
-        'bg-l0': '#111111',
-        'bg-l1': '#171717',
-        'bg-l2': '#242424',
-        'bg-l3': '#2E2E2E',
+        'bg-l0': '#ffffff',
+        'bg-l1': '#ffffff',
+        'bg-l2': '#ffffff',
+        'bg-l3': '#ffffff',
 
         'accent-pink': '#F768A0',
         'accent-pink-5': '#442E37',

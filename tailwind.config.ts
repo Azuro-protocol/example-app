@@ -102,7 +102,7 @@ const config: Config = {
     require('@headlessui/tailwindcss'),
     plugin(({ addComponents, matchUtilities, theme }) => {
       // addBase({
-      //   'body': { backgroundColor: theme('colors.test') },
+      //   'body': { backgroundColor: theme('colors.bg-11')},
       // })
       addComponents({
         '.text-heading-h1': {

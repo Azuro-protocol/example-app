@@ -1,78 +1,49 @@
-.footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem 1.5rem;
-  /* optional background/border */
-  /* background: var(--bg); */
-}
+import React from 'react';
 
-/* left side placeholder */
-.left {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
+export default function Footer() {
+  return (
+    <footer className="flex items-center justify-between p-4 sm:p-6">
+      {/* Left side placeholder */}
+      <div className="flex items-center gap-3">
+        {/* You can put logo or navigation links here */}
+        <span>© 2025 Your Company</span>
+      </div>
 
-/* CTA button styling */
-.ctaButton {
-  display: inline-flex;            /* ensures logo + text are inline and aligned */
-  align-items: center;             /* vertical center */
-  gap: 0.5rem;                     /* spacing between logo and text */
-  padding: 0.5rem 0.9rem;
-  border-radius: 8px;
-  border: none;
-  background: #0b74ff;
-  color: white;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 0.95rem;
-  line-height: 1;
-}
+      {/* CTA Button */}
+      <button
+        type="button"
+        className="
+          inline-flex items-center gap-2 
+          px-4 py-2 rounded-lg 
+          bg-blue-600 text-white 
+          font-semibold text-sm 
+          focus:outline-none focus:ring-4 focus:ring-blue-300
+          transition-colors duration-200
+          hover:bg-blue-700
+        "
+      >
+        {/* Logo wrapper */}
+        <span className="inline-flex items-center justify-center w-6 h-6 flex-shrink-0">
+          {/* Replace with your SVG logo */}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            className="w-full h-full"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M12 4v16m8-8H4"
+            />
+          </svg>
+        </span>
 
-/* remove unwanted default button outline on mouse click but keep keyboard focus */
-.ctaButton:focus {
-  outline: 3px solid rgba(11, 116, 255, 0.2);
-  outline-offset: 2px;
-}
-
-/* logo wrapper to control size and override any svg transform that might misalign */
-.logoWrap {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 24px;      /* fixed width */
-  height: 24px;     /* fixed height */
-  flex: 0 0 24px;   /* do not grow/shrink */
-  line-height: 0;   /* avoid descender whitespace */
-}
-
-/* Ensure svg inside behaves: removes transforms and forces it to fit the wrapper */
-.logoWrap svg {
-  display: block;            /* remove inline SVG baseline gaps */
-  width: 100% !important;
-  height: 100% !important;
-  max-width: none;
-  max-height: none;
-  transform: none !important; /* clear any transform from svg that shifts it */
-  margin: 0;
-  vertical-align: middle;
-}
-
-/* text */
-.buttonText {
-  display: inline-block;
-}
-
-/* Example responsive tweak: smaller button on small screens */
-@media (max-width: 480px) {
-  .ctaButton {
-    padding: 0.4rem 0.6rem;
-    gap: 0.4rem;
-  }
-  .logoWrap {
-    width: 20px;
-    height: 20px;
-    flex: 0 0 20px;
-  }
+        {/* Button text */}
+        <span>Call to Action</span>
+      </button>
+    </footer>
+  );
 }

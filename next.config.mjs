@@ -7,6 +7,7 @@ const nextConfig = {
     AZURO_UNSTABLE_DEV_ENABLED: process.env.AZURO_UNSTABLE_DEV_ENABLED,
   },
   reactStrictMode: true,
+  turbopack: {},
   webpack: (config, { isServer, webpack }) => {
     // fixes npm packages that depend on `fs` module
     if (!isServer) {
@@ -48,6 +49,7 @@ const nextConfig = {
 
     return config
   },
+  serverExternalPackages: ['pino-pretty', 'lokijs', 'encoding'],
   headers: () => ([
     {
       source: '/(images|js)/:file*',

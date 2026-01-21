@@ -35,7 +35,7 @@
     "dayjs": "^1.11.13",
     "formular": "3.1.6",
     "graphql": "^16.9.0",
-    "next": "16.1.4",
+    "next": "15.5.9",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "react-xmasonry": "^3.0.6",

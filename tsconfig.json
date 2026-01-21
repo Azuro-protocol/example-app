@@ -16,11 +16,9 @@
     "disableSizeLimit": true,
     "skipLibCheck": true,
     "strict": true,
-
     "strictPropertyInitialization": false,
     "noImplicitAny": false,
     "useUnknownInCatchVariables": false,
-
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
@@ -94,7 +92,8 @@
     "additional.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts"
   ],
   "exclude": [
     "e2e",

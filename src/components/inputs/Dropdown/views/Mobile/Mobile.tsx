@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react'
-import { Menu } from '@headlessui/react'
+import { Menu, PopoverButton, Popover, MenuButton, PopoverPanel, MenuItems } from '@headlessui/react'
 import cx from 'classnames'
 
 import { PlainModal } from 'components/feedback'
@@ -8,30 +8,8 @@ import type { DropdownProps } from '../../Dropdown'
 // here is a plain modal, which render controlled by Menu
 const closeModalStub = () => null
 
-type DropdownModalProps = {
-  contentClassName?: string
-  content: React.ReactElement
-}
-
-const DropdownModal: React.CFC<DropdownModalProps> = (props) => {
-  const { content, contentClassName } = props
-
-  return (
-    <PlainModal
-      withCloseButton={false}
-      closeModal={closeModalStub}
-      containerClassName="z-sup-modal"
-      contentClassName={contentClassName}
-    >
-      <Menu.Items>
-        {content}
-      </Menu.Items>
-    </PlainModal>
-  )
-}
-
 const Mobile = forwardRef<HTMLDivElement, DropdownProps>((props, ref) => {
-  const { children, className, buttonClassName, content, contentClassName } = props
+  const { children, className, buttonClassName, content, contentClassName, renderType = 'menu' } = props
   let child
 
   if (typeof children === 'function') {
@@ -45,30 +23,41 @@ const Mobile = forwardRef<HTMLDivElement, DropdownProps>((props, ref) => {
     )
   }
 
+  const isPopover = renderType === 'popover'
+  const Wrapper = isPopover ? Popover : Menu
+  const Button = isPopover ? PopoverButton : MenuButton
+  const Items = isPopover ? PopoverPanel : MenuItems
+
   return (
-    <Menu ref={ref} as="div">
+    <Wrapper ref={ref} as="div">
       {
         ({ open }) => (
           <>
-            <Menu.Button
+            <Button
               className={cx(className, buttonClassName)}
               disabled={!content}
             >
 
               {child}
-            </Menu.Button>
+            </Button>
             {
               open && (
-                <DropdownModal
-                  content={content}
+                <PlainModal
+                  withCloseButton={false}
+                  closeModal={closeModalStub}
+                  containerClassName="z-sup-modal"
                   contentClassName={contentClassName}
-                />
+                >
+                  <Items>
+                    {content}
+                  </Items>
+                </PlainModal>
               )
             }
           </>
         )
       }
-    </Menu>
+    </Wrapper>
   )
 })
 

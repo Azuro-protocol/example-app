@@ -3,7 +3,7 @@ import BrowserRuntime from './BrowserRuntime'
 import ServerRuntime from './ServerRuntime'
 
 
-export const svgRuntime = __SERVER__ ? new ServerRuntime() : new BrowserRuntime()
+export const svgRuntime = typeof window === 'undefined' ? new ServerRuntime() : new BrowserRuntime()
 
 const SvgProviderContext = createContext<SvgProvider.Runtime>(svgRuntime)
 

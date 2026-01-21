@@ -12,6 +12,7 @@ export type DropdownProps = {
   content?: any
   buttonClassName?: string
   contentClassName?: string
+  renderType?: 'menu' | 'popover'
   placement?: 'bottomLeft' | 'bottomRight' | 'center' | 'arrowCenter' | 'topCenter'
 }
 

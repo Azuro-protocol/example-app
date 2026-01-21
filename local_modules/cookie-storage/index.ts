@@ -4,7 +4,7 @@ import { constants } from 'helpers'
 
 
 const validateServerOptions = (options?: OptionsType): void => {
-  if (__SERVER__ && !options?.res) {
+  if (typeof window === 'undefined' && !options?.res) {
     throw new Error('Request should be defined')
   }
 }

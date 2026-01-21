@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react'
 import cx from 'classnames'
-import { Menu, MenuButton, MenuItems } from '@headlessui/react'
+import { Menu, MenuButton, MenuItems, Popover, PopoverButton, PopoverPanel } from '@headlessui/react'
 
 import type { DropdownProps } from '../../Dropdown'
 
@@ -8,8 +8,13 @@ import type { DropdownProps } from '../../Dropdown'
 const Desktop = forwardRef<HTMLDivElement, DropdownProps>((props, ref) => {
   const {
     children, className, buttonClassName, contentClassName: _contentClassName,
-    dropListClassName, content, placement = 'bottomLeft',
+    dropListClassName, content, placement = 'bottomLeft', renderType = 'menu'
   } = props
+
+  const isPopover = renderType === 'popover'
+  const Wrapper = isPopover ? Popover : Menu
+  const Button = isPopover ? PopoverButton : MenuButton
+  const Items = isPopover ? PopoverPanel : MenuItems
 
   const rootClassName = cx('relative flex w-fit', className)
   const menuClassName = cx(dropListClassName, 'absolute w-fit z-[100]', {
@@ -22,12 +27,12 @@ const Desktop = forwardRef<HTMLDivElement, DropdownProps>((props, ref) => {
   const btnClassName = cx(buttonClassName)
 
   return (
-    <Menu
+    <Wrapper
       ref={ref}
       as="div"
       className={rootClassName}
     >
-      <MenuButton
+      <Button
         aria-label="Menu"
         className={btnClassName}
       >
@@ -46,13 +51,13 @@ const Desktop = forwardRef<HTMLDivElement, DropdownProps>((props, ref) => {
             )
           }
         }
-      </MenuButton>
-      <MenuItems className={menuClassName} modal={false}>
+      </Button>
+      <Items className={menuClassName} modal={false}>
         <div className={contentClassName}>
           {content}
         </div>
-      </MenuItems>
-    </Menu>
+      </Items>
+    </Wrapper>
   )
 })
 

@@ -47,7 +47,7 @@ const ChainSelect: React.FC = () => {
   const { appChain, setAppChainId } = useChain()
 
   return (
-    <div className="border border-grey-20 p-1 rounded-md">
+    <div className="border border-grey-20 p-1 rounded-md" onClick={(e) => e.stopPropagation()}>
       <Listbox value={appChain.id} onChange={setAppChainId}>
         <ListboxButton
           className="p-2 flex items-center justify-between w-full group/select"
@@ -200,6 +200,7 @@ const Balance: React.FC = () => {
       contentClassName="mb:p-0"
       content={<Content />}
       placement="bottomRight"
+      renderType="popover"
     >
       <div className={rootClassName}>
         <div className="flex items-center">

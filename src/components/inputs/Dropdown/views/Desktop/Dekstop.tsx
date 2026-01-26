@@ -8,7 +8,7 @@ import type { DropdownProps } from '../../Dropdown'
 const Desktop = forwardRef<HTMLDivElement, DropdownProps>((props, ref) => {
   const {
     children, className, buttonClassName, contentClassName: _contentClassName,
-    dropListClassName, content, placement = 'bottomLeft', renderType = 'menu'
+    dropListClassName, content, placement = 'bottomLeft', renderType = 'menu',
   } = props
 
   const isPopover = renderType === 'popover'

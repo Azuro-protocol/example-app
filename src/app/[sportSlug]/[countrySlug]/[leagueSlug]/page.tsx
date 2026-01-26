@@ -1,5 +1,7 @@
 'use client'
 
+export const runtime = 'edge'
+
 import { useSports } from 'hooks'
 
 import { LeagueSkeleton } from 'compositions/events/League/League'

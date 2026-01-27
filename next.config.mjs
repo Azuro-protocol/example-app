@@ -71,7 +71,7 @@ const nextConfig = {
     return []
   },
   output: 'standalone',
-  productionBrowserSourceMaps: true,
+  productionBrowserSourceMaps: false,
   modularizeImports: {
     '@headlessui/react': {
       transform: '@headlessui/react/dist/components/{{member}}/{{member}}.js',

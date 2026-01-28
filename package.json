@@ -7,7 +7,7 @@
   "private": true,
   "scripts": {
     "dev": "npm run watch-icons & next dev",
-    "build": "npm run build-icons && NODE_OPTIONS=--max-old-space-size=8192 next build",
+    "build": "npm run build-icons && NODE_OPTIONS=--max-old-space-size=4096 next build",
     "start": "next start",
     "lint": "next lint && tsc --noEmit",
     "------  Icons --------------------------------------------------------------------------": "",

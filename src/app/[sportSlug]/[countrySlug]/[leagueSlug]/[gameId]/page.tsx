@@ -1,7 +1,5 @@
 'use client'
 
-export const runtime = 'edge'
-
 import { useEffect } from 'react'
 import { useGame, useGameState } from '@azuro-org/sdk'
 import { GameState, type GameQuery } from '@azuro-org/toolkit'

@@ -12,7 +12,11 @@
     "lint": "next lint && tsc --noEmit",
     "------  Icons --------------------------------------------------------------------------": "",
     "watch-icons": "node bin/icons --watch",
-    "build-icons": "node bin/icons"
+    "build-icons": "node bin/icons",
+    "------  Cloudflare ---------------------------------------------------------------------": "",
+    "cf:build": "npx @opennextjs/cloudflare",
+    "cf:preview": "npm run cf:build && wrangler dev",
+    "cf:deploy": "npm run cf:build && wrangler deploy"
   },
   "dependencies": {
     "@azuro-org/dictionaries": "^3.0.28",
@@ -35,7 +39,7 @@
     "dayjs": "^1.11.13",
     "formular": "3.1.6",
     "graphql": "^16.9.0",
-    "next": "15.5.9",
+    "next": "^15.5.10",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "react-xmasonry": "^3.0.6",
@@ -47,6 +51,7 @@
     "@babel/preset-env": "^7.28.5",
     "@babel/preset-typescript": "^7.28.5",
     "@babel/register": "^7.28.3",
+    "@opennextjs/cloudflare": "^1.16.0",
     "@types/node": "^20",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
@@ -67,6 +72,7 @@
     "stylelint-scss": "5.3.2",
     "tailwindcss": "^3.4.19",
     "typescript": "^5",
+    "wrangler": "^4.61.0",
     "yargs": "17.7.2"
   }
 }

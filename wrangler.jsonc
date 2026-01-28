@@ -1,0 +1,22 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "azuro-betting-app",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2025-01-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  // 可选：KV 缓存配置（用于 ISR）
+  // "kv_namespaces": [
+  //   {
+  //     "binding": "NEXT_CACHE_WORKERS_KV",
+  //     "id": "<YOUR_KV_NAMESPACE_ID>"
+  //   }
+  // ],
+  // 环境变量配置
+  "vars": {
+    "NODE_ENV": "production"
+  }
+}

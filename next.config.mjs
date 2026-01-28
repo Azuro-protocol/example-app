@@ -70,7 +70,7 @@ const nextConfig = {
   async redirects() {
     return []
   },
-  output: 'standalone',
+  // output: 'standalone',
   productionBrowserSourceMaps: false,
   modularizeImports: {
     '@headlessui/react': {

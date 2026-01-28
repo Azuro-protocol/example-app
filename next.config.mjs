@@ -47,6 +47,9 @@ const nextConfig = {
     // Modify the file loader rule to ignore *.svg, since we have it handled now.
     fileLoaderRule.exclude = /\.svg$/i
 
+    // 内存优化：减少并行处理
+    config.parallelism = 1
+
     return config
   },
   serverExternalPackages: ['pino-pretty', 'lokijs', 'encoding'],
@@ -70,7 +73,6 @@ const nextConfig = {
   async redirects() {
     return []
   },
-  // output: 'standalone',
   productionBrowserSourceMaps: false,
   modularizeImports: {
     '@headlessui/react': {
@@ -79,7 +81,8 @@ const nextConfig = {
     }
   },
   experimental: {
-    gzipSize: true,
+    gzipSize: false,
+    // 优化大型依赖包的导入
     optimizePackageImports: [
       'components/dataDisplay',
       'components/feedback',
@@ -91,8 +94,21 @@ const nextConfig = {
       'contexts',
       'helpers',
       'helpers/getters',
-      'hooks'
-    ]
+      'hooks',
+      // 添加大型第三方包
+      '@lifi/widget',
+      'viem',
+      'wagmi',
+      '@azuro-org/sdk',
+      '@azuro-org/toolkit',
+      'dayjs',
+      'graphql'
+    ],
+    // 禁用 worker 线程，减少内存占用
+    webpackBuildWorker: false,
+    // 禁用并行路由
+    parallelServerCompiles: false,
+    parallelServerBuildTraces: false,
   }
 }
 

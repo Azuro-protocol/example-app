@@ -3,9 +3,10 @@
 import React, { useCallback } from 'react'
 
 
-export type FormProps = React.AllHTMLAttributes<HTMLFormElement> & {
+export type FormProps = Omit<React.AllHTMLAttributes<HTMLFormElement>, 'onSubmit'> & {
   loading?: boolean
   disabled?: boolean
+  onSubmit?: React.FormEventHandler<HTMLFormElement>
 }
 
 // Little helper to handle loading and disable states for form;

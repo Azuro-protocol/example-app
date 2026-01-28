@@ -14,7 +14,7 @@
     "watch-icons": "node bin/icons --watch",
     "build-icons": "node bin/icons",
     "------  Cloudflare ---------------------------------------------------------------------": "",
-    "cf:build": "npx @opennextjs/cloudflare",
+    "cf:build": "npx @opennextjs/cloudflare build",
     "cf:preview": "npm run cf:build && wrangler dev",
     "cf:deploy": "npm run cf:build && wrangler deploy"
   },

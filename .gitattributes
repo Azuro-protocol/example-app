@@ -1,0 +1,35 @@
+# 默认：自动识别文本文件并统一为 LF
+* text=auto eol=lf
+
+# 明确指定为文本并归一化
+*.ts text
+*.tsx text
+*.js text
+*.jsx text
+*.mjs text
+*.cjs text
+*.json text
+*.md text
+*.yml text
+*.yaml text
+*.html text
+*.css text
+*.scss text
+*.sh text
+*.config.js text
+*.config.mjs text
+*.config.ts text
+
+# 二进制文件不参与换行符转换
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary
+
+# SVG 按文本处理（便于 diff），若需按二进制可改为 binary
+*.svg text

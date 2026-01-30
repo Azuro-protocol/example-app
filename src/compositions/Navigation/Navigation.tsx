@@ -58,9 +58,11 @@ type Top = {
   gamesCount?: number
 }
 
+type SportFromApi = NavigationQuery['sports'][0]
+
 type SportProps = {
   gamesCount?: number
-} & (Top | NavigationQuery['sports'][0])
+} & (Top | (Omit<SportFromApi, 'name'> & { name: string | Intl.Message }))
 
 const Sport: React.FC<SportProps> = (props) => {
   const { slug, name, countries } = props as NavigationQuery['sports'][0]

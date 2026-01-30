@@ -1,177 +1,62 @@
 export default {
   title: {
     en: 'Statistics',
+    zh: '数据',
   },
   stats: {
-    // soccer start
-    attacks: {
-      en: 'Attacks',
-    },
-    dangerousAttacks: {
-      en: 'Dangerous Attacks',
-    },
-    possession: {
-      en: 'Possession',
-    },
-    penalties: {
-      en: 'Penalties',
-    },
-    corners: {
-      en: 'Corners',
-    },
-    yellowCards: {
-      en: 'Yellow Cards',
-    },
-    redCards: {
-      en: 'Red Cards',
-    },
-    totalShots: {
-      en: 'Total Shots',
-    },
-    shotsOnTarget: {
-      en: 'Shots on Target',
-    },
-    shotsOffTarget: {
-      en: 'Shots off Target',
-    },
-    throwIns: {
-      en: 'Throw-Ins',
-    },
-    freeKicks: {
-      en: 'Free Kicks',
-    },
-    substitutions: {
-      en: 'Substitutions',
-    },
-    actionArea: {
-      en: 'Action Area',
-    },
-    expectedGoals: {
-      en: 'Expected Goals (xG)',
-    },
-    passes: {
-      en: 'Passes',
-    },
-    goalkeeperSaves: {
-      en: 'Goalkeeper Saves',
-    },
-    passingAccuracy: {
-      en: 'Passing Accuracy',
-    },
-    crosses: {
-      en: 'Crosses',
-    },
-    offsides: {
-      en: 'Offsides',
-    },
-    ballSafe: {
-      en: 'Ball Safe',
-    },
-    shotsBlocked: {
-      en: 'Shots Blocked',
-    },
-    injuryBreaks: {
-      en: 'Injury Breaks',
-    },
-    missedPenalties: {
-      en: 'Missed Penalties',
-    },
-    kickoffs: {
-      en: 'Kickoffs',
-    },
-    // soccer end
-    // basketball start
-    fouls: {
-      en: 'Fouls',
-    },
-    freeThrows: {
-      en: 'Free Throws',
-    },
-    freeThrowsScoredPerc: {
-      en: 'Free Throws Scored Percentage',
-    },
-    twoPointers: {
-      en: 'Two Pointers',
-    },
-    threePointers: {
-      en: 'Three Pointers',
-    },
-    timeoutsTaken: {
-      en: 'Timeouts Taken',
-    },
-    timeoutsRemaining: {
-      en: 'Timeouts Remaining',
-    },
-    jumpBalls: {
-      en: 'Jump Balls',
-    },
-    assists: {
-      en: 'Assists',
-    },
-    offensiveRebounds: {
-      en: 'Offensive Rebounds',
-    },
-    defensiveRebounds: {
-      en: 'Defensive Rebounds',
-    },
-    totalRebounds: {
-      en: 'Total Rebounds',
-    },
-    turnovers: {
-      en: 'Turnovers',
-    },
-    steals: {
-      en: 'Steals',
-    },
-    blocks: {
-      en: 'Blocks',
-    },
-    playersDisqualified: {
-      en: 'Players Disqualified',
-    },
-    // basketball end
-    // tennis start
-    serviceFaults: {
-      en: 'Service Faults',
-    },
-    doubleFaults: {
-      en: 'Double Faults',
-    },
-    aces: {
-      en: 'Aces',
-    },
-    breakPoints: {
-      en: 'Break Points',
-    },
-    breakPointsConversion: {
-      en: 'Break Points Conversion',
-    },
-    winFirstServePerc: {
-      en: 'Win First Serve Percentage',
-    },
-    winSecondServePerc: {
-      en: 'Win Second Serve Percentage',
-    },
-    pointsOnOwnServe: {
-      en: 'Points on Own Serve',
-    },
-    totalPointsWon: {
-      en: 'Total Points Won',
-    },
-    // tennis end
-    // volleyball start
-    longestStreak: {
-      en: 'Longest Streak',
-    },
-    pointsWonOnOwnServe: {
-      en: 'Points Won on Own Serve',
-    },
-    pointsWonOnOpponentServe: {
-      en: 'Points Won on Opponent Serve',
-    },
-    serviceErrors: {
-      en: 'Service Errors',
-    },
-    // volleyball end
+    attacks: { en: 'Attacks', zh: '进攻' },
+    dangerousAttacks: { en: 'Dangerous Attacks', zh: '危险进攻' },
+    possession: { en: 'Possession', zh: '控球率' },
+    penalties: { en: 'Penalties', zh: '点球' },
+    corners: { en: 'Corners', zh: '角球' },
+    yellowCards: { en: 'Yellow Cards', zh: '黄牌' },
+    redCards: { en: 'Red Cards', zh: '红牌' },
+    totalShots: { en: 'Total Shots', zh: '总射门' },
+    shotsOnTarget: { en: 'Shots on Target', zh: '射正' },
+    shotsOffTarget: { en: 'Shots off Target', zh: '射偏' },
+    throwIns: { en: 'Throw-Ins', zh: '界外球' },
+    freeKicks: { en: 'Free Kicks', zh: '任意球' },
+    substitutions: { en: 'Substitutions', zh: '换人' },
+    actionArea: { en: 'Action Area', zh: '活动区域' },
+    expectedGoals: { en: 'Expected Goals (xG)', zh: '预期进球 (xG)' },
+    passes: { en: 'Passes', zh: '传球' },
+    goalkeeperSaves: { en: 'Goalkeeper Saves', zh: '扑救' },
+    passingAccuracy: { en: 'Passing Accuracy', zh: '传球成功率' },
+    crosses: { en: 'Crosses', zh: '传中' },
+    offsides: { en: 'Offsides', zh: '越位' },
+    ballSafe: { en: 'Ball Safe', zh: '控球' },
+    shotsBlocked: { en: 'Shots Blocked', zh: '封堵射门' },
+    injuryBreaks: { en: 'Injury Breaks', zh: '伤停' },
+    missedPenalties: { en: 'Missed Penalties', zh: '罚失点球' },
+    kickoffs: { en: 'Kickoffs', zh: '开球' },
+    fouls: { en: 'Fouls', zh: '犯规' },
+    freeThrows: { en: 'Free Throws', zh: '罚球' },
+    freeThrowsScoredPerc: { en: 'Free Throws Scored Percentage', zh: '罚球命中率' },
+    twoPointers: { en: 'Two Pointers', zh: '两分球' },
+    threePointers: { en: 'Three Pointers', zh: '三分球' },
+    timeoutsTaken: { en: 'Timeouts Taken', zh: '已用暂停' },
+    timeoutsRemaining: { en: 'Timeouts Remaining', zh: '剩余暂停' },
+    jumpBalls: { en: 'Jump Balls', zh: '跳球' },
+    assists: { en: 'Assists', zh: '助攻' },
+    offensiveRebounds: { en: 'Offensive Rebounds', zh: '前场篮板' },
+    defensiveRebounds: { en: 'Defensive Rebounds', zh: '后场篮板' },
+    totalRebounds: { en: 'Total Rebounds', zh: '总篮板' },
+    turnovers: { en: 'Turnovers', zh: '失误' },
+    steals: { en: 'Steals', zh: '抢断' },
+    blocks: { en: 'Blocks', zh: '盖帽' },
+    playersDisqualified: { en: 'Players Disqualified', zh: '犯规离场' },
+    serviceFaults: { en: 'Service Faults', zh: '发球失误' },
+    doubleFaults: { en: 'Double Faults', zh: '双误' },
+    aces: { en: 'Aces', zh: 'Ace 球' },
+    breakPoints: { en: 'Break Points', zh: '破发点' },
+    breakPointsConversion: { en: 'Break Points Conversion', zh: '破发成功率' },
+    winFirstServePerc: { en: 'Win First Serve Percentage', zh: '一发得分率' },
+    winSecondServePerc: { en: 'Win Second Serve Percentage', zh: '二发得分率' },
+    pointsOnOwnServe: { en: 'Points on Own Serve', zh: '发球局得分' },
+    totalPointsWon: { en: 'Total Points Won', zh: '总得分' },
+    longestStreak: { en: 'Longest Streak', zh: '最长连胜' },
+    pointsWonOnOwnServe: { en: 'Points Won on Own Serve', zh: '发球得分' },
+    pointsWonOnOpponentServe: { en: 'Points Won on Opponent Serve', zh: '接发得分' },
+    serviceErrors: { en: 'Service Errors', zh: '发球失误' },
   },
 }

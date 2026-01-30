@@ -2,10 +2,11 @@
 
 import React from 'react'
 import { type Sport } from 'hooks'
-import { Message } from '@locmod/intl'
+import { Message, useIntl } from '@locmod/intl'
 
 import { Icon, type IconName } from 'components/ui'
 import { Href } from 'components/navigation'
+import sportNames from 'compositions/events/Navbar/messages'
 import messages from './messages'
 
 
@@ -31,17 +32,20 @@ type SportProps = {
 
 const Sport: React.CFC<SportProps> = ({ children, sport, isPage = false, withLink = true }) => {
   const { slug, name } = sport
+  const intl = useIntl()
+  const sportNameMsg = (sportNames as Record<string, Intl.Message>)[slug]
+  const sportName = sportNameMsg ? intl.formatMessage(sportNameMsg) : name
 
   return (
     <div>
       <div className="flex items-center justify-between py-3 px-4">
         {
           isPage ? (
-            <Message className="text-heading-h4 font-semibold" value={{ ...messages.sport, values: { sportName: name } }} />
+            <Message className="text-heading-h4 font-semibold" value={{ ...messages.sport, values: { sportName } }} />
           ) : (
             <div className="flex items-center">
               <Icon className="size-6 mr-3 text-brand-50" name={`sport/${slug}` as IconName} />
-              <div className="text-heading-h4 font-semibold">{name}</div>
+              <div className="text-heading-h4 font-semibold">{sportName}</div>
             </div>
           )
         }

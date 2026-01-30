@@ -7,6 +7,7 @@ import { cookies, headers } from 'next/headers'
 import { type ChainId } from '@azuro-org/toolkit'
 import { constants } from 'helpers'
 import { appChains } from 'wallet/chains'
+import { defaultLocale, isValidLocale } from 'i18n/config'
 
 import Providers from 'compositions/Providers/Providers'
 import PageLayout from 'compositions/PageLayout/PageLayout'
@@ -41,11 +42,15 @@ export default async function RootLayout({
   const initialChainId = _initialChainId &&
                   (appChains.find(chain => chain.id === +_initialChainId)?.id as ChainId) || constants.defaultChain.id
 
+  const localeCookie = cookieStore.get('NEXT_LOCALE')?.value
+  const locale = isValidLocale(localeCookie) ? localeCookie : defaultLocale
+
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body className={inter.className}>
         <Providers
           // initialState={initialState}
+          locale={locale}
           userAgent={userAgent || ''}
           initialLiveState={initialLiveState}
           initialChainId={initialChainId}

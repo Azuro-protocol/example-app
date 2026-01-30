@@ -15,6 +15,7 @@ import { Flag } from 'components/dataDisplay'
 import Skeleton from './components/Skeleton/Skeleton'
 
 import messages from './messages'
+import sportNames from 'compositions/events/Navbar/messages'
 
 
 type LeagueProps = NavigationQuery['sports'][0]['countries'][0]['leagues'][0] & {
@@ -101,10 +102,12 @@ const Sport: React.FC<SportProps> = (props) => {
     }).flat()
   }, [ countries ])
 
+  const href = isTop ? '/' : isUnique ? '/unique' : (isActive ? '/' : `/${slug}`)
+
   return (
     <div className={rootClassName}>
       <div className={wrapperClassName}>
-        <Href to={`/${slug}`} className={buttonClassName}>
+        <Href to={href} className={buttonClassName}>
           <div className="flex items-center">
             <Icon className="size-4 mr-2" name={icon} />
             <Message className="text-caption-13" value={name} />
@@ -198,9 +201,10 @@ const Navigation: React.FC<NavigationProps> = ({ className }) => {
         sortedSports?.map(sport => {
           const { activeLiveGamesCount, activePrematchGamesCount } = sport
           const gamesCount = isLive ? activeLiveGamesCount : activePrematchGamesCount
+          const name = (sportNames as Record<string, Intl.Message>)[sport.slug] ?? sport.name
 
           return (
-            <Sport key={sport.slug} gamesCount={gamesCount} {...sport} />
+            <Sport key={sport.slug} gamesCount={gamesCount} {...sport} name={name} />
           )
         })
       }

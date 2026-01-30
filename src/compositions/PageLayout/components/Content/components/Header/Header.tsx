@@ -11,6 +11,7 @@ import { Icon, Logo } from 'components/ui'
 import { Button, buttonMessages } from 'components/inputs'
 import Navigation from 'compositions/Navigation/Navigation'
 import LiveSwitcher from 'compositions/LiveSwitcher/LiveSwitcher'
+import LanguageSwitcher from 'compositions/LanguageSwitcher/LanguageSwitcher'
 
 import Controls from '../Controls/Controls'
 
@@ -71,19 +72,21 @@ const Header: React.FC = () => {
           </div>
           <Logo className="h-4" />
         </div>
-        {
-          Boolean(account) ? (
-            <Controls />
-          ) : (
-            <Button
-              className="ml-auto"
-              title={buttonMessages.connectWallet}
-              size={32}
-              loading={isConnecting || isReconnecting}
-              onClick={login}
-            />
-          )
-        }
+        <div className="ml-auto flex items-center gap-2">
+          <LanguageSwitcher />
+          {
+            Boolean(account) ? (
+              <Controls />
+            ) : (
+              <Button
+                title={buttonMessages.connectWallet}
+                size={32}
+                loading={isConnecting || isReconnecting}
+                onClick={login}
+              />
+            )
+          }
+        </div>
       </div>
       {
         isVisible && (

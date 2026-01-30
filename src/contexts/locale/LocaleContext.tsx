@@ -22,8 +22,10 @@ export function LocaleProvider({
 
 export function useLocale(): Locale {
   const locale = useContext(LocaleContext)
+
   if (locale === null) {
     return 'en'
   }
+
   return locale
 }

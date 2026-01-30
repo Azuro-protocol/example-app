@@ -19,7 +19,9 @@ const LanguageSwitcher: React.FC = () => {
   const currentLocale = useLocale()
 
   const handleSelect = (locale: Locale) => {
-    if (locale === currentLocale) return
+    if (locale === currentLocale) {
+      return
+    }
     setCookie(cookieName, locale, { maxAge: COOKIE_MAX_AGE, path: '/' })
     window.location.reload()
   }
@@ -34,12 +36,14 @@ const LanguageSwitcher: React.FC = () => {
           <button
             key={locale}
             type="button"
-            className={cx(
+            className={
+          cx(
               'w-full text-left text-caption-13 px-2 py-1.5 rounded transition',
               locale === currentLocale
                 ? 'bg-grey-15 text-grey-90'
                 : 'text-grey-60 hover:bg-grey-10 hover:text-grey-90'
-            )}
+          )
+        }
             onClick={() => handleSelect(locale)}
           >
             {localeNames[locale]}

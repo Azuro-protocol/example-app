@@ -32,16 +32,16 @@ const Providers: React.CFC<Props> = (props) => {
         <LocaleProvider locale={locale}>
           <IntlProvider locale={locale}>
             <WagmiProvider initialState={initialState}>
-            <AzuroSDKProvider initialChainId={initialChainId} affiliate={process.env.NEXT_PUBLIC_AFFILIATE_ADDRESS as Address}>
-              <LiveProvider initialLiveState={initialLiveState}>
-                <OddsViewProvider>
-                  {children}
-                </OddsViewProvider>
-              </LiveProvider>
-              <NewFreeBetsChecker />
-            </AzuroSDKProvider>
-          </WagmiProvider>
-        </IntlProvider>
+              <AzuroSDKProvider initialChainId={initialChainId} affiliate={process.env.NEXT_PUBLIC_AFFILIATE_ADDRESS as Address}>
+                <LiveProvider initialLiveState={initialLiveState}>
+                  <OddsViewProvider>
+                    {children}
+                  </OddsViewProvider>
+                </LiveProvider>
+                <NewFreeBetsChecker />
+              </AzuroSDKProvider>
+            </WagmiProvider>
+          </IntlProvider>
         </LocaleProvider>
         <div className="sr-only">
           <SvgSprite />

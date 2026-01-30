@@ -21,7 +21,7 @@ export default {
     stopped: { en: 'Stopped', zh: '已停止' },
     win: { en: 'Won', zh: '赢' },
     lose: { en: 'Lost', zh: '输' },
-    live: { en: "Live'", zh: '滚球' },
+    live: { en: 'Live\'', zh: '滚球' },
   },
   empty: {
     title: { en: 'No bets to be displayed', zh: '暂无投注' },

@@ -11,11 +11,11 @@ import { constants } from 'helpers'
 import { Icon, type IconName } from 'components/ui'
 import { Href } from 'components/navigation'
 import { Flag } from 'components/dataDisplay'
+import sportNames from 'compositions/events/Navbar/messages'
 
 import Skeleton from './components/Skeleton/Skeleton'
 
 import messages from './messages'
-import sportNames from 'compositions/events/Navbar/messages'
 
 
 type LeagueProps = NavigationQuery['sports'][0]['countries'][0]['leagues'][0] & {
@@ -206,7 +206,12 @@ const Navigation: React.FC<NavigationProps> = ({ className }) => {
           const name = (sportNames as Record<string, Intl.Message>)[sport.slug] ?? sport.name
 
           return (
-            <Sport key={sport.slug} gamesCount={gamesCount} {...sport} name={name} />
+            <Sport
+              key={sport.slug}
+              gamesCount={gamesCount}
+              {...sport}
+              name={name}
+            />
           )
         })
       }

@@ -8,7 +8,7 @@ export default {
     zh: '连接即表示您同意',
   },
   privacyPolicy: {
-    en: "Azuro Protocol's Privacy Policy",
+    en: 'Azuro Protocol\'s Privacy Policy',
     zh: 'Azuro 协议隐私政策',
   },
   success: {

@@ -1,6 +1,6 @@
 export default {
   title: {
-    en: "today's",
+    en: 'today\'s',
     zh: '今日',
   },
   top: {

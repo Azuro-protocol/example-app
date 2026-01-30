@@ -1,6 +1,6 @@
 export default {
   title: {
-    en: "You're lucky, you've got a FREEBET!",
+    en: 'You\'re lucky, you\'ve got a FREEBET!',
     zh: '恭喜获得免费投注！',
   },
   text: {

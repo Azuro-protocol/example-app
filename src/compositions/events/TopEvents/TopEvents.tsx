@@ -84,7 +84,7 @@ const Card: React.FC<CardProps> = ({ game }) => {
   })
 
   return (
-    <div className="bg-card-border-bottom p-px rounded-md overflow-hidden">
+    <div className="bg-card-border-bottom p-px rounded-md overflow-hidden border border-tech-cyan/10">
       <div className="p-4 bg-grey-10 rounded-md">
         <Href to={`/${sportSlug}/${countrySlug}/${leagueSlug}/${gameId}`} className="flex items-center justify-center text-grey-60 text-caption-13 hover:underline">
           <Icon className="size-4 mr-2 flex-none" name={`sport/${sportSlug}` as IconName} />
@@ -181,10 +181,10 @@ const Events: React.FC = () => {
         </ul>
       </div>
       <div className="absolute top-6 right-6 flex items-center" data-glide-el="controls">
-        <button className="w-8 h-6 flex items-center justify-center bg-bg-l0 rounded-tl-full rounded-tr-1 rounded-br-1 rounded-bl-full border border-grey-15 text-grey-60 hover:text-grey-90 transition" data-glide-dir="<">
+        <button className="w-8 h-6 flex items-center justify-center bg-bg-l0 rounded-tl-full rounded-tr-1 rounded-br-1 rounded-bl-full border border-tech-cyan/25 text-grey-60 hover:text-tech-cyan transition" data-glide-dir="<">
           <Icon className="size-5" name="interface/chevron_left" />
         </button>
-        <button className="w-8 h-6 flex items-center justify-center bg-bg-l0 rounded-tl-1 rounded-tr-full rounded-br-full rounded-bl-1 border border-grey-15 text-grey-60 hover:text-grey-90 transition ml-1" data-glide-dir=">">
+        <button className="w-8 h-6 flex items-center justify-center bg-bg-l0 rounded-tl-1 rounded-tr-full rounded-br-full rounded-bl-1 border border-tech-cyan/25 text-grey-60 hover:text-tech-cyan transition ml-1" data-glide-dir=">">
           <Icon className="size-5" name="interface/chevron_right" />
         </button>
       </div>
@@ -201,7 +201,7 @@ const TopEvents: React.FC = () => {
       <div className="px-4">
         <Message className="text-caption-13 text-grey-60 uppercase" value={messages.title} />
         <h1 className="text-heading-h1 font-bold">
-          <Message className="text-brand-50" value={messages.top} />
+          <Message className="text-tech-cyan" value={messages.top} />
           {
             Boolean(sport) && (
               <Message className="ml-2" value={sport} />

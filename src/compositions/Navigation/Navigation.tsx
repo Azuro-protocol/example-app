@@ -34,7 +34,7 @@ const League: React.FC<LeagueProps> = (props) => {
 
   const isActive = Boolean(leagueSlug) && countrySlug === country.slug && slug === leagueSlug
 
-  const rootClassName = cx('flex items-center justify-between py-2 px-4 hover:text-grey-90', {
+  const rootClassName = cx('flex items-center justify-between py-2 px-4 hover:text-tech-cyan/90', {
     'text-grey-60': !isActive,
     'text-grey-90': isActive,
   })
@@ -47,7 +47,7 @@ const League: React.FC<LeagueProps> = (props) => {
         <Flag className="mr-2 flex-none" country={country.slug} />
         <div className="text-caption-13 text-ellipsis whitespace-nowrap overflow-hidden">{name}</div>
       </div>
-      <div className="bg-grey-10 px-1 py-px ml-2 text-caption-12">{gamesCount}</div>
+      <div className="bg-tech-cyan-10 border border-tech-cyan/20 text-tech-cyan px-1 py-px ml-2 text-caption-12">{gamesCount}</div>
     </Href>
   )
 }
@@ -77,10 +77,10 @@ const Sport: React.FC<SportProps> = (props) => {
   const rootClassName = cx('p-px rounded-md overflow-hidden', {
     'bg-card-border-top': isActive,
   })
-  const wrapperClassName = cx({ 'bg-bg-l1 rounded-md': isActive })
-  const buttonClassName = cx('group px-4 py-2 flex w-full items-center justify-between hover:text-brand-50', {
+  const wrapperClassName = cx({ 'bg-bg-l1 rounded-md border border-tech-cyan/10': isActive })
+  const buttonClassName = cx('group px-4 py-2 flex w-full items-center justify-between hover:text-tech-cyan', {
     'text-grey-60': !isActive,
-    'text-brand-50': isActive,
+    'text-tech-cyan': isActive,
   })
   const iconClassName = cx('h-4 w-4', {
     'rotate-180': isActive,

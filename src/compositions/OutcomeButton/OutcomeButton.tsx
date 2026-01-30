@@ -29,7 +29,7 @@ const OutcomeButton: React.FC<OutcomeButtonProps> = (props) => {
     'group/button w-full relative flex items-center justify-between ds:px-3 mb:px-2 overflow-hidden',
     'text-caption-13 font-semibold border-none rounded-min select-none',
     {
-      'hover:text-brand-50 hover:bg-brand-5': !isLocked && !isActive,
+      'hover:text-tech-cyan hover:bg-tech-cyan-10': !isLocked && !isActive,
       'text-grey-10 bg-grey-90': isActive,
       'bg-grey-15': !isActive,
       'text-grey-40 cursor-not-allowed': isLocked,
@@ -38,7 +38,7 @@ const OutcomeButton: React.FC<OutcomeButtonProps> = (props) => {
     }
   )
   const titleClassName = cx('text-left whitespace-normal', {
-    'group-hover/button:text-brand-50': !isLocked && !isActive,
+    'group-hover/button:text-tech-cyan': !isLocked && !isActive,
     'text-grey-10': isActive,
     'text-grey-60': !isActive,
     'text-grey-40': isLocked,

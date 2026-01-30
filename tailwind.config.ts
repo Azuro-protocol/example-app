@@ -22,6 +22,17 @@ const config: Config = {
     },
     extend: {
       colors: {
+        // 科技感主色：青色/蓝霓虹
+        'tech-cyan': '#00F5FF',
+        'tech-cyan-dim': '#00C4CC',
+        'tech-cyan-10': 'rgba(0, 245, 255, 0.1)',
+        'tech-cyan-5': 'rgba(0, 245, 255, 0.05)',
+        'tech-blue': '#4D7CFF',
+        'tech-blue-dim': '#3A5FCC',
+        'tech-blue-10': 'rgba(77, 124, 255, 0.1)',
+        'tech-purple': '#8B5CF6',
+        'tech-purple-10': 'rgba(139, 92, 246, 0.1)',
+
         'brand-70': '#B84200',
         'brand-60': '#E66001',
         'brand-50': '#FF6B00',
@@ -37,10 +48,11 @@ const config: Config = {
         'grey-15': '#2E2E2E',
         'grey-10': '#1F1F1F',
 
-        'bg-l0': '#111111',
-        'bg-l1': '#171717',
-        'bg-l2': '#242424',
-        'bg-l3': '#2E2E2E',
+        // 炫酷深色背景：深蓝紫渐变基调
+        'bg-l0': '#050810',
+        'bg-l1': '#0a0f1c',
+        'bg-l2': '#0f1628',
+        'bg-l3': '#151d35',
 
         'accent-pink': '#F768A0',
         'accent-pink-5': '#442E37',
@@ -68,8 +80,10 @@ const config: Config = {
         'lg': '1.25rem', // 20
       },
       backgroundImage: ({ theme }) => ({
-        'card-border-top': 'linear-gradient(180deg, rgba(239, 239, 243, 0.15) 0%, rgba(239, 239, 243, 0) 100%)',
-        'card-border-bottom': 'linear-gradient(180deg, rgba(239, 239, 243, 0) 0%, rgba(239, 239, 243, 0.15) 100%)',
+        'card-border-top': 'linear-gradient(180deg, rgba(0, 245, 255, 0.12) 0%, rgba(0, 245, 255, 0) 100%)',
+        'card-border-bottom': 'linear-gradient(180deg, rgba(0, 245, 255, 0) 0%, rgba(0, 245, 255, 0.08) 100%)',
+        'tech-grid': 'linear-gradient(rgba(0, 245, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 245, 255, 0.03) 1px, transparent 1px)',
+        'tech-grid-dense': 'linear-gradient(rgba(0, 245, 255, 0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 245, 255, 0.04) 1px, transparent 1px)',
         'live-switcher-bg': 'linear-gradient(90deg, rgba(61, 32, 31, 0.5) 0%, rgba(61, 32, 31, 0) 100%)',
         'betslip-item-bg': `linear-gradient(90.08deg, ${theme('colors.bg-l2')} 0.06%, ${theme('colors.brand-10')} 300%)`,
         'betslip-item-bg-inc': `linear-gradient(90.08deg, ${theme('colors.bg-l2')} 0.06%, ${theme('colors.accent-green')} 300%)`,
@@ -82,8 +96,16 @@ const config: Config = {
         'bet-game-lost': `linear-gradient(180deg, ${theme('colors.bg-l3')} 0%, ${theme('colors.accent-red')} 1000%)`,
         'live-event-gradient': `linear-gradient(90deg, transparent 0%, ${theme('colors.accent-red')} 50%, transparent 100%)`,
       }),
+      backgroundSize: {
+        'tech-grid': '24px 24px',
+        'tech-grid-dense': '16px 16px',
+      },
       boxShadow: ({ theme }) => ({
         'betslip': `0px -10px 30px ${theme('colors.bg-l1')}`,
+        'glow-cyan': `0 0 20px ${theme('colors.tech-cyan-10')}, 0 0 40px ${theme('colors.tech-cyan-5')}`,
+        'glow-cyan-sm': `0 0 12px ${theme('colors.tech-cyan-10')}`,
+        'glow-blue': `0 0 20px ${theme('colors.tech-blue-10')}`,
+        'border-glow-cyan': `inset 0 0 20px ${theme('colors.tech-cyan-5')}`,
       }),
       fill: {
         'gradient-azuro-waves-grey': '#c4cfe4',

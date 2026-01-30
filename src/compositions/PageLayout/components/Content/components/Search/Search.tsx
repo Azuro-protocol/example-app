@@ -11,7 +11,7 @@ import messages from './messages'
 const Search: React.FC = () => {
   return (
     <div
-      className="h-16 w-full flex items-center text-grey-40 hover:text-grey-90 py-3 px-6 bg-bg-l0 cursor-pointer"
+      className="h-16 w-full flex items-center text-grey-40 hover:text-tech-cyan py-3 px-6 bg-bg-l0 border-b border-tech-cyan/10 cursor-pointer transition-colors"
       onClick={() => openModal('SearchModal')}
     >
       <Icon className="size-5 mr-2" name="interface/search" />

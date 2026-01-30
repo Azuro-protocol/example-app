@@ -18,7 +18,7 @@ const RightSidebar: React.FC = () => {
 
   return (
     <>
-      <div className="px-6 py-3 sticky top-0 z-20 flex items-center justify-end gap-2">
+      <div className="px-6 py-3 sticky top-0 z-20 flex items-center justify-end gap-2 border-b border-tech-cyan/10">
         <LanguageSwitcher />
         {
           Boolean(account) ? (
@@ -34,7 +34,7 @@ const RightSidebar: React.FC = () => {
         }
       </div>
       <div
-        className="bg-bg-l1 border border-grey-10 rounded-r-md -ml-px overflow-auto wd:h-[calc(100vh_-_4.5rem)] no-scrollbar p-2 space-y-2"
+        className="bg-bg-l1 border border-tech-cyan/20 rounded-r-md -ml-px overflow-auto wd:h-[calc(100vh_-_4.5rem)] no-scrollbar p-2 space-y-2 shadow-glow-cyan-sm"
       >
         <LiveStatistics withBottomLine />
         <TabbedBetslip />

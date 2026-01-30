@@ -2,7 +2,7 @@ import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import duration from 'dayjs/plugin/duration'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Exo_2 } from 'next/font/google'
 import { cookies, headers } from 'next/headers'
 import { type ChainId } from '@azuro-org/toolkit'
 import { constants } from 'helpers'
@@ -18,7 +18,7 @@ import '../scss/globals.scss'
 dayjs.extend(utc)
 dayjs.extend(duration)
 
-const inter = Inter({ subsets: [ 'latin' ] })
+const exo2 = Exo_2({ subsets: [ 'latin' ], variable: '--font-exo2' })
 
 export const metadata: Metadata = {
   metadataBase: new URL(constants.baseUrl),
@@ -47,7 +47,7 @@ export default async function RootLayout({
 
   return (
     <html lang={locale}>
-      <body className={inter.className}>
+      <body className={exo2.className}>
         <Providers
           // initialState={initialState}
           locale={locale}

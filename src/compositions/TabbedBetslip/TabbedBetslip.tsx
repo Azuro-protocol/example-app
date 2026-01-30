@@ -17,7 +17,7 @@ const TabbedBetslip: React.FC = () => {
 
   return (
     <>
-      <div className="bg-bg-l0 rounded-md border border-grey-15 p-1 flex items-center">
+      <div className="bg-bg-l0 rounded-md border border-tech-cyan/20 p-1 flex items-center">
         {
           tabs.map(tab => {
             const isActive = activeTab === tab
@@ -26,9 +26,9 @@ const TabbedBetslip: React.FC = () => {
               <button
                 key={tab}
                 className={
-                  cx('w-full p-2 text-center rounded-sm', {
-                    'text-grey-60 hover:text-grey-90': !isActive,
-                    'text-grey-90 bg-grey-10': isActive,
+                  cx('w-full p-2 text-center rounded-sm transition', {
+                    'text-grey-60 hover:text-tech-cyan': !isActive,
+                    'text-tech-cyan bg-tech-cyan-10': isActive,
                   })
                 }
                 onClick={() => setActiveTab(tab)}

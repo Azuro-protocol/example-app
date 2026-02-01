@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "azuro-betting-app",
+  "name": "azuro-example-app",
   "main": ".open-next/worker.js",
   "compatibility_date": "2025-01-01",
   "compatibility_flags": ["nodejs_compat"],

@@ -197,7 +197,7 @@ type BetProps = {
 
 const Bet: React.FC<BetProps> = ({ bet }) => {
   const {
-    createdAt, status: graphBetStatus, amount, outcomes,
+    createdAt, status: graphBetStatus, amount, outcomes, orderState,
     payout, cashout, possibleWin, freebetId, txHash,
     isWin, isLose, isCanceled, isRedeemed, isCashedOut,
   } = bet
@@ -286,6 +286,7 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
           Boolean(games.length) && (
             <BetStatus
               graphBetStatus={graphBetStatus}
+              orderState={orderState}
               games={games}
               isWin={isWin}
               isCashedOut={isCashedOut}
@@ -520,7 +521,6 @@ const Content: React.FC<ContentProps> = ({ tab }) => {
       type: tab,
       affiliate: process.env.NEXT_PUBLIC_AFFILIATE_ADDRESS as Address,
     },
-    orderDir: OrderDirection.Desc,
   }
 
   const betsQuery = useBets(props)

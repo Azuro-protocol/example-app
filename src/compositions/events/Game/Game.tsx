@@ -3,7 +3,7 @@
 import React, { useSyncExternalStore } from 'react'
 import cx from 'classnames'
 import { LIVE_STATISTICS_SUPPORTED_SPORTS, LIVE_STATISTICS_SUPPORTED_PROVIDERS, useGameState } from '@azuro-org/sdk'
-import { type GameQuery, GameState, getProviderFromId } from '@azuro-org/toolkit'
+import { type GameData, GameState, getProviderFromId } from '@azuro-org/toolkit'
 import { openModal } from '@locmod/modal'
 import { getGameDateTime } from 'helpers/getters'
 import { liveStatisticsGameIdStore } from 'helpers/stores'
@@ -40,7 +40,7 @@ export const GameSkeleton: React.FC<{ className?: string }> = ({ className }) =>
 type GameProps = {
   className?: string
   leagueUrl: string
-  game: NonNullable<GameQuery['game']>
+  game: GameData
   withTopRadius?: boolean
   isUnique?: boolean
 }

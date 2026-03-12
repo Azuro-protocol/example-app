@@ -4,7 +4,7 @@ import React from 'react'
 import cx from 'classnames'
 import { useFreezeBodyScroll } from 'hooks'
 import { Message } from '@locmod/intl'
-import { type GameQuery, GameState, type GameMarkets, type Market as TMarket, type ConditionState } from '@azuro-org/toolkit'
+import { type GameData, GameState, type GameMarkets, type Market as TMarket, type ConditionState } from '@azuro-org/toolkit'
 import { useActiveMarkets } from '@azuro-org/sdk'
 
 import { Icon } from 'components/ui'
@@ -46,7 +46,7 @@ const HeadMarket: React.FC<HeadMarketProps> = ({ market, game, conditionIndex, c
 type MobileMarketsProps = {
   sortedMarkets: string[]
   marketsByKey: MarketsByKey
-  game: NonNullable<GameQuery['game']>
+  game: GameData
   conditionStates: Record<string, ConditionState>
   onClose: () => void
 }
@@ -100,7 +100,7 @@ export const MarketsSkeleton: React.FC = () => {
 
 type ContentProps = {
   markets: GameMarkets
-  game: NonNullable<GameQuery['game']>
+  game: GameData
 }
 
 const Content: React.FC<ContentProps> = ({ markets, game }) => {
@@ -196,7 +196,7 @@ const Content: React.FC<ContentProps> = ({ markets, game }) => {
 
 type MarketsProps = {
   gameState: GameState
-  game: NonNullable<GameQuery['game']>
+  game: GameData
 }
 
 const Markets: React.FC<MarketsProps> = ({ game, gameState }) => {

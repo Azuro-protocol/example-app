@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { type GameQuery, GameState } from '@azuro-org/toolkit'
+import { type GameData, GameState } from '@azuro-org/toolkit'
 import {
   type LiveStatistics,
   type HomeGuest,
@@ -43,7 +43,7 @@ export const EventInfoSkeleton: React.FC = () => {
 }
 
 type LiveScoreProps = {
-  participants: NonNullable<GameQuery['game']>['participants']
+  participants: GameData['participants']
   sportId: string
   liveScoreBoard: LiveStatistics['scoreBoard']
 }
@@ -166,7 +166,7 @@ const Title: React.FC<TitleProps> = ({ state, startsAt, sportId, liveScoreBoard,
 }
 
 type EventInfoProps = {
-  game: NonNullable<GameQuery['game']>
+  game: GameData
   state: GameState
 }
 

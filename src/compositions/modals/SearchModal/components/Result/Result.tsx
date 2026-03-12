@@ -1,9 +1,7 @@
+import { useMemo } from 'react'
 import { type Field, useFieldState } from 'formular'
-import { useQuery } from '@tanstack/react-query'
-import { type GamesQuery, type GamesQueryVariables, GamesDocument, Game_OrderBy, OrderDirection, GameState } from '@azuro-org/toolkit'
 import { useDebounce } from 'hooks'
-import { useChain } from '@azuro-org/sdk'
-import { gqlRequest } from 'helpers'
+import { useSearchGames } from '@azuro-org/sdk'
 
 import EmptyContent from 'compositions/EmptyContent/EmptyContent'
 import Sport, { SportSkeleton } from 'compositions/events/Sport/Sport'
@@ -19,38 +17,21 @@ type ResultProps = {
 
 const Result: React.FC<ResultProps> = ({ field }) => {
   const { value } = useFieldState(field)
-  const { graphql } = useChain()
-
   const debouncedValue = useDebounce(value?.trim(), 300)
 
-  const { data: sports, isFetching } = useQuery({
-    queryKey: [ 'search', debouncedValue ],
-    queryFn: async () => {
-      const variables: GamesQueryVariables = {
-        first: 1000,
-        orderBy: Game_OrderBy.StartsAt,
-        orderDirection: OrderDirection.Desc,
-        where: {
-          state_in: [ GameState.Live, GameState.Prematch ],
-          title_contains_nocase: debouncedValue.toLowerCase(),
-        },
-      }
-
-      const { games } = await gqlRequest<GamesQuery, GamesQueryVariables>({
-        url: graphql.feed,
-        document: GamesDocument,
-        variables,
-      })
-
-      const sports = formatGamesIntoSports(games)
-
-      return sports
-    },
-    refetchOnWindowFocus: false,
-    enabled: debouncedValue.length > 1,
+  const { data, isFetching } = useSearchGames({
+    input: value
   })
 
-  if (!debouncedValue || debouncedValue?.length < 2) {
+  const sports = useMemo(() => {
+    if (!data?.games) {
+      return []
+    }
+
+    return formatGamesIntoSports(data.games)
+  }, [data?.games])
+
+  if (!debouncedValue || debouncedValue?.length < 3) {
     return null
   }
 

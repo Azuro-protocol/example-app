@@ -152,7 +152,7 @@ const BetDetailsModal: ModalComponent<BetDetailsModalProps> = (props) => {
   const { appChain, betToken } = useChain()
 
   const {
-    tokenId, createdAt, status: graphBetStatus, amount, outcomes, freebetId, totalOdds, possibleWin,
+    tokenId, createdAt, orderState, status: graphBetStatus, amount, outcomes, freebetId, totalOdds, possibleWin,
     isWin, isCashedOut,
   } = bet
 
@@ -191,6 +191,7 @@ const BetDetailsModal: ModalComponent<BetDetailsModalProps> = (props) => {
               Boolean(games.length) && (
                 <BetStatus
                   graphBetStatus={graphBetStatus}
+                  orderState={orderState}
                   games={games}
                   isWin={isWin}
                   isCashedOut={isCashedOut}

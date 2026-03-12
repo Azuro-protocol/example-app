@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useRef } from 'react'
-import { type GameQuery, type MarketOutcome } from '@azuro-org/toolkit'
+import { type GameData, type MarketOutcome } from '@azuro-org/toolkit'
 import cx from 'classnames'
 
 import { Icon } from 'components/ui'
@@ -13,7 +13,7 @@ import useButton from './utils/useButton'
 type OutcomeButtonProps = {
   marketName: string
   outcome: MarketOutcome
-  game: NonNullable<GameQuery['game']>
+  game: GameData
   isLocked: boolean
   size?: 28 | 40
 }

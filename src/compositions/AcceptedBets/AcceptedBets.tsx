@@ -40,7 +40,6 @@ const AcceptedBets: React.FC = () => {
       affiliate: process.env.NEXT_PUBLIC_AFFILIATE_ADDRESS as Address,
     },
     itemsPerPage: 500,
-    orderDir: OrderDirection.Desc,
   }
   const { data, isLoading } = useBets(props)
 

@@ -17,6 +17,9 @@ export default {
   [BetStatus.Resolved]: {
     en: 'Resolved',
   },
+  [BetStatus.Preparing]: {
+    en: 'Preparing',
+  },
   win: {
     en: 'Won',
   },

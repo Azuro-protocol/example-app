@@ -1,5 +1,7 @@
 import React, { useMemo } from 'react'
-import { getBetStatus, type GraphBetStatus, type GameQuery, BetStatus as TBetStatus } from '@azuro-org/toolkit'
+import {
+  getBetStatus, type GraphBetStatus, type GameData, BetStatus as TBetStatus, BetOrderState,
+} from '@azuro-org/toolkit'
 import { Message } from '@locmod/intl'
 import cx from 'classnames'
 
@@ -30,9 +32,19 @@ const statusData: Data = {
     title: messages[TBetStatus.Canceled],
     color: 'text-grey-60',
   },
+  [TBetStatus.Rejected]: {
+    icon: 'interface/declined',
+    title: messages[TBetStatus.Canceled],
+    color: 'text-grey-60',
+  },
   [TBetStatus.PendingResolution]: {
     icon: 'interface/pending',
     title: messages[TBetStatus.PendingResolution],
+    color: 'text-accent-blue',
+  },
+  [TBetStatus.Preparing]: {
+    icon: 'interface/pending',
+    title: messages[TBetStatus.Preparing],
     color: 'text-accent-blue',
   },
   [TBetStatus.Resolved]: {
@@ -43,19 +55,21 @@ const statusData: Data = {
 }
 
 type BetStatusProps = {
-  graphBetStatus: GraphBetStatus
-  games: NonNullable<GameQuery['game']>[]
+  graphBetStatus: GraphBetStatus | null
+  orderState: BetOrderState
+  games: GameData[]
   isWin: boolean | null
   isCashedOut: boolean
 }
 
-const BetStatus: React.FC<BetStatusProps> = ({ graphBetStatus, games, isWin, isCashedOut }) => {
+const BetStatus: React.FC<BetStatusProps> = ({ graphBetStatus, orderState, games, isWin, isCashedOut }) => {
   const betStatus = useMemo(() => {
     return getBetStatus({
       graphStatus: graphBetStatus,
+      orderState,
       games: games!,
     })
-  }, [])
+  }, [graphBetStatus, orderState, games])
 
   let { icon, title, color } = statusData[betStatus]
 

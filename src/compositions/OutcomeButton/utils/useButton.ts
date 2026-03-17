@@ -1,5 +1,5 @@
 import { useBaseBetslip, useSelectionOdds } from '@azuro-org/sdk'
-import { type GameQuery, type MarketOutcome } from '@azuro-org/toolkit'
+import { type GameData, type MarketOutcome } from '@azuro-org/toolkit'
 import { type MutableRefObject } from 'react'
 
 import useOddsChange from 'src/hooks/useOddsChange'
@@ -8,7 +8,7 @@ import useOddsChange from 'src/hooks/useOddsChange'
 type UseButtonProps = {
   marketName: string
   outcome: MarketOutcome
-  game: NonNullable<GameQuery['game']>
+  game: GameData
   nodeRef: MutableRefObject<HTMLDivElement | null>
 }
 

@@ -1,14 +1,12 @@
-
-import { type GamesQuery, type SportsQuery } from '@azuro-org/toolkit'
+import { type GameData, type SportData } from '@azuro-org/toolkit'
 import { type Sport } from 'hooks'
 
 
-type Game = GamesQuery['games'][number]
-type Games = Game[]
+type Games = GameData[]
 
-type Data = Record<string, Omit<SportsQuery['sports'][0], 'countries'> & {
-  countries: Record<string, Omit<SportsQuery['sports'][0]['countries'][0], 'leagues'> & {
-    leagues: Record<string, SportsQuery['sports'][0]['countries'][0]['leagues'][0]>
+type Data = Record<string, Omit<SportData, 'countries'> & {
+  countries: Record<string, Omit<SportData['countries'][0], 'leagues'> & {
+    leagues: Record<string, SportData['countries'][0]['leagues'][0]>
   }>
 }
 >
@@ -35,7 +33,7 @@ const formatSportsData = (gamesData: Games): Sport[] => {
 
     if (!sportsData[sportId]) {
       sportsData[sportId] = {
-        id: sportId,
+        id: +sportId,
         sportId,
         slug: sportSlug,
         name: sportName,

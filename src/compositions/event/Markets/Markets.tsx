@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import { XMasonry, XBlock } from 'react-xmasonry'
 import { GameState, getIsPendingResolution } from '@azuro-org/toolkit'
-import { type GameQuery, type GameMarkets, type Market } from '@azuro-org/toolkit'
+import { type GameData, type GameMarkets, type Market } from '@azuro-org/toolkit'
 import { useActiveMarkets, useBetsSummaryBySelection, useConditionState, useResolvedMarkets } from '@azuro-org/sdk'
 import { useAccount } from '@azuro-org/sdk-social-aa-connector'
 import dayjs from 'dayjs'
@@ -51,7 +51,7 @@ export const MarketsSkeleton: React.FC = () => {
 type ConditionProps = {
   condition: Market['conditions'][0]
   marketName: string
-  game: NonNullable<GameQuery['game']>
+  game: GameData
   betsSummary?: Record<string, string>
   isResult?: boolean
 }
@@ -103,7 +103,7 @@ const Condition: React.FC<ConditionProps> = (props) => {
 
 type ContentProps = {
   markets: GameMarkets
-  game: NonNullable<GameQuery['game']>
+  game: GameData
   betsSummary?: Record<string, string>
   isResult?: boolean
 }
@@ -195,7 +195,7 @@ const Content: React.FC<ContentProps> = (props) => {
 }
 
 type MarketsProps = {
-  game: NonNullable<GameQuery['game']>
+  game: GameData
   gameState: GameState
 }
 

@@ -1,4 +1,4 @@
-import { type GamesQuery } from '@azuro-org/toolkit'
+import { type GameData } from '@azuro-org/toolkit'
 
 import { OpponentLogo } from 'components/dataDisplay'
 
@@ -6,7 +6,7 @@ import TotalScore, { type TotalScoreProps } from '../TotalScore/TotalScore'
 
 
 type ScoreBoardProps = {
-  participants: GamesQuery['games'][0]['participants']
+  participants: GameData['participants']
 } & TotalScoreProps
 
 const ScoreBoard: React.FC<ScoreBoardProps> = ({ sportId, scoreBoard, participants }) => {

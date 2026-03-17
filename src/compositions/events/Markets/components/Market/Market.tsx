@@ -2,7 +2,7 @@
 
 import React from 'react'
 import cx from 'classnames'
-import { ConditionState, type GameQuery, type Market as TMarket } from '@azuro-org/toolkit'
+import { ConditionState, type GameData, type Market as TMarket } from '@azuro-org/toolkit'
 
 import OutcomeButton from 'compositions/OutcomeButton/OutcomeButton'
 
@@ -10,7 +10,7 @@ import OutcomeButton from 'compositions/OutcomeButton/OutcomeButton'
 type ButtonsProps = {
   marketName: string
   conditions: TMarket['conditions']
-  game: NonNullable<GameQuery['game']>
+  game: GameData
   conditionStates: Record<string, ConditionState>
 }
 
@@ -52,7 +52,7 @@ export const MarketSkeleton: React.FC = () => {
 
 export type MarketProps = {
   market: TMarket
-  game: NonNullable<GameQuery['game']>
+  game: GameData
   conditionStates: Record<string, ConditionState>
 }
 

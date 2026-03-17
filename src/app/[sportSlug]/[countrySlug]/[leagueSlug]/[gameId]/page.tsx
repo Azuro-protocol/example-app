@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 import { useGame, useGameState } from '@azuro-org/sdk'
-import { GameState, type GameQuery } from '@azuro-org/toolkit'
+import { GameState, type GameData } from '@azuro-org/toolkit'
 import { useParams } from 'next/navigation'
 import { liveStatisticsGameIdStore } from 'helpers/stores'
 
@@ -11,7 +11,7 @@ import Markets, { MarketsSkeleton } from 'compositions/event/Markets/Markets'
 
 
 type ContentProps = {
-  game: NonNullable<GameQuery['game']>
+  game: GameData
 }
 
 const Content: React.FC<ContentProps> = ({ game }) => {

@@ -4,7 +4,7 @@ import React, { useMemo } from 'react'
 import { useParams } from 'next/navigation'
 import { Message } from '@locmod/intl'
 import { useLive, useNavigation } from '@azuro-org/sdk'
-import { type NavigationQuery } from '@azuro-org/toolkit'
+import { type NavigationSportData } from '@azuro-org/toolkit'
 import cx from 'classnames'
 import { constants } from 'helpers'
 
@@ -17,7 +17,7 @@ import Skeleton from './components/Skeleton/Skeleton'
 import messages from './messages'
 
 
-type LeagueProps = NavigationQuery['sports'][0]['countries'][0]['leagues'][0] & {
+type LeagueProps = NavigationSportData['countries'][0]['leagues'][0] & {
   url: string
   country: {
     name: string
@@ -59,10 +59,10 @@ type Top = {
 
 type SportProps = {
   gamesCount?: number
-} & (Top | NavigationQuery['sports'][0])
+} & (Top | NavigationSportData)
 
 const Sport: React.FC<SportProps> = (props) => {
-  const { slug, name, countries } = props as NavigationQuery['sports'][0]
+  const { slug, name, countries } = props as NavigationSportData
   const { gamesCount } = props as Top
 
   const { sportSlug } = useParams()
@@ -136,6 +136,7 @@ type NavigationProps = {
 const Navigation: React.FC<NavigationProps> = ({ className }) => {
   const { isLive } = useLive()
   const { data: navigation, isFetching } = useNavigation({
+    returnAsPrematchAndLiveMap: false,
     isLive,
   })
 

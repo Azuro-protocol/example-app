@@ -5,7 +5,7 @@ import { useParams } from 'next/navigation'
 import { Message } from '@locmod/intl'
 import cx from 'classnames'
 import { useGame, useLiveStatistics } from '@azuro-org/sdk'
-import { type GamesQuery } from '@azuro-org/toolkit'
+import { type GameData } from '@azuro-org/toolkit'
 import { useIsMounted } from 'hooks'
 import { closeModal } from '@locmod/modal'
 import { liveStatisticsGameIdStore } from 'helpers/stores'
@@ -21,7 +21,7 @@ import messages from './messages'
 
 type ContentProps = {
   storeGameId: string
-  game: GamesQuery['games'][0]
+  game: GameData
   isGamePage: boolean
   withCollapse?: boolean
   withClearButton?: boolean

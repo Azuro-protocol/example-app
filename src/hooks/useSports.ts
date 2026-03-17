@@ -1,12 +1,12 @@
 import { useParams } from 'next/navigation'
-import { useSports as _useSports, useLive } from '@azuro-org/sdk'
-import { Game_OrderBy, OrderDirection, type SportsQuery } from '@azuro-org/toolkit'
+import { useSports as _useSports, useLive, type UseSportsProps } from '@azuro-org/sdk'
+import { GameOrderBy, OrderDirection, type SportData } from '@azuro-org/toolkit'
 import { useMemo } from 'react'
 import { constants } from 'helpers'
 
 
-type GraphSport = SportsQuery['sports'][0]
-type GraphLeague = GraphSport['countries'][0]['leagues'][0]
+type GraphSport = SportData
+type GraphLeague = SportData['countries'][0]['leagues'][0]
 
 export type Sport = Omit<GraphSport, 'countries'> & {
   leagues: Array<GraphLeague & {
@@ -20,14 +20,14 @@ const useSports = () => {
   const isTopPage = !params.sportSlug || params.sportSlug === '/'
   const { isLive } = useLive()
 
-  const props = isTopPage ? {
-    gameOrderBy: Game_OrderBy.Turnover,
+  const props: UseSportsProps = isTopPage ? {
+    gameOrderBy: GameOrderBy.Turnover,
     filter: {
-      limit: constants.topPageGamePerSportLimit,
+      maxGamesPerLeague: constants.topPageGamePerSportLimit,
     },
     isLive,
   } : {
-    gameOrderBy: Game_OrderBy.StartsAt,
+    gameOrderBy: GameOrderBy.StartsAt,
     orderDir: OrderDirection.Asc,
     filter: {
       sportSlug: params.sportSlug as string,
@@ -37,7 +37,7 @@ const useSports = () => {
     isLive,
   }
 
-  const { data: sports, isFetching } = _useSports(props as any) // TODO
+  const { data: sports, isFetching } = _useSports(props)
 
   const formattedSports = useMemo(() => {
     if (!sports?.length) {

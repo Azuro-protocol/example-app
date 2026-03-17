@@ -6,7 +6,7 @@ import React, { useEffect, useRef } from 'react'
 import { Message } from '@locmod/intl'
 import { useParams } from 'next/navigation'
 import { useActiveMarket, useActiveMarkets, useGames } from '@azuro-org/sdk'
-import { ConditionState, Game_OrderBy, type GameMarkets, type GamesQuery } from '@azuro-org/toolkit'
+import { ConditionState, GameOrderBy, type GameMarkets, type GameData } from '@azuro-org/toolkit'
 import cx from 'classnames'
 import { getGameDateTime } from 'helpers/getters'
 
@@ -26,7 +26,7 @@ const CardSkeleton: React.FC<{ className?: string }> = ({ className }) => {
 
 type ConditionProps = {
   markets: GameMarkets
-  game: GamesQuery['games'][0]
+  game: GameData
 }
 
 const Condition: React.FC<ConditionProps> = ({ markets, game }) => {
@@ -55,7 +55,7 @@ const Condition: React.FC<ConditionProps> = ({ markets, game }) => {
 }
 
 type CardProps = {
-  game: GamesQuery['games'][0]
+  game: GameData
 }
 
 const Card: React.FC<CardProps> = ({ game }) => {
@@ -134,13 +134,12 @@ const sliderConfiguration = {
 }
 
 const Events: React.FC = () => {
-  const { data: games, isFetching } = useGames({
-    filter: {
-      limit: 9,
-    },
-    orderBy: Game_OrderBy.Turnover,
+  const { data, isFetching } = useGames({
+    perPage: 9,
+    orderBy: GameOrderBy.Turnover,
   })
   const containerRef = useRef<HTMLDivElement>(null)
+  const { games } = data || {}
 
 
   useEffect(() => {

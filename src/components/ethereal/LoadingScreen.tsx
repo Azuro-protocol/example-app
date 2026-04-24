@@ -1,6 +1,7 @@
 'use client'
 
 import { AnimatePresence, motion } from 'framer-motion'
+import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
 
@@ -59,7 +60,14 @@ const LoadingScreen = () => {
                 transition={{ duration: 1.2, ease: 'easeOut' }}
                 className="absolute inset-0 flex items-center justify-center"
               >
-                <div className="h-3 w-3 rounded-full bg-mist shadow-glow" />
+                <Image
+                  src="/logo.png"
+                  alt="Team Fusion"
+                  width={96}
+                  height={96}
+                  priority
+                  className="rounded-full shadow-glow"
+                />
               </motion.div>
             </div>
             <motion.p

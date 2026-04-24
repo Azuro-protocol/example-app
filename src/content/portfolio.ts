@@ -1,115 +1,57 @@
-export const site = {
-  name: 'Aether Labs',
-  owner: 'Your Name',
-  role: 'AI Automation Architect',
-  tagline: 'AI automation that feels like magic.',
-  heroLead:
-    'I design and build intelligent systems that quietly do the work for you — from autonomous agents to data pipelines that simply flow.',
-  email: 'hello@yourdomain.com',
-  location: 'Remote · Worldwide',
-  socials: [
-    { label: 'GitHub', href: 'https://github.com/' },
-    { label: 'LinkedIn', href: 'https://www.linkedin.com/' },
-    { label: 'X', href: 'https://x.com/' },
-  ],
+import data from './portfolio.json'
+
+
+export type Social = { label: string; href: string }
+
+export type Site = {
+  name: string
+  owner: string
+  role: string
+  tagline: string
+  heroLead: string
+  email: string
+  location: string
+  socials: Social[]
 }
 
-export const about = {
-  title: 'About',
-  body: [
-    "I'm an AI automation specialist crafting systems that think, decide, and act — so you can focus on the work that only you can do.",
-    'For the past several years I’ve been building with LLMs, vector databases, orchestration frameworks and the messy real-world APIs that tie everything together. The result is quiet, reliable automation that your team forgets is even there.',
-  ],
-  facts: [
-    { label: 'Years in AI', value: '6+' },
-    { label: 'Automations shipped', value: '40+' },
-    { label: 'Hours reclaimed', value: '∞' },
-  ],
+export type Fact = { label: string; value: string }
+
+export type About = {
+  title: string
+  body: string[]
+  facts: Fact[]
 }
 
-export const services = [
-  {
-    title: 'AI Agents & Assistants',
-    description:
-      'Custom autonomous agents that handle research, support, outreach, and internal operations — with the judgment of a teammate and the patience of a machine.',
-    icon: 'spark',
-  },
-  {
-    title: 'Workflow Automation',
-    description:
-      'End-to-end automations across the tools you already use. Triggers, branching logic, human-in-the-loop — orchestrated beautifully.',
-    icon: 'orbit',
-  },
-  {
-    title: 'Data Pipelines & RAG',
-    description:
-      'Ingest, chunk, embed, retrieve. Production-grade retrieval systems that give your models the right context, every time.',
-    icon: 'prism',
-  },
-  {
-    title: 'Custom Integrations',
-    description:
-      'Bespoke connectors between your stack and any AI model — OpenAI, Anthropic, open-source, or your own fine-tuned models.',
-    icon: 'weave',
-  },
-]
+export type Service = {
+  title: string
+  description: string
+  icon: string
+}
 
-export const work = [
-  {
-    title: 'Seraph Support Desk',
-    summary:
-      'A tiered AI support agent resolving 72% of tickets end-to-end for a SaaS with 20k customers.',
-    tags: [ 'Agents', 'RAG', 'Zendesk' ],
-  },
-  {
-    title: 'Lumen Ops Pipeline',
-    summary:
-      'Document-to-decision pipeline turning 4-hour analyst reviews into 3-minute briefings.',
-    tags: [ 'Pipelines', 'LLMs', 'Airflow' ],
-  },
-  {
-    title: 'Nimbus Outreach',
-    summary:
-      'Personalized outbound engine that writes, schedules, and follows up — 5x reply rate vs. templates.',
-    tags: [ 'Agents', 'CRM', 'Email' ],
-  },
-  {
-    title: 'Oracle Dash',
-    summary:
-      'Natural-language BI layer over a 200-table warehouse. Ask in English, get charts and SQL.',
-    tags: [ 'RAG', 'SQL', 'Analytics' ],
-  },
-  {
-    title: 'Helios Intake',
-    summary:
-      'Voice + form AI intake for a legal practice. Structured data in, qualified leads out.',
-    tags: [ 'Voice', 'Forms', 'Automation' ],
-  },
-  {
-    title: 'Aurora Editor',
-    summary:
-      'Internal content studio blending human drafts with model suggestions — shipped 3x more copy.',
-    tags: [ 'LLMs', 'Editors', 'Workflow' ],
-  },
-]
+export type Work = {
+  title: string
+  summary: string
+  tags: string[]
+}
 
-export const testimonials = [
-  {
-    quote:
-      'It felt like watching our operations learn to breathe on their own. Everything just… flowed.',
-    author: 'Maya Chen',
-    role: 'COO, Northwind',
-  },
-  {
-    quote:
-      'We replaced four brittle scripts with one elegant automation. I keep forgetting it’s running.',
-    author: 'Daniel Ortiz',
-    role: 'Head of Engineering, Kettle & Co',
-  },
-  {
-    quote:
-      'The agent handled a weekend surge while the team slept. I woke up to a clean queue.',
-    author: 'Priya Rao',
-    role: 'Customer Lead, Drift Studio',
-  },
-]
+export type Testimonial = {
+  quote: string
+  author: string
+  role: string
+}
+
+export type PortfolioContent = {
+  site: Site
+  about: About
+  services: Service[]
+  work: Work[]
+  testimonials: Testimonial[]
+}
+
+export const content = data as PortfolioContent
+
+export const site = content.site
+export const about = content.about
+export const services = content.services
+export const work = content.work
+export const testimonials = content.testimonials

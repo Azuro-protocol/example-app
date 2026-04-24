@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
-import AuroraMark from '@/components/ethereal/AuroraMark'
+import BrandMark from '@/components/ethereal/BrandMark'
 import { site } from '@/content/portfolio'
 
 
@@ -39,7 +39,7 @@ const Nav = () => {
         }`}
       >
         <a href="#home" className="flex items-center gap-2 pl-1 pr-3 group">
-          <AuroraMark size={22} className="transition-transform group-hover:rotate-90 duration-700" />
+          <BrandMark size={28} className="transition-transform group-hover:scale-110 duration-500" />
           <span className="font-serif text-base tracking-wide text-mist hidden sm:inline">
             {site.name}
           </span>

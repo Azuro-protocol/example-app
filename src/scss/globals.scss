@@ -3,151 +3,99 @@
 @tailwind utilities;
 
 @layer base {
-
   html {
-    font-size: 4.444vw;
-    @media (min-width: 569px) {
-      font-size: 16px;
-    }
-    @media (min-width: 1981px) {
-      font-size: 16px;
-    }
+    scroll-behavior: smooth;
   }
 
   html,
   body {
     width: 100%;
-    height: fit-content;
     min-height: 100dvh;
     margin: 0;
     padding: 0;
   }
 
   body {
-    overflow: hidden auto;
+    font-family: var(--font-inter), system-ui, sans-serif;
     font-weight: 400;
-    text-rendering: optimizelegibility;
+    color: theme('colors.mist');
+    background-color: theme('colors.void');
+    text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
-    @apply bg-bg-l0;
-    @apply text-grey-90;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
   }
 
-  input {
-
-    &::-webkit-outer-spin-button,
-    &::-webkit-inner-spin-button {
-      margin: 0;
-      -webkit-appearance: none;
-    }
-
-    /* Firefox */
-    &[type='number'] {
-      -moz-appearance: textfield;
-    }
+  h1, h2, h3 {
+    font-family: var(--font-fraunces), Georgia, serif;
+    font-weight: 300;
+    letter-spacing: -0.02em;
   }
-}
 
-:focus-visible {
-  outline: none;
-}
-
-.focus-visible {
-
-  :focus-visible {
-    outline: auto;
-    outline-offset: 2px;
+  ::selection {
+    background: rgba(123, 92, 255, 0.4);
+    color: theme('colors.mist');
   }
-}
 
-body {
-
-  &.body-scroll-frozen {
-    overflow: hidden;
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
   }
-}
 
-.no-scrollbar {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-
-  &::-webkit-scrollbar {
-    display: none; /* Chrome, Safari and Opera */
+  ::-webkit-scrollbar-track {
+    background: transparent;
   }
-}
 
-@include mobile {
-  .desktop,
-  .narrow:not(.mobile),
-  .wide:not(.mobile) {
-    display: none !important;
-  }
-}
-
-@include desktop {
-
-  .mobile:not(.narrow):not(.wide) {
-    display: none !important;
-  }
-}
-
-@include narrow {
-
-  .mobile:not(.narrow),
-  .wide {
-    display: none !important;
-  }
-}
-
-@include wide {
-
-  .mobile:not(.wide),
-  .narrow {
-    display: none !important;
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #7B5CFF, #FF7BC8);
+    border-radius: 999px;
+    border: 2px solid theme('colors.void');
   }
 }
 
 @layer components {
+  .glow-text {
+    background: linear-gradient(120deg, #E9E4FF 0%, #B9A7FF 35%, #FF9BD4 70%, #9FE9FF 100%);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: aurora-shift 12s ease-in-out infinite;
+  }
 
-  .bone {
+  .frost {
+    background: linear-gradient(135deg, rgba(233, 228, 255, 0.06), rgba(123, 92, 255, 0.04));
+    border: 1px solid rgba(233, 228, 255, 0.08);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  .aurora-border {
     position: relative;
-    overflow: hidden;
-    @apply bg-grey-90/15;
-    @apply animate-pulse;
+    background: linear-gradient(135deg, rgba(10, 6, 24, 0.7), rgba(10, 6, 24, 0.5));
   }
 
-  .word-spacing-max {
-    word-spacing: 9999px;
-  }
-
-  .word-spacing-normal {
-    word-spacing: normal;
-  }
-
-  .preserve-3d {
-    transform-style: preserve-3d;
-  }
-
-  .backface-hidden {
-    backface-visibility: hidden;
-  }
-
-  .rotate-y-180 {
-    transform: rotateY(180deg);
-  }
-
-  .rotate-y-0 {
-    transform: rotateY(0deg);
+  .aurora-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(123, 92, 255, 0.5), rgba(255, 123, 200, 0.25), rgba(111, 230, 255, 0.5));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
   }
 }
 
-@layer utilities {
-
-  // update to use the only class instead of duplication "h-screen h-dvh"
-  .h-dvh {
-    height: 100dvh;
-  }
-
-  .min-h-dvh {
-    min-height: 100dvh;
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

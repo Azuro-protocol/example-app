@@ -1,7 +1,0 @@
-export { default as Card } from './Card/Card'
-export { default as AmountInput } from './AmountInput/AmountInput'
-export { default as Chips } from './Chips/Chips'
-export { default as BetButton } from './BetButton/BetButton'
-export { default as FreeBet } from './FreeBet/FreeBet'
-export { default as Slippage } from './Slippage/Slippage'
-export { default as QuickBet } from './QuickBet/QuickBet'

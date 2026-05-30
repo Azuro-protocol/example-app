@@ -1,7 +1,7 @@
 'use client'
 
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
-import { Message } from '@locmod/intl'
+import { type IntlMessage, Message } from '@locmod/intl'
 import cx from 'classnames'
 import { useEffect, useState } from 'react'
 import type { ModalComponent } from '@locmod/modal'
@@ -21,7 +21,7 @@ import messages from './messages'
 
 type TabId = 'deposit' | 'withdraw'
 
-const tabs: { id: TabId; title: Intl.Message; iconName: IconName; Content: typeof DepositView | typeof WithdrawView }[] = [
+const tabs: { id: TabId; title: IntlMessage; iconName: IconName; Content: typeof DepositView | typeof WithdrawView }[] = [
   {
     id: 'deposit',
     title: messages.deposit,

@@ -1,6 +1,6 @@
 'use client'
 
-import { Message } from '@locmod/intl'
+import { type IntlMessage, Message } from '@locmod/intl'
 import cx from 'classnames'
 
 import { WalletIcon } from 'components/dataDisplay'
@@ -11,8 +11,8 @@ import { Button, buttonMessages } from 'components/inputs'
 type ActionScreenProps = {
   walletName: string | undefined
   walletIcon: string | undefined
-  title: string | Intl.Message
-  text: string | Intl.Message
+  title: string | IntlMessage
+  text: string | IntlMessage
   isError?: boolean
   isPending?: boolean
   reset: () => void

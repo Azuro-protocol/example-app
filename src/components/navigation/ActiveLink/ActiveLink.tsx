@@ -1,7 +1,7 @@
 'use client'
 import { forwardRef, type AnchorHTMLAttributes } from 'react'
 import cx from 'classnames'
-import { Message } from '@locmod/intl'
+import { type IntlMessage, Message } from '@locmod/intl'
 import { type LinkProps } from 'next/link'
 import { usePathname } from 'next/navigation'
 
@@ -14,7 +14,7 @@ export type ActiveLinkProps = Pick<LinkProps, 'scroll' | 'shallow' | 'replace'> 
   activeRegex?: string
   to?: string
   toTab?: string
-  message?: Intl.Message | string
+  message?: IntlMessage | string
   isActive?: boolean
   onClick?: (props: any) => void
 }

@@ -1,10 +1,12 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { XMasonry, XBlock } from 'react-xmasonry'
-import { GameState, getIsPendingResolution } from '@azuro-org/toolkit'
+import { GameState, getIsPendingResolution, groupConditionsByMarket } from '@azuro-org/toolkit'
 import { type GameData, type GameMarkets, type Market } from '@azuro-org/toolkit'
-import { useActiveMarkets, useBetsSummaryBySelection, useConditionState, useResolvedMarkets } from '@azuro-org/sdk'
+import {
+  useActiveConditions, useBetsSummaryBySelection, useConditionsState, useConditionState, useResolvedMarkets,
+} from '@azuro-org/sdk'
 import { useAccount } from '@azuro-org/sdk-social-aa-connector'
 import dayjs from 'dayjs'
 import cx from 'classnames'
@@ -201,7 +203,7 @@ type MarketsProps = {
 
 const ResolvedMarkets: React.FC<MarketsProps> = ({ game, gameState }) => {
   const { address } = useAccount()
-  const { data: markets, isLoading } = useResolvedMarkets({ gameId: game.gameId })
+  const { data: markets, isLoading } = useResolvedMarkets({ gameId: game.gameId, extended: true })
   const { data: betsSummary } = useBetsSummaryBySelection({
     account: address!,
     gameId: game.gameId,
@@ -228,14 +230,31 @@ const ResolvedMarkets: React.FC<MarketsProps> = ({ game, gameState }) => {
 
 
 const WAIT_TIME = 600000
+const emptyList = []
 
 const ActiveMarkets: React.FC<MarketsProps> = ({ game, gameState }) => {
-  const { data: markets, isLoading, isPlaceholderData } = useActiveMarkets({
+  const { data: conditions = emptyList, isLoading, isPlaceholderData } = useActiveConditions({
     gameId: game.id,
+    extended: true,
     query: {
       refetchInterval: 10_000,
     },
   })
+
+  const { conditionsMap } = useConditionsState({
+    conditions,
+  })
+
+  const markets = useMemo(() => {
+    if (!conditions?.length) {
+      return emptyList
+    }
+
+    const filteredConditions = conditions.filter(condition => !conditionsMap?.[condition.conditionId]?.hidden)
+
+    return groupConditionsByMarket(filteredConditions)
+  }, [conditions, conditionsMap])
+
   const isLive = gameState === GameState.Live
 
   const startDate = +game.startsAt * 1000
@@ -245,7 +264,7 @@ const ActiveMarkets: React.FC<MarketsProps> = ({ game, gameState }) => {
   )
 
   useEffect(() => {
-    if (shouldWait() && !markets?.length) {
+    if (shouldWait() && !conditions?.length) {
       const interval = setInterval(() => {
         const newWaitingTime = Math.max(WAIT_TIME - dayjs().diff(startDate), 0)
 
@@ -259,13 +278,13 @@ const ActiveMarkets: React.FC<MarketsProps> = ({ game, gameState }) => {
         clearInterval(interval)
       }
     }
-  }, [ gameState, markets ])
+  }, [ gameState, conditions ])
 
   if (isLoading || isPlaceholderData) {
     return <MarketsSkeleton />
   }
 
-  if (!markets) {
+  if (!conditions?.length) {
     if (isLive) {
       if (waitingTime) {
         const time = dayjs.duration(waitingTime).format('mm:ss')

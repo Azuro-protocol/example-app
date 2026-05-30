@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState } from 'react'
 import cx from 'classnames'
-import { Message } from '@locmod/intl'
+import { type IntlMessage, Message } from '@locmod/intl'
 import dayjs from 'dayjs'
 
 import messages from './messages'
@@ -85,7 +85,7 @@ export const filterGamesByTime = <T extends Games>(games: T, filterByTime: Filte
   }) as T
 }
 
-const items: { title: Intl.Message, value: FilterByTime }[] = [
+const items: { title: IntlMessage, value: FilterByTime }[] = [
   {
     title: messages.all,
     value: 'all',

@@ -4,7 +4,7 @@ import { type ReactNode, useEffect } from 'react'
 import { type ModalComponent } from '@locmod/modal'
 import { type Connector, useConnect } from 'wagmi'
 import { useAccount } from '@azuro-org/sdk-social-aa-connector'
-import { Message } from '@locmod/intl'
+import { type IntlMessage, Message } from '@locmod/intl'
 import { useDevice } from 'contexts'
 
 import { PlainModal } from 'components/feedback'
@@ -82,8 +82,8 @@ const ConnectModal: ModalComponent<ConnectModalProps> = (props) => {
     )
   }
   else if (isError) {
-    let title: Intl.Message
-    let text: Intl.Message
+    let title: IntlMessage
+    let text: IntlMessage
 
     if ('code' in error) {
       title = messages.errors[error.code]?.title

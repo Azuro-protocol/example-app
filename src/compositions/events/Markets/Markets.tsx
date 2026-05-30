@@ -200,7 +200,7 @@ type MarketsProps = {
 }
 
 const Markets: React.FC<MarketsProps> = ({ game, gameState }) => {
-  const { data: markets, isFetching, isPlaceholderData } = useActiveMarkets({ gameId: game.gameId })
+  const { data: markets, isFetching, isPlaceholderData } = useActiveMarkets({ gameId: game.gameId, extended: true })
 
   if (isFetching || isPlaceholderData || gameState === GameState.Live && !markets?.length) {
     return <MarketsSkeleton />

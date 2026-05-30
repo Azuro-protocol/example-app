@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import { useBaseBetslip, useBetTokenBalance, useChain, useDetailedBetslip } from '@azuro-org/sdk'
-import { Message } from '@locmod/intl'
+import { type IntlMessage, Message } from '@locmod/intl'
 import cx from 'classnames'
 
 import { Icon } from 'components/ui'
@@ -46,7 +46,7 @@ const Settings: React.FC<SettingsProps> = ({ onClose }) => {
 }
 
 type TabProps = {
-  title: Intl.Message
+  title: IntlMessage
   isActive: boolean
   onClick: () => void
 }

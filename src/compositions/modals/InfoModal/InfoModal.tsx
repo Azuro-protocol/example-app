@@ -2,7 +2,7 @@
 import type { ReactElement, ReactNode } from 'react'
 import cx from 'classnames'
 import type { ModalComponent } from '@locmod/modal'
-import { Message } from '@locmod/intl'
+import { type IntlMessage, Message } from '@locmod/intl'
 
 import { PlainModal } from 'components/feedback'
 import { Button, buttonMessages, type ButtonProps } from 'components/inputs'
@@ -14,9 +14,9 @@ export type InfoModalProps = {
   className?: string
   contentClassName?: string
   icon: ReactElement
-  title: Intl.Message | string
-  text?: Intl.Message | string
-  bottomText?: Intl.Message | string
+  title: IntlMessage | string
+  text?: IntlMessage | string
+  bottomText?: IntlMessage | string
   buttonProps?: Omit<ButtonProps, 'styling' | 'size'>
   closeOnButtonClick?: boolean
   overlayClosable?: boolean

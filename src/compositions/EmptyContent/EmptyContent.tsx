@@ -1,13 +1,13 @@
 import React from 'react'
 import cx from 'classnames'
-import { Message } from '@locmod/intl'
+import { type IntlMessage, Message } from '@locmod/intl'
 
 
 type EmptyContentProps = {
   className?: string
   image: string
-  title: string | Intl.Message
-  text?: string | Intl.Message
+  title: string | IntlMessage
+  text?: string | IntlMessage
 }
 
 const EmptyContent: React.FC<EmptyContentProps> = ({ className, image, title, text }) => {

@@ -2,7 +2,7 @@ import React, { useMemo } from 'react'
 import {
   getBetStatus, type GraphBetStatus, type GameData, BetStatus as TBetStatus, BetOrderState,
 } from '@azuro-org/toolkit'
-import { Message } from '@locmod/intl'
+import { type IntlMessage, Message } from '@locmod/intl'
 import cx from 'classnames'
 
 import { Icon, LiveDot, type IconName } from 'components/ui'
@@ -12,7 +12,7 @@ import messages from './messages'
 
 type Data = Record<TBetStatus, {
   icon: IconName | React.ReactElement
-  title: Intl.Message
+  title: IntlMessage
   color: string
 }>
 

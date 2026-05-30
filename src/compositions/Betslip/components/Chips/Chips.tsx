@@ -1,7 +1,7 @@
 import React from 'react'
 import cx from 'classnames'
 import { useBetTokenBalance, useDetailedBetslip } from '@azuro-org/sdk'
-import { Message } from '@locmod/intl'
+import { type IntlMessage, Message } from '@locmod/intl'
 import { useAccount } from '@azuro-org/sdk-social-aa-connector'
 import { formatToFixed } from 'helpers/formatters'
 
@@ -11,7 +11,7 @@ import messages from './messages'
 
 
 type ChipProps = {
-  title: string | Intl.Message
+  title: string | IntlMessage
   isActive: boolean
   isDisabled?: boolean
   onClick: () => void

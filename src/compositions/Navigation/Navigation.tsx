@@ -2,7 +2,7 @@
 
 import React, { useMemo } from 'react'
 import { useParams } from 'next/navigation'
-import { Message } from '@locmod/intl'
+import { type IntlMessage, Message } from '@locmod/intl'
 import { useLive, useNavigation } from '@azuro-org/sdk'
 import { type NavigationSportData } from '@azuro-org/toolkit'
 import cx from 'classnames'
@@ -53,7 +53,7 @@ const League: React.FC<LeagueProps> = (props) => {
 
 type Top = {
   slug: '/'
-  name: Intl.Message
+  name: IntlMessage
   gamesCount?: number
 }
 

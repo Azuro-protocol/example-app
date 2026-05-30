@@ -23,6 +23,8 @@ const formatSportsData = (gamesData: Games): Sport[] => {
       league: {
         name: leagueName,
         slug: leagueSlug,
+        isTopLeague,
+        topWeight,
       },
       country: {
         name: countryName,
@@ -55,6 +57,8 @@ const formatSportsData = (gamesData: Games): Sport[] => {
       sportsData[sportId].countries[countrySlug].leagues[leagueSlug] = {
         name: leagueName,
         slug: leagueSlug,
+        isTopLeague,
+        topWeight,
         turnover: '0',
         games: [],
       }

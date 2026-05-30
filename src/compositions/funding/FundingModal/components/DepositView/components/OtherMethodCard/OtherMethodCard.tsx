@@ -1,15 +1,15 @@
 'use client'
 
-import { Message } from '@locmod/intl'
+import { type IntlMessage, Message } from '@locmod/intl'
 
 import { Button } from 'components/inputs'
 import { Icon, type IconName } from 'components/ui'
 
 
 export type OtherMethodCardProps = {
-  title: Intl.Message
+  title: IntlMessage
   icons: (IconName | 'divider')[]
-  buttonTitle: Intl.Message
+  buttonTitle: IntlMessage
   onClick?: () => void
 }
 

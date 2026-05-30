@@ -3,7 +3,7 @@ import React, { useRef, useState } from 'react'
 import { useFloating, useInteractions, useHover, useClick, useDismiss,
   offset, shift, arrow, flip, autoUpdate, safePolygon } from '@floating-ui/react-dom-interactions'
 import type { Placement } from '@floating-ui/react-dom-interactions'
-import { Message } from '@locmod/intl'
+import { type IntlMessage, Message } from '@locmod/intl'
 import cx from 'classnames'
 import { useMedia, useDevice } from 'contexts'
 
@@ -12,8 +12,8 @@ import { Icon } from 'components/ui'
 
 type TooltipProps = {
   children: React.ReactElement
-  title?: string | Intl.Message
-  text?: string | Intl.Message
+  title?: string | IntlMessage
+  text?: string | IntlMessage
   content?: React.ReactElement
   width?: number // sets specific tooltip width (use only for small text content)
   placement?: Placement

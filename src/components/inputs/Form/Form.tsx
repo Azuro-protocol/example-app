@@ -13,7 +13,7 @@ export type FormProps = React.AllHTMLAttributes<HTMLFormElement> & {
 const Form: React.CFC<FormProps> = (props) => {
   const { children, action = '.', loading, disabled, onSubmit, ...rest } = props
 
-  const handleSubmit = useCallback<React.FormEventHandler<HTMLFormElement>>((event) => {
+  const handleSubmit = useCallback((event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault()
 
     if (loading || disabled) {

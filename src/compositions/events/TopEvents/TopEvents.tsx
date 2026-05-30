@@ -81,6 +81,7 @@ const Card: React.FC<CardProps> = ({ game }) => {
 
   const { data: markets, isFetching } = useActiveMarkets({
     gameId: game.gameId,
+    extended: true,
   })
 
   return (

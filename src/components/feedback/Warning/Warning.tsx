@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { Message } from '@locmod/intl'
+import { type IntlMessage, Message } from '@locmod/intl'
 import cx from 'classnames'
 
 import { Icon } from 'components/ui'
@@ -9,7 +9,7 @@ import { Icon } from 'components/ui'
 
 type WarningProps = {
   className?: string
-  text: string | Intl.Message
+  text: string | IntlMessage
 }
 
 const Warning: React.FC<WarningProps> = ({ className, text }) => {

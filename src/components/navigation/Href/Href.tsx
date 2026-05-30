@@ -2,7 +2,7 @@
 import cx from 'classnames'
 import { forwardRef, type AnchorHTMLAttributes } from 'react'
 import Link from 'next/link'
-import { Message } from '@locmod/intl'
+import { type IntlMessage, Message } from '@locmod/intl'
 
 
 export type HrefProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
@@ -11,7 +11,7 @@ export type HrefProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
   to?: string
   toTab?: string
   mailto?: string
-  message?: Intl.Message | string
+  message?: IntlMessage | string
   onClick?: (props: any) => void
 }
 

@@ -2,14 +2,14 @@
 
 import React from 'react'
 import cx from 'classnames'
-import { useIntl } from '@locmod/intl'
+import { type IntlMessage, useIntl } from '@locmod/intl'
 import { parseUnits } from 'viem'
 
 
 type InputProps = {
   className?: string
   value: string
-  placeholder?: string | Intl.Message
+  placeholder?: string | IntlMessage
   type?: 'text' | 'number'
   maxValue?: string
   leftNode?: React.ReactElement

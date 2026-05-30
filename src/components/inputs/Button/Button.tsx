@@ -1,7 +1,7 @@
 'use client'
 
 import React, { forwardRef } from 'react'
-import { Message } from '@locmod/intl'
+import { type IntlMessage, Message } from '@locmod/intl'
 import cx from 'classnames'
 
 import { ButtonBase } from 'components/inputs'
@@ -23,7 +23,7 @@ export type ButtonStyle = typeof styles[number]
 
 export type ButtonProps = ButtonBaseProps & OnlyOne<{
   children: React.ReactNode | undefined
-  title?: string | Intl.Message
+  title?: string | IntlMessage
   leftIcon?: IconName
   rightIcon?: IconName
   rightNode?: React.ReactElement

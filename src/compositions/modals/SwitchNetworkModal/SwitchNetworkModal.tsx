@@ -7,6 +7,7 @@ import { Message } from '@locmod/intl'
 import { useConnect, useSwitchChain, useWalletClient, useDisconnect } from 'wagmi'
 import { useWallet } from 'wallet'
 import { UserRejectedRequestError } from 'viem'
+import { bscTestnet } from 'viem/chains'
 
 import { PlainModal } from 'components/feedback'
 
@@ -31,7 +32,7 @@ const SwitchNetworkModal: ModalComponent<SwitchNetworkModalProps> = (props) => {
 
   useEffect(() => {
     if (switchChain && userChainId !== chainId) {
-      switchChain({ chainId })
+      switchChain({ chainId: bscTestnet.id })
     }
   }, [ chainId, userChainId, switchChain ])
 

@@ -8,6 +8,10 @@
   "scripts": {
     "dev": "npm run watch-icons & next dev",
     "build": "npm run build-icons && next build",
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "upload": "opennextjs-cloudflare build && opennextjs-cloudflare upload",
+    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
     "start": "next start",
     "lint-ts": "tsc --noEmit",
     "lint": "next lint && tsc --noEmit",
@@ -36,7 +40,7 @@
     "dayjs": "^1.11.13",
     "formular": "3.1.6",
     "graphql": "^16.9.0",
-    "next": "15.5.12",
+    "next": "15.5.18",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "react-xmasonry": "^3.0.6",
@@ -48,6 +52,7 @@
     "@babel/preset-env": "^7.28.5",
     "@babel/preset-typescript": "^7.28.5",
     "@babel/register": "^7.28.3",
+    "@opennextjs/cloudflare": "^1.19.11",
     "@types/node": "^20",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
@@ -57,7 +62,7 @@
     "chokidar": "3.6.0",
     "encoding": "0.1.13",
     "eslint": "^8",
-    "eslint-config-next": "15.5.9",
+    "eslint-config-next": "15.5.18",
     "eslint-plugin-import": "2.29.1",
     "glob": "13.0.0",
     "pino-pretty": "10.3.1",
@@ -68,6 +73,7 @@
     "stylelint-scss": "5.3.2",
     "tailwindcss": "^3.4.19",
     "typescript": "^5",
+    "wrangler": "^4.100.0",
     "yargs": "17.7.2"
   }
 }

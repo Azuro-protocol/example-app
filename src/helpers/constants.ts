@@ -7,6 +7,7 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL as string
 const companyName = process.env.NEXT_PUBLIC_COMPANY_NAME as string
 const privyAppId = process.env.NEXT_PUBLIC_PRIVY_APP_ID as string
 const isDevEnabled = Boolean(JSON.parse(process.env.AZURO_UNSTABLE_DEV_ENABLED || 'false'))
+const defaultChainId = Number(process.env.NEXT_PUBLIC_DEFAULT_CHAIN_ID)
 
 const rpcByChains: Record<ChainId, string> = {
   [gnosis.id]: 'https://gnosis-rpc.publicnode.com',
@@ -67,7 +68,7 @@ const localStorageKeys = {
 
 export default {
   baseUrl,
-  defaultChain: isDevEnabled ? polygonAmoy : polygon,
+  defaultChain: [ gnosis, polygon, polygonAmoy, chiliz, spicy, base, baseSepolia, bsc, bscTestnet ].find(chain => chain.id === defaultChainId) || (isDevEnabled ? bscTestnet : polygon),
   companyName,
   rpcByChains,
   topPageGamePerSportLimit: 10,

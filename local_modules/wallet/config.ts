@@ -3,7 +3,7 @@
 import { cookieStorage, createStorage, http } from 'wagmi'
 import { type PrivyConfig } from '@azuro-org/sdk-social-aa-connector'
 import { createConfig } from '@privy-io/wagmi'
-import { polygon, polygonAmoy, gnosis, chiliz, spicy, base, baseSepolia, bsc, bscTestnet } from 'viem/chains'
+import { bscTestnet } from 'viem/chains'
 import { constants } from 'helpers'
 
 import { appChains } from './chains'
@@ -34,14 +34,6 @@ export const privyConfig: PrivyConfig = {
 const wagmiConfig = createConfig({
   chains: appChains,
   transports: {
-    [polygon.id]: http(constants.rpcByChains[polygon.id]),
-    [polygonAmoy.id]: http(constants.rpcByChains[polygonAmoy.id]),
-    [gnosis.id]: http(constants.rpcByChains[gnosis.id]),
-    [chiliz.id]: http(constants.rpcByChains[chiliz.id]),
-    [spicy.id]: http(constants.rpcByChains[spicy.id]),
-    [base.id]: http(constants.rpcByChains[base.id]),
-    [baseSepolia.id]: http(constants.rpcByChains[baseSepolia.id]),
-    [bsc.id]: http(constants.rpcByChains[bsc.id]),
     [bscTestnet.id]: http(constants.rpcByChains[bscTestnet.id]),
   },
   ssr: false,

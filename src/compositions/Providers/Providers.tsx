@@ -11,6 +11,7 @@ import { WagmiProvider } from 'wallet'
 import { DeviceProvider, OddsViewProvider } from 'contexts'
 
 import NewFreeBetsChecker from 'compositions/NewFreeBetsChecker/NewFreeBetsChecker'
+import 'helpers/setupBscMarketManagerFetch'
 
 
 type Props = {

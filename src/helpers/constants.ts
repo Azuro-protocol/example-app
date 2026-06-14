@@ -6,6 +6,7 @@ import { type IconName } from 'components/ui'
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL as string
 const companyName = process.env.NEXT_PUBLIC_COMPANY_NAME as string
 const privyAppId = process.env.NEXT_PUBLIC_PRIVY_APP_ID as string
+const bscMarketManagerApiBase = process.env.NEXT_PUBLIC_BSC_MARKET_MANAGER_API_BASE as string
 const isDevEnabled = Boolean(JSON.parse(process.env.AZURO_UNSTABLE_DEV_ENABLED || 'false'))
 const defaultChainId = Number(process.env.NEXT_PUBLIC_DEFAULT_CHAIN_ID)
 
@@ -68,6 +69,7 @@ const localStorageKeys = {
 
 export default {
   baseUrl,
+  bscMarketManagerApiBase,
   defaultChain: [ gnosis, polygon, polygonAmoy, chiliz, spicy, base, baseSepolia, bsc, bscTestnet ].find(chain => chain.id === defaultChainId) || (isDevEnabled ? bscTestnet : polygon),
   companyName,
   rpcByChains,

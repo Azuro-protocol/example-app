@@ -17,6 +17,9 @@ const nextConfig = {
     config.externals.push('pino-pretty', 'lokijs', 'encoding')
 
     config.plugins.push(
+      // wagmi's Tempo connectors optionally import the "accounts" package and
+      // handle its absence at runtime; without this webpack fails the build
+      new webpack.IgnorePlugin({ resourceRegExp: /^accounts$/ }),
       new webpack.DefinePlugin({
         '__CLIENT__': !isServer,
         '__SERVER__': isServer,

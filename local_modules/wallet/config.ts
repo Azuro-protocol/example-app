@@ -14,9 +14,9 @@ export const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_ID as string
 // Replace this with your Privy config
 export const privyConfig: PrivyConfig = {
   embeddedWallets: {
-    createOnLogin: 'users-without-wallets',
-    requireUserPasswordOnCreate: false,
-    // waitForTransactionConfirmation: false,
+    ethereum: {
+      createOnLogin: 'users-without-wallets',
+    },
     showWalletUIs: false,
   },
   loginMethods: [ 'email', 'google', 'twitter', 'wallet', 'farcaster', 'discord', 'instagram' ],

@@ -72,8 +72,8 @@ const Content: React.FC<ContentProps> = ({ openSettings }) => {
   const { betToken } = useChain()
   const { items, clear } = useBaseBetslip()
   const {
-    odds, states, minBet, maxBet, disableReason, betAmount, selectedFreebet,
-    isOddsFetching, isStatesFetching,
+    odds, states, outcomeStates, minBet, maxBet, disableReason, betAmount, selectedFreebet,
+    isOddsFetching, isStatesFetching, isOutcomeStatesFetching,
   } = useDetailedBetslip()
   const { data, isLoading: isBalanceFetching } = useBetTokenBalance()
 
@@ -143,8 +143,9 @@ const Content: React.FC<ContentProps> = ({ openSettings }) => {
                 item={item}
                 // batchBetAmount={batchBetAmounts[`${conditionId}-${outcomeId}`]}
                 state={states[conditionId]}
+                outcomeState={outcomeStates[`${conditionId}-${outcomeId}`]}
                 odds={odds?.[`${conditionId}-${outcomeId}`]}
-                isStatesFetching={isStatesFetching}
+                isStatesFetching={isStatesFetching || isOutcomeStatesFetching}
                 isOddsFetching={isOddsFetching}
                 // isBatch={isBatch}
                 // onBatchAmountChange={(value) => changeBatchBetAmount(item, value)}

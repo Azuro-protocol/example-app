@@ -2,7 +2,7 @@
 
 import React, { useRef } from 'react'
 import { useBaseBetslip, useChain, useGameState } from '@azuro-org/sdk'
-import { ConditionState, GameState } from '@azuro-org/toolkit'
+import { ConditionState, GameState, OutcomeState } from '@azuro-org/toolkit'
 import cx from 'classnames'
 
 import useOddsChange from 'src/hooks/useOddsChange'
@@ -17,6 +17,7 @@ type ItemProps = {
   item: AzuroSDK.BetslipItem
   // batchBetAmount: string
   state: ConditionState
+  outcomeState: OutcomeState | undefined
   odds: number
   isStatesFetching: boolean
   isOddsFetching: boolean
@@ -25,7 +26,7 @@ type ItemProps = {
 }
 
 const Card: React.FC<ItemProps> = (props) => {
-  const { item, odds, state, isOddsFetching, isStatesFetching } = props
+  const { item, odds, state, outcomeState, isOddsFetching, isStatesFetching } = props
   const { marketName, selectionName, game } = item
   const {
     gameId,
@@ -55,7 +56,10 @@ const Card: React.FC<ItemProps> = (props) => {
     oddsRef.current = odds
   }
 
-  const isDisabled = !isStatesFetching && state !== ConditionState.Active
+  const isDisabled = !isStatesFetching && (
+    state !== ConditionState.Active
+    || (Boolean(outcomeState) && outcomeState !== OutcomeState.Active)
+  )
   const isLive = gameState === GameState.Live
   const isUnique = sportSlug === 'unique'
 

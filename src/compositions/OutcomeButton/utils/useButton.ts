@@ -1,5 +1,5 @@
 import { useBaseBetslip, useSelectionOdds } from '@azuro-org/sdk'
-import { type GameData, type MarketOutcome } from '@azuro-org/toolkit'
+import { OutcomeState, type GameData, type MarketOutcome } from '@azuro-org/toolkit'
 import { type MutableRefObject } from 'react'
 
 import useOddsChange from 'src/hooks/useOddsChange'
@@ -34,14 +34,20 @@ const useButton = (props: UseButtonProps) => {
   const onClick = () => {
     if (isActive) {
       removeItem(outcome)
+
+      return
     }
-    else {
-      addItem({
-        marketName,
-        game,
-        ...outcome,
-      })
+
+    // static fallback guard; the parent's live isLocked -> disabled button is the primary gate for live transitions
+    if (outcome.hidden || outcome.state !== OutcomeState.Active) {
+      return
     }
+
+    addItem({
+      marketName,
+      game,
+      ...outcome,
+    })
   }
 
   return {

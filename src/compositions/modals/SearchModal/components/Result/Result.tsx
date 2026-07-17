@@ -20,7 +20,7 @@ const Result: React.FC<ResultProps> = ({ field }) => {
   const debouncedValue = useDebounce(value?.trim(), 300)
 
   const { data, isFetching } = useSearchGames({
-    input: value
+    input: value,
   })
 
   const sports = useMemo(() => {
@@ -29,7 +29,7 @@ const Result: React.FC<ResultProps> = ({ field }) => {
     }
 
     return formatGamesIntoSports(data.games)
-  }, [data?.games])
+  }, [ data?.games ])
 
   if (!debouncedValue || debouncedValue?.length < 3) {
     return null

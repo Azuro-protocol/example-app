@@ -50,7 +50,7 @@ type LeagueProps = {
 const League: React.FC<LeagueProps> = ({ sportSlug, league, isPage = false }) => {
   const { slug, name, countryName, countrySlug, games } = league
 
-  const [ref, entry] = useEntry({
+  const [ ref, entry ] = useEntry({
     once: isPage,
     observerProps: {
       rootMargin: '100% 0px',

@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react'
-import {
-  getBetStatus, type GraphBetStatus, type GameData, BetStatus as TBetStatus, BetOrderState,
-} from '@azuro-org/toolkit'
+import { getBetStatus, BetStatus as TBetStatus } from '@azuro-org/toolkit'
+import type { BetOrderState, GraphBetStatus, GameData } from '@azuro-org/toolkit'
 import { type IntlMessage, Message } from '@locmod/intl'
 import cx from 'classnames'
 
@@ -69,7 +68,7 @@ const BetStatus: React.FC<BetStatusProps> = ({ graphBetStatus, orderState, games
       orderState,
       games: games!,
     })
-  }, [graphBetStatus, orderState, games])
+  }, [ graphBetStatus, orderState, games ])
 
   let { icon, title, color } = statusData[betStatus]
 

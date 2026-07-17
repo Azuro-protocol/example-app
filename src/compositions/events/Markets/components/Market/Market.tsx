@@ -2,10 +2,57 @@
 
 import React from 'react'
 import cx from 'classnames'
-import { ConditionState, type GameData, type Market as TMarket } from '@azuro-org/toolkit'
+import { ConditionState, OutcomeState, type GameData, type Market as TMarket } from '@azuro-org/toolkit'
+import { useOutcomesState } from '@azuro-org/sdk'
 
 import OutcomeButton from 'compositions/OutcomeButton/OutcomeButton'
 
+
+type ConditionButtonsProps = {
+  marketName: string
+  condition: TMarket['conditions'][0]
+  game: GameData
+  conditionStates: Record<string, ConditionState>
+}
+
+const ConditionButtons: React.FC<ConditionButtonsProps> = ({ marketName, condition, game, conditionStates }) => {
+  const { conditionId, outcomes } = condition
+  const { outcomesMap } = useOutcomesState({ outcomes })
+
+  const isConditionLocked = conditionStates[conditionId] !== ConditionState.Active
+
+  // individually hidden outcomes are not rendered
+  const visibleOutcomes = outcomes.filter((outcome) => {
+    const outcomeState = outcomesMap[`${conditionId}-${outcome.outcomeId}`]
+
+    return !(outcomeState?.hidden ?? outcome.hidden)
+  })
+
+  if (!visibleOutcomes.length) {
+    return null
+  }
+
+  return (
+    <div className={cx('grid gap-x-2 gap-y-3 w-full mt-2 first-of-type:mt-0', visibleOutcomes?.length === 3 ? 'grid-cols-3' : 'grid-cols-2')}>
+      {
+        visibleOutcomes.map((outcome) => {
+          const outcomeState = outcomesMap[`${conditionId}-${outcome.outcomeId}`]
+          const isLocked = isConditionLocked || (outcomeState?.state ?? outcome.state) !== OutcomeState.Active
+
+          return (
+            <OutcomeButton
+              key={`${outcome.conditionId}-${outcome.outcomeId}`}
+              marketName={marketName}
+              outcome={outcome}
+              game={game}
+              isLocked={isLocked}
+            />
+          )
+        })
+      }
+    </div>
+  )
+}
 
 type ButtonsProps = {
   marketName: string
@@ -18,20 +65,14 @@ const Buttons: React.FC<ButtonsProps> = ({ marketName, conditions, game, conditi
   return (
     <div className="w-full">
       {
-        conditions.map(({ conditionId, outcomes }, index) => (
-          <div key={index} className={cx('grid gap-x-2 gap-y-3 w-full mt-2 first-of-type:mt-0', outcomes?.length === 3 ? 'grid-cols-3' : 'grid-cols-2')}>
-            {
-              outcomes.map(outcome => (
-                <OutcomeButton
-                  key={`${outcome.conditionId}-${outcome.outcomeId}`}
-                  marketName={marketName}
-                  outcome={outcome}
-                  game={game}
-                  isLocked={conditionStates[conditionId] !== ConditionState.Active}
-                />
-              ))
-            }
-          </div>
+        conditions.map((condition) => (
+          <ConditionButtons
+            key={condition.conditionId}
+            marketName={marketName}
+            condition={condition}
+            game={game}
+            conditionStates={conditionStates}
+          />
         ))
       }
     </div>

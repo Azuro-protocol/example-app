@@ -9,6 +9,7 @@ import EmptyContent from 'compositions/events/EmptyContent/EmptyContent'
 import Navbar from 'compositions/events/Navbar/Navbar'
 import FilteredLeagues from 'compositions/events/FilteredLeagues/FilteredLeagues'
 import UniqueEvents from 'compositions/events/UniqueEvents/UniqueEvents'
+import HotComboTips from 'compositions/events/HotComboTips/HotComboTips'
 
 
 const Sports: React.FC = () => {
@@ -57,6 +58,7 @@ export default function TopPage() {
       <Navbar>
         <Sports />
       </Navbar>
+      <HotComboTips />
     </>
   )
 }

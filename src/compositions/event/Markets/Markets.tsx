@@ -2,10 +2,10 @@
 
 import React, { useEffect, useMemo, useState } from 'react'
 import { XMasonry, XBlock } from 'react-xmasonry'
-import { GameState, getIsPendingResolution, groupConditionsByMarket } from '@azuro-org/toolkit'
+import { GameState, getIsPendingResolution, groupConditionsByMarket, OutcomeState } from '@azuro-org/toolkit'
 import { type GameData, type GameMarkets, type Market } from '@azuro-org/toolkit'
 import {
-  useActiveConditions, useBetsSummaryBySelection, useConditionsState, useConditionState, useResolvedMarkets,
+  useActiveConditions, useBetsSummaryBySelection, useConditionsState, useConditionState, useOutcomesState, useResolvedMarkets,
 } from '@azuro-org/sdk'
 import { useAccount } from '@azuro-org/sdk-social-aa-connector'
 import dayjs from 'dayjs'
@@ -67,11 +67,24 @@ const Condition: React.FC<ConditionProps> = (props) => {
     initialState,
   })
 
+  const { outcomesMap } = useOutcomesState({ outcomes })
+
+  // individually hidden outcomes are not rendered (results are never filtered)
+  const visibleOutcomes = isResult ? outcomes : outcomes.filter((outcome) => {
+    const outcomeState = outcomesMap[`${conditionId}-${outcome.outcomeId}`]
+
+    return !outcomeState?.hidden || !outcome.hidden
+  })
+
+  if (!visibleOutcomes.length) {
+    return null
+  }
+
   return (
     <div className="flex justify-between">
       <div className="flex gap-2 w-full">
         {
-          outcomes.map((outcome) => {
+          visibleOutcomes.map((outcome) => {
             const key = outcome.outcomeId
 
             if (isResult) {
@@ -86,13 +99,16 @@ const Condition: React.FC<ConditionProps> = (props) => {
               )
             }
 
+            const outcomeState = outcomesMap[`${conditionId}-${outcome.outcomeId}`]
+            const isOutcomeLocked = isLocked || (outcomeState?.state ?? outcome.state) !== OutcomeState.Active
+
             return (
               <OutcomeButton
                 key={key}
                 marketName={marketName}
                 outcome={outcome}
                 game={game}
-                isLocked={isLocked}
+                isLocked={isOutcomeLocked}
                 size={40}
               />
             )
@@ -253,7 +269,7 @@ const ActiveMarkets: React.FC<MarketsProps> = ({ game, gameState }) => {
     const filteredConditions = conditions.filter(condition => !conditionsMap?.[condition.conditionId]?.hidden)
 
     return groupConditionsByMarket(filteredConditions)
-  }, [conditions, conditionsMap])
+  }, [ conditions, conditionsMap ])
 
   const isLive = gameState === GameState.Live
 

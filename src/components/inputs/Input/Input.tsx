@@ -66,7 +66,7 @@ const Input: React.FC<InputProps> = (props) => {
         autoFocus={autoFocus}
         value={value}
         onChange={handleInputChange}
-        placeholder={typeof placeholder === 'string' ? placeholder : intl.formatMessage(placeholder)}
+        placeholder={typeof placeholder === 'string' || !placeholder ? placeholder : intl.formatMessage(placeholder)}
       />
       {
         Boolean(rightNode) && (

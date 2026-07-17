@@ -1,6 +1,6 @@
 'use client'
 
-import { Message } from '@locmod/intl'
+import { Message, type IntlMessage } from '@locmod/intl'
 import { useEffect, useMemo } from 'react'
 import { useWallet } from 'wallet'
 
@@ -56,7 +56,7 @@ const DepositView: React.FC<DepositViewProps> = (props) => {
           ChainIcon: () => <Icon className={iconClassName} name={constants.chainIcons[appChain.id]} />,
         },
       },
-    ]
+    ] as IntlMessage[]
   }, [ isAAWallet, appChain, betToken ])
 
   // const handleExchangeClick = () => {

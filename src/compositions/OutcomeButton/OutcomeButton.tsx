@@ -6,6 +6,7 @@ import cx from 'classnames'
 
 import { Icon } from 'components/ui'
 import OddsValue from 'compositions/OddsValue/OddsValue'
+import SelectionName from 'compositions/SelectionName/SelectionName'
 
 import useButton from './utils/useButton'
 
@@ -14,34 +15,45 @@ type OutcomeButtonProps = {
   marketName: string
   outcome: MarketOutcome
   game: GameData
-  isLocked: boolean
+  isLocked?: boolean
+  displayHidden?: boolean
   size?: 28 | 40
 }
 
 const OutcomeButton: React.FC<OutcomeButtonProps> = (props) => {
-  const { marketName, outcome, game, isLocked, size = 28 } = props
+  const { marketName, outcome, game, isLocked, displayHidden, size = 28 } = props
   const { selectionName } = outcome
 
   const nodeRef = useRef<HTMLDivElement>(null)
-  const { odds, isActive, onClick } = useButton({ marketName, outcome, game, nodeRef })
+  const { odds, isActive, isLocked: isButtonLocked, isHidden, onClick } = useButton({
+    marketName,
+    outcome,
+    game,
+    nodeRef,
+    conditionLocked: isLocked,
+  })
+
+  if (isHidden && !displayHidden) {
+    return null
+  }
 
   const buttonClassName = cx(
     'group/button w-full relative flex items-center justify-between ds:px-3 mb:px-2 overflow-hidden',
     'text-caption-13 font-semibold border-none rounded-min select-none',
     {
-      'hover:text-brand-50 hover:bg-brand-5': !isLocked && !isActive,
+      'hover:text-brand-50 hover:bg-brand-5': !isButtonLocked && !isActive,
       'text-grey-10 bg-grey-90': isActive,
       'bg-grey-15': !isActive,
-      'text-grey-40 cursor-not-allowed': isLocked,
+      'text-grey-40 cursor-not-allowed': isButtonLocked,
       'h-7': size === 28,
       'h-10': size === 40,
     }
   )
   const titleClassName = cx('text-left whitespace-normal', {
-    'group-hover/button:text-brand-50': !isLocked && !isActive,
+    'group-hover/button:text-brand-50': !isButtonLocked && !isActive,
     'text-grey-10': isActive,
     'text-grey-60': !isActive,
-    'text-grey-40': isLocked,
+    'text-grey-40': isButtonLocked,
   })
   const oddsClassName = cx('group/odds flex items-center')
   const arrowClassName = cx(
@@ -58,23 +70,21 @@ const OutcomeButton: React.FC<OutcomeButtonProps> = (props) => {
   return (
     <button
       className={buttonClassName}
-      disabled={isLocked}
+      disabled={isButtonLocked}
       onClick={onClick}
     >
-      <div className="flex items-center">
+      <div className="flex items-center min-w-0 flex-1">
         {
-          (isLocked) && (
+          (isButtonLocked) && (
             <Icon
-              className="mr-1 size-4 text-grey-40"
+              className="mr-1 size-4 text-grey-40 flex-none"
               name="interface/lock"
             />
           )
         }
-        <div className={titleClassName}>
-          {selectionName}
-        </div>
+        <SelectionName className={titleClassName} selectionName={selectionName} />
       </div>
-      <div ref={nodeRef} className={oddsClassName}>
+      <div ref={nodeRef} className={cx(oddsClassName, 'flex-none')}>
         <Icon className={arrowClassName} name="interface/caret_up" />
         <OddsValue className={valueClassName} odds={odds} />
       </div>

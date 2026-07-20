@@ -1,11 +1,10 @@
 'use client'
 
 import React, { useEffect, useMemo, useState } from 'react'
-import { XMasonry, XBlock } from 'react-xmasonry'
-import { GameState, getIsPendingResolution, groupConditionsByMarket, OutcomeState } from '@azuro-org/toolkit'
-import { type GameData, type GameMarkets, type Market } from '@azuro-org/toolkit'
+import { GameState, getIsPendingResolution, groupConditionsByMarket } from '@azuro-org/toolkit'
+import { type GameData, type GameMarkets } from '@azuro-org/toolkit'
 import {
-  useActiveConditions, useBetsSummaryBySelection, useConditionsState, useConditionState, useOutcomesState, useResolvedMarkets,
+  useActiveConditions, useBetsSummaryBySelection, useConditionsState, useResolvedMarkets,
 } from '@azuro-org/sdk'
 import { useAccount } from '@azuro-org/sdk-social-aa-connector'
 import dayjs from 'dayjs'
@@ -13,13 +12,11 @@ import cx from 'classnames'
 
 import { Tooltip } from 'components/feedback'
 import { Icon } from 'components/ui'
-import OutcomeButton from 'compositions/OutcomeButton/OutcomeButton'
 import EmptyContent from 'compositions/EmptyContent/EmptyContent'
 
-import OutcomeResult from './components/OutcomeResult/OutcomeResult'
+import Condition from './components/Condition/Condition'
 import Headline from './components/Headline/Headline'
 
-import useView from './utils/useView'
 import useCollapse from './utils/useCollapse'
 
 import messages from './messages'
@@ -50,75 +47,6 @@ export const MarketsSkeleton: React.FC = () => {
   )
 }
 
-type ConditionProps = {
-  condition: Market['conditions'][0]
-  marketName: string
-  game: GameData
-  betsSummary?: Record<string, string>
-  isResult?: boolean
-}
-
-const Condition: React.FC<ConditionProps> = (props) => {
-  const { condition, marketName, game, betsSummary, isResult } = props
-  const { conditionId, outcomes, state: initialState } = condition
-
-  const { data: state, isLocked } = useConditionState({
-    conditionId,
-    initialState,
-  })
-
-  const { outcomesMap } = useOutcomesState({ outcomes })
-
-  // individually hidden outcomes are not rendered (results are never filtered)
-  const visibleOutcomes = isResult ? outcomes : outcomes.filter((outcome) => {
-    const outcomeState = outcomesMap[`${conditionId}-${outcome.outcomeId}`]
-
-    return !outcomeState?.hidden || !outcome.hidden
-  })
-
-  if (!visibleOutcomes.length) {
-    return null
-  }
-
-  return (
-    <div className="flex justify-between">
-      <div className="flex gap-2 w-full">
-        {
-          visibleOutcomes.map((outcome) => {
-            const key = outcome.outcomeId
-
-            if (isResult) {
-              return (
-                <OutcomeResult
-                  key={key}
-                  outcome={outcome}
-                  conditionState={state}
-                  summary={betsSummary?.[key]}
-                  size={40}
-                />
-              )
-            }
-
-            const outcomeState = outcomesMap[`${conditionId}-${outcome.outcomeId}`]
-            const isOutcomeLocked = isLocked || (outcomeState?.state ?? outcome.state) !== OutcomeState.Active
-
-            return (
-              <OutcomeButton
-                key={key}
-                marketName={marketName}
-                outcome={outcome}
-                game={game}
-                isLocked={isOutcomeLocked}
-                size={40}
-              />
-            )
-          })
-        }
-      </div>
-    </div>
-  )
-}
-
 type ContentProps = {
   markets: GameMarkets
   game: GameData
@@ -130,83 +58,71 @@ const Content: React.FC<ContentProps> = (props) => {
   const { markets, game, betsSummary, isResult } = props
 
   const { areAllCollapsed, collapsedMarketIds, collapse, collapseAll } = useCollapse(markets)
-  const { activeView, changeView } = useView()
 
   return (
     <>
       <Headline
-        activeView={activeView}
         isCollapsed={areAllCollapsed}
-        onChangeView={changeView}
         onCollapse={collapseAll}
       />
-      <div className="-mx-2">
-        <XMasonry
-          maxColumns={10}
-          targetBlockWidth={478}
-        >
-          {
-            markets.map(({ name, description, conditions, marketKey }) => {
-              const isCollapsed = collapsedMarketIds.includes(marketKey)
+      <div className="space-y-2">
+        {
+          markets.map(({ name, description, conditions, marketKey, category }) => {
+            const isCollapsed = collapsedMarketIds.includes(marketKey)
 
-              return (
-                <XBlock
-                  key={name}
-                  width={activeView === 'columns' ? 1 : 2}
+            return (
+              <div key={marketKey}>
+                <button
+                  className={
+                    cx('flex items-center justify-between p-4 w-full group cursor-pointer', {
+                      'border-b border-b-grey-10': isCollapsed,
+                    })
+                  }
+                  onClick={() => collapse(marketKey)}
                 >
-                  <div className="px-2">
-                    <button
-                      className={
-                        cx('flex items-center justify-between p-4 w-full group cursor-pointer', {
-                          'border-b border-b-grey-10': isCollapsed,
-                        })
-                      }
-                      onClick={() => collapse(marketKey)}
-                    >
-                      <div className="flex items-center">
-                        <div className="text-caption-14 font-semibold">{name}</div>
-                        {
-                          Boolean(description) && (
-                            <Tooltip
-                              text={description}
-                              placement="bottom"
-                              width={400}
-                            >
-                              <div className="w-fit ml-1 cursor-pointer text-grey-60 hover:text-grey-90">
-                                <Icon className="size-4" name="interface/info-circle" />
-                              </div>
-                            </Tooltip>
-                          )
-                        }
-                      </div>
-                      <div className="px-2 bg-grey-10 text-grey-60 group-hover:bg-grey-15 group-hover:text-grey-90 rounded-ssm">
-                        <Icon className="size-4" name={isCollapsed ? 'interface/chevron_down' : 'interface/chevron_up'} />
-                      </div>
-                    </button>
+                  <div className="flex items-center">
+                    <div className="text-caption-14 font-semibold">{name}</div>
                     {
-                      !isCollapsed && (
-                        <div className="space-y-2 bg-bg-l2 rounded-sm p-2">
-                          {
-                            conditions.map((condition, index) => (
-                              <Condition
-                                key={`${index}-${condition.outcomes.length}`}
-                                condition={condition}
-                                marketName={name}
-                                game={game}
-                                betsSummary={betsSummary}
-                                isResult={isResult}
-                              />
-                            ))
-                          }
-                        </div>
+                      Boolean(description) && (
+                        <Tooltip
+                          text={description}
+                          placement="bottom"
+                          width={400}
+                        >
+                          <div className="w-fit ml-1 cursor-pointer text-grey-60 hover:text-grey-90">
+                            <Icon className="size-4" name="interface/info-circle" />
+                          </div>
+                        </Tooltip>
                       )
                     }
                   </div>
-                </XBlock>
-              )
-            })
-          }
-        </XMasonry>
+                  <div className="px-2 bg-grey-10 text-grey-60 group-hover:bg-grey-15 group-hover:text-grey-90 rounded-ssm">
+                    <Icon className="size-4" name={isCollapsed ? 'interface/chevron_down' : 'interface/chevron_up'} />
+                  </div>
+                </button>
+                {
+                  !isCollapsed && (
+                    <div className="space-y-2 bg-bg-l2 rounded-sm p-2">
+                      {
+                        conditions.map((condition) => (
+                          <Condition
+                            key={condition.conditionId}
+                            condition={condition}
+                            category={category}
+                            marketName={name}
+                            game={game}
+                            betsSummary={betsSummary}
+                            isResult={isResult}
+                          />
+                        ))
+                      }
+                    </div>
+                  )
+                }
+              </div>
+            )
+          })
+        }
       </div>
     </>
   )

@@ -21,25 +21,40 @@ export type MarketsByKey = Record<string, TMarket>
 type HeadMarketProps = {
   conditionIndex: number
   isOpen: boolean
+  otherMarketsCount: number
+  onExpand: () => void
 } & MarketProps
 
-const HeadMarket: React.FC<HeadMarketProps> = ({ market, game, conditionIndex, conditionStates, isOpen }) => {
+const HeadMarket: React.FC<HeadMarketProps> = ({ market, game, conditionIndex, conditionStates, isOpen, otherMarketsCount, onExpand }) => {
   const { conditions } = market
+
+  const activeCondition = conditions[conditionIndex]
+  const visibleOutcomes = !isOpen && activeCondition.outcomes.length > 3
+    ? activeCondition.outcomes.slice(0, 3)
+    : activeCondition.outcomes
 
   const headMarket: TMarket = {
     ...market,
     conditions: isOpen ? conditions : [
-      conditions[conditionIndex].outcomes.length > 3 ? ({
-        ...conditions[conditionIndex],
-        outcomes: conditions[conditionIndex].outcomes.slice(0, 2),
-      }) : (
-        conditions[conditionIndex]
-      ),
+      {
+        ...activeCondition,
+        outcomes: visibleOutcomes,
+      },
     ],
   }
 
+  const nonHiddenCount = activeCondition.outcomes.filter((outcome) => !outcome.hidden).length
+  const shownCount = visibleOutcomes.filter((outcome) => !outcome.hidden).length
+  const overflowCount = nonHiddenCount - shownCount
+  const expandCount = otherMarketsCount || Math.max(0, overflowCount)
+
   return (
-    <Market market={headMarket} game={game} conditionStates={conditionStates} />
+    <Market
+      market={headMarket}
+      game={game}
+      conditionStates={conditionStates}
+      {...(!isOpen && { expandCount, onExpand })}
+    />
   )
 }
 
@@ -149,6 +164,8 @@ const Content: React.FC<ContentProps> = ({ markets, game }) => {
                 game={game}
                 isOpen={isOpen}
                 conditionStates={states}
+                otherMarketsCount={otherMarkets.length}
+                onExpand={() => setOpen(true)}
               />
             )
           }

@@ -2,9 +2,9 @@
 
 import React from 'react'
 import cx from 'classnames'
-import { ConditionState, OutcomeState, type GameData, type Market as TMarket } from '@azuro-org/toolkit'
-import { useOutcomesState } from '@azuro-org/sdk'
+import { ConditionState, type GameData, type Market as TMarket } from '@azuro-org/toolkit'
 
+import { Icon } from 'components/ui'
 import OutcomeButton from 'compositions/OutcomeButton/OutcomeButton'
 
 
@@ -17,38 +17,22 @@ type ConditionButtonsProps = {
 
 const ConditionButtons: React.FC<ConditionButtonsProps> = ({ marketName, condition, game, conditionStates }) => {
   const { conditionId, outcomes } = condition
-  const { outcomesMap } = useOutcomesState({ outcomes })
 
   const isConditionLocked = conditionStates[conditionId] !== ConditionState.Active
 
-  // individually hidden outcomes are not rendered
-  const visibleOutcomes = outcomes.filter((outcome) => {
-    const outcomeState = outcomesMap[`${conditionId}-${outcome.outcomeId}`]
-
-    return !(outcomeState?.hidden ?? outcome.hidden)
-  })
-
-  if (!visibleOutcomes.length) {
-    return null
-  }
-
   return (
-    <div className={cx('grid gap-x-2 gap-y-3 w-full mt-2 first-of-type:mt-0', visibleOutcomes?.length === 3 ? 'grid-cols-3' : 'grid-cols-2')}>
+    <div className={cx('grid gap-x-2 gap-y-3 w-full mt-2 first-of-type:mt-0', outcomes.length === 3 ? 'grid-cols-3' : 'grid-cols-2')}>
       {
-        visibleOutcomes.map((outcome) => {
-          const outcomeState = outcomesMap[`${conditionId}-${outcome.outcomeId}`]
-          const isLocked = isConditionLocked || (outcomeState?.state ?? outcome.state) !== OutcomeState.Active
-
-          return (
-            <OutcomeButton
-              key={`${outcome.conditionId}-${outcome.outcomeId}`}
-              marketName={marketName}
-              outcome={outcome}
-              game={game}
-              isLocked={isLocked}
-            />
-          )
-        })
+        outcomes.map((outcome) => (
+          <OutcomeButton
+            key={`${outcome.conditionId}-${outcome.outcomeId}`}
+            marketName={marketName}
+            outcome={outcome}
+            game={game}
+            isLocked={isConditionLocked}
+            displayHidden
+          />
+        ))
       }
     </div>
   )
@@ -95,16 +79,34 @@ export type MarketProps = {
   market: TMarket
   game: GameData
   conditionStates: Record<string, ConditionState>
+  expandCount?: number
+  onExpand?: () => void
 }
 
-const Market: React.FC<MarketProps> = ({ market, game, conditionStates }) => {
+const Market: React.FC<MarketProps> = ({ market, game, conditionStates, expandCount, onExpand }) => {
   const { name, conditions } = market
 
   return (
     <div className="w-full mt-2 first-of-type:mt-0">
-      <div className="mb-[0.375rem] mt-auto text-caption-12 font-medium text-grey-60 ds:text-center">
-        {name}
-      </div>
+      {
+        expandCount && onExpand ? (
+          <div className="mb-[0.375rem] mt-auto grid grid-cols-[1fr_auto_1fr] items-center text-caption-12 font-medium text-grey-60">
+            <span />
+            <span className="truncate text-center">{name}</span>
+            <button
+              className="ml-auto flex items-center h-5 pl-2 pr-1 rounded-min border border-grey-20 text-caption-12 text-grey-60 hover:text-grey-90 whitespace-nowrap"
+              onClick={onExpand}
+            >
+              +{expandCount}
+              <Icon name="interface/chevron_right" className="size-4" />
+            </button>
+          </div>
+        ) : (
+          <div className="mb-[0.375rem] mt-auto text-caption-12 font-medium text-grey-60 ds:text-center">
+            {name}
+          </div>
+        )
+      }
       <Buttons
         marketName={name}
         conditions={conditions}

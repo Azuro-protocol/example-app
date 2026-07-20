@@ -5,8 +5,8 @@ import Glide from '@glidejs/glide'
 import React, { useEffect, useRef } from 'react'
 import { Message } from '@locmod/intl'
 import { useParams } from 'next/navigation'
-import { useActiveMarket, useActiveMarkets, useGames, useOutcomesState } from '@azuro-org/sdk'
-import { ConditionState, GameOrderBy, OutcomeState, type GameMarkets, type GameData } from '@azuro-org/toolkit'
+import { useActiveMarket, useActiveMarkets, useGames } from '@azuro-org/sdk'
+import { ConditionState, GameOrderBy, type GameMarkets, type GameData } from '@azuro-org/toolkit'
 import cx from 'classnames'
 import { getGameDateTime } from 'helpers/getters'
 
@@ -37,38 +37,21 @@ const Condition: React.FC<ConditionProps> = ({ markets, game }) => {
   const { name, conditions } = marketsByKey[activeMarketKey!]
   const { conditionId, outcomes } = conditions[0]
 
-  const { outcomesMap } = useOutcomesState({ outcomes })
-
   const isConditionLocked = states[conditionId] !== ConditionState.Active
-
-  // individually hidden outcomes are not rendered
-  const visibleOutcomes = outcomes.filter((outcome) => {
-    const outcomeState = outcomesMap[`${conditionId}-${outcome.outcomeId}`]
-
-    return !outcomeState?.hidden || !outcome.hidden
-  })
-
-  if (!visibleOutcomes.length) {
-    return null
-  }
 
   return (
     <>
       {
-        visibleOutcomes.map((outcome) => {
-          const outcomeState = outcomesMap[`${conditionId}-${outcome.outcomeId}`]
-          const isLocked = isConditionLocked || (outcomeState?.state ?? outcome.state) !== OutcomeState.Active
-
-          return (
-            <OutcomeButton
-              key={outcome.outcomeId}
-              marketName={name}
-              outcome={outcome}
-              game={game}
-              isLocked={isLocked}
-            />
-          )
-        })
+        outcomes.map((outcome) => (
+          <OutcomeButton
+            key={outcome.outcomeId}
+            marketName={name}
+            outcome={outcome}
+            game={game}
+            isLocked={isConditionLocked}
+            displayHidden
+          />
+        ))
       }
     </>
   )

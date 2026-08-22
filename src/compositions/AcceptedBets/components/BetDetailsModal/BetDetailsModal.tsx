@@ -17,6 +17,7 @@ import { Href } from 'components/navigation'
 import { OpponentLogo } from 'components/dataDisplay'
 import OddsValue from 'compositions/OddsValue/OddsValue'
 import BetStatus from 'compositions/BetStatus/BetStatus'
+import BetOutcomeStatus, { getBetOutcomeState } from 'compositions/BetOutcomeStatus/BetOutcomeStatus'
 
 import messages from './messages'
 
@@ -28,7 +29,7 @@ type OutcomeProps = {
 }
 
 const Outcome: React.FC<OutcomeProps> = ({ outcome, isCombo, onLinkClick }) => {
-  const { game, marketName, selectionName, odds, isWin, isLose } = outcome
+  const { game, marketName, selectionName, odds } = outcome
   const {
     title,
     state: gameState, gameId, participants, startsAt,
@@ -43,6 +44,9 @@ const Outcome: React.FC<OutcomeProps> = ({ outcome, isCombo, onLinkClick }) => {
 
   const { date, time } = getGameDateTime(+startsAt * 1000)
   const isUnique = sportSlug === 'unique'
+  // per-leg settlement, not the game's state: a leg can be voided while its game is still running
+  const outcomeState = getBetOutcomeState(outcome)
+  const withResult = outcomeState !== 'pending'
 
   return (
     <div className="rounded-md overflow-hidden">
@@ -67,29 +71,22 @@ const Outcome: React.FC<OutcomeProps> = ({ outcome, isCombo, onLinkClick }) => {
                     isCombo && (
                       <>
                         {
-                          [ GameState.Live, GameState.Finished ].includes(gameState) && (
-                            <div className="size-1 flex-none bg-grey-40 rounded-full mx-2" />
+                          gameState === GameState.Stopped && (
+                            <>
+                              <div className="size-1 flex-none bg-grey-40 rounded-full mx-2" />
+                              <div className="flex items-center text-grey-60">
+                                <Icon className="size-4 mr-[2px]" name="interface/declined" />
+                                <Message className="font-semibold" value={messages.gameState.stopped} />
+                              </div>
+                            </>
                           )
                         }
-                        {/* {
-                      gameState === GameState.Stopped && (
-                        <div className="flex items-center text-accent-yellow">
-                          <Icon className="size-4 mr-[2px]" name="interface/declined" />
-                          <Message className="font-semibold" value={messages.gameState.declined} />
-                        </div>
-                      )
-                    } */}
                         {
-                          gameState === GameState.Finished && (
-                            <Message
-                              className={
-                                cx('font-semibold', {
-                                  'text-accent-green': isWin,
-                                  'text-accent-red': isLose,
-                                })
-                              }
-                              value={isWin ? messages.gameState.win : messages.gameState.lose}
-                            />
+                          withResult && (
+                            <>
+                              <div className="size-1 flex-none bg-grey-40 rounded-full mx-2" />
+                              <BetOutcomeStatus state={outcomeState} />
+                            </>
                           )
                         }
                       </>
@@ -115,9 +112,10 @@ const Outcome: React.FC<OutcomeProps> = ({ outcome, isCombo, onLinkClick }) => {
       <div
         className={
           cx('p-3 mt-px space-y-1.5', {
-            'bg-bet-game-won': isWin,
-            'bg-bet-game-lost': isLose,
-            'bg-bg-l2': !isWin && !isLose,
+            'bg-bet-game-won': outcomeState === 'won',
+            'bg-bet-game-lost': outcomeState === 'lost',
+            // a refunded leg returns the stake, so it stays neutral rather than reading as lost
+            'bg-bg-l2': outcomeState === 'refunded' || outcomeState === 'pending',
           })
         }
       >

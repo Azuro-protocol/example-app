@@ -17,6 +17,7 @@ import { OpponentLogo } from 'components/dataDisplay'
 import { Href } from 'components/navigation'
 import { Button } from 'components/inputs'
 import BetStatus from 'compositions/BetStatus/BetStatus'
+import BetOutcomeStatus, { getBetOutcomeState } from 'compositions/BetOutcomeStatus/BetOutcomeStatus'
 import EmptyContent from 'compositions/EmptyContent/EmptyContent'
 import OddsValue from 'compositions/OddsValue/OddsValue'
 
@@ -33,7 +34,7 @@ type OutcomeProps = {
 }
 
 const Outcome: React.FC<OutcomeProps> = ({ outcome, isCombo }) => {
-  const { odds, marketName, game, selectionName, isWin, isLose, isLive } = outcome
+  const { odds, marketName, game, selectionName, isLive } = outcome
 
   const {
     title,
@@ -55,7 +56,9 @@ const Outcome: React.FC<OutcomeProps> = ({ outcome, isCombo }) => {
   const countrySlug = country?.slug
 
   const isUnique = sportSlug === 'unique'
-  const withResult = isWin !== null || isLose !== null
+  // per-leg settlement, not the game's state: a leg can be voided while its game is still running
+  const outcomeState = getBetOutcomeState(outcome)
+  const withResult = outcomeState !== 'pending'
   const { date, time } = getGameDateTime(+(startsAt || 0) * 1000)
 
   const marketBoxClassName = 'text-caption-13 mb:flex mb:items-center mb:justify-between'
@@ -99,9 +102,10 @@ const Outcome: React.FC<OutcomeProps> = ({ outcome, isCombo }) => {
       <div
         className={
           cx('mt-px flex ds:items-center ds:justify-between p-3 mb:px-2 mb:flex-col', {
-            'bg-bet-game-won': isWin,
-            'bg-bet-game-lost': isLose,
-            'bg-bg-l3': !isWin && !isLose,
+            'bg-bet-game-won': outcomeState === 'won',
+            'bg-bet-game-lost': outcomeState === 'lost',
+            // a refunded leg returns the stake, so it stays neutral rather than reading as lost
+            'bg-bg-l3': outcomeState === 'refunded' || outcomeState === 'pending',
           })
         }
       >
@@ -142,18 +146,10 @@ const Outcome: React.FC<OutcomeProps> = ({ outcome, isCombo }) => {
                           )
                         }
                         {
-                          Boolean(gameState === GameState.Finished && withResult) && (
+                          withResult && (
                             <>
                               <div className="size-1 flex-none bg-grey-40 rounded-full mx-2" />
-                              <Message
-                                className={
-                                  cx('font-semibold', {
-                                    'text-accent-green': isWin,
-                                    'text-accent-red': isLose,
-                                  })
-                                }
-                                value={isWin ? messages.gameState.win : messages.gameState.lose}
-                              />
+                              <BetOutcomeStatus state={outcomeState} />
                             </>
                           )
                         }

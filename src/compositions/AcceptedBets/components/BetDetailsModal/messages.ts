@@ -30,17 +30,8 @@ export default {
     en: 'cash-out',
   },
   gameState: {
-    declined: {
-      en: 'Declined',
-    },
-    win: {
-      en: 'Won',
-    },
-    lose: {
-      en: 'Lost',
-    },
-    live: {
-      en: 'Live\’',
+    stopped: {
+      en: 'Stopped',
     },
   },
 }

@@ -51,12 +51,6 @@ export default {
     stopped: {
       en: 'Stopped',
     },
-    win: {
-      en: 'Won',
-    },
-    lose: {
-      en: 'Lost',
-    },
     live: {
       en: 'Live\’',
     },

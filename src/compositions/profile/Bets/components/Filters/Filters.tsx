@@ -42,26 +42,28 @@ const DateRangeFilter: React.FC<DateRangeFilterProps> = ({ range, onChange }) =>
       buttonClassName="flex items-center text-grey-60 hover:text-grey-90 ui-open:text-grey-90"
       placement="bottomRight"
       content={
-        <div className="flex flex-col bg-bg-l3 p-2 rounded-md border border-grey-20 w-40">
-          {
-            dateRangeOptions.map(({ preset, title }) => {
-              const isActive = preset === range
+        (
+          <div className="flex flex-col bg-bg-l3 p-2 rounded-md border border-grey-20 w-40">
+            {
+              dateRangeOptions.map(({ preset, title }) => {
+                const isActive = preset === range
 
-              const className = cx('flex items-center p-1 cursor-pointer w-full text-left', {
-                'text-grey-60 hover:text-grey-90': !isActive,
-                'text-grey-90': isActive,
+                const className = cx('flex items-center p-1 cursor-pointer w-full text-left', {
+                  'text-grey-60 hover:text-grey-90': !isActive,
+                  'text-grey-90': isActive,
+                })
+
+                return (
+                  <Menu.Item key={preset}>
+                    <button className={className} onClick={() => onChange(preset)}>
+                      <Message className="text-caption-13 font-semibold" value={title} />
+                    </button>
+                  </Menu.Item>
+                )
               })
-
-              return (
-                <Menu.Item key={preset}>
-                  <button className={className} onClick={() => onChange(preset)}>
-                    <Message className="text-caption-13 font-semibold" value={title} />
-                  </button>
-                </Menu.Item>
-              )
-            })
-          }
-        </div>
+            }
+          </div>
+        )
       }
     >
       <div className="flex items-center">
@@ -129,7 +131,12 @@ const Filters: React.FC<FiltersProps> = ({ range, onRangeChange, kind, onKindCha
         <DateRangeFilter range={range} onChange={onRangeChange} />
         {
           hasAdvancedFilters && (
-            <Button title={messages.clear} size={32} style="tertiary" onClick={onClear} />
+            <Button
+              title={messages.clear}
+              size={32}
+              style="tertiary"
+              onClick={onClear}
+            />
           )
         }
       </div>

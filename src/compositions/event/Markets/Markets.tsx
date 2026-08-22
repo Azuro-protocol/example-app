@@ -137,7 +137,9 @@ const GameMarkets: React.FC<MarketsProps> = ({ game, gameState }) => {
 
   // while a game runs, conditions and outcomes flagged `hidden` aren't offered and stay out of the
   // list, but once it's finished they carry a result the bettor is entitled to see
-  const includeHidden = gameState === GameState.Finished
+  // hidden markets stay out of the way while a game runs, but once it's over they're part of the
+  // result - a canceled game is just as over as a finished one, and every outcome is refunded
+  const includeHidden = gameState === GameState.Finished || gameState === GameState.Canceled
 
   const { data: markets = emptyList, isLoading, isPlaceholderData } = useActiveMarkets({
     gameId: game.gameId,

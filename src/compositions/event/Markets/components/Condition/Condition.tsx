@@ -78,10 +78,12 @@ const Condition: React.FC<ConditionProps> = (props) => {
 
   const { data: outcomeStates } = useOutcomesState({ outcomes })
 
-  // pickers exist to compose a bet, so they only make sense while something is still bettable
-  const hasBettableOutcomes = outcomes.some((outcome) => !isOutcomeSettled(outcomeStates[getOutcomeKey(outcome)]))
+  // Pickers exist to compose a bet and render buttons only, so they can't show a result. As soon as
+  // any outcome settles we fall through to the grid below, which switches per cell - that keeps the
+  // still-open outcomes bettable while the settled ones show their result.
+  const hasSettledOutcomes = outcomes.some((outcome) => isOutcomeSettled(outcomeStates[getOutcomeKey(outcome)]))
 
-  if (hasBettableOutcomes && category === 'correct_score') {
+  if (!hasSettledOutcomes && category === 'correct_score') {
     return (
       <CorrectScoreView
         outcomes={outcomes}
@@ -92,7 +94,7 @@ const Condition: React.FC<ConditionProps> = (props) => {
     )
   }
 
-  if (hasBettableOutcomes && (category === 'outright' || category === 'players')) {
+  if (!hasSettledOutcomes && (category === 'outright' || category === 'players')) {
     const storageKey = category === 'players'
       ? constants.localStorageKeys.playersView
       : constants.localStorageKeys.outrightView

@@ -151,7 +151,7 @@ const BetDetailsModal: ModalComponent<BetDetailsModalProps> = (props) => {
 
   const {
     tokenId, createdAt, orderState, status: graphBetStatus, amount, outcomes, freebetId, totalOdds, possibleWin,
-    isWin, isCashedOut,
+    isWin, isCanceled, isCashedOut,
   } = bet
 
   const isFreeBet = Boolean(freebetId)
@@ -192,6 +192,7 @@ const BetDetailsModal: ModalComponent<BetDetailsModalProps> = (props) => {
                   orderState={orderState}
                   games={games}
                   isWin={isWin}
+                  isCanceled={isCanceled}
                   isCashedOut={isCashedOut}
                 />
               )

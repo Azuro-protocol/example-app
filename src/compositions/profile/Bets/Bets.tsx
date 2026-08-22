@@ -287,6 +287,7 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
               orderState={orderState}
               games={games}
               isWin={isWin}
+              isCanceled={isCanceled}
               isCashedOut={isCashedOut}
             />
           )

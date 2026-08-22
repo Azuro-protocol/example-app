@@ -20,7 +20,7 @@ type BetCardProps = {
 const BetCard: React.FC<BetCardProps> = ({ bet }) => {
   const {
     tokenId, createdAt, status: graphBetStatus, amount, outcomes, freebetId,
-    isWin, isCashedOut, orderState,
+    isWin, isCanceled, isCashedOut, orderState,
   } = bet
 
   const { betToken } = useChain()
@@ -48,6 +48,7 @@ const BetCard: React.FC<BetCardProps> = ({ bet }) => {
               orderState={orderState}
               games={games}
               isWin={isWin}
+              isCanceled={isCanceled}
               isCashedOut={isCashedOut}
             />
           )

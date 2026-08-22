@@ -58,10 +58,11 @@ type BetStatusProps = {
   orderState: BetOrderState
   games: GameData[]
   isWin: boolean | null
+  isCanceled: boolean
   isCashedOut: boolean
 }
 
-const BetStatus: React.FC<BetStatusProps> = ({ graphBetStatus, orderState, games, isWin, isCashedOut }) => {
+const BetStatus: React.FC<BetStatusProps> = ({ graphBetStatus, orderState, games, isWin, isCanceled, isCashedOut }) => {
   const betStatus = useMemo(() => {
     return getBetStatus({
       graphStatus: graphBetStatus,
@@ -77,6 +78,11 @@ const BetStatus: React.FC<BetStatusProps> = ({ graphBetStatus, orderState, games
     icon = 'interface/cash_out'
     title = messages.cashedOut
     color = 'text-accent-purple'
+  }
+  // A bet voided per-outcome keeps `Resolved` on its condition, so `getBetStatus` can't see the
+  // cancellation - without this it would fall through to the "lost" branch below.
+  else if (isCanceled) {
+    ({ icon, title, color } = statusData[TBetStatus.Canceled])
   }
   else if (betStatus === TBetStatus.Resolved) {
     if (isWin) {

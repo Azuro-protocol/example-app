@@ -1,4 +1,4 @@
-import { BetType } from '@azuro-org/sdk'
+import { BetStatusFilter } from '@azuro-org/sdk'
 
 
 export default {
@@ -76,16 +76,16 @@ export default {
     all: {
       en: 'All',
     },
-    [BetType.Unredeemed]: {
+    [BetStatusFilter.Unredeemed]: {
       en: 'Unredeemed',
     },
-    [BetType.Accepted]: {
+    [BetStatusFilter.Accepted]: {
       en: 'Accepted',
     },
-    [BetType.CashedOut]: {
+    [BetStatusFilter.CashedOut]: {
       en: 'Cashed-Out',
     },
-    [BetType.Settled]: {
+    [BetStatusFilter.Settled]: {
       en: 'Settled',
     },
   },

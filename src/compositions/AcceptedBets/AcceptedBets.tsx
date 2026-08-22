@@ -1,6 +1,6 @@
 'use client'
 
-import { BetType, useBets, type UseBetsProps } from '@azuro-org/sdk'
+import { BetStatusFilter, useBets } from '@azuro-org/sdk'
 import { OrderDirection } from '@azuro-org/toolkit'
 import { useAccount } from '@azuro-org/sdk-social-aa-connector'
 import { type Address } from 'viem'
@@ -33,15 +33,14 @@ const EmptyContent: React.FC = () => {
 const AcceptedBets: React.FC = () => {
   const { address } = useAccount()
 
-  const props: UseBetsProps = {
+  const { data, isLoading } = useBets({
     filter: {
       bettor: address!,
-      type: BetType.Accepted,
+      status: BetStatusFilter.Accepted,
       affiliate: process.env.NEXT_PUBLIC_AFFILIATE_ADDRESS as Address,
     },
     itemsPerPage: 500,
-  }
-  const { data, isLoading } = useBets(props)
+  })
 
   if (isLoading) {
     return (

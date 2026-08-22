@@ -1,17 +1,14 @@
 'use client'
 
-import { useChain, useRedeemBet, BetType, type Bet, type BetOutcome, usePrecalculatedCashouts, useBets, useLegacyBets, type UseBetsProps, type UseLegacyBetsProps } from '@azuro-org/sdk'
-import { GameState, OrderDirection } from '@azuro-org/toolkit'
+import { useChain, useRedeemBet, BetStatusFilter, type Bet, type BetOutcome, usePrecalculatedCashouts, useBets, useLegacyBets } from '@azuro-org/sdk'
+import { GameState, OrderDirection, type BetsFilter } from '@azuro-org/toolkit'
 import { Message } from '@locmod/intl'
 import React, { useEffect, useMemo } from 'react'
 import dayjs from 'dayjs'
-import { useSearchParams, useRouter, usePathname } from 'next/navigation'
 import cx from 'classnames'
 import { openModal } from '@locmod/modal'
-import { useAccount } from '@azuro-org/sdk-social-aa-connector'
 import { useEntry } from '@locmod/intersection-observer'
 import { type InfiniteData, type UseInfiniteQueryResult } from '@tanstack/react-query'
-import { type Address } from 'viem'
 import { toLocaleString } from 'helpers'
 import { getGameDateTime } from 'helpers/getters'
 
@@ -24,6 +21,9 @@ import EmptyContent from 'compositions/EmptyContent/EmptyContent'
 import OddsValue from 'compositions/OddsValue/OddsValue'
 
 import ConnectButtonWrapper from 'compositions/ConnectButtonWrapper/ConnectButtonWrapper'
+import useBetsFilters from './utils/useBetsFilters'
+import Filters from './components/Filters/Filters'
+import Report from './components/Report/Report'
 import messages from './messages'
 
 
@@ -198,7 +198,7 @@ type BetProps = {
 const Bet: React.FC<BetProps> = ({ bet }) => {
   const {
     createdAt, status: graphBetStatus, amount, outcomes, orderState,
-    payout, cashout, possibleWin, freebetId, txHash,
+    settledPayout, cashout, possibleWin, freebetId, txHash,
     isWin, isLose, isCanceled, isRedeemed, isCashedOut,
   } = bet
 
@@ -235,7 +235,9 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
     if (isWin) {
       return {
         resultTitle: messages.winning,
-        resultAmount: `${toLocaleString(payout || possibleWin, { digits: 2 })} ${betToken.symbol}`,
+        // `settledPayout` survives redemption, so an already-claimed win still shows what it paid
+        // out rather than falling back to the pre-settlement estimate
+        resultAmount: `${toLocaleString(settledPayout ?? possibleWin, { digits: 2 })} ${betToken.symbol}`,
       }
     }
 
@@ -257,7 +259,7 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
       resultTitle: messages.possibleWin,
       resultAmount: `${toLocaleString(possibleWin, { digits: 2 })} ${betToken.symbol}`,
     }
-  }, [ isCashedOut ])
+  }, [ isCashedOut, cashout, isWin, settledPayout, possibleWin, isLose, amount, isCanceled, betToken.symbol ])
 
   const handleRedeem = async () => {
     try {
@@ -385,25 +387,25 @@ const tabs = [
   },
   {
     title: messages.tabs.unredeemed,
-    value: BetType.Unredeemed,
+    value: BetStatusFilter.Unredeemed,
   },
   {
     title: messages.tabs.accepted,
-    value: BetType.Accepted,
+    value: BetStatusFilter.Accepted,
   },
   {
     title: messages.tabs.cashedOut,
-    value: BetType.CashedOut,
+    value: BetStatusFilter.CashedOut,
   },
   {
     title: messages.tabs.settled,
-    value: BetType.Settled,
+    value: BetStatusFilter.Settled,
   },
 ]
 
 type NavbarProps = {
-  activeType: BetType | undefined
-  onClick: (type: BetType | undefined) => void
+  activeType: BetStatusFilter | undefined
+  onClick: (type: BetStatusFilter | undefined) => void
 }
 
 const Navbar: React.FC<NavbarProps> = ({ activeType, onClick }) => {
@@ -510,22 +512,13 @@ const BetsPages: React.FC<BetsPagesProps> = (props) => {
 }
 
 type ContentProps = {
-  tab: BetType
+  filter: BetsFilter
 }
 
-const Content: React.FC<ContentProps> = ({ tab }) => {
-  const { address } = useAccount()
-  const props: UseBetsProps = {
-    filter: {
-      bettor: address!,
-      type: tab,
-      affiliate: process.env.NEXT_PUBLIC_AFFILIATE_ADDRESS as Address,
-    },
-  }
-
-  const betsQuery = useBets(props)
+const Content: React.FC<ContentProps> = ({ filter }) => {
+  const betsQuery = useBets({ filter })
   const legacyBetsQuery = useLegacyBets({
-    ...props as UseLegacyBetsProps,
+    filter,
     query: {
       enabled: !betsQuery.isFetching && !betsQuery.hasNextPage,
     },
@@ -549,29 +542,23 @@ const Content: React.FC<ContentProps> = ({ tab }) => {
 }
 
 const Bets: React.FC = () => {
-  const searchParams = useSearchParams()
-  const pathname = usePathname()
-  const router = useRouter()
-
-  const tab = searchParams.get('tab') as BetType || undefined
-
-  const handleTabChange = (type: BetType | undefined) => {
-    const params = new URLSearchParams(searchParams.toString())
-
-    if (type) {
-      params.set('tab', type)
-    }
-    else {
-      params.delete('tab')
-    }
-
-    router.replace(pathname + '?' + params)
-  }
+  const {
+    filter, status, setStatus, range, setRange, kind, setKind, hasAdvancedFilters, clearAdvancedFilters,
+  } = useBetsFilters()
 
   return (
     <div className="space-y-3">
-      <Navbar activeType={tab} onClick={(type) => handleTabChange(type)} />
-      <Content tab={tab} />
+      <Navbar activeType={status} onClick={setStatus} />
+      <Filters
+        range={range}
+        onRangeChange={setRange}
+        kind={kind}
+        onKindChange={setKind}
+        hasAdvancedFilters={hasAdvancedFilters}
+        onClear={clearAdvancedFilters}
+      />
+      <Report filter={filter} />
+      <Content filter={filter} />
     </div>
   )
 }

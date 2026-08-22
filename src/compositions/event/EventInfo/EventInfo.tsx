@@ -196,7 +196,7 @@ const EventInfo: React.FC<EventInfoProps> = ({ game, state }) => {
     enabled: Boolean(game),
   })
 
-  const isLive = status === GameState.Live
+  const isLive = state === GameState.Live
 
   return (
     <div className="-mx-2">

@@ -1,11 +1,9 @@
 'use client'
 
-import React, { useEffect, useMemo, useState } from 'react'
-import { GameState, getIsPendingResolution, groupConditionsByMarket } from '@azuro-org/toolkit'
+import React, { useEffect, useState } from 'react'
+import { GameState, getIsPendingResolution } from '@azuro-org/toolkit'
 import { type GameData, type GameMarkets } from '@azuro-org/toolkit'
-import {
-  useActiveConditions, useBetsSummaryBySelection, useConditionsState, useResolvedMarkets,
-} from '@azuro-org/sdk'
+import { useActiveMarkets, useBetsSummaryBySelection } from '@azuro-org/sdk'
 import { useAccount } from '@azuro-org/sdk-social-aa-connector'
 import dayjs from 'dayjs'
 import cx from 'classnames'
@@ -51,11 +49,10 @@ type ContentProps = {
   markets: GameMarkets
   game: GameData
   betsSummary?: Record<string, string>
-  isResult?: boolean
 }
 
 const Content: React.FC<ContentProps> = (props) => {
-  const { markets, game, betsSummary, isResult } = props
+  const { markets, game, betsSummary } = props
 
   const { areAllCollapsed, collapsedMarketIds, collapse, collapseAll } = useCollapse(markets)
 
@@ -112,7 +109,6 @@ const Content: React.FC<ContentProps> = (props) => {
                             marketName={name}
                             game={game}
                             betsSummary={betsSummary}
-                            isResult={isResult}
                           />
                         ))
                       }
@@ -133,59 +129,31 @@ type MarketsProps = {
   gameState: GameState
 }
 
-const ResolvedMarkets: React.FC<MarketsProps> = ({ game, gameState }) => {
-  const { address } = useAccount()
-  const { data: markets, isLoading } = useResolvedMarkets({ gameId: game.gameId, extended: true })
-  const { data: betsSummary } = useBetsSummaryBySelection({
-    account: address!,
-    gameId: game.gameId,
-    gameState,
-  })
-
-  if (isLoading) {
-    return <MarketsSkeleton />
-  }
-
-  if (!markets?.length) {
-    return <div>Empty</div>
-  }
-
-  return (
-    <Content
-      markets={markets}
-      game={game}
-      betsSummary={betsSummary}
-      isResult
-    />
-  )
-}
-
-
 const WAIT_TIME = 600000
-const emptyList = []
+const emptyList: GameMarkets = []
 
-const ActiveMarkets: React.FC<MarketsProps> = ({ game, gameState }) => {
-  const { data: conditions = emptyList, isLoading, isPlaceholderData } = useActiveConditions({
-    gameId: game.id,
+const GameMarkets: React.FC<MarketsProps> = ({ game, gameState }) => {
+  const { address } = useAccount()
+
+  // while a game runs, conditions and outcomes flagged `hidden` aren't offered and stay out of the
+  // list, but once it's finished they carry a result the bettor is entitled to see
+  const includeHidden = gameState === GameState.Finished
+
+  const { data: markets = emptyList, isLoading, isPlaceholderData } = useActiveMarkets({
+    gameId: game.gameId,
     extended: true,
+    includeHidden,
     query: {
       refetchInterval: 10_000,
     },
   })
 
-  const { conditionsMap } = useConditionsState({
-    conditions,
+  // the hook self-gates on a finished game, so it stays idle while the game is running
+  const { data: betsSummary } = useBetsSummaryBySelection({
+    account: address!,
+    gameId: game.gameId,
+    gameState,
   })
-
-  const markets = useMemo(() => {
-    if (!conditions?.length) {
-      return emptyList
-    }
-
-    const filteredConditions = conditions.filter(condition => !conditionsMap?.[condition.conditionId]?.hidden)
-
-    return groupConditionsByMarket(filteredConditions)
-  }, [ conditions, conditionsMap ])
 
   const isLive = gameState === GameState.Live
 
@@ -196,7 +164,7 @@ const ActiveMarkets: React.FC<MarketsProps> = ({ game, gameState }) => {
   )
 
   useEffect(() => {
-    if (shouldWait() && !conditions?.length) {
+    if (shouldWait() && !markets.length) {
       const interval = setInterval(() => {
         const newWaitingTime = Math.max(WAIT_TIME - dayjs().diff(startDate), 0)
 
@@ -210,13 +178,13 @@ const ActiveMarkets: React.FC<MarketsProps> = ({ game, gameState }) => {
         clearInterval(interval)
       }
     }
-  }, [ gameState, conditions ])
+  }, [ gameState, markets ])
 
   if (isLoading || isPlaceholderData) {
     return <MarketsSkeleton />
   }
 
-  if (!conditions?.length) {
+  if (!markets.length) {
     if (isLive) {
       if (waitingTime) {
         const time = dayjs.duration(waitingTime).format('mm:ss')
@@ -251,16 +219,16 @@ const ActiveMarkets: React.FC<MarketsProps> = ({ game, gameState }) => {
   }
 
   return (
-    <Content markets={markets} game={game} />
+    <Content
+      markets={markets}
+      game={game}
+      betsSummary={betsSummary}
+    />
   )
 }
 
 const Markets: React.FC<MarketsProps> = (props) => {
   const { gameState, game } = props
-
-  if (gameState === GameState.Finished) {
-    return <ResolvedMarkets {...props} />
-  }
 
   const isPendingResolution = getIsPendingResolution({ state: gameState, startsAt: game.startsAt })
 
@@ -276,7 +244,7 @@ const Markets: React.FC<MarketsProps> = (props) => {
   }
 
   return (
-    <ActiveMarkets {...props} />
+    <GameMarkets {...props} />
   )
 }
 

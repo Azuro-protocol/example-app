@@ -29,13 +29,11 @@ const OutcomePicker: React.FC<OutcomePickerProps> = (props) => {
   const intl = useIntl()
 
   const filteredOutcomes = useMemo(() => {
-    const visibleOutcomes = outcomes.filter((outcome) => !outcome.hidden)
-
     if (!query) {
-      return visibleOutcomes
+      return outcomes
     }
 
-    return visibleOutcomes.filter((outcome) => (
+    return outcomes.filter((outcome) => (
       outcome.selectionName.toLowerCase().includes(query.toLowerCase())
     ))
   }, [ outcomes, query ])

@@ -1,6 +1,6 @@
 import { useBaseBetslip, useOutcomeState } from '@azuro-org/sdk'
 import { type GameData, type MarketOutcome } from '@azuro-org/toolkit'
-import { type MutableRefObject, useRef } from 'react'
+import { type MutableRefObject } from 'react'
 
 import useOddsChange from 'src/hooks/useOddsChange'
 
@@ -16,7 +16,9 @@ type UseButtonProps = {
 const useButton = (props: UseButtonProps) => {
   const { marketName, outcome, game, nodeRef, conditionLocked } = props
 
-  const { odds, isLocked: isOutcomeLocked, isHidden: liveHidden } = useOutcomeState({
+  // isHidden is latched one way by the hook - the feed suspends and re-prices outcomes constantly,
+  // so taking every value would make buttons flicker in and out under the cursor
+  const { odds, isLocked: isOutcomeLocked, isHidden } = useOutcomeState({
     conditionId: outcome.conditionId,
     outcomeId: outcome.outcomeId,
     initialOdds: outcome.odds,
@@ -26,17 +28,8 @@ const useButton = (props: UseButtonProps) => {
 
   useOddsChange({ odds, nodeRef })
 
-  // don't hide if previously outcome was NOT hidden to avoid flickering
-  const hiddenRef = useRef(outcome.hidden)
-
-  if (liveHidden === false && hiddenRef.current) {
-    hiddenRef.current = false
-  }
-
-  const isHidden = hiddenRef.current
-
   // deliberately excludes isFetching to avoid a lock flash on initial load
-  const isLocked = Boolean(conditionLocked) || isOutcomeLocked || isHidden
+  const isLocked = Boolean(conditionLocked) || isOutcomeLocked || Boolean(isHidden)
 
   const { items, addItem, removeItem } = useBaseBetslip()
 

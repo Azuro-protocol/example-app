@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { isOutcomeSettled, type GameData, type Market, type MarketOutcome, type OutcomeState } from '@azuro-org/toolkit'
-import { useConditionState, useOutcomesState } from '@azuro-org/sdk'
+import { useConditionState } from '@azuro-org/sdk'
 
 import { constants } from 'helpers'
 
@@ -15,7 +15,7 @@ import SearchableMarketView from './components/SearchableMarketView/SearchableMa
 import { getOutcomeGridClassName } from './components/OutcomeGrid/OutcomeGrid'
 
 
-const getOutcomeKey = ({ conditionId, outcomeId }: Pick<MarketOutcome, 'conditionId' | 'outcomeId'>) => (
+export const getOutcomeKey = ({ conditionId, outcomeId }: Pick<MarketOutcome, 'conditionId' | 'outcomeId'>) => (
   `${conditionId}-${outcomeId}`
 )
 
@@ -63,11 +63,13 @@ type ConditionProps = {
   category: Market['category']
   marketName: string
   game: GameData
+  /** live states for every outcome of the market, keyed by `getOutcomeKey` - watched one level up */
+  outcomeStates: Record<string, OutcomeState>
   betsSummary?: Record<string, string>
 }
 
 const Condition: React.FC<ConditionProps> = (props) => {
-  const { condition, category, marketName, game, betsSummary } = props
+  const { condition, category, marketName, game, outcomeStates, betsSummary } = props
   const { conditionId, outcomes, state: initialState } = condition
 
   // the condition state only drives lock/live behaviour now - it no longer decides won/lost/void
@@ -75,8 +77,6 @@ const Condition: React.FC<ConditionProps> = (props) => {
     conditionId,
     initialState,
   })
-
-  const { data: outcomeStates } = useOutcomesState({ outcomes })
 
   // Pickers exist to compose a bet and render buttons only, so they can't show a result. As soon as
   // any outcome settles we fall through to the grid below, which switches per cell - that keeps the

@@ -6,13 +6,10 @@ import { type GameData, type GameMarkets } from '@azuro-org/toolkit'
 import { useActiveMarkets, useBetsSummaryBySelection } from '@azuro-org/sdk'
 import { useAccount } from '@azuro-org/sdk-social-aa-connector'
 import dayjs from 'dayjs'
-import cx from 'classnames'
 
-import { Tooltip } from 'components/feedback'
-import { Icon } from 'components/ui'
 import EmptyContent from 'compositions/EmptyContent/EmptyContent'
 
-import Condition from './components/Condition/Condition'
+import Market from './components/Market/Market'
 import Headline from './components/Headline/Headline'
 
 import useCollapse from './utils/useCollapse'
@@ -48,11 +45,12 @@ export const MarketsSkeleton: React.FC = () => {
 type ContentProps = {
   markets: GameMarkets
   game: GameData
+  isGameOver: boolean
   betsSummary?: Record<string, string>
 }
 
 const Content: React.FC<ContentProps> = (props) => {
-  const { markets, game, betsSummary } = props
+  const { markets, game, isGameOver, betsSummary } = props
 
   const { areAllCollapsed, collapsedMarketIds, collapse, collapseAll } = useCollapse(markets)
 
@@ -64,60 +62,17 @@ const Content: React.FC<ContentProps> = (props) => {
       />
       <div className="space-y-2">
         {
-          markets.map(({ name, description, conditions, marketKey, category }) => {
-            const isCollapsed = collapsedMarketIds.includes(marketKey)
-
-            return (
-              <div key={marketKey}>
-                <button
-                  className={
-                    cx('flex items-center justify-between p-4 w-full group cursor-pointer', {
-                      'border-b border-b-grey-10': isCollapsed,
-                    })
-                  }
-                  onClick={() => collapse(marketKey)}
-                >
-                  <div className="flex items-center">
-                    <div className="text-caption-14 font-semibold">{name}</div>
-                    {
-                      Boolean(description) && (
-                        <Tooltip
-                          text={description}
-                          placement="bottom"
-                          width={400}
-                        >
-                          <div className="w-fit ml-1 cursor-pointer text-grey-60 hover:text-grey-90">
-                            <Icon className="size-4" name="interface/info-circle" />
-                          </div>
-                        </Tooltip>
-                      )
-                    }
-                  </div>
-                  <div className="px-2 bg-grey-10 text-grey-60 group-hover:bg-grey-15 group-hover:text-grey-90 rounded-ssm">
-                    <Icon className="size-4" name={isCollapsed ? 'interface/chevron_down' : 'interface/chevron_up'} />
-                  </div>
-                </button>
-                {
-                  !isCollapsed && (
-                    <div className="space-y-2 bg-bg-l2 rounded-sm p-2">
-                      {
-                        conditions.map((condition) => (
-                          <Condition
-                            key={condition.conditionId}
-                            condition={condition}
-                            category={category}
-                            marketName={name}
-                            game={game}
-                            betsSummary={betsSummary}
-                          />
-                        ))
-                      }
-                    </div>
-                  )
-                }
-              </div>
-            )
-          })
+          markets.map((market) => (
+            <Market
+              key={market.marketKey}
+              market={market}
+              game={game}
+              isGameOver={isGameOver}
+              isCollapsed={collapsedMarketIds.includes(market.marketKey)}
+              betsSummary={betsSummary}
+              onCollapse={collapse}
+            />
+          ))
         }
       </div>
     </>
@@ -137,12 +92,12 @@ const GameMarkets: React.FC<MarketsProps> = ({ game, gameState }) => {
 
   // hidden markets stay out of the way while a game runs, but once it's over they're part of the
   // result - a canceled game is just as over as a finished one, and every outcome is refunded
-  const includeHidden = gameState === GameState.Finished || gameState === GameState.Canceled
+  const isGameOver = gameState === GameState.Finished || gameState === GameState.Canceled
 
   const { data: markets = emptyList, isLoading, isPlaceholderData } = useActiveMarkets({
     gameId: game.gameId,
     extended: true,
-    includeHidden,
+    includeHidden: isGameOver,
     query: {
       refetchInterval: 10_000,
     },
@@ -222,6 +177,7 @@ const GameMarkets: React.FC<MarketsProps> = ({ game, gameState }) => {
     <Content
       markets={markets}
       game={game}
+      isGameOver={isGameOver}
       betsSummary={betsSummary}
     />
   )

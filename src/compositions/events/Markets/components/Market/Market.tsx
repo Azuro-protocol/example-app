@@ -30,7 +30,6 @@ const ConditionButtons: React.FC<ConditionButtonsProps> = ({ marketName, conditi
             outcome={outcome}
             game={game}
             isLocked={isConditionLocked}
-            displayHidden
           />
         ))
       }

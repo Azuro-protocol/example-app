@@ -16,26 +16,21 @@ type OutcomeButtonProps = {
   outcome: MarketOutcome
   game: GameData
   isLocked?: boolean
-  displayHidden?: boolean
   size?: 28 | 40
 }
 
 const OutcomeButton: React.FC<OutcomeButtonProps> = (props) => {
-  const { marketName, outcome, game, isLocked, displayHidden, size = 28 } = props
+  const { marketName, outcome, game, isLocked, size = 28 } = props
   const { selectionName } = outcome
 
   const nodeRef = useRef<HTMLDivElement>(null)
-  const { odds, isActive, isLocked: isButtonLocked, isHidden, onClick } = useButton({
+  const { odds, isActive, isLocked: isButtonLocked, onClick } = useButton({
     marketName,
     outcome,
     game,
     nodeRef,
     conditionLocked: isLocked,
   })
-
-  if (isHidden && !displayHidden) {
-    return null
-  }
 
   const buttonClassName = cx(
     'group/button w-full relative flex items-center justify-between ds:px-3 mb:px-2 overflow-hidden',

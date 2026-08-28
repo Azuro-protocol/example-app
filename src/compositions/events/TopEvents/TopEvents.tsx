@@ -49,7 +49,6 @@ const Condition: React.FC<ConditionProps> = ({ markets, game }) => {
             outcome={outcome}
             game={game}
             isLocked={isConditionLocked}
-            displayHidden
           />
         ))
       }

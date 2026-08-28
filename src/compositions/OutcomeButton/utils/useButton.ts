@@ -16,9 +16,13 @@ type UseButtonProps = {
 const useButton = (props: UseButtonProps) => {
   const { marketName, outcome, game, nodeRef, conditionLocked } = props
 
-  // isHidden is latched one way by the hook - the feed suspends and re-prices outcomes constantly,
-  // so taking every value would make buttons flicker in and out under the cursor
-  const { odds, isLocked: isOutcomeLocked, isHidden } = useOutcomeState({
+  // Whether an outcome is offered at all is decided upstream, by the hook the markets come from,
+  // which weighs the live visibility of every outcome of the game. `isInitiallyHidden` only seeds
+  // that decision's one-way latch here; the button never reads it back. `hidden` on a fetched
+  // record means "the feed hadn't offered this at fetch time", not "don't show this" - and the
+  // record isn't rewritten when the feed later offers it, so re-deriving from it would hide, or
+  // lock, precisely the outcomes that were revealed.
+  const { odds, isLocked: isOutcomeLocked } = useOutcomeState({
     conditionId: outcome.conditionId,
     outcomeId: outcome.outcomeId,
     initialOdds: outcome.odds,
@@ -29,7 +33,7 @@ const useButton = (props: UseButtonProps) => {
   useOddsChange({ odds, nodeRef })
 
   // deliberately excludes isFetching to avoid a lock flash on initial load
-  const isLocked = Boolean(conditionLocked) || isOutcomeLocked || Boolean(isHidden)
+  const isLocked = Boolean(conditionLocked) || isOutcomeLocked
 
   const { items, addItem, removeItem } = useBaseBetslip()
 
@@ -63,7 +67,6 @@ const useButton = (props: UseButtonProps) => {
     odds,
     isActive,
     isLocked,
-    isHidden,
     onClick,
   }
 }

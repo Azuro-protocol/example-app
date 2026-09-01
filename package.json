@@ -17,9 +17,9 @@
   },
   "dependencies": {
     "@azuro-org/dictionaries": "^3.0.28",
-    "@azuro-org/sdk": "7.5.0",
+    "@azuro-org/sdk": "8.0.0",
     "@azuro-org/sdk-social-aa-connector": "^2.0.1",
-    "@azuro-org/toolkit": "6.4.0",
+    "@azuro-org/toolkit": "7.0.0",
     "@floating-ui/react-dom-interactions": "^0.13.3",
     "@glidejs/glide": "^3.6.2",
     "@headlessui/react": "2.2.10",

@@ -121,7 +121,7 @@ const Condition: React.FC<ConditionProps> = (props) => {
             marketName={marketName}
             game={game}
             isConditionLocked={isLocked}
-            summary={betsSummary?.[outcome.outcomeId]}
+            summary={betsSummary?.[getOutcomeKey(outcome)]}
           />
         ))
       }

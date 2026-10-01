@@ -14,6 +14,7 @@ import { constants, toLocaleString } from 'helpers'
 import { Icon } from 'components/ui'
 import { Dropdown } from 'components/inputs'
 
+import { PromoCodeInput } from './components'
 import messages from './messages'
 
 
@@ -176,6 +177,7 @@ const Content: React.FC = () => {
     <div className="border border-grey-20 p-2 ds:w-[18.75rem] bg-bg-l2 rounded-md overflow-hidden space-y-2">
       <ChainSelect />
       <BalanceInfo />
+      <PromoCodeInput />
     </div>
   )
 }

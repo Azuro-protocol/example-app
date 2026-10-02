@@ -5,7 +5,7 @@ import { OrderDirection } from '@azuro-org/toolkit'
 import { useAccount } from '@azuro-org/sdk-social-aa-connector'
 import { type Address } from 'viem'
 import { Message } from '@locmod/intl'
-import React from 'react'
+import React, { Suspense } from 'react'
 import dynamic from 'next/dynamic'
 
 import { Button } from 'components/inputs'
@@ -86,7 +86,10 @@ const AcceptedBets: React.FC = () => {
         title={messages.allBets}
         size={40}
       />
-      <BetDetailsModal />
+      {/* the modal registers itself on load; without its own boundary the load suspends the whole page */}
+      <Suspense fallback={null}>
+        <BetDetailsModal />
+      </Suspense>
     </>
   )
 }

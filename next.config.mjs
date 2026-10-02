@@ -17,9 +17,11 @@ const nextConfig = {
     config.externals.push('pino-pretty', 'lokijs', 'encoding')
 
     config.plugins.push(
-      // wagmi's Tempo connectors optionally import the "accounts" package and
-      // handle its absence at runtime; without this webpack fails the build
-      new webpack.IgnorePlugin({ resourceRegExp: /^(accounts|@x402\/)$/ }),
+      // wagmi's Tempo connectors optionally import the "accounts" package, and the
+      // CDP SDK behind its Base account connector optionally imports "@x402/*"
+      // packages by subpath; both handle their absence at runtime, but without
+      // this webpack fails the build
+      new webpack.IgnorePlugin({ resourceRegExp: /^(accounts|@x402\/.+)$/ }),
       new webpack.DefinePlugin({
         '__CLIENT__': !isServer,
         '__SERVER__': isServer,

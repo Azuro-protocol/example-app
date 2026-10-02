@@ -9,6 +9,11 @@ import { useAccount } from '@azuro-org/sdk-social-aa-connector'
 import { type Address } from 'viem'
 
 
+// the list can refetch while an announcement is open or still waiting its turn, and an id is stored only
+// when its announcement closes, so every freebet queued during this page session is remembered here
+// and not queued again
+const queuedIds = new Set<string>()
+
 const NewFreeBetsChecker: React.FC = () => {
   const { address } = useAccount()
   const { data: bonuses } = useBonuses({
@@ -33,9 +38,11 @@ const NewFreeBetsChecker: React.FC = () => {
       const storageName = `bonus-${uniqueId}`
       const wasShown = localStorage.getItem<boolean>(storageName)
 
-      if (wasShown) {
+      if (wasShown || queuedIds.has(uniqueId)) {
         return promise
       }
+
+      queuedIds.add(uniqueId)
 
       // as it's possible to have few bonuses, we should show them one-by-one
       return promise

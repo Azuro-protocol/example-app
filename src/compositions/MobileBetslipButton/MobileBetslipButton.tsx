@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { Suspense } from 'react'
 import { useBaseBetslip } from '@azuro-org/sdk'
 import { openModal } from '@locmod/modal'
 import dynamic from 'next/dynamic'
@@ -31,7 +31,10 @@ const MobileBetslipButton: React.FC = () => {
         onClick={() => openModal('BetslipModal')}
       />
       <Media narrow mobile>
-        <BetslipModal />
+        {/* the modal registers itself on load; without its own boundary the load suspends the whole page */}
+        <Suspense fallback={null}>
+          <BetslipModal />
+        </Suspense>
       </Media>
     </div>
   )

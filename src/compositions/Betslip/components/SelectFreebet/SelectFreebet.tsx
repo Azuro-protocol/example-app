@@ -4,7 +4,7 @@ import { useBaseBetslip, useChain, useDetailedBetslip } from '@azuro-org/sdk'
 import { Message } from '@locmod/intl'
 import dynamic from 'next/dynamic'
 import { openModal } from '@locmod/modal'
-import React, { useEffect } from 'react'
+import React, { Suspense, useEffect } from 'react'
 
 import { Icon } from 'components/ui'
 
@@ -64,7 +64,10 @@ const SelectFreebet: React.FC = () => {
           )
         }
       </div>
-      <SelectFreebetModal />
+      {/* the modal registers itself on load; without its own boundary the load suspends the whole page */}
+      <Suspense fallback={null}>
+        <SelectFreebetModal />
+      </Suspense>
     </>
   )
 }

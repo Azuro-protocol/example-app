@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useSyncExternalStore } from 'react'
+import React, { Suspense, useSyncExternalStore } from 'react'
 import { useParams } from 'next/navigation'
 import { closeModal, openModal } from '@locmod/modal'
 import dynamic from 'next/dynamic'
@@ -48,7 +48,10 @@ const MobileBetslipButton: React.FC = () => {
         onClick={() => openModal('StatisticsModal')}
       />
       <Media narrow mobile>
-        <StatisticsModal />
+        {/* the modal registers itself on load; without its own boundary the load suspends the whole page */}
+        <Suspense fallback={null}>
+          <StatisticsModal />
+        </Suspense>
       </Media>
     </div>
   )

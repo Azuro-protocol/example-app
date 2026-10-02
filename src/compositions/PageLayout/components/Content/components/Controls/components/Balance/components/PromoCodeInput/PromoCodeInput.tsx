@@ -16,17 +16,14 @@ import messages from './messages'
 
 const MAX_CODE_LENGTH = 32
 
-type PromoCodeInputProps = {
-  className?: string
-}
-
-const PromoCodeInput: React.FC<PromoCodeInputProps> = ({ className }) => {
+const PromoCodeInput: React.FC = () => {
   const { appChain } = useChain()
   const close = useClose()
   const [ value, setValue ] = useState('')
 
   const { activate, isPending, error, reset } = useActivatePromoCode({
     affiliate: process.env.NEXT_PUBLIC_AFFILIATE_ADDRESS as Address,
+    // the hook's own callbacks run even if the dropdown was closed while the request was pending
     onSuccess: (freebet) => {
       // the new freebet announcement only watches the selected chain
       if (freebet.chainId !== appChain.id) {
@@ -62,8 +59,9 @@ const PromoCodeInput: React.FC<PromoCodeInputProps> = ({ className }) => {
     errorMessage = isPromoCodeError(error) ? messages.errors[error.code] : messages.genericError
   }
 
-  const handleChange = (value: string) => {
-    setValue(value.slice(0, MAX_CODE_LENGTH))
+  const handleChange = (nextValue: string) => {
+    // leading spaces from a paste would otherwise count toward the limit and cut the code's end
+    setValue(nextValue.trimStart().slice(0, MAX_CODE_LENGTH))
 
     if (error) {
       reset()
@@ -75,17 +73,18 @@ const PromoCodeInput: React.FC<PromoCodeInputProps> = ({ className }) => {
       return
     }
 
+    // a per-call callback runs only while this input is still mounted
     activate({ code }, {
       onSuccess: () => {
         setValue('')
-        // closes the sheet on mobile, which sits above the new freebet announcement
+        // closes the dropdown (the sheet on mobile), so the new freebet announcement is left on its own
         close()
       },
     })
   }
 
   return (
-    <Form className={className} loading={isPending} onSubmit={handleSubmit}>
+    <Form loading={isPending} onSubmit={handleSubmit}>
       {/* upper case is only displayed: rewriting the value while typing moves the caret and fights autocorrect */}
       <Input
         className="[&>input]:uppercase [&>input::placeholder]:normal-case"

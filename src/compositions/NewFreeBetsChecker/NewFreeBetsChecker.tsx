@@ -38,11 +38,11 @@ const NewFreeBetsChecker: React.FC = () => {
       const storageName = `bonus-${uniqueId}`
       const wasShown = localStorage.getItem<boolean>(storageName)
 
-      if (wasShown || queuedIds.has(storageName)) {
+      if (wasShown || queuedIds.has(uniqueId)) {
         return promise
       }
 
-      queuedIds.add(storageName)
+      queuedIds.add(uniqueId)
 
       // as it's possible to have few bonuses, we should show them one-by-one
       return promise

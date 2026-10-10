@@ -117,9 +117,13 @@ const BalanceInfo: React.FC = () => {
     account: address!,
   })
 
-  const { inBets, toPayout } = betsSummaryData || {}
+  const { inBets, withdrawable, freebet } = betsSummaryData || {}
   const { balance } = balanceData || {}
   const { balance: nativeBalance } = nativeBalanceData || {}
+
+  const ownInBets = Number(inBets) || 0
+  const freebetInBets = Number(freebet?.inBets) || 0
+  const isOwnInBetsShown = ownInBets > 0 || freebetInBets === 0
 
   return (
     <div className="rounded-md bg-bg-l1 overflow-hidden">
@@ -149,8 +153,23 @@ const BalanceInfo: React.FC = () => {
             isBetsSummaryFetching ? (
               <div className="bone h-4 w-10 rounded-full" />
             ) : (
-              <div className="text-caption-13 font-semibold">
-                {toLocaleString(inBets || 0, { digits: 2 })} {betToken.symbol}
+              <div className="flex flex-wrap items-center gap-x-1">
+                {
+                  isOwnInBetsShown && (
+                    <span className="text-caption-13 font-semibold">
+                      {toLocaleString(ownInBets, { digits: 2 })} {betToken.symbol}
+                    </span>
+                  )
+                }
+                {
+                  freebetInBets > 0 && (
+                    <span className="inline-flex items-center gap-x-1 text-caption-12 text-grey-60">
+                      {isOwnInBetsShown && '+'}
+                      <Icon className="size-3" name="interface/gift" />
+                      {toLocaleString(freebetInBets, { digits: 2 })} {betToken.symbol}
+                    </span>
+                  )
+                }
               </div>
             )
           }
@@ -162,7 +181,7 @@ const BalanceInfo: React.FC = () => {
               <div className="bone h-4 w-10 rounded-full" />
             ) : (
               <div className="text-caption-13 font-semibold">
-                {toLocaleString(toPayout || 0, { digits: 2 })} {betToken.symbol}
+                {toLocaleString(withdrawable || 0, { digits: 2 })} {betToken.symbol}
               </div>
             )
           }

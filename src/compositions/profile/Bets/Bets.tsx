@@ -220,20 +220,26 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
     return outcomes.map(({ game }) => game).filter(Boolean)
   }, [ outcomes ])
 
-  const { resultTitle, resultAmount } = useMemo(() => {
+  const { resultTitle, resultAmount, isPositiveWin } = useMemo(() => {
     if (isCashedOut) {
       return {
         resultTitle: messages.cashedOut,
         resultAmount: `${toLocaleString(cashout!, { digits: 2 })} ${betToken.symbol}`,
+        isPositiveWin: false,
       }
     }
 
     if (isWin) {
+      // `settledPayout` survives redemption, so an already-claimed win still shows what it paid
+      // out rather than falling back to the pre-settlement estimate. For a v3 freebet it is the bettor's
+      // share; legacy bets keep their v2 figures
+      const winAmount = settledPayout ?? possibleWin
+      const isPositive = winAmount > 0
+
       return {
         resultTitle: messages.winning,
-        // `settledPayout` survives redemption, so an already-claimed win still shows what it paid
-        // out rather than falling back to the pre-settlement estimate
-        resultAmount: `${toLocaleString(settledPayout ?? possibleWin, { digits: 2 })} ${betToken.symbol}`,
+        resultAmount: `${isPositive ? '+' : ''}${toLocaleString(winAmount, { digits: 2 })} ${betToken.symbol}`,
+        isPositiveWin: isPositive,
       }
     }
 
@@ -241,6 +247,7 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
       return {
         resultTitle: messages.loss,
         resultAmount: `-${toLocaleString(amount, { digits: 2 })} ${betToken.symbol}`,
+        isPositiveWin: false,
       }
     }
 
@@ -248,12 +255,14 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
       return {
         resultTitle: messages.possibleWin,
         resultAmount: '––',
+        isPositiveWin: false,
       }
     }
 
     return {
       resultTitle: messages.possibleWin,
       resultAmount: `${toLocaleString(possibleWin, { digits: 2 })} ${betToken.symbol}`,
+      isPositiveWin: false,
     }
   }, [ isCashedOut, cashout, isWin, settledPayout, possibleWin, isLose, amount, isCanceled, betToken.symbol ])
 
@@ -331,8 +340,8 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
             <span
               className={
                 cx('font-semibold', {
-                  'text-grey-70': isLose || isCanceled || isCashedOut,
-                  'text-accent-green': isWin && !isCashedOut,
+                  'text-grey-70': isLose || isCanceled || isCashedOut || (isWin && !isPositiveWin),
+                  'text-accent-green': isPositiveWin,
                 })
               }
             >{resultAmount}

@@ -231,7 +231,8 @@ const Bet: React.FC<BetProps> = ({ bet }) => {
 
     if (isWin) {
       // `settledPayout` survives redemption, so an already-claimed win still shows what it paid
-      // out rather than falling back to the pre-settlement estimate. For a freebet it is the bettor's share
+      // out rather than falling back to the pre-settlement estimate. For a v3 freebet it is the bettor's
+      // share; legacy bets keep their v2 figures
       const winAmount = settledPayout ?? possibleWin
       const isPositive = winAmount > 0
 

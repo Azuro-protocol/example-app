@@ -227,7 +227,7 @@ const BetDetailsModal: ModalComponent<BetDetailsModalProps> = (props) => {
           </div>
           <div className="flex items-center text-caption-12 justify-between">
             <Message className="text-grey-60" value={messages.totalOdds} />
-            <span className="text-caption-13 font-semibold">{totalOdds}</span>
+            <OddsValue className="text-caption-13 font-semibold" odds={totalOdds} />
           </div>
           <div className="flex items-center text-caption-12 justify-between">
             <Message className="text-grey-60" value={messages.possibleWin} />

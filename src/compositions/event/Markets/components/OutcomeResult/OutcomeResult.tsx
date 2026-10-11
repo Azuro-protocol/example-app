@@ -42,10 +42,12 @@ const OutcomeResult: React.FC<OutcomeResultProps> = ({ outcome, state, summary, 
   )
   const titleClassName = cx('text-left whitespace-normal')
 
+  // a freebet that lost costs the bettor nothing, so an outcome can sum to zero - a zero is not a gain or a loss
+  const isZeroSummary = !Number(summary)
   const betsSummaryClassName = cx({
-    'text-accent-green': isWon,
-    'text-accent-red': isLost,
-    'text-grey-60': !isWon && !isLost,
+    'text-accent-green': isWon && !isZeroSummary,
+    'text-accent-red': isLost && !isZeroSummary,
+    'text-grey-60': (!isWon && !isLost) || isZeroSummary,
   })
 
   return (

@@ -113,13 +113,28 @@ const BalanceInfo: React.FC = () => {
   const { appChain, betToken } = useChain()
   const { data: balanceData, isLoading: isBalanceFetching } = useBetTokenBalance()
   const { data: nativeBalanceData, isLoading: isNativeBalanceFetching } = useNativeBalance()
-  const { data: betsSummaryData, isLoading: isBetsSummaryFetching } = useBetsSummary({
+  const {
+    data: betsSummaryData,
+    isLoading: isBetsSummaryLoading,
+    isPlaceholderData: isBetsSummaryPlaceholder,
+    isError: isBetsSummaryError,
+  } = useBetsSummary({
     account: address!,
   })
+  // the app keeps the previous query's data as a placeholder, which after a chain or wallet switch is the previous
+  // chain's or wallet's summary, formatted with the new chain's decimals - it waits behind the skeleton instead
+  const isBetsSummaryFetching = isBetsSummaryLoading || isBetsSummaryPlaceholder
 
-  const { inBets, toPayout } = betsSummaryData || {}
+  const { inBets, withdrawable, freebet } = betsSummaryData || {}
   const { balance } = balanceData || {}
   const { balance: nativeBalance } = nativeBalanceData || {}
+
+  const ownInBets = Number(inBets) || 0
+  const freebetInBets = Number(freebet?.inBets) || 0
+  const isOwnInBetsShown = ownInBets > 0 || freebetInBets === 0
+  // the summary needs an indexer that records the bettor's freebet totals and fails on chains without them,
+  // so an unknown figure is shown rather than a zero
+  const isBetsSummaryUnavailable = isBetsSummaryError && !betsSummaryData
 
   return (
     <div className="rounded-md bg-bg-l1 overflow-hidden">
@@ -148,9 +163,26 @@ const BalanceInfo: React.FC = () => {
           {
             isBetsSummaryFetching ? (
               <div className="bone h-4 w-10 rounded-full" />
+            ) : isBetsSummaryUnavailable ? (
+              <div className="text-caption-13 font-semibold">––</div>
             ) : (
-              <div className="text-caption-13 font-semibold">
-                {toLocaleString(inBets || 0, { digits: 2 })} {betToken.symbol}
+              <div className="flex flex-wrap items-center gap-x-1">
+                {
+                  isOwnInBetsShown && (
+                    <span className="text-caption-13 font-semibold">
+                      {toLocaleString(ownInBets, { digits: 2 })} {betToken.symbol}
+                    </span>
+                  )
+                }
+                {
+                  freebetInBets > 0 && (
+                    <span className="inline-flex items-center gap-x-1 text-caption-12 text-grey-60">
+                      {isOwnInBetsShown && '+'}
+                      <Icon className="size-3" name="interface/gift" />
+                      {toLocaleString(freebetInBets, { digits: 2 })} {betToken.symbol}
+                    </span>
+                  )
+                }
               </div>
             )
           }
@@ -160,9 +192,11 @@ const BalanceInfo: React.FC = () => {
           {
             isBetsSummaryFetching ? (
               <div className="bone h-4 w-10 rounded-full" />
+            ) : isBetsSummaryUnavailable ? (
+              <div className="text-caption-13 font-semibold">––</div>
             ) : (
               <div className="text-caption-13 font-semibold">
-                {toLocaleString(toPayout || 0, { digits: 2 })} {betToken.symbol}
+                {toLocaleString(withdrawable || 0, { digits: 2 })} {betToken.symbol}
               </div>
             )
           }
